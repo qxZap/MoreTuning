@@ -1,0 +1,726 @@
+{
+  "opelF17": {
+    "name": "Opel F17 Manual",
+    "f_ratios": {"1":5.6,"2":3.2,"3":2.1,"4":1.5,"5":1.0,"6":0.8},
+    "r_ratios": {"1":4.0},
+    "shift_time":0.25,
+    "price": 7500,
+    "weight": 45,
+    "lvl_req": 10
+  },
+  "zf8HP70": {
+    "name": "ZF 8HP70 8_Speed Auto",
+    "f_ratios": {"1":4.71,"2":3.14,"3":2.11,"4":1.67,"5":1.29,"6":1.00,"7":0.84,"8":0.65},
+    "r_ratios": {"1":3.32},
+    "shift_time":0.2,
+    "price": 28000,
+    "weight": 90,
+    "lvl_req": 52
+  },
+  "ford10R80": {
+    "name": "Ford 10R80 10_Speed Auto",
+    "f_ratios": {"1":4.70,"2":3.14,"3":2.10,"4":1.76,"5":1.54,"6":1.31,"7":1.15,"8":0.97,"9":0.79,"10":0.64},
+    "r_ratios": {"1":3.14},
+    "shift_time":0.18,
+    "price": 35000,
+    "weight": 100,
+    "lvl_req": 65
+  },
+  "toyotaU660E": {
+    "name": "Toyota U660E 6_Speed Auto",
+    "f_ratios": {"1":3.64,"2":2.19,"3":1.41,"4":1.00,"5":0.83,"6":0.72},
+    "r_ratios": {"1":4.11},
+    "shift_time":0.3,
+    "price": 12000,
+    "weight": 70,
+    "lvl_req": 30
+  },
+  "aisinTF_80SC": {
+    "name": "Aisin TF_80SC 6_Speed Auto",
+    "f_ratios": {"1":4.17,"2":2.34,"3":1.55,"4":1.00,"5":0.82,"6":0.64},
+    "r_ratios": {"1":3.59},
+    "shift_time":0.25,
+    "price": 13000,
+    "weight": 75,
+    "lvl_req": 35
+  },
+  "gm8L90": {
+    "name": "GM 8L90 8_Speed Auto",
+    "f_ratios": {"1":4.56,"2":2.97,"3":2.07,"4":1.78,"5":1.39,"6":1.15,"7":0.91,"8":0.69},
+    "r_ratios": {"1":3.06},
+    "shift_time":0.22,
+    "price": 26000,
+    "weight": 95,
+    "lvl_req": 55
+  },
+  "torqueFlite8HP": {
+    "name": "Chrysler TorqueFlite 8_Speed",
+    "f_ratios": {"1":4.71,"2":3.14,"3":2.10,"4":1.76,"5":1.29,"6":1.00,"7":0.84,"8":0.65},
+    "r_ratios": {"1":3.32},
+    "shift_time":0.2,
+    "price": 27000,
+    "weight": 90,
+    "lvl_req": 50
+  },
+  "mitsubishiINVECS_II": {
+    "name": "Mitsubishi INVECS II 4_Speed Auto",
+    "f_ratios": {"1":2.924,"2":1.568,"3":1.000,"4":0.696},
+    "r_ratios": {"1":2.212},
+    "shift_time":0.3,
+    "price": 9000,
+    "weight": 60,
+    "lvl_req": 20
+  },
+  "vwDQ381": {
+    "name": "VW DQ381 7_Speed DSG",
+    "f_ratios": {"1":4.72,"2":2.99,"3":2.09,"4":1.67,"5":1.29,"6":1.04,"7":0.84},
+    "r_ratios": {"1":3.26},
+    "shift_time":0.1,
+    "price": 20000,
+    "weight": 80,
+    "lvl_req": 60
+  },
+  "bmwZF_6HP28": {
+    "name": "BMW ZF 6HP28 6_Speed Auto",
+    "f_ratios": {"1":4.17,"2":2.34,"3":1.55,"4":1.00,"5":0.82,"6":0.64},
+    "r_ratios": {"1":3.40},
+    "shift_time":0.22,
+    "price": 15000,
+    "weight": 80,
+    "lvl_req": 40
+  },
+  "hondaCVT_H5": {
+    "name": "Honda Earth Dreams CVT (H5)",
+    "AutoShiftComportRPM":1500,
+    "TorqueConvertorStallRPM":null,
+    "TorqueConvertorStallRatioPower":null,
+    "TorqueConvertorTorqueRate":null,
+    "shift_time":0.1,
+    "CVT_ClutchCurvePow":0.8,
+    "CVT_InputRPMRange":"1000_6000",
+    "CVT_GearRatios":"3.5_0.4",
+    "price": 16000,
+    "weight": 65,
+    "lvl_req": 45
+  },
+  "nissanCVT_XTRONIC": {
+    "name": "Nissan XTRONIC CVT",
+    "AutoShiftComportRPM":1300,
+    "TorqueConvertorStallRPM":null,
+    "TorqueConvertorStallRatioPower":null,
+    "TorqueConvertorTorqueRate":null,
+    "shift_time":0.12,
+    "CVT_ClutchCurvePow":0.85,
+    "CVT_InputRPMRange":"900_6500",
+    "CVT_GearRatios":"5.0_0.3",
+    "price": 15000,
+    "weight": 70,
+    "lvl_req": 40
+  },
+  "toyotaSuperCVT_i": {
+    "name": "Toyota Super CVT_i",
+    "AutoShiftComportRPM":1400,
+    "TorqueConvertorStallRPM":null,
+    "TorqueConvertorStallRatioPower":null,
+    "TorqueConvertorTorqueRate":null,
+    "shift_time":0.11,
+    "CVT_ClutchCurvePow":0.9,
+    "CVT_InputRPMRange":"1000_7000",
+    "CVT_GearRatios":"5.1_0.32",
+    "price": 17000,
+    "weight": 70,
+    "lvl_req": 48
+  },
+  "subaruLineartronic": {
+    "name": "Subaru Lineartronic CVT",
+    "AutoShiftComportRPM":1200,
+    "TorqueConvertorStallRPM":null,
+    "TorqueConvertorStallRatioPower":null,
+    "TorqueConvertorTorqueRate":null,
+    "shift_time":0.13,
+    "CVT_ClutchCurvePow":0.88,
+    "CVT_InputRPMRange":"1000_6500",
+    "CVT_GearRatios":"6.0_0.29",
+    "price": 16500,
+    "weight": 72,
+    "lvl_req": 46
+  },
+  "mitsubishiCVT_INVECS_III": {
+    "name": "Mitsubishi INVECS_III CVT",
+    "AutoShiftComportRPM":1400,
+    "TorqueConvertorStallRPM":null,
+    "TorqueConvertorStallRatioPower":null,
+    "TorqueConvertorTorqueRate":null,
+    "shift_time":0.12,
+    "CVT_ClutchCurvePow":0.87,
+    "CVT_InputRPMRange":"1000_6000",
+    "CVT_GearRatios":"4.5_0.33",
+    "price": 14500,
+    "weight": 68,
+    "lvl_req": 42
+  },
+  "audiS_tronicDCT7": {
+    "name": "Audi S_tronic 7_Speed DCT",
+    "f_ratios": {"1":3.944,"2":2.488,"3":1.634,"4":1.228,"5":0.971,"6":0.838,"7":0.676},
+    "r_ratios": {"1":2.773},
+    "shift_time":0.08,
+    "price": 28000,
+    "weight": 90,
+    "lvl_req": 70
+  },
+  "porschePDK8": {
+    "name": "Porsche PDK 8_Speed DCT",
+    "f_ratios": {"1":3.84,"2":2.36,"3":1.67,"4":1.30,"5":1.15,"6":1.00,"7":0.85,"8":0.68},
+    "r_ratios": {"1":2.93},
+    "shift_time":0.08,
+    "price": 38000,
+    "weight": 95,
+    "lvl_req": 80
+  },
+  "volvoAM_CVTPW": {
+    "name": "Volvo Powershift Dual_Clutch 6_Speed",
+    "f_ratios": {"1":3.59,"2":2.19,"3":1.41,"4":1.00,"5":0.83,"6":0.69},
+    "r_ratios": {"1":3.38},
+    "shift_time":0.09,
+    "price": 22000,
+    "weight": 85,
+    "lvl_req": 68
+  },
+  "mercedes_AMG_MCT9": {
+    "name": "Mercedes AMG MCT 9_Speed",
+    "f_ratios": {"1":5.47,"2":3.17,"3":2.10,"4":1.67,"5":1.29,"6":1.00,"7":0.84,"8":0.69,"9":0.60},
+    "r_ratios": {"1":5.20},
+    "shift_time":0.05,
+    "price": 45000,
+    "weight": 110,
+    "lvl_req": 90
+  },
+  "teslaDirectDrive": {
+    "name": "Tesla Model S Single_Speed",
+    "f_ratios": {"1":9.73},
+    "r_ratios": {"1":-1},
+    "shift_time":0,
+    "price": 30000,
+    "weight": 60,
+    "lvl_req": 75
+  },
+  "gmAllison1000": {
+    "name": "Allison 1000 6_Speed Auto (Truck)",
+    "f_ratios": {"1":4.17,"2":2.34,"3":1.55,"4":1.00,"5":0.71,"6":0.61},
+    "r_ratios": {"1":3.06},
+    "shift_time":0.5,
+    "price": 18000,
+    "weight": 350,
+    "lvl_req": 40
+  },
+  "eatonUltrashiftPlus12": {
+    "name": "Eaton UltraShift Plus 12_Speed (Truck)",
+    "f_ratios": {"1":12.29,"2":10.04,"3":8.38,"4":6.90,"5":5.68,"6":4.62,"7":3.73,"8":3.06,"9":2.52,"10":2.09,"11":1.74,"12":1.43},
+    "r_ratios": {"1":5.95},
+    "shift_time":0.7,
+    "price": 22000,
+    "weight": 450,
+    "lvl_req": 60
+  },
+  "volvoI_Shift12": {
+    "name": "Volvo I_Shift 12_Speed AT",
+    "f_ratios": {"1":12.25,"2":10.02,"3":8.35,"4":6.87,"5":5.65,"6":4.59,"7":3.71,"8":3.05,"9":2.51,"10":2.08,"11":1.73,"12":1.43},
+    "r_ratios": {"1":5.95},
+    "shift_time":0.65,
+    "price": 23000,
+    "weight": 460,
+    "lvl_req": 62
+  },
+  "manTipMair16s230DS": {
+    "name": "MAN TipMatic 16_Speed AMT (Truck)",
+    "f_ratios": {"1":17.93,"2":15.51,"3":13.23,"4":11.19,"5":9.42,"6":7.91,"7":6.63,"8":5.55,"9":4.64,"10":3.88,"11":3.25,"12":2.71,"13":2.27,"14":1.90,"15":1.60,"16":1.35},
+    "r_ratios": {"1":16.08},
+    "shift_time":0.8,
+    "price": 25000,
+    "weight": 550,
+    "lvl_req": 70
+  },
+  "scaniaOpticruise12": {
+    "name": "Scania Opticruise 12_Speed AMT",
+    "f_ratios": {"1":13.85,"2":11.40,"3":9.26,"4":7.53,"5":6.14,"6":5.01,"7":4.08,"8":3.31,"9":2.69,"10":2.19,"11":1.78,"12":1.45},
+    "r_ratios": {"1":11.50},
+    "shift_time":0.7,
+    "price": 24000,
+    "weight": 480,
+    "lvl_req": 65
+  },
+  "allisonHT_740": {
+    "name": "Allison HT_740 6_Speed Auto (Bus)",
+    "f_ratios": {"1":4.783,"2":2.958,"3":1.706,"4":1.000,"5":0.645,"6":0.515},
+    "r_ratios": {"1":3.549},
+    "shift_time":0.4,
+    "price": 19000,
+    "weight": 380,
+    "lvl_req": 45
+  },
+  "hondaCivicGK5": {
+    "name": "Honda Civic GK5 Manual",
+    "f_ratios": {"1":3.166,"2":1.894,"3":1.235,"4":0.970,"5":0.812,"6":0.701},
+    "r_ratios": {"1":3.545},
+    "shift_time": 0.22,
+    "price": 9000,
+    "weight": 50,
+    "lvl_req": 25
+  },
+  "mazdaKYF6M": {
+    "name": "Mazda 6 Speed Manual",
+    "f_ratios": {"1":3.636,"2":2.364,"3":1.684,"4":1.281,"5":1.030,"6":0.848},
+    "r_ratios": {"1":3.583},
+    "shift_time": 0.20,
+    "price": 8500,
+    "weight": 48,
+    "lvl_req": 22
+  },
+  "subaruTY856VB6AA": {
+    "name": "Subaru 6 Speed Manual",
+    "f_ratios": {"1":3.636,"2":2.100,"3":1.521,"4":1.152,"5":0.902,"6":0.738},
+    "r_ratios": {"1":3.909},
+    "shift_time": 0.23,
+    "price": 9500,
+    "weight": 52,
+    "lvl_req": 28
+  },
+  "mitsubishiSST6A": {
+    "name": "Mitsubishi SST Twin Clutch 6",
+    "f_ratios": {"1":3.538,"2":2.187,"3":1.680,"4":1.315,"5":1.035,"6":0.835},
+    "r_ratios": {"1":2.903},
+    "shift_time": 0.15,
+    "price": 25000,
+    "weight": 88,
+    "lvl_req": 65
+  },
+  "kiaDCT7DCT": {
+    "name": "Kia 7 Speed Dual Clutch",
+    "f_ratios": {"1":3.800,"2":2.100,"3":1.500,"4":1.150,"5":0.925,"6":0.750,"7":0.600},
+    "r_ratios": {"1":3.000},
+    "shift_time": 0.12,
+    "price": 19000,
+    "weight": 78,
+    "lvl_req": 58
+  },
+  "renaultEDC7": {
+    "name": "Renault EDC 7 Speed DCT",
+    "f_ratios": {"1":3.615,"2":2.109,"3":1.529,"4":1.145,"5":0.959,"6":0.795,"7":0.653},
+    "r_ratios": {"1":3.307},
+    "shift_time": 0.10,
+    "price": 21000,
+    "weight": 80,
+    "lvl_req": 62
+  },
+  "bmwZF10HP": {
+    "name": "BMW ZF 10 Speed Auto",
+    "f_ratios": {"1":5.184,"2":3.174,"3":2.111,"4":1.667,"5":1.285,"6":1.000,"7":0.839,"8":0.702,"9":0.580,"10":0.480},
+    "r_ratios": {"1":4.472},
+    "shift_time": 0.18,
+    "price": 38000,
+    "weight": 105,
+    "lvl_req": 70
+  },
+  "gm10L1000": {
+    "name": "GM 10 Speed Auto",
+    "f_ratios": {"1":4.70,"2":3.14,"3":2.10,"4":1.75,"5":1.42,"6":1.17,"7":1.00,"8":0.84,"9":0.72,"10":0.63},
+    "r_ratios": {"1":3.14},
+    "shift_time": 0.19,
+    "price": 34000,
+    "weight": 100,
+    "lvl_req": 68
+  },
+  "audi8hp45": {
+    "name": "Audi 8 Speed Tiptronic",
+    "f_ratios": {"1":4.714,"2":3.143,"3":2.106,"4":1.667,"5":1.285,"6":1.000,"7":0.839,"8":0.684},
+    "r_ratios": {"1":3.321},
+    "shift_time": 0.22,
+    "price": 27500,
+    "weight": 90,
+    "lvl_req": 50
+  },
+  "jeep8hp45": {
+    "name": "Jeep 8 Speed Auto",
+    "f_ratios": {"1":4.70,"2":3.14,"3":2.10,"4":1.76,"5":1.29,"6":1.00,"7":0.84,"8":0.65},
+    "r_ratios": {"1":3.32},
+    "shift_time": 0.21,
+    "price": 26500,
+    "weight": 92,
+    "lvl_req": 48
+  },
+  "toyotaU760E": {
+    "name": "Toyota U760E 6 Speed Auto",
+    "f_ratios": {"1":4.07,"2":2.37,"3":1.56,"4":1.17,"5":1.00,"6":0.82},
+    "r_ratios": {"1":4.17},
+    "shift_time": 0.28,
+    "price": 12500,
+    "weight": 72,
+    "lvl_req": 32
+  },
+  "hondaCVTH6": {
+    "name": "Honda H6 CVT",
+    "AutoShiftComportRPM": 1600,
+    "TorqueConvertorStallRPM": null,
+    "TorqueConvertorStallRatioPower": null,
+    "TorqueConvertorTorqueRate": null,
+    "shift_time": 0.11,
+    "CVT_ClutchCurvePow": 0.82,
+    "CVT_InputRPMRange": "1000-6000",
+    "CVT_GearRatios": "4.0-0.35",
+    "price": 16500,
+    "weight": 67,
+    "lvl_req": 47
+  },
+  "toyotaCVTTurboCVT": {
+    "name": "Toyota Turbo CVT",
+    "AutoShiftComportRPM": 1500,
+    "TorqueConvertorStallRPM": null,
+    "TorqueConvertorStallRatioPower": null,
+    "TorqueConvertorTorqueRate": null,
+    "shift_time": 0.13,
+    "CVT_ClutchCurvePow": 0.87,
+    "CVT_InputRPMRange": "1200-7000",
+    "CVT_GearRatios": "5.2-0.30",
+    "price": 18000,
+    "weight": 75,
+    "lvl_req": 50
+  },
+  "subaruCVTForester": {
+    "name": "Subaru Forester CVT",
+    "AutoShiftComportRPM": 1300,
+    "TorqueConvertorStallRPM": null,
+    "TorqueConvertorStallRatioPower": null,
+    "TorqueConvertorTorqueRate": null,
+    "shift_time": 0.12,
+    "CVT_ClutchCurvePow": 0.86,
+    "CVT_InputRPMRange": "900-6500",
+    "CVT_GearRatios": "6.2-0.28",
+    "price": 17000,
+    "weight": 73,
+    "lvl_req": 48
+  },
+  "nissanCVTSR20": {
+    "name": "Nissan SR20 CVT",
+    "AutoShiftComportRPM": 1400,
+    "TorqueConvertorStallRPM": null,
+    "TorqueConvertorStallRatioPower": null,
+    "TorqueConvertorTorqueRate": null,
+    "shift_time": 0.12,
+    "CVT_ClutchCurvePow": 0.84,
+    "CVT_InputRPMRange": "950-6600",
+    "CVT_GearRatios": "5.4-0.31",
+    "price": 15500,
+    "weight": 71,
+    "lvl_req": 43
+  },
+  "volvoCVTPW6": {
+    "name": "Volvo PW6 CVT",
+    "AutoShiftComportRPM": 1450,
+    "TorqueConvertorStallRPM": null,
+    "TorqueConvertorStallRatioPower": null,
+    "TorqueConvertorTorqueRate": null,
+    "shift_time": 0.11,
+    "CVT_ClutchCurvePow": 0.88,
+    "CVT_InputRPMRange": "1000-7000",
+    "CVT_GearRatios": "5.3-0.29",
+    "price": 17500,
+    "weight": 74,
+    "lvl_req": 49
+  },
+  "gmAllison4700": {
+    "name": "Allison 4700 6 Speed Truck",
+    "f_ratios": {"1":4.63,"2":2.73,"3":1.72,"4":1.00,"5":0.77,"6":0.62},
+    "r_ratios": {"1":4.82},
+    "shift_time": 0.45,
+    "price": 20000,
+    "weight": 400,
+    "lvl_req": 50
+  },
+  "eatonEndurant10": {
+    "name": "Eaton Endurant 10 Speed",
+    "f_ratios": {"1":11.32,"2":9.26,"3":7.58,"4":6.19,"5":5.07,"6":4.10,"7":3.35,"8":2.74,"9":2.24,"10":1.82},
+    "r_ratios": {"1":5.30},
+    "shift_time": 0.6,
+    "price": 21000,
+    "weight": 420,
+    "lvl_req": 55
+  },
+  "mackMP810": {
+    "name": "Mack MP810 10 Speed AMT",
+    "f_ratios": {"1":13.3,"2":11.3,"3":9.6,"4":8.1,"5":6.9,"6":5.6,"7":4.6,"8":3.8,"9":3.1,"10":2.5},
+    "r_ratios": {"1":14.0},
+    "shift_time": 0.75,
+    "price": 24000,
+    "weight": 500,
+    "lvl_req": 68
+  },
+  "mercedes16SpeedAMT": {
+    "name": "Mercedes 16 Speed AMT",
+    "f_ratios": {"1":17.5,"2":15.2,"3":13.0,"4":11.2,"5":9.3,"6":7.8,"7":6.5,"8":5.5,"9":4.6,"10":3.8,"11":3.2,"12":2.6,"13":2.1,"14":1.7,"15":1.4,"16":1.1},
+    "r_ratios": {"1":18.0},
+    "shift_time": 0.8,
+    "price": 26000,
+    "weight": 580,
+    "lvl_req": 72
+  },
+  "ford12SpeedTandem": {
+    "name": "Ford 12 Speed Tandem Auto",
+    "f_ratios": {"1":11.4,"2":9.3,"3":7.6,"4":6.2,"5":5.0,"6":4.0,"7":3.1,"8":2.5,"9":2.0,"10":1.6,"11":1.3,"12":1.0},
+    "r_ratios": {"1":5.8},
+    "shift_time": 0.6,
+    "price": 22500,
+    "weight": 470,
+    "lvl_req": 60
+  },
+  "scaniaSuper13Speed": {
+    "name": "Scania Super 13 Speed AMT",
+    "f_ratios": {"1":13.5,"2":11.1,"3":9.0,"4":7.3,"5":6.0,"6":4.9,"7":4.0,"8":3.3,"9":2.7,"10":2.2,"11":1.8,"12":1.5,"13":1.2},
+    "r_ratios": {"1":12.1},
+    "shift_time": 0.7,
+    "price": 25000,
+    "weight": 520,
+    "lvl_req": 70
+  },
+  "toyotaC160": {
+    "name": "Toyota C160 Manual",
+    "f_ratios": {"1":3.615,"2":1.944,"3":1.310,"4":0.972,"5":0.756,"6":0.650},
+    "r_ratios": {"1":3.583},
+    "shift_time": 0.22,
+    "price": 8000,
+    "weight": 47,
+    "lvl_req": 20
+  },
+  "fordMTX75": {
+    "name": "Ford MTX75 Manual 6",
+    "f_ratios": {"1":3.58,"2":2.06,"3":1.42,"4":1.14,"5":0.89,"6":0.76},
+    "r_ratios": {"1":3.18},
+    "shift_time": 0.23,
+    "price": 7800,
+    "weight": 46,
+    "lvl_req": 18
+  },
+  "vw0AQ200": {
+    "name": "VW 0AQ200 Manual 6",
+    "f_ratios": {"1":3.55,"2":1.95,"3":1.36,"4":1.12,"5":0.94,"6":0.79},
+    "r_ratios": {"1":3.77},
+    "shift_time": 0.24,
+    "price": 8200,
+    "weight": 48,
+    "lvl_req": 20
+  },
+  "bmwS65DCT7": {
+    "name": "BMW S65 DCT 7",
+    "f_ratios": {"1":3.30,"2":2.19,"3":1.65,"4":1.33,"5":1.09,"6":0.92,"7":0.77},
+    "r_ratios": {"1":2.86},
+    "shift_time": 0.08,
+    "price": 30000,
+    "weight": 92,
+    "lvl_req": 75
+  },
+  "nissanRE0F10A": {
+    "name": "Nissan RE0F10A Auto 7",
+    "f_ratios": {"1":2.92,"2":2.16,"3":1.68,"4":1.29,"5":1.00,"6":0.77,"7":0.60},
+    "r_ratios": {"1":2.92},
+    "shift_time": 0.25,
+    "price": 14000,
+    "weight": 76,
+    "lvl_req": 38
+  },
+  "hyundaiA6LF1": {
+    "name": "Hyundai A6LF1 Auto 6",
+    "f_ratios": {"1":3.59,"2":2.19,"3":1.41,"4":1.00,"5":0.83,"6":0.64},
+    "r_ratios": {"1":3.11},
+    "shift_time": 0.24,
+    "price": 13500,
+    "weight": 73,
+    "lvl_req": 36
+  },
+  "kiaA8LF1": {
+    "name": "Kia A8LF1 Auto 8",
+    "f_ratios": {"1":4.70,"2":3.14,"3":2.10,"4":1.76,"5":1.29,"6":1.00,"7":0.84,"8":0.65},
+    "r_ratios": {"1":3.32},
+    "shift_time": 0.20,
+    "price": 27000,
+    "weight": 90,
+    "lvl_req": 50
+  },
+  "audiDL501": {
+    "name": "Audi DL501 Tiptronic 7",
+    "f_ratios": {"1":4.81,"2":2.91,"3":1.95,"4":1.38,"5":1.03,"6":0.87,"7":0.71},
+    "r_ratios": {"1":3.00},
+    "shift_time": 0.22,
+    "price": 26000,
+    "weight": 88,
+    "lvl_req": 60
+  },
+  "gm6T70": {
+    "name": "GM 6T70 6 Speed Auto",
+    "f_ratios": {"1":4.03,"2":2.36,"3":1.53,"4":1.15,"5":0.85,"6":0.67},
+    "r_ratios": {"1":3.64},
+    "shift_time": 0.23,
+    "price": 13800,
+    "weight": 75,
+    "lvl_req": 37
+  },
+  "mercedes9GTronic": {
+    "name": "Mercedes 9G Tronic Auto",
+    "f_ratios": {"1":5.50,"2":3.14,"3":2.11,"4":1.67,"5":1.29,"6":1.00,"7":0.84,"8":0.69,"9":0.62},
+    "r_ratios": {"1":4.73},
+    "shift_time": 0.18,
+    "price": 40000,
+    "weight": 108,
+    "lvl_req": 78
+  },
+  "ford10R140": {
+    "name": "Ford 10R140 Heavy Truck Auto",
+    "f_ratios": {"1":4.45,"2":3.17,"3":2.21,"4":1.78,"5":1.47,"6":1.17,"7":1.00,"8":0.85,"9":0.70,"10":0.60},
+    "r_ratios": {"1":3.05},
+    "shift_time": 0.35,
+    "price": 28000,
+    "weight": 450,
+    "lvl_req": 65
+  },
+  "volvoIshiftDualClutch": {
+    "name": "Volvo I Shift Dual Clutch 12",
+    "f_ratios": {"1":12.25,"2":10.02,"3":8.35,"4":6.87,"5":5.65,"6":4.59,"7":3.71,"8":3.05,"9":2.51,"10":2.08,"11":1.73,"12":1.43},
+    "r_ratios": {"1":5.95},
+    "shift_time": 0.60,
+    "price": 26000,
+    "weight": 500,
+    "lvl_req": 72
+  },
+  "mackMDrive12": {
+    "name": "Mack M Drive 12 Speed AMT",
+    "f_ratios": {"1":13.9,"2":11.5,"3":9.5,"4":7.8,"5":6.4,"6":5.2,"7":4.1,"8":3.3,"9":2.7,"10":2.2,"11":1.8,"12":1.4},
+    "r_ratios": {"1":14.7},
+    "shift_time": 0.75,
+    "price": 25500,
+    "weight": 510,
+    "lvl_req": 70
+  },
+  "scaniaG25AMT": {
+    "name": "Scania G25 AMT 12",
+    "f_ratios": {"1":13.6,"2":11.2,"3":9.1,"4":7.4,"5":6.1,"6":5.0,"7":4.1,"8":3.3,"9":2.7,"10":2.2,"11":1.8,"12":1.4},
+    "r_ratios": {"1":12.3},
+    "shift_time": 0.65,
+    "price": 24500,
+    "weight": 490,
+    "lvl_req": 68
+  },
+  "hondaCVTNX": {
+    "name": "Honda NX CVT",
+    "AutoShiftComportRPM": 1500,
+    "TorqueConvertorStallRPM": null,
+    "TorqueConvertorStallRatioPower": null,
+    "TorqueConvertorTorqueRate": null,
+    "shift_time": 0.11,
+    "CVT_ClutchCurvePow": 0.83,
+    "CVT_InputRPMRange": "1000-6500",
+    "CVT_GearRatios": "4.2-0.34",
+    "price": 16800,
+    "weight": 66,
+    "lvl_req": 46
+  },
+  "subaruCVTLGT": {
+    "name": "Subaru LGT CVT",
+    "AutoShiftComportRPM": 1400,
+    "TorqueConvertorStallRPM": null,
+    "TorqueConvertorStallRatioPower": null,
+    "TorqueConvertorTorqueRate": null,
+    "shift_time": 0.12,
+    "CVT_ClutchCurvePow": 0.85,
+    "CVT_InputRPMRange": "900-6800",
+    "CVT_GearRatios": "6.3-0.27",
+    "price": 17200,
+    "weight": 73,
+    "lvl_req": 49
+  },
+  "renaultCVTContinental": {
+    "name": "Renault Continental CVT",
+    "AutoShiftComportRPM": 1600,
+    "TorqueConvertorStallRPM": null,
+    "TorqueConvertorStallRatioPower": null,
+    "TorqueConvertorTorqueRate": null,
+    "shift_time": 0.12,
+    "CVT_ClutchCurvePow": 0.86,
+    "CVT_InputRPMRange": "1100-7000",
+    "CVT_GearRatios": "5.0-0.30",
+    "price": 16000,
+    "weight": 70,
+    "lvl_req": 45
+  },
+  "nissanCVTNismo": {
+    "name": "Nissan Nismo CVT High Performance",
+    "AutoShiftComportRPM": 2000,
+    "TorqueConvertorStallRPM": null,
+    "TorqueConvertorStallRatioPower": null,
+    "TorqueConvertorTorqueRate": null,
+    "shift_time": 0.10,
+    "CVT_ClutchCurvePow": 0.90,
+    "CVT_InputRPMRange": "1500-7000",
+    "CVT_GearRatios": "6.5-0.25",
+    "price": 20000,
+    "weight": 78,
+    "lvl_req": 55
+  },
+  "toyotaCVTSmart": {
+    "name": "Toyota Smart CVT",
+    "AutoShiftComportRPM": 1300,
+    "TorqueConvertorStallRPM": null,
+    "TorqueConvertorStallRatioPower": null,
+    "TorqueConvertorTorqueRate": null,
+    "shift_time": 0.13,
+    "CVT_ClutchCurvePow": 0.88,
+    "CVT_InputRPMRange": "1000-6000",
+    "CVT_GearRatios": "5.6-0.32",
+    "price": 16900,
+    "weight": 71,
+    "lvl_req": 47
+  },
+  "allisonT3000": {
+    "name": "Allison T3000 6 Speed Auto",
+    "f_ratios": {"1":4.50,"2":2.90,"3":1.95,"4":1.38,"5":1.03,"6":0.76},
+    "r_ratios": {"1":3.50},
+    "shift_time": 0.45,
+    "price": 21000,
+    "weight": 410,
+    "lvl_req": 52
+  },
+  "eatonUltrashiftPlus14": {
+    "name": "Eaton UltraShift Plus 14 Speed",
+    "f_ratios": {"1":14.00,"2":12.00,"3":10.00,"4":8.40,"5":7.00,"6":5.80,"7":4.80,"8":4.00,"9":3.25,"10":2.60,"11":2.10,"12":1.70,"13":1.35,"14":1.10},
+    "r_ratios": {"1":6.00},
+    "shift_time": 0.7,
+    "price": 26000,
+    "weight": 530,
+    "lvl_req": 70
+  },
+  "volvoCVTES8": {
+    "name": "Volvo ES8 CVT",
+    "AutoShiftComportRPM": 1550,
+    "TorqueConvertorStallRPM": null,
+    "TorqueConvertorStallRatioPower": null,
+    "TorqueConvertorTorqueRate": null,
+    "shift_time": 0.11,
+    "CVT_ClutchCurvePow": 0.87,
+    "CVT_InputRPMRange": "1000-7000",
+    "CVT_GearRatios": "5.8-0.29",
+    "price": 18500,
+    "weight": 76,
+    "lvl_req": 52
+  },
+  "mercedesCVTW205": {
+    "name": "Mercedes W205 CVT",
+    "AutoShiftComportRPM": 1500,
+    "TorqueConvertorStallRPM": null,
+    "TorqueConvertorStallRatioPower": null,
+    "TorqueConvertorTorqueRate": null,
+    "shift_time": 0.12,
+    "CVT_ClutchCurvePow": 0.89,
+    "CVT_InputRPMRange": "1100-6800",
+    "CVT_GearRatios": "5.4-0.30",
+    "price": 17800,
+    "weight": 75,
+    "lvl_req": 50
+  }
+}
