@@ -348,10 +348,10 @@ for trans_key in transmissions:
         TorqueConvertorStallRPM = 2000
     else:
         if is_auto:
-          TorqueConvertorStallRatioPower = 3
-        else:
           TorqueConvertorStallRatioPower = 2
-        TorqueConvertorStallRPM = 7000
+        else:
+          TorqueConvertorStallRatioPower = 3
+        # TorqueConvertorStallRPM = 7000
 
     def_gear = 1
     ratios = []
@@ -395,15 +395,10 @@ for trans_key in transmissions:
       ratios.append((0, 100, 'N'))
       gear_index+=1
 
-      f_index = 1
-      for f_ratio in transmission.get('f_ratios'):
-          if is_truck:
-            ratios.append((transmission.get('f_ratios')[f_ratio], 100,  f_index))
-          else:
-            ratios.append((transmission.get('f_ratios')[f_ratio], 100,  str(f_index)))
-          gear_index+=1
-          f_index+=1
-    
+      for gear_index in transmission.get('f_ratios'):
+          gear_ratio = transmission.get('f_ratios')[gear_index]
+          ratios.append((gear_ratio,100,gear_index))
+
     # Determine default gear index
     for index in range(0,len(ratios)):
        if 'N' in ratios[index]:
