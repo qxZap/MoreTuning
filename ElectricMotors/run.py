@@ -149,7 +149,7 @@ def load_new_engine_part(transmission_id, engine_name, weight, price, req, index
         row_value = row.get("Value")
 
         if row_name == 'Name':
-            row['CultureInvariantString'] = '[MOD] Z> '+engine_name
+            row['CultureInvariantString'] = engine_name
         if row_name == 'Desciption':
             row['CultureInvariantString'] = description
         if row_name == 'Cost':
@@ -191,11 +191,14 @@ if motors:
         hp = motor.get("hp")
         name = motor.get("name")
 
-        if name.startswith('EV '):
-            name = name[3:]
+        # if name.startswith('EV '):
+        #     name = name[3:]
 
         name_parts = name.split(',')
         name = f'{name_parts[0]} {name_parts[1].upper()}'
+        
+        while '  ' in name:
+            name = name.replace('  ',' ')
 
         Inertia = float(int(3000/670*hp))
         StarterTorque = 0
