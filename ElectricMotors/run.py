@@ -14,6 +14,8 @@ def create_folder_if_not_exists(path):
         print(f"Folder already exists: {path}")
 
 def get_weight(hp_count):
+    if hp>=1010:
+        return int(49/670*hp_count)
     if hp>=670:
         return int(150/670*hp_count)
     if hp>=300:
@@ -21,7 +23,7 @@ def get_weight(hp_count):
     return int(60/130*hp_count)
 
 def get_level_req(hp_count):
-    return int(hp_count/2)
+    return 1+int(hp_count/3)
 
 def get_base_motor(name):
     base_file = None
