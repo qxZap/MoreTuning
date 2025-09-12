@@ -1,39 +1,201 @@
 {
-  "EVNetGainHyper9": { "hp": 120, "name": "EV NetGain Hyper9, 120hp", "description": "NetGain Hyper9 is a high performance electric vehicle motor." },
-  "EVWulingHongguangMiniEV": { "hp": 27, "name": "EV Wuling Hongguang Mini EV, 27hp", "FuelConsumptionCoef": 0.6, "description": "Wuling Hongguang Mini EV electric vehicle motor." },
-  "EVTataTiagoEV": { "hp": 74, "name": "EV Tata Tiago EV, 74hp", "FuelConsumptionCoef": 0.6, "description": "Tata Tiago EV electric vehicle motor." },
-  "EVVinFastVFe34": { "hp": 148, "name": "EV VinFast VF e34, 148hp", "FuelConsumptionCoef": 0.6, "description": "VinFast VF e34 electric vehicle motor." },
-  "EVMGMG4EV": { "hp": 171, "name": "EV MG MG4 EV, 171hp", "FuelConsumptionCoef": 0.6, "description": "MG MG4 EV electric vehicle motor." },
-  "EVChevroletBoltEV": { "hp": 200, "name": "EV Chevrolet Bolt EV, 200hp", "FuelConsumptionCoef": 0.5, "description": "Chevrolet Bolt EV electric vehicle motor." },
-  "EVAlpineA290": { "hp": 220, "name": "EV Alpine A290, 220hp", "FuelConsumptionCoef": 0.6, "description": "Alpine A290 electric vehicle motor." },
-  "EVVolvoEX30": { "hp": 272, "name": "EV Volvo EX30 Single Motor, 272hp", "FuelConsumptionCoef": 0.6, "description": "Volvo EX30 Single Motor electric vehicle motor." },
-  "EVHyundaiIoniq9": { "hp": 304, "name": "EV Hyundai Ioniq 9, 304hp", "FuelConsumptionCoef": 0.6, "description": "Hyundai Ioniq 9 electric vehicle motor." },
-  "EVPolestar3LongRangeSingleMotor": { "hp": 295, "name": "EV Polestar 3 Long Range Single Motor, 295hp", "FuelConsumptionCoef": 0.5, "description": "Polestar 3 Long Range Single Motor electric vehicle motor." },
-  "EVMercedesEQS450Plus": { "hp": 355, "name": "EV Mercedes EQS 450+, 355hp", "FuelConsumptionCoef": 0.4, "description": "Mercedes EQS 450+ electric vehicle motor." },
-  "EVPolestar2DualMotor": { "hp": 408, "name": "EV Polestar 2 Dual Motor, 408hp", "FuelConsumptionCoef": 0.6, "description": "Polestar 2 Dual Motor electric vehicle motor." },
-  "EVNIOET5": { "hp": 483, "name": "EV NIO ET5, 483hp", "description": "NIO ET5 electric vehicle motor." },
-  "EVChevroletSilveradoEVWT": { "hp": 510, "name": "EV Chevrolet Silverado EV WT, 510hp", "FuelConsumptionCoef": 0.5, "description": "Chevrolet Silverado EV WT electric vehicle motor." },
-  "EVFiskerOceanUltra": { "hp": 540, "name": "EV Fisker Ocean Ultra, 540hp", "description": "Fisker Ocean Ultra electric vehicle motor." },
-  "EVRivianR1TQuadMotorGen1": { "hp": 835, "name": "EV Rivian R1T Quad-Motor Gen 1, 835hp", "description": "Rivian R1T Quad-Motor Gen 1 electric vehicle motor." },
-  "EVLucidGravityDreamEdition": { "hp": 1070, "name": "EV Lucid Gravity Dream Edition, 1070hp", "description": "Lucid Gravity Dream Edition electric vehicle motor." },
-  "EVMHero917": { "hp": 1088, "name": "EV M-Hero 917, 1088hp", "description": "M-Hero 917 electric vehicle motor." },
-  "EVGACAionHyperSSR": { "hp": 1224, "name": "EV GAC Aion Hyper SSR, 1224hp", "description": "GAC Aion Hyper SSR electric vehicle motor." },
-  "EVLucidAirSapphire": { "hp": 1234, "name": "EV Lucid Air Sapphire, 1234hp", "description": "Lucid Air Sapphire electric vehicle motor." },
-  "EVMercedesAMGGTXXConcept": { "hp": 1341, "name": "EV Mercedes-AMG GT XX Concept, 1341hp", "description": "Mercedes-AMG GT XX Concept electric vehicle motor." },
-  "EVNIOEP9": { "hp": 1341, "name": "EV NIO EP9, 1341hp", "description": "NIO EP9 electric vehicle motor." },
-  "EVPininfarinaBattista": { "hp": 1876, "name": "EV Pininfarina Battista, 1876hp", "description": "Pininfarina Battista electric vehicle motor." },
-  "EVElationFreedom": { "hp": 1903, "name": "EV Elation Freedom, 1903hp", "description": "Elation Freedom electric vehicle motor." },
-  "EVRimacNevera": { "hp": 1914, "name": "EV Rimac Nevera, 1914hp", "description": "Rimac Nevera electric vehicle motor." },
-  "EVAsparkOwl": { "hp": 1953, "name": "EV Aspark Owl, 1953hp", "description": "Aspark Owl electric vehicle motor." },
-  "EVDrakoDragon": { "hp": 2000, "name": "EV Drako Dragon, 2000hp", "description": "Drako Dragon electric vehicle motor." },
-  "EVLotusEvija": { "hp": 2011, "name": "EV Lotus Evija, 2011hp", "description": "Lotus Evija electric vehicle motor." },
-  "EVRimacNeveraR": { "hp": 2106, "name": "EV Rimac Nevera R, 2106hp", "description": "Rimac Nevera R electric vehicle motor." },
-  "EVYangwangU9TrackEdition": { "hp": 3019, "name": "EV Yangwang U9 Track Edition, 3019hp", "description": "Yangwang U9 Track Edition electric vehicle motor."},
-  "EVAudiRSetronGTPerformance": { "hp": 925, "name": "EV Audi RS e-tron GT Performance, 925hp", "description": "Audi RS e-tron GT Performance electric vehicle motor." },
-  "EVPorscheTaycanTurboS": { "hp": 938, "name": "EV Porsche Taycan Turbo S, 938hp", "description": "Porsche Taycan Turbo S electric vehicle motor." },
-  "EVGMCHummerEV": { "hp": 1000, "name": "EV GMC Hummer EV, 1000hp", "description": "GMC Hummer EV electric vehicle motor." },
-  "EVTeslaSemi": { "hp": 1000, "name": "EV Tesla Semi, 1000hp", "FuelConsumptionCoef": 0.5, "description": "Tesla Semi electric vehicle motor." },
-  "EVTeslaModelSPlaid": { "hp": 1020, "name": "EV Tesla Model S Plaid, 1020hp", "description": "Tesla Model S Plaid electric vehicle motor." },
-  "EVTeslaModelXPlaid": { "hp": 1020, "name": "EV Tesla Model X Plaid, 1020hp", "FuelConsumptionCoef": 0.7, "description": "Tesla Model X Plaid electric vehicle motor." },
-  "EVLucidAirGrandTouringPerformance": { "hp": 1050, "name": "EV Lucid Air Grand Touring Performance, 1050hp", "description": "Lucid Air Grand Touring Performance electric vehicle motor." }
+  "EVNetGainHyper9": {
+    "hp": 120,
+    "name": "EV NetGain Hyper9, 120hp",
+    "description": "NetGain Hyper9 is a high performance electric vehicle motor."
+  },
+  "EVWulingHongguangMiniEV": {
+    "hp": 27,
+    "name": "EV Wuling Hongguang Mini EV, 27hp",
+    "FuelConsumptionCoef": 0.6,
+    "description": "Wuling Hongguang Mini EV electric vehicle motor."
+  },
+  "EVTataTiagoEV": {
+    "hp": 74,
+    "name": "EV Tata Tiago EV, 74hp",
+    "FuelConsumptionCoef": 0.6,
+    "description": "Tata Tiago EV electric vehicle motor."
+  },
+  "EVVinFastVFe34": {
+    "hp": 148,
+    "name": "EV VinFast VF e34, 148hp",
+    "FuelConsumptionCoef": 0.6,
+    "description": "VinFast VF e34 electric vehicle motor."
+  },
+  "EVMGMG4EV": {
+    "hp": 171,
+    "name": "EV MG MG4 EV, 171hp",
+    "FuelConsumptionCoef": 0.6,
+    "description": "MG MG4 EV electric vehicle motor."
+  },
+  "EVChevroletBoltEV": {
+    "hp": 200,
+    "name": "EV Chevrolet Bolt EV, 200hp",
+    "FuelConsumptionCoef": 0.5,
+    "description": "Chevrolet Bolt EV electric vehicle motor."
+  },
+  "EVAlpineA290": {
+    "hp": 220,
+    "name": "EV Alpine A290, 220hp",
+    "FuelConsumptionCoef": 0.6,
+    "description": "Alpine A290 electric vehicle motor."
+  },
+  "EVVolvoEX30": {
+    "hp": 272,
+    "name": "EV Volvo EX30 Single Motor, 272hp",
+    "FuelConsumptionCoef": 0.6,
+    "description": "Volvo EX30 Single Motor electric vehicle motor."
+  },
+  "EVHyundaiIoniq9": {
+    "hp": 304,
+    "name": "EV Hyundai Ioniq 9, 304hp",
+    "FuelConsumptionCoef": 0.6,
+    "description": "Hyundai Ioniq 9 electric vehicle motor."
+  },
+  "EVPolestar3LongRangeSingleMotor": {
+    "hp": 295,
+    "name": "EV Polestar 3 Long Range Single Motor, 295hp",
+    "FuelConsumptionCoef": 0.5,
+    "description": "Polestar 3 Long Range Single Motor electric vehicle motor."
+  },
+  "EVMercedesEQS450Plus": {
+    "hp": 355,
+    "name": "EV Mercedes EQS 450+, 355hp",
+    "FuelConsumptionCoef": 0.4,
+    "description": "Mercedes EQS 450+ electric vehicle motor."
+  },
+  "EVPolestar2DualMotor": {
+    "hp": 408,
+    "name": "EV Polestar 2 Dual Motor, 408hp",
+    "FuelConsumptionCoef": 0.6,
+    "description": "Polestar 2 Dual Motor electric vehicle motor."
+  },
+  "EVNIOET5": {
+    "hp": 483,
+    "name": "EV NIO ET5, 483hp",
+    "description": "NIO ET5 electric vehicle motor."
+  },
+  "EVChevroletSilveradoEVWT": {
+    "hp": 510,
+    "name": "EV Chevrolet Silverado EV WT, 510hp",
+    "FuelConsumptionCoef": 0.5,
+    "description": "Chevrolet Silverado EV WT electric vehicle motor."
+  },
+  "EVFiskerOceanUltra": {
+    "hp": 540,
+    "name": "EV Fisker Ocean Ultra, 540hp",
+    "description": "Fisker Ocean Ultra electric vehicle motor."
+  },
+  "EVRivianR1TQuadMotorGen1": {
+    "hp": 835,
+    "name": "EV Rivian R1T Quad-Motor Gen 1, 835hp",
+    "description": "Rivian R1T Quad-Motor Gen 1 electric vehicle motor."
+  },
+  "EVLucidGravityDreamEdition": {
+    "hp": 1070,
+    "name": "EV Lucid Gravity Dream Edition, 1070hp",
+    "description": "Lucid Gravity Dream Edition electric vehicle motor."
+  },
+  "EVMHero917": {
+    "hp": 1088,
+    "name": "EV M-Hero 917, 1088hp",
+    "description": "M-Hero 917 electric vehicle motor."
+  },
+  "EVGACAionHyperSSR": {
+    "hp": 1224,
+    "name": "EV GAC Aion Hyper SSR, 1224hp",
+    "description": "GAC Aion Hyper SSR electric vehicle motor."
+  },
+  "EVLucidAirSapphire": {
+    "hp": 1234,
+    "name": "EV Lucid Air Sapphire, 1234hp",
+    "description": "Lucid Air Sapphire electric vehicle motor."
+  },
+  "EVMercedesAMGGTXXConcept": {
+    "hp": 1341,
+    "name": "EV Mercedes-AMG GT XX Concept, 1341hp",
+    "description": "Mercedes-AMG GT XX Concept electric vehicle motor."
+  },
+  "EVNIOEP9": {
+    "hp": 1341,
+    "name": "EV NIO EP9, 1341hp",
+    "description": "NIO EP9 electric vehicle motor."
+  },
+  "EVPininfarinaBattista": {
+    "hp": 1876,
+    "name": "EV Pininfarina Battista, 1876hp",
+    "description": "Pininfarina Battista electric vehicle motor."
+  },
+  "EVElationFreedom": {
+    "hp": 1903,
+    "name": "EV Elation Freedom, 1903hp",
+    "description": "Elation Freedom electric vehicle motor."
+  },
+  "EVRimacNevera": {
+    "hp": 1914,
+    "name": "EV Rimac Nevera, 1914hp",
+    "description": "Rimac Nevera electric vehicle motor."
+  },
+  "EVAsparkOwl": {
+    "hp": 1953,
+    "name": "EV Aspark Owl, 1953hp",
+    "description": "Aspark Owl electric vehicle motor."
+  },
+  "EVDrakoDragon": {
+    "hp": 2000,
+    "name": "EV Drako Dragon, 2000hp",
+    "description": "Drako Dragon electric vehicle motor."
+  },
+  "EVLotusEvija": {
+    "hp": 2011,
+    "name": "EV Lotus Evija, 2011hp",
+    "description": "Lotus Evija electric vehicle motor."
+  },
+  "EVRimacNeveraR": {
+    "hp": 2106,
+    "name": "EV Rimac Nevera R, 2106hp",
+    "description": "Rimac Nevera R electric vehicle motor."
+  },
+  "EVYangwangU9TrackEdition": {
+    "hp": 3019,
+    "name": "EV Yangwang U9 Track Edition, 3019hp",
+    "description": "Yangwang U9 Track Edition electric vehicle motor."
+  },
+  "EVAudiRSetronGTPerformance": {
+    "hp": 925,
+    "name": "EV Audi RS e-tron GT Performance, 925hp",
+    "description": "Audi RS e-tron GT Performance electric vehicle motor."
+  },
+  "EVPorscheTaycanTurboS": {
+    "hp": 938,
+    "name": "EV Porsche Taycan Turbo S, 938hp",
+    "description": "Porsche Taycan Turbo S electric vehicle motor."
+  },
+  "EVGMCHummerEV": {
+    "hp": 1000,
+    "name": "EV GMC Hummer EV, 1000hp",
+    "description": "GMC Hummer EV electric vehicle motor."
+  },
+  "EVTeslaSemi": {
+    "hp": 1000,
+    "name": "EV Tesla Semi, 1000hp",
+    "FuelConsumptionCoef": 0.5,
+    "description": "Tesla Semi electric vehicle motor."
+  },
+  "EVTeslaModelSPlaid": {
+    "hp": 1020,
+    "name": "EV Tesla Model S Plaid, 1020hp",
+    "description": "Tesla Model S Plaid electric vehicle motor."
+  },
+  "EVTeslaModelXPlaid": {
+    "hp": 1020,
+    "name": "EV Tesla Model X Plaid, 1020hp",
+    "FuelConsumptionCoef": 0.7,
+    "description": "Tesla Model X Plaid electric vehicle motor."
+  },
+  "EVLucidAirGrandTouringPerformance": {
+    "hp": 1050,
+    "name": "EV Lucid Air Grand Touring Performance, 1050hp",
+    "description": "Lucid Air Grand Touring Performance electric vehicle motor."
+  }
 }
