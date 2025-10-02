@@ -114,6 +114,7 @@ if data:
         type_index = None
         vehicle_keys_index = None
         VehicleRowGameplayTagQuery_index = None
+        truck_keys_value = None
 
         for i in range(0, len(current_part['Value'])):
             current_line_json = current_part['Value'][i]
@@ -125,6 +126,8 @@ if data:
                 type_index = i
             if current_line_json.get('Name') == 'VehicleKeys':
                 vehicle_keys_index = i
+            if current_line_json.get('Name') == 'TruckClasses':
+                truck_keys_value = i
             if current_line_json.get('Name') == 'VehicleRowGameplayTagQuery':
                 VehicleRowGameplayTagQuery_index = i
 
@@ -134,6 +137,7 @@ if data:
 
             current_part['Value'][type_index]['Value'] = []
             current_part['Value'][vehicle_keys_index]['Value'] = []
+            current_part['Value'][truck_keys_value]['Value'] = []
             current_part['Value'][VehicleRowGameplayTagQuery_index]['Value'] = get_vehicle_tag_query()
             new_parts.append(current_part)
         
