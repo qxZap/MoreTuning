@@ -118,6 +118,8 @@ if data:
 
         for i in range(0, len(current_part['Value'])):
             current_line_json = current_part['Value'][i]
+            if current_line_json.get('Name') == 'bIsHidden':
+                current_part['Value'][i]['Value'] = False
             if current_line_json.get('Name') == 'Cost':
                 price_index = i
             if current_line_json.get('Name') == 'MassKg':
