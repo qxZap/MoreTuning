@@ -1,0 +1,911 @@
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Cervos\Cervos.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Cervos\Cervos.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Cervos\Cervos.uasset
+Unhandled exception. System.FormatException: Failed to find a valid schema for parent name /Game/Cars/Parts/Light/BlinkerLight_01.BlinkerLight_01_C
+   at UAssetAPI.Unversioned.Usmap.GetSchemaFromName(String nm, UAsset asset, String modulePath, Boolean throwExceptions) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 742
+   at UAssetAPI.Unversioned.Usmap.TryGetProperty[T](FName propertyName, AncestryInfo ancestry, Int32 dupIndex, UAsset asset, T& propDat, Int32& idx) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 763
+   at UAssetAPI.MainSerializer.GenerateUnversionedHeader(List`1& data, FName parentName, FName parentModulePath, UAsset asset) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\MainSerializer.cs:line 156
+   at UAssetAPI.ExportTypes.NormalExport.Write(AssetBinaryWriter writer) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\ExportTypes\NormalExport.cs:line 176
+   at UAssetAPI.UAsset.WriteData() in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2654
+   at UAssetAPI.UAsset.Write(String outputPath) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2742
+   at UAssetGUI.Program.Main() in D:\a\UAssetGUI\UAssetGUI\UAssetGUI\Program.cs:line 67
+[UAssetGUI] Running: UAssetGUI.exe fromjson qxZap_SirensUnlocked_P\MotorTown\Content\Cars\Models\Cervos\Cervos.json qxZap_SirensUnlocked_P\MotorTown\Content\Cars\Models\Cervos\Cervos.uasset MotorTown
+[UAssetGUI] Failed qxZap_SirensUnlocked_P\MotorTown\Content\Cars\Models\Cervos\Cervos.json with code 3762504530
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\CheetahMk1\CheetahMk1.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\CheetahMk1\CheetahMk1.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\CheetahMk1\CheetahMk1.uasset
+Unhandled exception. System.FormatException: Failed to find a valid schema for parent name /Game/Cars/Parts/Light/BlinkerLight_01.BlinkerLight_01_C
+   at UAssetAPI.Unversioned.Usmap.GetSchemaFromName(String nm, UAsset asset, String modulePath, Boolean throwExceptions) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 742
+   at UAssetAPI.Unversioned.Usmap.TryGetProperty[T](FName propertyName, AncestryInfo ancestry, Int32 dupIndex, UAsset asset, T& propDat, Int32& idx) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 763
+   at UAssetAPI.MainSerializer.GenerateUnversionedHeader(List`1& data, FName parentName, FName parentModulePath, UAsset asset) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\MainSerializer.cs:line 156
+   at UAssetAPI.ExportTypes.NormalExport.Write(AssetBinaryWriter writer) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\ExportTypes\NormalExport.cs:line 176
+   at UAssetAPI.UAsset.WriteData() in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2654
+   at UAssetAPI.UAsset.Write(String outputPath) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2742
+   at UAssetGUI.Program.Main() in D:\a\UAssetGUI\UAssetGUI\UAssetGUI\Program.cs:line 67
+[UAssetGUI] Running: UAssetGUI.exe fromjson qxZap_SirensUnlocked_P\MotorTown\Content\Cars\Models\CheetahMk1\CheetahMk1.json qxZap_SirensUnlocked_P\MotorTown\Content\Cars\Models\CheetahMk1\CheetahMk1.uasset MotorTown
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Cervos\Cervos.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Cervos\Cervos.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Cervos\Cervos.uasset
+Unhandled exception. System.FormatException: Failed to find a valid schema for parent name /Game/Cars/Parts/Light/BlinkerLight_01.BlinkerLight_01_C
+   at UAssetAPI.Unversioned.Usmap.GetSchemaFromName(String nm, UAsset asset, String modulePath, Boolean throwExceptions) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 742
+   at UAssetAPI.Unversioned.Usmap.TryGetProperty[T](FName propertyName, AncestryInfo ancestry, Int32 dupIndex, UAsset asset, T& propDat, Int32& idx) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 763
+   at UAssetAPI.MainSerializer.GenerateUnversionedHeader(List`1& data, FName parentName, FName parentModulePath, UAsset asset) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\MainSerializer.cs:line 156
+   at UAssetAPI.ExportTypes.NormalExport.Write(AssetBinaryWriter writer) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\ExportTypes\NormalExport.cs:line 176
+   at UAssetAPI.UAsset.WriteData() in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2654
+   at UAssetAPI.UAsset.Write(String outputPath) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2742
+   at UAssetGUI.Program.Main() in D:\a\UAssetGUI\UAssetGUI\UAssetGUI\Program.cs:line 67
+[UAssetGUI] Running: UAssetGUI.exe fromjson qxZap_SirensUnlocked_P\MotorTown\Content\Cars\Models\Cervos\Cervos.json qxZap_SirensUnlocked_P\MotorTown\Content\Cars\Models\Cervos\Cervos.uasset MotorTown
+[UAssetGUI] Failed qxZap_SirensUnlocked_P\MotorTown\Content\Cars\Models\Cervos\Cervos.json with code 3762504530
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\CheetahMk1\CheetahMk1.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\CheetahMk1\CheetahMk1.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\CheetahMk1\CheetahMk1.uasset
+Unhandled exception. System.FormatException: Failed to find a valid schema for parent name /Game/Cars/Parts/Light/BlinkerLight_01.BlinkerLight_01_C
+   at UAssetAPI.Unversioned.Usmap.GetSchemaFromName(String nm, UAsset asset, String modulePath, Boolean throwExceptions) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 742
+   at UAssetAPI.Unversioned.Usmap.TryGetProperty[T](FName propertyName, AncestryInfo ancestry, Int32 dupIndex, UAsset asset, T& propDat, Int32& idx) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 763
+   at UAssetAPI.MainSerializer.GenerateUnversionedHeader(List`1& data, FName parentName, FName parentModulePath, UAsset asset) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\MainSerializer.cs:line 156
+   at UAssetAPI.ExportTypes.NormalExport.Write(AssetBinaryWriter writer) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\ExportTypes\NormalExport.cs:line 176
+   at UAssetAPI.UAsset.WriteData() in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2654
+   at UAssetAPI.UAsset.Write(String outputPath) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2742
+   at UAssetGUI.Program.Main() in D:\a\UAssetGUI\UAssetGUI\UAssetGUI\Program.cs:line 67
+[UAssetGUI] Running: UAssetGUI.exe fromjson qxZap_SirensUnlocked_P\MotorTown\Content\Cars\Models\CheetahMk1\CheetahMk1.json qxZap_SirensUnlocked_P\MotorTown\Content\Cars\Models\CheetahMk1\CheetahMk1.uasset MotorTown
+[UAssetGUI] Failed qxZap_SirensUnlocked_P\MotorTown\Content\Cars\Models\CheetahMk1\CheetahMk1.json with code 3762504530
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Lead.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Lead.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Lead.uasset
+Unhandled exception. System.FormatException: Failed to find a valid schema for parent name MTVehicleBaseBP_C
+   at UAssetAPI.Unversioned.Usmap.GetSchemaFromName(String nm, UAsset asset, String modulePath, Boolean throwExceptions) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 742
+   at UAssetAPI.Unversioned.Usmap.TryGetProperty[T](FName propertyName, AncestryInfo ancestry, Int32 dupIndex, UAsset asset, T& propDat, Int32& idx) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 775
+   at UAssetAPI.MainSerializer.GenerateUnversionedHeader(List`1& data, FName parentName, FName parentModulePath, UAsset asset) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\MainSerializer.cs:line 156
+   at UAssetAPI.ExportTypes.NormalExport.Write(AssetBinaryWriter writer) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\ExportTypes\NormalExport.cs:line 176
+   at UAssetAPI.UAsset.WriteData() in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2654
+   at UAssetAPI.UAsset.Write(String outputPath) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2742
+   at UAssetGUI.Program.Main() in D:\a\UAssetGUI\UAssetGUI\UAssetGUI\Program.cs:line 67
+[UAssetGUI] Running: UAssetGUI.exe fromjson qxZap_SirensUnlocked_P\MotorTown\Content\Cars\Models\Conter\Conter_Lead.json qxZap_SirensUnlocked_P\MotorTown\Content\Cars\Models\Conter\Conter_Lead.uasset MotorTown
+[UAssetGUI] Failed qxZap_SirensUnlocked_P\MotorTown\Content\Cars\Models\Conter\Conter_Lead.json with code 3762504530
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Rear.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Rear.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Rear.uasset
+Unhandled exception. System.FormatException: Failed to find a valid schema for parent name MTVehicleBaseBP_C
+   at UAssetAPI.Unversioned.Usmap.GetSchemaFromName(String nm, UAsset asset, String modulePath, Boolean throwExceptions) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 742
+   at UAssetAPI.Unversioned.Usmap.TryGetProperty[T](FName propertyName, AncestryInfo ancestry, Int32 dupIndex, UAsset asset, T& propDat, Int32& idx) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 775
+   at UAssetAPI.MainSerializer.GenerateUnversionedHeader(List`1& data, FName parentName, FName parentModulePath, UAsset asset) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\MainSerializer.cs:line 156
+   at UAssetAPI.ExportTypes.NormalExport.Write(AssetBinaryWriter writer) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\ExportTypes\NormalExport.cs:line 176
+   at UAssetAPI.UAsset.WriteData() in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2654
+   at UAssetAPI.UAsset.Write(String outputPath) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2742
+   at UAssetGUI.Program.Main() in D:\a\UAssetGUI\UAssetGUI\UAssetGUI\Program.cs:line 67
+[UAssetGUI] Running: UAssetGUI.exe fromjson qxZap_SirensUnlocked_P\MotorTown\Content\Cars\Models\Conter\Conter_Rear.json qxZap_SirensUnlocked_P\MotorTown\Content\Cars\Models\Conter\Conter_Rear.uasset MotorTown
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Cervos\Cervos.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Cervos\Cervos.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Cervos\Cervos.uasset
+Unhandled exception. System.FormatException: Failed to find a valid schema for parent name /Game/Cars/Parts/Light/BlinkerLight_01.BlinkerLight_01_C
+   at UAssetAPI.Unversioned.Usmap.GetSchemaFromName(String nm, UAsset asset, String modulePath, Boolean throwExceptions) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 742
+   at UAssetAPI.Unversioned.Usmap.TryGetProperty[T](FName propertyName, AncestryInfo ancestry, Int32 dupIndex, UAsset asset, T& propDat, Int32& idx) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 763
+   at UAssetAPI.MainSerializer.GenerateUnversionedHeader(List`1& data, FName parentName, FName parentModulePath, UAsset asset) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\MainSerializer.cs:line 156
+   at UAssetAPI.ExportTypes.NormalExport.Write(AssetBinaryWriter writer) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\ExportTypes\NormalExport.cs:line 176
+   at UAssetAPI.UAsset.WriteData() in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2654
+   at UAssetAPI.UAsset.Write(String outputPath) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2742
+   at UAssetGUI.Program.Main() in D:\a\UAssetGUI\UAssetGUI\UAssetGUI\Program.cs:line 67
+[UAssetGUI] Running: UAssetGUI.exe fromjson D:\MT\MoreTuning\Cervos.json D:\MT\MoreTuning\Cervos.uasset MotorTown
+[UAssetGUI] Failed D:\MT\MoreTuning\Cervos.json with code 3762504530
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\CheetahMk1\CheetahMk1.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\CheetahMk1\CheetahMk1.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\CheetahMk1\CheetahMk1.uasset
+Unhandled exception. System.FormatException: Failed to find a valid schema for parent name /Game/Cars/Parts/Light/BlinkerLight_01.BlinkerLight_01_C
+   at UAssetAPI.Unversioned.Usmap.GetSchemaFromName(String nm, UAsset asset, String modulePath, Boolean throwExceptions) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 742
+   at UAssetAPI.Unversioned.Usmap.TryGetProperty[T](FName propertyName, AncestryInfo ancestry, Int32 dupIndex, UAsset asset, T& propDat, Int32& idx) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 763
+   at UAssetAPI.MainSerializer.GenerateUnversionedHeader(List`1& data, FName parentName, FName parentModulePath, UAsset asset) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\MainSerializer.cs:line 156
+   at UAssetAPI.ExportTypes.NormalExport.Write(AssetBinaryWriter writer) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\ExportTypes\NormalExport.cs:line 176
+   at UAssetAPI.UAsset.WriteData() in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2654
+   at UAssetAPI.UAsset.Write(String outputPath) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2742
+   at UAssetGUI.Program.Main() in D:\a\UAssetGUI\UAssetGUI\UAssetGUI\Program.cs:line 67
+[UAssetGUI] Running: UAssetGUI.exe fromjson D:\MT\MoreTuning\CheetahMk1.json D:\MT\MoreTuning\CheetahMk1.uasset MotorTown
+[UAssetGUI] Failed D:\MT\MoreTuning\CheetahMk1.json with code 3762504530
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Lead.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Lead.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Lead.uasset
+Unhandled exception. System.FormatException: Failed to find a valid schema for parent name MTVehicleBaseBP_C
+   at UAssetAPI.Unversioned.Usmap.GetSchemaFromName(String nm, UAsset asset, String modulePath, Boolean throwExceptions) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 742
+   at UAssetAPI.Unversioned.Usmap.TryGetProperty[T](FName propertyName, AncestryInfo ancestry, Int32 dupIndex, UAsset asset, T& propDat, Int32& idx) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 775
+   at UAssetAPI.MainSerializer.GenerateUnversionedHeader(List`1& data, FName parentName, FName parentModulePath, UAsset asset) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\MainSerializer.cs:line 156
+   at UAssetAPI.ExportTypes.NormalExport.Write(AssetBinaryWriter writer) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\ExportTypes\NormalExport.cs:line 176
+   at UAssetAPI.UAsset.WriteData() in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2654
+   at UAssetAPI.UAsset.Write(String outputPath) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2742
+   at UAssetGUI.Program.Main() in D:\a\UAssetGUI\UAssetGUI\UAssetGUI\Program.cs:line 67
+[UAssetGUI] Running: UAssetGUI.exe fromjson D:\MT\MoreTuning\Conter_Lead.json D:\MT\MoreTuning\Conter_Lead.uasset MotorTown
+[UAssetGUI] Failed D:\MT\MoreTuning\Conter_Lead.json with code 3762504530
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Rear.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Rear.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Rear.uasset
+Unhandled exception. System.FormatException: Failed to find a valid schema for parent name MTVehicleBaseBP_C
+   at UAssetAPI.Unversioned.Usmap.GetSchemaFromName(String nm, UAsset asset, String modulePath, Boolean throwExceptions) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 742
+   at UAssetAPI.Unversioned.Usmap.TryGetProperty[T](FName propertyName, AncestryInfo ancestry, Int32 dupIndex, UAsset asset, T& propDat, Int32& idx) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 775
+   at UAssetAPI.MainSerializer.GenerateUnversionedHeader(List`1& data, FName parentName, FName parentModulePath, UAsset asset) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\MainSerializer.cs:line 156
+   at UAssetAPI.ExportTypes.NormalExport.Write(AssetBinaryWriter writer) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\ExportTypes\NormalExport.cs:line 176
+   at UAssetAPI.UAsset.WriteData() in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2654
+   at UAssetAPI.UAsset.Write(String outputPath) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2742
+   at UAssetGUI.Program.Main() in D:\a\UAssetGUI\UAssetGUI\UAssetGUI\Program.cs:line 67
+[UAssetGUI] Running: UAssetGUI.exe fromjson D:\MT\MoreTuning\Conter_Rear.json D:\MT\MoreTuning\Conter_Rear.uasset MotorTown
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Cervos\Cervos.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Cervos\Cervos.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Cervos\Cervos.uasset
+Unhandled exception. System.FormatException: Failed to find a valid schema for parent name /Game/Cars/Parts/Light/BlinkerLight_01.BlinkerLight_01_C
+   at UAssetAPI.Unversioned.Usmap.GetSchemaFromName(String nm, UAsset asset, String modulePath, Boolean throwExceptions) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 742
+   at UAssetAPI.Unversioned.Usmap.TryGetProperty[T](FName propertyName, AncestryInfo ancestry, Int32 dupIndex, UAsset asset, T& propDat, Int32& idx) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 763
+   at UAssetAPI.MainSerializer.GenerateUnversionedHeader(List`1& data, FName parentName, FName parentModulePath, UAsset asset) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\MainSerializer.cs:line 156
+   at UAssetAPI.ExportTypes.NormalExport.Write(AssetBinaryWriter writer) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\ExportTypes\NormalExport.cs:line 176
+   at UAssetAPI.UAsset.WriteData() in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2654
+   at UAssetAPI.UAsset.Write(String outputPath) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2742
+   at UAssetGUI.Program.Main() in D:\a\UAssetGUI\UAssetGUI\UAssetGUI\Program.cs:line 67
+[UAssetGUI] Running: UAssetGUI.exe fromjson D:\MT\MoreTuning\Cervos.json D:\MT\MoreTuning\Cervos.uasset MotorTown
+[UAssetGUI] Failed D:\MT\MoreTuning\Cervos.json with code 3762504530
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\CheetahMk1\CheetahMk1.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\CheetahMk1\CheetahMk1.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\CheetahMk1\CheetahMk1.uasset
+Unhandled exception. System.FormatException: Failed to find a valid schema for parent name /Game/Cars/Parts/Light/BlinkerLight_01.BlinkerLight_01_C
+   at UAssetAPI.Unversioned.Usmap.GetSchemaFromName(String nm, UAsset asset, String modulePath, Boolean throwExceptions) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 742
+   at UAssetAPI.Unversioned.Usmap.TryGetProperty[T](FName propertyName, AncestryInfo ancestry, Int32 dupIndex, UAsset asset, T& propDat, Int32& idx) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 763
+   at UAssetAPI.MainSerializer.GenerateUnversionedHeader(List`1& data, FName parentName, FName parentModulePath, UAsset asset) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\MainSerializer.cs:line 156
+   at UAssetAPI.ExportTypes.NormalExport.Write(AssetBinaryWriter writer) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\ExportTypes\NormalExport.cs:line 176
+   at UAssetAPI.UAsset.WriteData() in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2654
+   at UAssetAPI.UAsset.Write(String outputPath) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2742
+   at UAssetGUI.Program.Main() in D:\a\UAssetGUI\UAssetGUI\UAssetGUI\Program.cs:line 67
+[UAssetGUI] Running: UAssetGUI.exe fromjson D:\MT\MoreTuning\CheetahMk1.json D:\MT\MoreTuning\CheetahMk1.uasset MotorTown
+[UAssetGUI] Failed D:\MT\MoreTuning\CheetahMk1.json with code 3762504530
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Lead.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Lead.json VER_UE5_5 MotorTown
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Cervos\Cervos.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Cervos\Cervos.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Cervos\Cervos.uasset
+Unhandled exception. System.FormatException: Failed to find a valid schema for parent name /Game/Cars/Parts/Light/BlinkerLight_01.BlinkerLight_01_C
+   at UAssetAPI.Unversioned.Usmap.GetSchemaFromName(String nm, UAsset asset, String modulePath, Boolean throwExceptions) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 742
+   at UAssetAPI.Unversioned.Usmap.TryGetProperty[T](FName propertyName, AncestryInfo ancestry, Int32 dupIndex, UAsset asset, T& propDat, Int32& idx) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 763
+   at UAssetAPI.MainSerializer.GenerateUnversionedHeader(List`1& data, FName parentName, FName parentModulePath, UAsset asset) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\MainSerializer.cs:line 156
+   at UAssetAPI.ExportTypes.NormalExport.Write(AssetBinaryWriter writer) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\ExportTypes\NormalExport.cs:line 176
+   at UAssetAPI.UAsset.WriteData() in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2654
+   at UAssetAPI.UAsset.Write(String outputPath) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2742
+   at UAssetGUI.Program.Main() in D:\a\UAssetGUI\UAssetGUI\UAssetGUI\Program.cs:line 67
+[UAssetGUI] Running: UAssetGUI.exe fromjson D:\MT\MoreTuning\Cervos.json D:\MT\MoreTuning\Cervos.uasset MotorTown
+[UAssetGUI] Failed D:\MT\MoreTuning\Cervos.json with code 3762504530
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\CheetahMk1\CheetahMk1.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\CheetahMk1\CheetahMk1.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\CheetahMk1\CheetahMk1.uasset
+Unhandled exception. System.FormatException: Failed to find a valid schema for parent name /Game/Cars/Parts/Light/BlinkerLight_01.BlinkerLight_01_C
+   at UAssetAPI.Unversioned.Usmap.GetSchemaFromName(String nm, UAsset asset, String modulePath, Boolean throwExceptions) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 742
+   at UAssetAPI.Unversioned.Usmap.TryGetProperty[T](FName propertyName, AncestryInfo ancestry, Int32 dupIndex, UAsset asset, T& propDat, Int32& idx) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 763
+   at UAssetAPI.MainSerializer.GenerateUnversionedHeader(List`1& data, FName parentName, FName parentModulePath, UAsset asset) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\MainSerializer.cs:line 156
+   at UAssetAPI.ExportTypes.NormalExport.Write(AssetBinaryWriter writer) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\ExportTypes\NormalExport.cs:line 176
+   at UAssetAPI.UAsset.WriteData() in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2654
+   at UAssetAPI.UAsset.Write(String outputPath) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2742
+   at UAssetGUI.Program.Main() in D:\a\UAssetGUI\UAssetGUI\UAssetGUI\Program.cs:line 67
+[UAssetGUI] Running: UAssetGUI.exe fromjson D:\MT\MoreTuning\CheetahMk1.json D:\MT\MoreTuning\CheetahMk1.uasset MotorTown
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Cervos\Cervos.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Cervos\Cervos.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Cervos\Cervos.uasset
+Unhandled exception. System.FormatException: Failed to find a valid schema for parent name /Game/Cars/Parts/Light/BlinkerLight_01.BlinkerLight_01_C
+   at UAssetAPI.Unversioned.Usmap.GetSchemaFromName(String nm, UAsset asset, String modulePath, Boolean throwExceptions) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 742
+   at UAssetAPI.Unversioned.Usmap.TryGetProperty[T](FName propertyName, AncestryInfo ancestry, Int32 dupIndex, UAsset asset, T& propDat, Int32& idx) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 763
+   at UAssetAPI.MainSerializer.GenerateUnversionedHeader(List`1& data, FName parentName, FName parentModulePath, UAsset asset) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\MainSerializer.cs:line 156
+   at UAssetAPI.ExportTypes.NormalExport.Write(AssetBinaryWriter writer) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\ExportTypes\NormalExport.cs:line 176
+   at UAssetAPI.UAsset.WriteData() in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2654
+   at UAssetAPI.UAsset.Write(String outputPath) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2742
+   at UAssetGUI.Program.Main() in D:\a\UAssetGUI\UAssetGUI\UAssetGUI\Program.cs:line 67
+[UAssetGUI] Running: UAssetGUI.exe fromjson Cervos.json Cervos.uasset MotorTown
+[UAssetGUI] Failed Cervos.json with code 3762504530
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\CheetahMk1\CheetahMk1.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\CheetahMk1\CheetahMk1.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\CheetahMk1\CheetahMk1.uasset
+Unhandled exception. System.FormatException: Failed to find a valid schema for parent name /Game/Cars/Parts/Light/BlinkerLight_01.BlinkerLight_01_C
+   at UAssetAPI.Unversioned.Usmap.GetSchemaFromName(String nm, UAsset asset, String modulePath, Boolean throwExceptions) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 742
+   at UAssetAPI.Unversioned.Usmap.TryGetProperty[T](FName propertyName, AncestryInfo ancestry, Int32 dupIndex, UAsset asset, T& propDat, Int32& idx) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 763
+   at UAssetAPI.MainSerializer.GenerateUnversionedHeader(List`1& data, FName parentName, FName parentModulePath, UAsset asset) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\MainSerializer.cs:line 156
+   at UAssetAPI.ExportTypes.NormalExport.Write(AssetBinaryWriter writer) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\ExportTypes\NormalExport.cs:line 176
+   at UAssetAPI.UAsset.WriteData() in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2654
+   at UAssetAPI.UAsset.Write(String outputPath) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2742
+   at UAssetGUI.Program.Main() in D:\a\UAssetGUI\UAssetGUI\UAssetGUI\Program.cs:line 67
+[UAssetGUI] Running: UAssetGUI.exe fromjson CheetahMk1.json CheetahMk1.uasset MotorTown
+[UAssetGUI] Failed CheetahMk1.json with code 3762504530
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Lead.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Lead.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Lead.uasset
+Unhandled exception. System.FormatException: Failed to find a valid schema for parent name MTVehicleBaseBP_C
+   at UAssetAPI.Unversioned.Usmap.GetSchemaFromName(String nm, UAsset asset, String modulePath, Boolean throwExceptions) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 742
+   at UAssetAPI.Unversioned.Usmap.TryGetProperty[T](FName propertyName, AncestryInfo ancestry, Int32 dupIndex, UAsset asset, T& propDat, Int32& idx) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 775
+   at UAssetAPI.MainSerializer.GenerateUnversionedHeader(List`1& data, FName parentName, FName parentModulePath, UAsset asset) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\MainSerializer.cs:line 156
+   at UAssetAPI.ExportTypes.NormalExport.Write(AssetBinaryWriter writer) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\ExportTypes\NormalExport.cs:line 176
+   at UAssetAPI.UAsset.WriteData() in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2654
+   at UAssetAPI.UAsset.Write(String outputPath) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2742
+   at UAssetGUI.Program.Main() in D:\a\UAssetGUI\UAssetGUI\UAssetGUI\Program.cs:line 67
+[UAssetGUI] Running: UAssetGUI.exe fromjson Conter_Lead.json Conter_Lead.uasset MotorTown
+[UAssetGUI] Failed Conter_Lead.json with code 3762504530
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Rear.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Rear.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Rear.uasset
+Unhandled exception. System.FormatException: Failed to find a valid schema for parent name MTVehicleBaseBP_C
+   at UAssetAPI.Unversioned.Usmap.GetSchemaFromName(String nm, UAsset asset, String modulePath, Boolean throwExceptions) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 742
+   at UAssetAPI.Unversioned.Usmap.TryGetProperty[T](FName propertyName, AncestryInfo ancestry, Int32 dupIndex, UAsset asset, T& propDat, Int32& idx) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\Unversioned\Usmap.cs:line 775
+   at UAssetAPI.MainSerializer.GenerateUnversionedHeader(List`1& data, FName parentName, FName parentModulePath, UAsset asset) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\MainSerializer.cs:line 156
+   at UAssetAPI.ExportTypes.NormalExport.Write(AssetBinaryWriter writer) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\ExportTypes\NormalExport.cs:line 176
+   at UAssetAPI.UAsset.WriteData() in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2654
+   at UAssetAPI.UAsset.Write(String outputPath) in D:\a\UAssetGUI\UAssetGUI\UAssetAPI\UAssetAPI\UAsset.cs:line 2742
+   at UAssetGUI.Program.Main() in D:\a\UAssetGUI\UAssetGUI\UAssetGUI\Program.cs:line 67
+[UAssetGUI] Running: UAssetGUI.exe fromjson Conter_Rear.json Conter_Rear.uasset MotorTown
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Ambi\Ambi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Ambi\Ambi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Ambi\Ambi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_4x2_Semi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_4x2_Semi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_4x2_Semi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Dryvan.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Dryvan.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Dryvan.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Semi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Semi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Semi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Tanker.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Tanker.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Tanker.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x4_Semi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x4_Semi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x4_Semi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_8x4_Dump.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_8x4_Dump.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_8x4_Dump.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bora\Bora.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bora\Bora.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bora\Bora.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Boxy\Boxy.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Boxy\Boxy.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Boxy\Boxy.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Brutus\Brutus_Ambulance.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Brutus\Brutus_Ambulance.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Brutus\Brutus_Ambulance.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Brutus\Brutus_Tanker.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Brutus\Brutus_Tanker.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Brutus\Brutus_Tanker.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Brutus\Brutus_Wrecker.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Brutus\Brutus_Wrecker.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Brutus\Brutus_Wrecker.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bulko\Bulko.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bulko\Bulko.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bulko\Bulko.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bus\AirCity.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bus\AirCity.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bus\AirCity.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bus\BusComponent.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bus\BusComponent.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bus\BusComponent.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Campy\Campy.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Campy\Campy.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Campy\Campy.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Carry\Carry.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Carry\Carry.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Carry\Carry.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Cervos\Cervos.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Cervos\Cervos.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Cervos\Cervos.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\CheetahMk1\CheetahMk1.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\CheetahMk1\CheetahMk1.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\CheetahMk1\CheetahMk1.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Lead_20ft.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Lead_20ft.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Lead_20ft.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Lead_40ft.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Lead_40ft.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Lead_40ft.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Rear_20ft.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Rear_20ft.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Rear_20ft.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Rear_40ft.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Rear_40ft.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Rear_40ft.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Cora\Cora.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Cora\Cora.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Cora\Cora.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Crany\Crany.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Crany\Crany.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Crany\Crany.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dabo\Dabo.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dabo\Dabo.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dabo\Dabo.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Daffy\Daffy.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Daffy\Daffy.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Daffy\Daffy.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dinky\Dinky_Dryvan.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dinky\Dinky_Dryvan.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dinky\Dinky_Dryvan.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dinky\Dinky_Flatbed.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dinky\Dinky_Flatbed.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dinky\Dinky_Flatbed.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dinky\Dinky_Tanker.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dinky\Dinky_Tanker.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dinky\Dinky_Tanker.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dooly\Dooly_D1.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dooly\Dooly_D1.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dooly\Dooly_D1.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dooly\Dooly_D2.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dooly\Dooly_D2.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dooly\Dooly_D2.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dooly\Dooly_S1.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dooly\Dooly_S1.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dooly\Dooly_S1.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dooly\Dooly_S2.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dooly\Dooly_S2.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dooly\Dooly_S2.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dory\Dory.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dory\Dory.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dory\Dory.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dory\DoryWrecker.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dory\DoryWrecker.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dory\DoryWrecker.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Duke\Duke.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Duke\Duke.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Duke\Duke.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dumbi\Dumbi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dumbi\Dumbi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dumbi\Dumbi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dumbi\InteriorLightPB.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dumbi\InteriorLightPB.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dumbi\InteriorLightPB.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Elisa\Elisa.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Elisa\Elisa.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Elisa\Elisa.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Elisa\Elisa_Police.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Elisa\Elisa_Police.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Elisa\Elisa_Police.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\ElisaTaxi\ElisaTaxi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\ElisaTaxi\ElisaTaxi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\ElisaTaxi\ElisaTaxi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\EnfoGT\EnfoGT.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\EnfoGT\EnfoGT.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\EnfoGT\EnfoGT.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\EnfoGT\M_Body.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\EnfoGT\M_Body.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\EnfoGT\M_Body.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Essam\Essam.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Essam\Essam.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Essam\Essam.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\FL1\FL1.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\FL1\FL1.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\FL1\FL1.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Flaber\Flaber_Lead.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Flaber\Flaber_Lead.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Flaber\Flaber_Lead.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Flaber\Flaber_Rear.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Flaber\Flaber_Rear.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Flaber\Flaber_Rear.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\FormulaSCM\FormulaSCM.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\FormulaSCM\FormulaSCM.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\FormulaSCM\FormulaSCM.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Fortem\Fortem.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Fortem\Fortem.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Fortem\Fortem.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Fox\Fox.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Fox\Fox.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Fox\Fox.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Fox\M_Body_Decal_Star.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Fox\M_Body_Decal_Star.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Fox\M_Body_Decal_Star.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Golima\Golima_Semi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Golima\Golima_Semi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Golima\Golima_Semi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\GolimaRotator\GolimaRotator.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\GolimaRotator\GolimaRotator.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\GolimaRotator\GolimaRotator.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Hana\Hana.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Hana\Hana.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Hana\Hana.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Hobber\Hobber_Lead.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Hobber\Hobber_Lead.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Hobber\Hobber_Lead.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Hobber\Hobber_Rear.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Hobber\Hobber_Rear.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Hobber\Hobber_Rear.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Jemusi\Jemusi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Jemusi\Jemusi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Jemusi\Jemusi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Jemusi\Jemusi_Dump.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Jemusi\Jemusi_Dump.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Jemusi\Jemusi_Dump.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Jemusi\Jemusi_Semi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Jemusi\Jemusi_Semi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Jemusi\Jemusi_Semi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Jemusi\Jemusi_Tanker.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Jemusi\Jemusi_Tanker.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Jemusi\Jemusi_Tanker.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kart_01\Kart_01.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kart_01\Kart_01.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kart_01\Kart_01.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kira\Kira_Box.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kira\Kira_Box.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kira\Kira_Box.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kira\Kira_Flatbed.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kira\Kira_Flatbed.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kira\Kira_Flatbed.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kira\Kira_Rollback.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kira\Kira_Rollback.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kira\Kira_Rollback.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kira\Kira_Tanker.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kira\Kira_Tanker.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kira\Kira_Tanker.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kira\Kira_Van.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kira\Kira_Van.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kira\Kira_Van.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Koma\Koma.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Koma\Koma.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Koma\Koma.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kuda\Kuda_Container_6x2.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kuda\Kuda_Container_6x2.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kuda\Kuda_Container_6x2.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kuda\Kuda_Dyrvan_4x2.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kuda\Kuda_Dyrvan_4x2.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kuda\Kuda_Dyrvan_4x2.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kuda\Kuda_Flatbed_4x2.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kuda\Kuda_Flatbed_4x2.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kuda\Kuda_Flatbed_4x2.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kuda\Kuda_LiveFishTank_4x2.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kuda\Kuda_LiveFishTank_4x2.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kuda\Kuda_LiveFishTank_4x2.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kuda\Kuda_Semi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kuda\Kuda_Semi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kuda\Kuda_Semi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Liliput\Door_RM_MR_Door1.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Liliput\Door_RM_MR_Door1.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Liliput\Door_RM_MR_Door1.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Liliput\Door_RM_MR_Door1_Anim_Armature_RM_Door_Open.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Liliput\Door_RM_MR_Door1_Anim_Armature_RM_Door_Open.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Liliput\Door_RM_MR_Door1_Anim_Armature_RM_Door_Open.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Liliput\Door_RM_MR_Door1_PhysicsAsset.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Liliput\Door_RM_MR_Door1_PhysicsAsset.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Liliput\Door_RM_MR_Door1_PhysicsAsset.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Liliput\Door_RM_MR_Door1_Skeleton.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Liliput\Door_RM_MR_Door1_Skeleton.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Liliput\Door_RM_MR_Door1_Skeleton.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Liliput\Liliput.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Liliput\Liliput.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Liliput\Liliput.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Lobo\Lobo.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Lobo\Lobo.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Lobo\Lobo.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\LoboVan\LoboVan.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\LoboVan\LoboVan.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\LoboVan\LoboVan.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Longhorn\Longhorn_Semi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Longhorn\Longhorn_Semi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Longhorn\Longhorn_Semi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Magis\Magis.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Magis\Magis.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Magis\Magis.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Maity\Compacty.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Maity\Compacty.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Maity\Compacty.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Maity\Dumpy.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Maity\Dumpy.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Maity\Dumpy.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Maity\Maity.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Maity\Maity.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Maity\Maity.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Maity\Mixi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Maity\Mixi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Maity\Mixi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Mammoth\Mammoth.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Mammoth\Mammoth.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Mammoth\Mammoth.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Micky\Micky.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Micky\Micky.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Micky\Micky.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Mitage\Mitage.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Mitage\Mitage.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Mitage\Mitage.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Monarch\Monarch.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Monarch\Monarch.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Monarch\Monarch.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Monarch\Monarch_Limo.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Monarch\Monarch_Limo.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Monarch\Monarch_Limo.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Muhan\Muhan.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Muhan\Muhan.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Muhan\Muhan.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Muhan\Muhan_Police.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Muhan\Muhan_Police.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Muhan\Muhan_Police.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Muscle_01\Stinger.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Muscle_01\Stinger.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Muscle_01\Stinger.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Neo\Neo.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Neo\Neo.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Neo\Neo.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nimo\MoodLight.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nimo\MoodLight.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nimo\MoodLight.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nimo\Nimo.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nimo\Nimo.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nimo\Nimo.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nimo\Nimo_Taxi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nimo\Nimo_Taxi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nimo\Nimo_Taxi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nuke\Nuke.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nuke\Nuke.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nuke\Nuke.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nuke\NukePolice.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nuke\NukePolice.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nuke\NukePolice.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nuke\NukeTaxi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nuke\NukeTaxi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nuke\NukeTaxi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Olbe\Olbe.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Olbe\Olbe.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Olbe\Olbe.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Oldum\Oldum.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Oldum\Oldum.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Oldum\Oldum.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Ollok\Ollok.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Ollok\Ollok.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Ollok\Ollok.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Panther\Panther.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Panther\Panther.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Panther\Panther.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Pickup_02\Ranch.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Pickup_02\Ranch.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Pickup_02\Ranch.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Police\Police.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Police\Police.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Police\Police.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\PoliceInterceptor1\PoliceInterceptor1.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\PoliceInterceptor1\PoliceInterceptor1.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\PoliceInterceptor1\PoliceInterceptor1.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Pulio\Pulio.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Pulio\Pulio.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Pulio\Pulio.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Pulse\Pulse.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Pulse\Pulse.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Pulse\Pulse.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Raton\Raton.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Raton\Raton.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Raton\Raton.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Roadmaster\Roadmaster.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Roadmaster\Roadmaster.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Roadmaster\Roadmaster.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Savannah\Savannah.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Savannah\Savannah.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Savannah\Savannah.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\SCM_Kart_One\SCM_Kart_One.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\SCM_Kart_One\SCM_Kart_One.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\SCM_Kart_One\SCM_Kart_One.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shobed\Shobed_10.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shobed\Shobed_10.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shobed\Shobed_10.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shobed\Shobed_7.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shobed\Shobed_7.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shobed\Shobed_7.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shotan\Shotan_10.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shotan\Shotan_10.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shotan\Shotan_10.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shotan\Shotan_7.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shotan\Shotan_7.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shotan\Shotan_7.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shovan\Shovan_10.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shovan\Shovan_10.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shovan\Shovan_10.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shovan\Shovan_7.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shovan\Shovan_7.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shovan\Shovan_7.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Spider\Spider.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Spider\Spider.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Spider\Spider.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\SRT\SRT.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\SRT\SRT.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\SRT\SRT.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Stagon\Stagon.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Stagon\Stagon.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Stagon\Stagon.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Stella\Stella.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Stella\Stella.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Stella\Stella.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\SV200\BusComponent_SV200.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\SV200\BusComponent_SV200.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\SV200\BusComponent_SV200.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\SV200\SV200.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\SV200\SV200.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\SV200\SV200.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Taber\Taber_Lead.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Taber\Taber_Lead.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Taber\Taber_Lead.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Taber\Taber_Rear.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Taber\Taber_Rear.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Taber\Taber_Rear.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Tavan\Tavan.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Tavan\Tavan.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Tavan\Tavan.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Tavan\Tavan_Ambulance.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Tavan\Tavan_Ambulance.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Tavan\Tavan_Ambulance.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Terra\Terra.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Terra\Terra.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Terra\Terra.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Titan\Titan.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Titan\Titan.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Titan\Titan.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Townie\Townie.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Townie\Townie.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Townie\Townie.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Townie\Townie_Bus.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Townie\Townie_Bus.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Townie\Townie_Bus.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_01\Trailer_01.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_01\Trailer_01.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_01\Trailer_01.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_30ft_Tanker_01\Trailer_30ft_Tanker_01.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_30ft_Tanker_01\Trailer_30ft_Tanker_01.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_30ft_Tanker_01\Trailer_30ft_Tanker_01.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_9m_Flat_01\Trailer_9m_Flat_01.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_9m_Flat_01\Trailer_9m_Flat_01.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_9m_Flat_01\Trailer_9m_Flat_01.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_9m_Flat_01\Trailer_9m_Log_01.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_9m_Flat_01\Trailer_9m_Log_01.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_9m_Flat_01\Trailer_9m_Log_01.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Cotra\Cotra_20_3L.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Cotra\Cotra_20_3L.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Cotra\Cotra_20_3L.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Cotra\Cotra_20_3S.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Cotra\Cotra_20_3S.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Cotra\Cotra_20_3S.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Cotra\Cotra_40_3.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Cotra\Cotra_40_3.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Cotra\Cotra_40_3.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_EastWood\Eastwood.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_EastWood\Eastwood.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_EastWood\Eastwood.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Flanker\Flanker3.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Flanker\Flanker3.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Flanker\Flanker3.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Flanker\Flanker3S.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Flanker\Flanker3S.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Flanker\Flanker3S.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Lomax\Lomax.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Lomax\Lomax.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Lomax\Lomax.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Middle_Tanker\Trailer_Middle_Tanker_01.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Middle_Tanker\Trailer_Middle_Tanker_01.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Middle_Tanker\Trailer_Middle_Tanker_01.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Small_Cage\Trailer_Small_Cage_01.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Small_Cage\Trailer_Small_Cage_01.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Small_Cage\Trailer_Small_Cage_01.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_SPT1\Trailer_SPT1.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_SPT1\Trailer_SPT1.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_SPT1\Trailer_SPT1.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Tanko\Tanko40.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Tanko\Tanko40.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Tanko\Tanko40.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Vamos\Vamos3.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Vamos\Vamos3.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Vamos\Vamos3.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trophy\DrivingLicense_Accent.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trophy\DrivingLicense_Accent.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trophy\DrivingLicense_Accent.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trophy\Trophy_Air.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trophy\Trophy_Air.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trophy\Trophy_Air.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trophy\Trophy_Taxi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trophy\Trophy_Taxi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trophy\Trophy_Taxi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trunko\Tronko.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trunko\Tronko.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trunko\Tronko.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Tuscan\Tuscan.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Tuscan\Tuscan.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Tuscan\Tuscan.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Vani\Vani.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Vani\Vani.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Vani\Vani.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Vista\Vista.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Vista\Vista.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Vista\Vista.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Voltex\Voltex.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Voltex\Voltex.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Voltex\Voltex.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Vulcan\Vulcan.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Vulcan\Vulcan.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Vulcan\Vulcan.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Zino\Zino.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Zino\Zino.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Zino\Zino.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Zydro\Zydro.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Zydro\Zydro.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Zydro\Zydro.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Zydro\Zydro_Police.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Zydro\Zydro_Police.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Zydro\Zydro_Police.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Ambi\Ambi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Ambi\Ambi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Ambi\Ambi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_4x2_Semi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_4x2_Semi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_4x2_Semi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Dryvan.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Dryvan.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Dryvan.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Semi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Semi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Semi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Tanker.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Tanker.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Tanker.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x4_Semi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x4_Semi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x4_Semi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_8x4_Dump.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_8x4_Dump.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_8x4_Dump.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bora\Bora.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bora\Bora.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bora\Bora.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Boxy\Boxy.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Boxy\Boxy.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Boxy\Boxy.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Brutus\Brutus_Ambulance.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Brutus\Brutus_Ambulance.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Brutus\Brutus_Ambulance.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Brutus\Brutus_Tanker.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Brutus\Brutus_Tanker.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Brutus\Brutus_Tanker.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Brutus\Brutus_Wrecker.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Brutus\Brutus_Wrecker.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Brutus\Brutus_Wrecker.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bulko\Bulko.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bulko\Bulko.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bulko\Bulko.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bus\AirCity.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bus\AirCity.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bus\AirCity.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bus\BusComponent.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bus\BusComponent.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bus\BusComponent.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Campy\Campy.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Campy\Campy.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Campy\Campy.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Carry\Carry.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Carry\Carry.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Carry\Carry.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Cervos\Cervos.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Cervos\Cervos.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Cervos\Cervos.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\CheetahMk1\CheetahMk1.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\CheetahMk1\CheetahMk1.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\CheetahMk1\CheetahMk1.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Lead_20ft.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Lead_20ft.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Lead_20ft.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Lead_40ft.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Lead_40ft.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Lead_40ft.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Rear_20ft.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Rear_20ft.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Rear_20ft.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Rear_40ft.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Rear_40ft.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Conter\Conter_Rear_40ft.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Cora\Cora.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Cora\Cora.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Cora\Cora.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Crany\Crany.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Crany\Crany.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Crany\Crany.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dabo\Dabo.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dabo\Dabo.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dabo\Dabo.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Daffy\Daffy.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Daffy\Daffy.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Daffy\Daffy.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dinky\Dinky_Dryvan.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dinky\Dinky_Dryvan.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dinky\Dinky_Dryvan.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dinky\Dinky_Flatbed.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dinky\Dinky_Flatbed.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dinky\Dinky_Flatbed.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dinky\Dinky_Tanker.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dinky\Dinky_Tanker.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dinky\Dinky_Tanker.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dooly\Dooly_D1.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dooly\Dooly_D1.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dooly\Dooly_D1.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dooly\Dooly_D2.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dooly\Dooly_D2.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dooly\Dooly_D2.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dooly\Dooly_S1.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dooly\Dooly_S1.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dooly\Dooly_S1.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dooly\Dooly_S2.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dooly\Dooly_S2.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dooly\Dooly_S2.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dory\Dory.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dory\Dory.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dory\Dory.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dory\DoryWrecker.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dory\DoryWrecker.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dory\DoryWrecker.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Duke\Duke.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Duke\Duke.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Duke\Duke.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dumbi\Dumbi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dumbi\Dumbi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dumbi\Dumbi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dumbi\InteriorLightPB.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dumbi\InteriorLightPB.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Dumbi\InteriorLightPB.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Elisa\Elisa.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Elisa\Elisa.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Elisa\Elisa.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Elisa\Elisa_Police.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Elisa\Elisa_Police.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Elisa\Elisa_Police.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\ElisaTaxi\ElisaTaxi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\ElisaTaxi\ElisaTaxi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\ElisaTaxi\ElisaTaxi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\EnfoGT\EnfoGT.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\EnfoGT\EnfoGT.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\EnfoGT\EnfoGT.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\EnfoGT\M_Body.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\EnfoGT\M_Body.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\EnfoGT\M_Body.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Essam\Essam.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Essam\Essam.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Essam\Essam.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\FL1\FL1.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\FL1\FL1.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\FL1\FL1.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Flaber\Flaber_Lead.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Flaber\Flaber_Lead.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Flaber\Flaber_Lead.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Flaber\Flaber_Rear.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Flaber\Flaber_Rear.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Flaber\Flaber_Rear.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\FormulaSCM\FormulaSCM.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\FormulaSCM\FormulaSCM.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\FormulaSCM\FormulaSCM.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Fortem\Fortem.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Fortem\Fortem.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Fortem\Fortem.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Fox\Fox.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Fox\Fox.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Fox\Fox.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Fox\M_Body_Decal_Star.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Fox\M_Body_Decal_Star.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Fox\M_Body_Decal_Star.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Golima\Golima_Semi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Golima\Golima_Semi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Golima\Golima_Semi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\GolimaRotator\GolimaRotator.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\GolimaRotator\GolimaRotator.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\GolimaRotator\GolimaRotator.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Hana\Hana.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Hana\Hana.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Hana\Hana.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Hobber\Hobber_Lead.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Hobber\Hobber_Lead.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Hobber\Hobber_Lead.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Hobber\Hobber_Rear.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Hobber\Hobber_Rear.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Hobber\Hobber_Rear.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Jemusi\Jemusi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Jemusi\Jemusi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Jemusi\Jemusi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Jemusi\Jemusi_Dump.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Jemusi\Jemusi_Dump.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Jemusi\Jemusi_Dump.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Jemusi\Jemusi_Semi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Jemusi\Jemusi_Semi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Jemusi\Jemusi_Semi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Jemusi\Jemusi_Tanker.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Jemusi\Jemusi_Tanker.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Jemusi\Jemusi_Tanker.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kart_01\Kart_01.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kart_01\Kart_01.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kart_01\Kart_01.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kira\Kira_Box.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kira\Kira_Box.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kira\Kira_Box.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kira\Kira_Flatbed.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kira\Kira_Flatbed.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kira\Kira_Flatbed.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kira\Kira_Rollback.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kira\Kira_Rollback.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kira\Kira_Rollback.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kira\Kira_Tanker.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kira\Kira_Tanker.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kira\Kira_Tanker.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kira\Kira_Van.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kira\Kira_Van.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kira\Kira_Van.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Koma\Koma.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Koma\Koma.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Koma\Koma.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kuda\Kuda_Container_6x2.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kuda\Kuda_Container_6x2.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kuda\Kuda_Container_6x2.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kuda\Kuda_Dyrvan_4x2.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kuda\Kuda_Dyrvan_4x2.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kuda\Kuda_Dyrvan_4x2.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kuda\Kuda_Flatbed_4x2.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kuda\Kuda_Flatbed_4x2.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kuda\Kuda_Flatbed_4x2.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kuda\Kuda_LiveFishTank_4x2.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kuda\Kuda_LiveFishTank_4x2.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kuda\Kuda_LiveFishTank_4x2.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kuda\Kuda_Semi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kuda\Kuda_Semi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Kuda\Kuda_Semi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Liliput\Door_RM_MR_Door1.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Liliput\Door_RM_MR_Door1.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Liliput\Door_RM_MR_Door1.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Liliput\Door_RM_MR_Door1_Anim_Armature_RM_Door_Open.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Liliput\Door_RM_MR_Door1_Anim_Armature_RM_Door_Open.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Liliput\Door_RM_MR_Door1_Anim_Armature_RM_Door_Open.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Liliput\Door_RM_MR_Door1_PhysicsAsset.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Liliput\Door_RM_MR_Door1_PhysicsAsset.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Liliput\Door_RM_MR_Door1_PhysicsAsset.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Liliput\Door_RM_MR_Door1_Skeleton.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Liliput\Door_RM_MR_Door1_Skeleton.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Liliput\Door_RM_MR_Door1_Skeleton.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Liliput\Liliput.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Liliput\Liliput.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Liliput\Liliput.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Lobo\Lobo.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Lobo\Lobo.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Lobo\Lobo.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\LoboVan\LoboVan.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\LoboVan\LoboVan.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\LoboVan\LoboVan.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Longhorn\Longhorn_Semi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Longhorn\Longhorn_Semi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Longhorn\Longhorn_Semi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Magis\Magis.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Magis\Magis.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Magis\Magis.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Maity\Compacty.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Maity\Compacty.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Maity\Compacty.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Maity\Dumpy.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Maity\Dumpy.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Maity\Dumpy.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Maity\Maity.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Maity\Maity.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Maity\Maity.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Maity\Mixi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Maity\Mixi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Maity\Mixi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Mammoth\Mammoth.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Mammoth\Mammoth.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Mammoth\Mammoth.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Micky\Micky.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Micky\Micky.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Micky\Micky.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Mitage\Mitage.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Mitage\Mitage.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Mitage\Mitage.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Monarch\Monarch.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Monarch\Monarch.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Monarch\Monarch.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Monarch\Monarch_Limo.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Monarch\Monarch_Limo.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Monarch\Monarch_Limo.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Muhan\Muhan.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Muhan\Muhan.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Muhan\Muhan.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Muhan\Muhan_Police.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Muhan\Muhan_Police.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Muhan\Muhan_Police.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Muscle_01\Stinger.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Muscle_01\Stinger.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Muscle_01\Stinger.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Neo\Neo.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Neo\Neo.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Neo\Neo.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nimo\MoodLight.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nimo\MoodLight.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nimo\MoodLight.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nimo\Nimo.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nimo\Nimo.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nimo\Nimo.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nimo\Nimo_Taxi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nimo\Nimo_Taxi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nimo\Nimo_Taxi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nuke\Nuke.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nuke\Nuke.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nuke\Nuke.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nuke\NukePolice.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nuke\NukePolice.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nuke\NukePolice.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nuke\NukeTaxi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nuke\NukeTaxi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Nuke\NukeTaxi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Olbe\Olbe.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Olbe\Olbe.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Olbe\Olbe.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Oldum\Oldum.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Oldum\Oldum.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Oldum\Oldum.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Ollok\Ollok.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Ollok\Ollok.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Ollok\Ollok.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Panther\Panther.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Panther\Panther.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Panther\Panther.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Pickup_02\Ranch.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Pickup_02\Ranch.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Pickup_02\Ranch.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Police\Police.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Police\Police.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Police\Police.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\PoliceInterceptor1\PoliceInterceptor1.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\PoliceInterceptor1\PoliceInterceptor1.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\PoliceInterceptor1\PoliceInterceptor1.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Pulio\Pulio.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Pulio\Pulio.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Pulio\Pulio.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Pulse\Pulse.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Pulse\Pulse.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Pulse\Pulse.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Raton\Raton.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Raton\Raton.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Raton\Raton.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Roadmaster\Roadmaster.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Roadmaster\Roadmaster.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Roadmaster\Roadmaster.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Savannah\Savannah.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Savannah\Savannah.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Savannah\Savannah.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\SCM_Kart_One\SCM_Kart_One.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\SCM_Kart_One\SCM_Kart_One.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\SCM_Kart_One\SCM_Kart_One.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shobed\Shobed_10.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shobed\Shobed_10.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shobed\Shobed_10.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shobed\Shobed_7.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shobed\Shobed_7.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shobed\Shobed_7.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shotan\Shotan_10.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shotan\Shotan_10.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shotan\Shotan_10.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shotan\Shotan_7.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shotan\Shotan_7.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shotan\Shotan_7.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shovan\Shovan_10.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shovan\Shovan_10.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shovan\Shovan_10.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shovan\Shovan_7.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shovan\Shovan_7.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Shovan\Shovan_7.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Spider\Spider.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Spider\Spider.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Spider\Spider.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\SRT\SRT.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\SRT\SRT.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\SRT\SRT.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Stagon\Stagon.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Stagon\Stagon.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Stagon\Stagon.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Stella\Stella.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Stella\Stella.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Stella\Stella.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\SV200\BusComponent_SV200.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\SV200\BusComponent_SV200.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\SV200\BusComponent_SV200.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\SV200\SV200.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\SV200\SV200.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\SV200\SV200.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Taber\Taber_Lead.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Taber\Taber_Lead.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Taber\Taber_Lead.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Taber\Taber_Rear.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Taber\Taber_Rear.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Taber\Taber_Rear.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Tavan\Tavan.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Tavan\Tavan.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Tavan\Tavan.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Tavan\Tavan_Ambulance.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Tavan\Tavan_Ambulance.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Tavan\Tavan_Ambulance.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Terra\Terra.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Terra\Terra.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Terra\Terra.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Titan\Titan.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Titan\Titan.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Titan\Titan.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Townie\Townie.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Townie\Townie.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Townie\Townie.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Townie\Townie_Bus.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Townie\Townie_Bus.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Townie\Townie_Bus.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_01\Trailer_01.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_01\Trailer_01.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_01\Trailer_01.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_30ft_Tanker_01\Trailer_30ft_Tanker_01.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_30ft_Tanker_01\Trailer_30ft_Tanker_01.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_30ft_Tanker_01\Trailer_30ft_Tanker_01.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_9m_Flat_01\Trailer_9m_Flat_01.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_9m_Flat_01\Trailer_9m_Flat_01.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_9m_Flat_01\Trailer_9m_Flat_01.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_9m_Flat_01\Trailer_9m_Log_01.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_9m_Flat_01\Trailer_9m_Log_01.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_9m_Flat_01\Trailer_9m_Log_01.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Cotra\Cotra_20_3L.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Cotra\Cotra_20_3L.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Cotra\Cotra_20_3L.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Cotra\Cotra_20_3S.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Cotra\Cotra_20_3S.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Cotra\Cotra_20_3S.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Cotra\Cotra_40_3.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Cotra\Cotra_40_3.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Cotra\Cotra_40_3.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_EastWood\Eastwood.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_EastWood\Eastwood.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_EastWood\Eastwood.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Flanker\Flanker3.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Trailer_Flanker\Flanker3.json VER_UE5_5 MotorTown
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Ambi\Ambi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Ambi\Ambi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Ambi\Ambi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Ambi\Ambi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Ambi\Ambi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Ambi\Ambi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Ambi\Ambi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Ambi\Ambi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Ambi\Ambi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_4x2_Semi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_4x2_Semi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_4x2_Semi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Dryvan.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Dryvan.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Dryvan.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Semi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Semi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Semi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Tanker.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Tanker.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Tanker.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x4_Semi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x4_Semi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x4_Semi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_8x4_Dump.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_8x4_Dump.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_8x4_Dump.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bora\Bora.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bora\Bora.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bora\Bora.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Boxy\Boxy.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Boxy\Boxy.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Boxy\Boxy.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Ambi\Ambi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Ambi\Ambi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Ambi\Ambi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_4x2_Semi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_4x2_Semi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_4x2_Semi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Dryvan.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Dryvan.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Dryvan.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Semi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Semi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Semi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Tanker.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Tanker.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Tanker.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x4_Semi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x4_Semi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x4_Semi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_8x4_Dump.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_8x4_Dump.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_8x4_Dump.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bora\Bora.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bora\Bora.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bora\Bora.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Boxy\Boxy.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Boxy\Boxy.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Boxy\Boxy.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Ambi\Ambi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Ambi\Ambi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Ambi\Ambi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_4x2_Semi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_4x2_Semi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_4x2_Semi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Dryvan.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Dryvan.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Dryvan.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Semi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Semi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Semi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Tanker.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Tanker.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x2_Tanker.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x4_Semi.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x4_Semi.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_6x4_Semi.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_8x4_Dump.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_8x4_Dump.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Atlas\Atlas_8x4_Dump.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bongo\Bongo_Bus.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bora\Bora.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bora\Bora.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Bora\Bora.uasset
+[UAssetGUI] Running: UAssetGUI.exe tojson D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Boxy\Boxy.uasset D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Boxy\Boxy.json VER_UE5_5 MotorTown
+[UAssetGUI] Created JSON for D:\MT\Output\Exports\MotorTown\Content\Cars\Models\Boxy\Boxy.uasset
