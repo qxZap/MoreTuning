@@ -107,7 +107,8 @@ if data:
         part_id = part.get('Name')
         part_name = part.get('Value')[0].get('CultureInvariantString')
 
-        new_part_name = '[MOD] Z> '+part_id.replace('_',' ')+' Carbon'
+        # new_part_name = '[MOD] Z> '+part_id.replace('_',' ')+' Carbon'
+        new_part_name = part_id.replace('_',' ')+' Carbon'
         new_part_id = part_id+'_Carbon'
         current_part = copy.deepcopy(part)
 
