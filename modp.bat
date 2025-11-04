@@ -5,6 +5,10 @@ set "MODNAME=%~1"
 set "PAKFILE=%MODNAME%.pak"
 set "PAKDIR=D:\SteamLibrary\steamapps\common\Motor Town\MotorTown\Content\Paks"
 
+REM Recursively remove all .bak files in the current directory and subdirectories
+echo Cleaning up old .bak files...
+del /S /Q "*.bak"
+
 REM Run repak
 echo Packing "%MODNAME%"...
 repak pack ".\%MODNAME%"
