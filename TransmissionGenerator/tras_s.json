@@ -1778,8 +1778,8 @@
     "name": "Scania Opticruise 12+2 (Truck)",
     "desc": "12 Speed Auto",
     "f_ratios": {
-      "L": 20.81,
-      "H": 16.65,
+      "C": 20.81,
+      "C2": 16.65,
       "L1": 13.50,
       "H1": 10.80,
       "L2": 8.70,

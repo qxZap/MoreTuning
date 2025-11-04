@@ -1345,6 +1345,9 @@
                     "PropertyTagExtensions": "NoExtension"
                   }
                 ]
-              }
+              },
+              {"$type":"UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI","Name":"bTruckClassIncludeNone","ArrayIndex":0,"IsZero":false,"PropertyTagFlags":"None","PropertyTagExtensions":"NoExtension","Value":true},
+              {"$type":"UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI","StructType":"MTVehiclePartBrakePower","SerializeNone":true,"StructGUID":"{00000000-0000-0000-0000-000000000000}","SerializationControl":"NoExtension","Operation":"None","Name":"BrakePower","ArrayIndex":0,"IsZero":false,"PropertyTagFlags":"None","PropertyTagExtensions":"NoExtension","Value":[{"$type":"UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI","Value":1.0,"Name":"BrakePowerMultiplier","ArrayIndex":0,"IsZero":false,"PropertyTagFlags":"None","PropertyTagExtensions":"NoExtension"}]},
+              {"$type":"UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI","StructType":"MTVehiclePartBrakeBalance","SerializeNone":true,"StructGUID":"{00000000-0000-0000-0000-000000000000}","SerializationControl":"NoExtension","Operation":"None","Name":"BrakeBalance","ArrayIndex":0,"IsZero":false,"PropertyTagFlags":"None","PropertyTagExtensions":"NoExtension","Value":[{"$type":"UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI","Value":1.0,"Name":"FrontMultiplier","ArrayIndex":0,"IsZero":false,"PropertyTagFlags":"None","PropertyTagExtensions":"NoExtension"},{"$type":"UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI","Value":1.0,"Name":"RearMultiplier","ArrayIndex":0,"IsZero":false,"PropertyTagFlags":"None","PropertyTagExtensions":"NoExtension"}]}
             ]
           }
