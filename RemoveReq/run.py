@@ -70,27 +70,6 @@ def get_vehicle_tag_query():
                   }
                 ]
 
-def namerow(part_name):
-    return {
-                                "$type": "UAssetAPI.PropertyTypes.Objects.TextPropertyData, UAssetAPI",
-                                "Flags": "CultureInvariant",
-                                "HistoryType": "None",
-                                "Namespace": None,
-                                "CultureInvariantString": part_name,
-                                "SourceFmt": None,
-                                "Arguments": None,
-                                "ArgumentsData": None,
-                                "TransformType": "ToLower",
-                                "SourceValue": None,
-                                "FormatOptions": None,
-                                "TargetCulture": None,
-                                "Name": "Name",
-                                "ArrayIndex": 0,
-                                "IsZero": False,
-                                "PropertyTagFlags": "None",
-                                "PropertyTagExtensions": "NoExtension",
-                                "Value": None
-                            }
 
 if data:
     part_names = data.get('NameMap')
@@ -135,7 +114,7 @@ if data:
 
 
         if price_index and weight_index:
-            new_price,new_weight = price_and_weight(current_part['Value'][weight_index]['Value'])
+            # new_price,new_weight = price_and_weight(current_part['Value'][weight_index]['Value'])
 
             current_part['Value'][type_index]['Value'] = []
             current_part['Value'][vehicle_keys_index]['Value'] = []
