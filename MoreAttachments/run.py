@@ -8,6 +8,7 @@ from pathlib import Path
 from datetime import timedelta
 
 TESTING = True
+TESTING_GAP = 4
 
 def quick_copy(src, dst):
     shutil.copy(src, dst)
@@ -237,12 +238,12 @@ def make_new_actor(path_base, actor_name, mesh_name, mesh_path):
     new_actor = copy.deepcopy(new_actor_template)
     # new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/OversizeLoadSigns",path_base)
     new_actor = new_actor.replace("OversizeLoad_Sign_7_C", actor_name+"_C")
-    new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/OversizeLoadSigns/Sign_7", mesh_path+"/"+mesh_name)
+    new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/OversizeLoadSigns/Sign_7", mesh_path)
     new_actor = new_actor.replace("Sign_7", mesh_name)
 
     data = json.loads(new_actor)
     data["FolderName"] = path_base+"/"+actor_name
-    data["NameMap"].append(mesh_path+"/"+mesh_name)
+    data["NameMap"].append(mesh_path)
     data["NameMap"].append(mesh_name)
     
     return data
@@ -373,7 +374,7 @@ for part in parts:
 #         }
 
 if TESTING:
-    aero_attachments = aero_attachments[:1]
+    aero_attachments = aero_attachments[:TESTING_GAP]
     print(f"[TESTING] Limited to 1 attachment: {aero_attachments[0].get('part_id')}")
 
 vendor_last_id = int(vendor_data["Exports"][8]["Data"][0]["Value"][-1]["Name"])+1
