@@ -138,7 +138,7 @@
                 "PropertyTagFlags": "None",
                 "PropertyTypeName": null,
                 "PropertyTagExtensions": "NoExtension",
-                "Value": -355
+                "Value": -351
               },
               {
                 "$type": "UAssetAPI.PropertyTypes.Objects.Int64PropertyData, UAssetAPI",
