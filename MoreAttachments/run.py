@@ -169,17 +169,17 @@ if not new_actor_template:
 def make_new_actor(path_base, actor_name, mesh_name, mesh_path):
     
     new_actor = copy.deepcopy(new_actor_template)
-    # new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/OversizeLoadSigns",path_base)
-    # new_actor = new_actor.replace("OversizeLoad_Sign_7_C", actor_name+"_C")
-    # new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/OversizeLoadSigns/Sign_7", mesh_path+"/"+mesh_name)
-    # new_actor = new_actor.replace("Sign_7", mesh_name)
-    new_actor = new_actor.replace("Default__MagisWing_C", "Default__"+actor_name+"_C")
-    new_actor = new_actor.replace("MagisWing_C", actor_name+"_C")
-    new_actor = new_actor.replace("MagisWing_GEN_VARIABLE", actor_name+"_GEN_VARIABLE")
-    new_actor = new_actor.replace("MagisWing", actor_name)
-    new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/MoreAttachmentsZS/Blueprints/RearWing/TypeA", mesh_path+"/"+mesh_name)
-    new_actor = new_actor.replace("/Game/Cars/Parts/RearWing/Magis", mesh_path)
-    new_actor = new_actor.replace("Magis", mesh_name)
+    new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/OversizeLoadSigns",path_base)
+    new_actor = new_actor.replace("OversizeLoad_Sign_7_C", actor_name+"_C")
+    new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/OversizeLoadSigns/Sign_7", mesh_path+"/"+mesh_name)
+    new_actor = new_actor.replace("Sign_7", mesh_name)
+    # new_actor = new_actor.replace("Default__MagisWing_C", "Default__"+actor_name+"_C")
+    # new_actor = new_actor.replace("MagisWing_C", actor_name+"_C")
+    # new_actor = new_actor.replace("MagisWing_GEN_VARIABLE", actor_name+"_GEN_VARIABLE")
+    # new_actor = new_actor.replace("MagisWing", actor_name)
+    # new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/MoreAttachmentsZS/Blueprints/RearWing/TypeA", mesh_path+"/"+mesh_name)
+    # new_actor = new_actor.replace("/Game/Cars/Parts/RearWing/Magis", mesh_path)
+    # new_actor = new_actor.replace("Magis", mesh_name)
 
     data = json.loads(new_actor)
     data["FolderName"] = path_base+"/"+actor_name
@@ -341,7 +341,7 @@ for aero_attachment in aero_attachments:
         eta_str = "--:--:--"
 
     print(
-        f"{current_index}/{attachments_count} ~ {percent}%   ETA: {eta_str}",
+        f"\t{current_index}/{attachments_count} ~ {percent}%   ETA: {eta_str}",
         end="\r"   # ← overwrite same line (clean terminal look)
     )
 
@@ -395,7 +395,8 @@ for aero_attachment in aero_attachments:
     data["Exports"][0]["CreateBeforeSerializationDependencies"].append(mesh_index)
 
     new_actor = make_new_actor('/Game/Objects/MoreAttachments', name_part_id, mesh_id, mesh_path)
-    save_at_path_and_convert_clean(new_actor, f"../MoreAttachments_P/MotorTown/Content/Objects/MoreAttachments/{name_part_id}.json")
+    # save_at_path_and_convert_clean(new_actor, f"../MoreAttachments_P/MotorTown/Content/Objects/MoreAttachments/{name_part_id}.json")
+    write_json_at_path(new_actor, f"../MoreAttachments_P/MotorTown/Content/Objects/MoreAttachments/{name_part_id}.json")
 
 # Save result
 
