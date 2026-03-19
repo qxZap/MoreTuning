@@ -103,40 +103,13 @@ def new_package_import(object_name, outer_index, class_package, class_name):
 
 def new_actor_import(actor_name, outer_index):
     return new_package_import(actor_name, outer_index, "/Script/Engine", "BlueprintGeneratedClass")
-    return {
-      "$type": "UAssetAPI.Import, UAssetAPI",
-      "ObjectName": actor_name,
-      "OuterIndex": outer_index,
-      "ClassPackage": "/Script/Engine",
-      "ClassName": "BlueprintGeneratedClass",
-      "PackageName": None,
-      "bImportOptional": False
-    }
 
 # For mesh
 def new_u_object_package_import(object_name):
     return new_package_import(object_name, 0, "/Script/CoreUObject", "Package")
-    return {
-      "$type": "UAssetAPI.Import, UAssetAPI",
-      "ObjectName": object_name,
-      "OuterIndex": 0,
-      "ClassPackage": "/Script/CoreUObject",
-      "ClassName": "Package",
-      "PackageName": None,
-      "bImportOptional": False
-    }
 
 def new_static_mesh(object_name, outer_index):
     return new_package_import(object_name, outer_index, "/Script/Engine", "StaticMesh")
-    return {
-      "$type": "UAssetAPI.Import, UAssetAPI",
-      "ObjectName": object_name,
-      "OuterIndex": outer_index,
-      "ClassPackage": "/Script/Engine",
-      "ClassName": "StaticMesh",
-      "PackageName": None,
-      "bImportOptional": False
-    }
 
 IN_FILE = "AeroParts.json"
 
@@ -198,16 +171,19 @@ def make_new_actor(path_base, actor_name, mesh_name, mesh_path):
     # new_actor = new_actor.replace("OversizeLoad_Sign_7_C", actor_name+"_C")
     # new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/OversizeLoadSigns/Sign_7", mesh_path+"/"+mesh_name)
     # new_actor = new_actor.replace("Sign_7", mesh_name)
+    new_actor = new_actor.replace("Default__MagisWing_C", "Default__"+actor_name+"_C")
     new_actor = new_actor.replace("MagisWing_C", actor_name+"_C")
+    new_actor = new_actor.replace("MagisWing_GEN_VARIABLE", actor_name+"_GEN_VARIABLE")
+    new_actor = new_actor.replace("MagisWing", actor_name)
     new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/MoreAttachmentsZS/Blueprints/RearWing/TypeA", mesh_path+"/"+mesh_name)
     new_actor = new_actor.replace("/Game/Cars/Parts/RearWing/Magis", mesh_path)
     new_actor = new_actor.replace("Magis", mesh_name)
 
     data = json.loads(new_actor)
     data["FolderName"] = path_base+"/"+actor_name
-    data["NameMap"].append(mesh_path+"/"+mesh_name)
-    data["NameMap"].append(mesh_name)
-    data["NameMap"]=list(set(data["NameMap"]))
+    for new_name in [mesh_path+"/"+mesh_name, mesh_name]:
+        if new_name not in data["NameMap"]:
+            data["NameMap"].append(new_name)
     
     return data
 
