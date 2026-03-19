@@ -135,13 +135,56 @@ if not new_attachment_template:
     exit()
 
 def make_new_attachment(attachment_id, attachment_name, cost, mass, actor_index, mesh_index):
-    
+    # TODO: attachment_name << nice format required 
     new_attachment = copy.deepcopy(new_attachment_template)
     new_attachment["Name"] = attachment_id
     
     for row in new_attachment["Value"]:
         if row["Name"] == 'ItemName':
             row["Value"] = attachment_name
+
+        if row["Name"] == "ItemNameTexts":
+            row["Value"] = [
+                  {
+                    "$type": "UAssetAPI.PropertyTypes.Objects.ArrayPropertyData, UAssetAPI",
+                    "ArrayType": "TextProperty",
+                    "Name": "Texts",
+                    "ArrayIndex": 0,
+                    "IsZero": False,
+                    "PropertyTagFlags": "None",
+                    "PropertyTypeName": None,
+                    "PropertyTagExtensions": "NoExtension",
+                    "Value": [
+                      {
+                        "$type": "UAssetAPI.PropertyTypes.Objects.TextPropertyData, UAssetAPI",
+                        "Flags": 0,
+                        "HistoryType": "None",
+                        "Namespace": None,
+                        "CultureInvariantString": attachment_name,
+                        "SourceFmt": None,
+                        "Arguments": None,
+                        "ArgumentsData": None,
+                        "TransformType": "ToLower",
+                        "SourceValue": None,
+                        "FormatOptions": None,
+                        "TargetCulture": None,
+                        "Name": "0",
+                        "ArrayIndex": 0,
+                        "IsZero": False,
+                        "PropertyTagFlags": "None",
+                        "PropertyTypeName": None,
+                        "PropertyTagExtensions": "NoExtension",
+                        "Value": None
+                      }
+                    ]
+                  }
+                ]
+        #     for subrow in row["Value"]:
+        #         if subrow["Name"] == "Texts":
+        #             subrow["Value"] = attachment_name
+                    # subrow["ArrayType"] = "TextProperty"
+                    # subrow["HistoryType"] = "None"
+        
         if row["Name"] == "Cost":
             row["Value"] = cost
         if row["Name"] == "MassKg":
@@ -152,7 +195,7 @@ def make_new_attachment(attachment_id, attachment_name, cost, mass, actor_index,
             row["Value"] = actor_index
         if row["Name"] == "StaticMesh":
             row["Value"] = mesh_index
-    
+
     return new_attachment
 
 
