@@ -1,9 +1,11 @@
 import os
+import time
 import copy
 import json
 import shutil
 import subprocess
 from pathlib import Path
+from datetime import timedelta
 
 def quick_copy(src, dst):
     shutil.copy(src, dst)
@@ -193,14 +195,19 @@ def make_new_actor(path_base, actor_name, mesh_name, mesh_path):
     
     new_actor = copy.deepcopy(new_actor_template)
     # new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/OversizeLoadSigns",path_base)
-    new_actor = new_actor.replace("OversizeLoad_Sign_7_C", actor_name+"_C")
-    new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/OversizeLoadSigns/Sign_7", mesh_path+"/"+mesh_name)
-    new_actor = new_actor.replace("Sign_7", mesh_name)
+    # new_actor = new_actor.replace("OversizeLoad_Sign_7_C", actor_name+"_C")
+    # new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/OversizeLoadSigns/Sign_7", mesh_path+"/"+mesh_name)
+    # new_actor = new_actor.replace("Sign_7", mesh_name)
+    new_actor = new_actor.replace("MagisWing_C", actor_name+"_C")
+    new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/MoreAttachmentsZS/Blueprints/RearWing/TypeA", mesh_path+"/"+mesh_name)
+    new_actor = new_actor.replace("/Game/Cars/Parts/RearWing/Magis", mesh_path)
+    new_actor = new_actor.replace("Magis", mesh_name)
 
     data = json.loads(new_actor)
     data["FolderName"] = path_base+"/"+actor_name
     data["NameMap"].append(mesh_path+"/"+mesh_name)
     data["NameMap"].append(mesh_name)
+    data["NameMap"]=list(set(data["NameMap"]))
     
     return data
 
@@ -326,7 +333,31 @@ for part in parts:
 vendor_last_id = int(vendor_data["Exports"][8]["Data"][0]["Value"][-1]["Name"])+1
 
 index = len(data["Imports"])
+
+attachments_count = len(aero_attachments)
+current_index = 1
+start_time = time.time()
+
 for aero_attachment in aero_attachments:
+    # Your real work here
+    # time.sleep(0.3)          # ← only for demonstration
+
+    elapsed = time.time() - start_time
+    progress = current_index / attachments_count
+    percent = int(progress * 100)
+
+    if current_index > 1:  # avoid division by zero at first iteration
+        eta_seconds = (elapsed / (current_index - 1)) * (attachments_count - current_index + 1)
+        eta_str = str(timedelta(seconds=int(eta_seconds)))
+    else:
+        eta_str = "--:--:--"
+
+    print(
+        f"{current_index}/{attachments_count} ~ {percent}%   ETA: {eta_str}",
+        end="\r"   # ← overwrite same line (clean terminal look)
+    )
+
+    current_index += 1
 
     part_id = aero_attachment.get("part_id")
     mesh_path = aero_attachment.get("mesh_path")
@@ -355,11 +386,11 @@ for aero_attachment in aero_attachments:
     # data["NameMap"].append(mesh_id)
     # data["NameMap"].append(mesh_path)
 
-    for new_name in [name_part_id, '/Game/Objects/MoreAttachments/'+name_part_id, mesh_id, mesh_path]:
+    for new_name in [name_part_id, '/Game/Objects/MoreAttachments/'+name_part_id, mesh_id, mesh_path, name_part_id+"_C"]:
         if new_name not in data["NameMap"]:
             data["NameMap"].append(new_name)
 
-    data["Imports"].append(new_actor_import(name_part_id, (-1)*index-2))
+    data["Imports"].append(new_actor_import(name_part_id+"_C", (-1)*index-2))
     actor_index = (-1)*index-1
     index+=2
     data["Imports"].append(new_u_object_package_import('/Game/Objects/MoreAttachments/'+name_part_id))
