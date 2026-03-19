@@ -5,6 +5,9 @@ import shutil
 import subprocess
 from pathlib import Path
 
+def quick_copy(src, dst):
+    shutil.copy(src, dst)
+
 def write_json_at_path(json_data, save_path):
     try:
         with open(save_path, "w+", encoding="utf-8") as f:
@@ -53,6 +56,16 @@ def run_uassetgui(json_path, output_path, game_name="MotorTown718"):
     except FileNotFoundError:
         print("UAssetGUI.exe not found. Check the path.")
 
+def open_uasset_gui_target(json_path):
+    try:
+        subprocess.run([
+            "..\\UAssetGUI.exe",
+            json_path,
+        ], check=True)
+        return True
+    except Exception as e:
+        pass
+
 def remove_file_if_exists(filepath):
     if os.path.isfile(filepath):
         os.remove(filepath)
@@ -65,12 +78,65 @@ def save_at_path_and_convert_clean(json_data, save_path):
     write_json_at_path(json_data, save_path)
     convert_and_delete(save_path)
 
+# EXAMPLE
+# {
+#       "$type": "UAssetAPI.Import, UAssetAPI",
+#       "ObjectName": "Default__OversizeLoad_Sign_7_C",
+#       "OuterIndex": -172,
+#       "ClassPackage": "/Game/Objects/VehicleAttachment/OversizeLoadSigns/OversizeLoad_Sign_7",
+#       "ClassName": "OversizeLoad_Sign_7_C",
+#       "PackageName": null,
+#       "bImportOptional": false
+#     }
+def new_package_import(object_name, outer_index, class_package, class_name):
+    return {
+      "$type": "UAssetAPI.Import, UAssetAPI",
+      "ObjectName": object_name,
+      "OuterIndex": outer_index,
+      "ClassPackage": class_package,
+      "ClassName": class_name,
+      "PackageName": None,
+      "bImportOptional": False
+    }
 
-# 130/kg real => 650c /kg real
-# Weight /2 , then apply 650c/kg
+def new_actor_import(actor_name, outer_index):
+    return new_package_import(actor_name, outer_index, "/Script/Engine", "BlueprintGeneratedClass")
+    return {
+      "$type": "UAssetAPI.Import, UAssetAPI",
+      "ObjectName": actor_name,
+      "OuterIndex": outer_index,
+      "ClassPackage": "/Script/Engine",
+      "ClassName": "BlueprintGeneratedClass",
+      "PackageName": None,
+      "bImportOptional": False
+    }
+
+# For mesh
+def new_u_object_package_import(object_name):
+    return new_package_import(object_name, 0, "/Script/CoreUObject", "Package")
+    return {
+      "$type": "UAssetAPI.Import, UAssetAPI",
+      "ObjectName": object_name,
+      "OuterIndex": 0,
+      "ClassPackage": "/Script/CoreUObject",
+      "ClassName": "Package",
+      "PackageName": None,
+      "bImportOptional": False
+    }
+
+def new_static_mesh(object_name, outer_index):
+    return new_package_import(object_name, outer_index, "/Script/Engine", "StaticMesh")
+    return {
+      "$type": "UAssetAPI.Import, UAssetAPI",
+      "ObjectName": object_name,
+      "OuterIndex": outer_index,
+      "ClassPackage": "/Script/Engine",
+      "ClassName": "StaticMesh",
+      "PackageName": None,
+      "bImportOptional": False
+    }
 
 IN_FILE = "AeroParts.json"
-# OUT_FILE = 'output.json'
 
 data = None
 with open(IN_FILE, "r") as f:
@@ -91,7 +157,7 @@ if not new_attachment_template:
     print(f"No {NEW_TATTACHMENT_TEMPLATE_PATH} found in the current folder! It's required to create new attachments!")
     exit()
 
-def make_new_attachment(attachment_id, attachment_name, cost, mass):
+def make_new_attachment(attachment_id, attachment_name, cost, mass, actor_index, mesh_index):
     
     new_attachment = copy.deepcopy(new_attachment_template)
     new_attachment["Name"] = attachment_id
@@ -105,6 +171,10 @@ def make_new_attachment(attachment_id, attachment_name, cost, mass):
             row["Value"] = mass if mass else 0
         if row["Name"] == "MaxStack":
             row["Value"] = 9
+        if row["Name"] == "AttachmentPartActorClass":
+            row["Value"] = actor_index
+        if row["Name"] == "StaticMesh":
+            row["Value"] = mesh_index
     
     return new_attachment
 
@@ -119,17 +189,30 @@ if not new_actor_template:
     print(f"No {NEW_ACTOR_PATH} found in the current folder! It's required to create new attachments!")
     exit()
 
-def make_new_actor(path_base, actor_name, mesh_name):
+def make_new_actor(path_base, actor_name, mesh_name, mesh_path):
     
     new_actor = copy.deepcopy(new_actor_template)
-    new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/OversizeLoadSigns",path_base)
+    # new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/OversizeLoadSigns",path_base)
     new_actor = new_actor.replace("OversizeLoad_Sign_7_C", actor_name+"_C")
+    new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/OversizeLoadSigns/Sign_7", mesh_path+"/"+mesh_name)
     new_actor = new_actor.replace("Sign_7", mesh_name)
 
     data = json.loads(new_actor)
     data["FolderName"] = path_base+"/"+actor_name
+    data["NameMap"].append(mesh_path+"/"+mesh_name)
+    data["NameMap"].append(mesh_name)
     
     return data
+
+VENDOR_FILE_PATH = "Vendor_Garage.json"
+vendor_data = None
+with open(VENDOR_FILE_PATH, "r") as f:
+    vendor_data = json.loads(f.read())
+
+if not vendor_data:
+    print(f"No {VENDOR_FILE_PATH} found in the current folder! It's required to create new attachments!")
+    exit()
+
 
 
 # Logic Start
@@ -239,6 +322,10 @@ for part in parts:
 #             "price": Cost,
 #             "mass": MassKg,
 #         }
+
+vendor_last_id = int(vendor_data["Exports"][8]["Data"][0]["Value"][-1]["Name"])+1
+
+index = len(data["Imports"])
 for aero_attachment in aero_attachments:
 
     part_id = aero_attachment.get("part_id")
@@ -249,19 +336,68 @@ for aero_attachment in aero_attachments:
 
     name_part_id = 'Attachment_'+part_id
 
-    data["Exports"][0]["Table"]["Data"].append(make_new_attachment(name_part_id, part_id, price, mass))
+    vendor_data["Exports"][8]["Data"][0]["Value"].append({
+              "$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI",
+              "Name": str(vendor_last_id),
+              "ArrayIndex": 0,
+              "IsZero": False,
+              "PropertyTagFlags": "None",
+              "PropertyTypeName": None,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": name_part_id
+            })
+    vendor_last_id+=1
 
-    data["NameMap"].append(name_part_id)
+    vendor_data["NameMap"].append(name_part_id)
+
+    # data["NameMap"].append(name_part_id)
+    # data["NameMap"].append('/Game/Objects/MoreAttachments/'+name_part_id)
+    # data["NameMap"].append(mesh_id)
+    # data["NameMap"].append(mesh_path)
+
+    for new_name in [name_part_id, '/Game/Objects/MoreAttachments/'+name_part_id, mesh_id, mesh_path]:
+        if new_name not in data["NameMap"]:
+            data["NameMap"].append(new_name)
+
+    data["Imports"].append(new_actor_import(name_part_id, (-1)*index-2))
+    actor_index = (-1)*index-1
+    index+=2
+    data["Imports"].append(new_u_object_package_import('/Game/Objects/MoreAttachments/'+name_part_id))
 
 
-    new_actor = make_new_actor('/Game/Objects/MoreAttachments', name_part_id, mesh_id)
+    data["Imports"].append(new_static_mesh(mesh_id, (-1)*index-2))
+    mesh_index = (-1)*index-1
+    index+=2
+    data["Imports"].append(new_u_object_package_import(mesh_path))
+
+
+    data["Exports"][0]["Table"]["Data"].append(make_new_attachment(name_part_id, part_id, price, mass, actor_index, mesh_index))
+    data["Exports"][0]["CreateBeforeSerializationDependencies"].append(actor_index)
+    data["Exports"][0]["CreateBeforeSerializationDependencies"].append(mesh_index)
+
+    new_actor = make_new_actor('/Game/Objects/MoreAttachments', name_part_id, mesh_id, mesh_path)
     save_at_path_and_convert_clean(new_actor, f"../MoreAttachments_P/MotorTown/Content/Objects/MoreAttachments/{name_part_id}.json")
-
-    # TODO: CreateBeforeSerializationDependencies, import actor and mesh
-    # creation of actors
-    # conversion of actors
-    # conversion of newparts
 
 # Save result
 
+copy_base_bps_from = '../../Output/Exports/MotorTown/Content/Characters'
+copy_base_bps_to = '../MoreAttachments_P/MotorTown/Content/Characters'
+
+files = ['MotorTownCharacterBP', 'MTAICharacter', 'MTPlayerCharacter']
+extensions = ['.uasset','.uexp']
+
+copied = []
+
+for file in files:
+    for extension in extensions:
+        copy_from = f'{copy_base_bps_from}/{file}{extension}'
+        copy_to = f'{copy_base_bps_to}/{file}{extension}'
+        quick_copy(copy_from, copy_to)
+
+        copied.append(copy_to)
+
 save_at_path_and_convert_clean(data, "../MoreAttachments_P/MotorTown/Content/DataAsset/Items/Items_AttachmentPart.json")
+save_at_path_and_convert_clean(vendor_data, "../MoreAttachments_P/MotorTown/Content/Characters/NPC/Vendor_Garage.json")
+
+for copied_file in copied:
+    remove_file_if_exists(copied_file)
