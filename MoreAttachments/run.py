@@ -7,6 +7,8 @@ import subprocess
 from pathlib import Path
 from datetime import timedelta
 
+TESTING = True
+
 def quick_copy(src, dst):
     shutil.copy(src, dst)
 
@@ -200,6 +202,12 @@ if not vendor_data:
 
 # Logic Start
 
+# Clean up previously generated files
+output_content_dir = Path("../MoreAttachments_P/MotorTown/Content/Objects/MoreAttachments")
+if output_content_dir.exists():
+    shutil.rmtree(output_content_dir)
+    print(f"Cleaned up {output_content_dir}")
+output_content_dir.mkdir(parents=True, exist_ok=True)
 
 aero_attachments = []
 
@@ -305,6 +313,10 @@ for part in parts:
 #             "price": Cost,
 #             "mass": MassKg,
 #         }
+
+if TESTING:
+    aero_attachments = aero_attachments[:1]
+    print(f"[TESTING] Limited to 1 attachment: {aero_attachments[0].get('part_id')}")
 
 vendor_last_id = int(vendor_data["Exports"][8]["Data"][0]["Value"][-1]["Name"])+1
 
