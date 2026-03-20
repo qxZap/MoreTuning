@@ -237,9 +237,12 @@ def make_new_actor(path_base, actor_name, mesh_name, mesh_path):
     
     new_actor = copy.deepcopy(new_actor_template)
     # new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/OversizeLoadSigns",path_base)
-    new_actor = new_actor.replace("OversizeLoad_Sign_7_C", actor_name+"_C")
-    new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/OversizeLoadSigns/Sign_7", mesh_path)
-    new_actor = new_actor.replace("Sign_7", mesh_name)
+    # new_actor = new_actor.replace("OversizeLoad_Sign_7_C", actor_name+"_C")
+    # new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/OversizeLoadSigns/Sign_7", mesh_path)
+    # new_actor = new_actor.replace("Sign_7", mesh_name)
+    new_actor = new_actor.replace("Neutz_SSCustomL_C", actor_name+"_C")
+    new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/MajasDetailWorks/Meshes/SideskirtCustomVeryLong", mesh_path)
+    new_actor = new_actor.replace("SideskirtCustomVeryLong", mesh_name)
 
     data = json.loads(new_actor)
     data["FolderName"] = path_base+"/"+actor_name
