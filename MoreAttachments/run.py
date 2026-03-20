@@ -8,7 +8,29 @@ from pathlib import Path
 from datetime import timedelta
 
 TESTING = True
-TESTING_GAP = 4
+TESTING_GAP = 20
+
+def load_json_from_path(path):
+    data = None
+    with open(path, 'r') as f:
+        data = json.loads(f.read())
+
+    if not data:
+        print(f"Error reading from {path} !!")
+    
+    return data
+
+def get_x_bounding(mesh_data):
+    for export in mesh_data["Exports"]:
+        for row in export["Data"]:
+            if row.get("Name") == "ExtendedBounds":
+                for subrow in row["Value"]:
+                    if subrow["Name"] == "Origin":
+                        for subsubrow in subrow["Value"]:
+                            if subsubrow["Name"] == "Origin":
+                                return subsubrow["Value"]["X"]
+
+    return "+0"
 
 def quick_copy(src, dst):
     shutil.copy(src, dst)
@@ -61,6 +83,23 @@ def run_uassetgui(json_path, output_path, game_name="MotorTown718"):
     except FileNotFoundError:
         print("UAssetGUI.exe not found. Check the path.")
 
+def run_uassetgui_uasset_to_json(uasset_path, json_path, game_name="MotorTown718"):
+    try:
+        subprocess.run([
+            "..\\UAssetGUI.exe",
+            "tojson",
+            uasset_path,
+            json_path,
+            'VER_UE5_5',
+            game_name
+        ], check=True)
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"Command failed with return code {e.returncode}")
+        return False
+    except FileNotFoundError:
+        print("UAssetGUI.exe not found. Check the path.")
+
 def open_uasset_gui_target(json_path):
     try:
         subprocess.run([
@@ -78,6 +117,9 @@ def remove_file_if_exists(filepath):
 def convert_and_delete(json_path):
     run_uassetgui(json_path, json_path.replace(".json",".uasset"))
     remove_file_if_exists(json_path)
+
+def convert_to_json(uasset_path):
+    run_uassetgui_uasset_to_json(uasset_path, uasset_path.replace('.uasset', '.json'))
 
 def save_at_path_and_convert_clean(json_data, save_path):
     write_json_at_path(json_data, save_path)
@@ -113,6 +155,9 @@ def new_u_object_package_import(object_name):
 
 def new_static_mesh(object_name, outer_index):
     return new_package_import(object_name, outer_index, "/Script/Engine", "StaticMesh")
+
+def game_to_mt_path(path):
+    return path.replace('/Game/', '/MotorTown/Content/')
 
 IN_FILE = "AeroParts.json"
 
@@ -233,7 +278,7 @@ if not new_actor_template:
     
 #     return data
 
-def make_new_actor(path_base, actor_name, mesh_name, mesh_path):
+def make_new_actor(path_base, actor_name, mesh_name, mesh_path, mesh_bounding):
     
     new_actor = copy.deepcopy(new_actor_template)
     # new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/OversizeLoadSigns",path_base)
@@ -243,12 +288,28 @@ def make_new_actor(path_base, actor_name, mesh_name, mesh_path):
     new_actor = new_actor.replace("Neutz_SSCustomL_C", actor_name+"_C")
     new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/MajasDetailWorks/Meshes/SideskirtCustomVeryLong", mesh_path)
     new_actor = new_actor.replace("SideskirtCustomVeryLong", mesh_name)
+    new_actor = new_actor.replace("-0.9696", str(mesh_bounding))
+
 
     data = json.loads(new_actor)
     data["FolderName"] = path_base+"/"+actor_name
     data["NameMap"].append(mesh_path)
     data["NameMap"].append(mesh_name)
-    
+
+    # for export in mesh_data["Exports"]:
+    #     for row in export["Data"]:
+    #         if row["Name"] == "ExtendedBounds":
+    #             for subrow in row["Value"]:
+    #                 print(subrow["Name"])
+    #                 print(subrow["Value"])
+                # print(row["Value"])
+                # print(row["Name"])
+                # for subrow in row["Value"]:
+                    # print(subrow["Value"])
+                # print(row["Value"])
+                    # if subrow["Name"] == "RelativeLocation":
+                    #     print(subrow["Value"])
+
     return data
 
 VENDOR_FILE_PATH = "Vendor_Garage.json"
@@ -378,7 +439,7 @@ for part in parts:
 
 if TESTING:
     aero_attachments = aero_attachments[:TESTING_GAP]
-    print(f"[TESTING] Limited to 1 attachment: {aero_attachments[0].get('part_id')}")
+    print(f"[TESTING] Limited to only {TESTING_GAP} attachments")
 
 vendor_last_id = int(vendor_data["Exports"][8]["Data"][0]["Value"][-1]["Name"])+1
 
@@ -456,7 +517,14 @@ for aero_attachment in aero_attachments:
     data["Exports"][0]["CreateBeforeSerializationDependencies"].append(actor_index)
     data["Exports"][0]["CreateBeforeSerializationDependencies"].append(mesh_index)
 
-    new_actor = make_new_actor('/Game/Objects/MoreAttachments', name_part_id, mesh_id, mesh_path)
+    # Every new actor requires relative location
+    # print("../../Output/Exports"+game_to_mt_path(mesh_path))
+    uasset_exported_path = "../../Output/Exports"+game_to_mt_path(mesh_path)+'.uasset'
+    convert_to_json(uasset_exported_path)
+    mesh_data = load_json_from_path(uasset_exported_path.replace('.uasset','.json'))
+    mesh_bounding = (-1)*get_x_bounding(mesh_data)
+
+    new_actor = make_new_actor('/Game/Objects/MoreAttachments', name_part_id, mesh_id, mesh_path, mesh_bounding)
     save_at_path_and_convert_clean(new_actor, f"../MoreAttachments_P/MotorTown/Content/Objects/MoreAttachments/{name_part_id}.json")
     # write_json_at_path(new_actor, f"../MoreAttachments_P/MotorTown/Content/Objects/MoreAttachments/{name_part_id}.json")
 
