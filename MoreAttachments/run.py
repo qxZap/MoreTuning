@@ -28,7 +28,7 @@ def get_x_bounding(mesh_data):
                     if subrow["Name"] == "Origin":
                         for subsubrow in subrow["Value"]:
                             if subsubrow["Name"] == "Origin":
-                                return subsubrow["Value"]["X"]
+                                return (subsubrow["Value"]["X"],subsubrow["Value"]["Y"],subsubrow["Value"]["Z"])
 
     return "+0"
 
@@ -225,12 +225,7 @@ def make_new_attachment(attachment_id, attachment_name, cost, mass, actor_index,
                     ]
                   }
                 ]
-        #     for subrow in row["Value"]:
-        #         if subrow["Name"] == "Texts":
-        #             subrow["Value"] = attachment_name
-                    # subrow["ArrayType"] = "TextProperty"
-                    # subrow["HistoryType"] = "None"
-        
+            
         if row["Name"] == "Cost":
             row["Value"] = cost
         if row["Name"] == "MassKg":
@@ -240,7 +235,7 @@ def make_new_attachment(attachment_id, attachment_name, cost, mass, actor_index,
         if row["Name"] == "AttachmentPartActorClass":
             row["Value"] = actor_index
         if row["Name"] == "StaticMesh":
-            row["Value"] = mesh_index
+            row["Value"] = -283
 
     return new_attachment
 
@@ -281,34 +276,29 @@ if not new_actor_template:
 def make_new_actor(path_base, actor_name, mesh_name, mesh_path, mesh_bounding):
     
     new_actor = copy.deepcopy(new_actor_template)
+
     # new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/OversizeLoadSigns",path_base)
     # new_actor = new_actor.replace("OversizeLoad_Sign_7_C", actor_name+"_C")
     # new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/OversizeLoadSigns/Sign_7", mesh_path)
     # new_actor = new_actor.replace("Sign_7", mesh_name)
+
     new_actor = new_actor.replace("Neutz_SSCustomL_C", actor_name+"_C")
     new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/MajasDetailWorks/Meshes/SideskirtCustomVeryLong", mesh_path)
     new_actor = new_actor.replace("SideskirtCustomVeryLong", mesh_name)
-    new_actor = new_actor.replace("-0.9696", str(mesh_bounding))
+
+    x = mesh_bounding[0]
+    y = mesh_bounding[1]
+    z = mesh_bounding[2]
+
+    new_actor = new_actor.replace("-0.96961", str((-1)*x))
+    new_actor = new_actor.replace("-0.96962", str(0.0))
+    new_actor = new_actor.replace("-0.96963", str(0.0))
 
 
     data = json.loads(new_actor)
     data["FolderName"] = path_base+"/"+actor_name
     data["NameMap"].append(mesh_path)
     data["NameMap"].append(mesh_name)
-
-    # for export in mesh_data["Exports"]:
-    #     for row in export["Data"]:
-    #         if row["Name"] == "ExtendedBounds":
-    #             for subrow in row["Value"]:
-    #                 print(subrow["Name"])
-    #                 print(subrow["Value"])
-                # print(row["Value"])
-                # print(row["Name"])
-                # for subrow in row["Value"]:
-                    # print(subrow["Value"])
-                # print(row["Value"])
-                    # if subrow["Name"] == "RelativeLocation":
-                    #     print(subrow["Value"])
 
     return data
 
@@ -507,22 +497,22 @@ for aero_attachment in aero_attachments:
     data["Imports"].append(new_u_object_package_import('/Game/Objects/MoreAttachments/'+name_part_id))
 
 
-    data["Imports"].append(new_static_mesh(mesh_id, (-1)*index-2))
+    # data["Imports"].append(new_static_mesh(mesh_id, (-1)*index-2))
     mesh_index = (-1)*index-1
-    index+=2
-    data["Imports"].append(new_u_object_package_import(mesh_path))
+    # index+=2
+    # data["Imports"].append(new_u_object_package_import(mesh_path))
 
 
     data["Exports"][0]["Table"]["Data"].append(make_new_attachment(name_part_id, part_id, price, mass, actor_index, mesh_index))
     data["Exports"][0]["CreateBeforeSerializationDependencies"].append(actor_index)
-    data["Exports"][0]["CreateBeforeSerializationDependencies"].append(mesh_index)
+    # data["Exports"][0]["CreateBeforeSerializationDependencies"].append(mesh_index)
 
     # Every new actor requires relative location
     # print("../../Output/Exports"+game_to_mt_path(mesh_path))
     uasset_exported_path = "../../Output/Exports"+game_to_mt_path(mesh_path)+'.uasset'
     convert_to_json(uasset_exported_path)
     mesh_data = load_json_from_path(uasset_exported_path.replace('.uasset','.json'))
-    mesh_bounding = (-1)*get_x_bounding(mesh_data)
+    mesh_bounding = [(-1)*bounding for bounding in get_x_bounding(mesh_data)]
 
     new_actor = make_new_actor('/Game/Objects/MoreAttachments', name_part_id, mesh_id, mesh_path, mesh_bounding)
     save_at_path_and_convert_clean(new_actor, f"../MoreAttachments_P/MotorTown/Content/Objects/MoreAttachments/{name_part_id}.json")
