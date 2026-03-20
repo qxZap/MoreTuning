@@ -1,0 +1,75 @@
+{
+  "$type": "UAssetAPI.Asset, UAssetAPI",
+  "Info": {
+    "PackageName": "/Game/Actors/CombinedActor",
+    "PackageFlags": "PKG_None"
+  },
+  "NameMap": [
+    "DefaultSceneRoot",
+    "Engine",
+    "MTInteractable",
+    "MTLightControl",
+    "CollisionComponent",
+    "None"
+  ],
+  "Exports": [
+    {
+      "$type": "UAssetAPI.Export, UAssetAPI",
+      "ObjectName": "DefaultSceneRoot",
+      "ClassIndex": -1,
+      "SuperIndex": -1,
+      "TemplateIndex": -1,
+      "ObjectFlags": "RF_Public",
+      "LoadedProperties": [
+        {
+          "$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI",
+          "Name": "CollisionProfileName",
+          "Value": "BlockAll"
+        }
+      ]
+    },
+    {
+      "$type": "UAssetAPI.Export, UAssetAPI",
+      "ObjectName": "MTInteractable",
+      "ClassIndex": -2,
+      "SuperIndex": -1,
+      "TemplateIndex": -1,
+      "ObjectFlags": "RF_Public",
+      "LoadedProperties": [
+        {
+          "$type": "UAssetAPI.PropertyTypes.Objects.EnumPropertyData, UAssetAPI",
+          "Name": "InteractionType",
+          "EnumType": "EMotorTownInteractableType",
+          "Value": "Toggle"
+        },
+        {
+          "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
+          "Name": "InteractionParams",
+          "StructType": "MTInteractionParams",
+          "Value": {}
+        }
+      ]
+    },
+    {
+      "$type": "UAssetAPI.Export, UAssetAPI",
+      "ObjectName": "MTLightControl",
+      "ClassIndex": -3,
+      "SuperIndex": -1,
+      "TemplateIndex": -1,
+      "ObjectFlags": "RF_Public",
+      "LoadedProperties": [
+        {
+          "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
+          "Name": "LightColor",
+          "StructType": "LinearColor",
+          "Value": {
+            "R": 1.0,
+            "G": 1.0,
+            "B": 1.0,
+            "A": 1.0
+          }
+        }
+      ]
+    }
+  ]
+}

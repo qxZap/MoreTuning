@@ -1,4 +1,5 @@
 import os
+import re
 import time
 import copy
 import json
@@ -7,8 +8,48 @@ import subprocess
 from pathlib import Path
 from datetime import timedelta
 
-TESTING = True
+TESTING = False
 TESTING_GAP = 20
+CREATE_ACTORS = False
+CLEAN_ACTORS = False
+
+MESH_ID_TO_USE = -283
+
+KNOWN_PART_ICONS = {
+  "Bonnet": 0,
+  "Fender": 0,
+  "FrontBumper": 0,
+  "FrontSpoiler": 0,
+  "FrontWindowSunVisor": 0,
+  "RearBumper": 0,
+  "RearSpoiler": 0,
+  "RearWindowLouvers": 0,
+  "RearWing": 0,
+  "Roof": 0,
+  "SideSkirt": 0,
+  "Trunk": 0
+}
+
+def clean_part_name(ugly_str):
+    """
+    Cleans strings by replacing separators with spaces and 
+    removing leading zeros from numbers.
+    Example: Vista_FrontBumper_04 -> Vista Front Bumper 4
+    """
+    # 1. Replace underscores and hyphens with spaces
+    # This also handles 'FrontBumper' if it were 'Front-Bumper'
+    cleaned = re.sub(r'[_,-]', ' ', ugly_str)
+    
+    # 2. Add spaces between CamelCase words (e.g., FrontBumper -> Front Bumper)
+    # This looks for a lowercase letter followed by an uppercase letter
+    cleaned = re.sub(r'([a-z])([A-Z])', r'\1 \2', cleaned)
+    
+    # 3. Remove leading zeros from numbers (e.g., 04 -> 4)
+    # \b0+ looks for a word boundary followed by one or more zeros
+    cleaned = re.sub(r'\b0+(\d+)', r'\1', cleaned)
+    
+    # 4. Strip extra whitespace and return
+    return ' '.join(cleaned.split())
 
 def load_json_from_path(path):
     data = None
@@ -156,6 +197,17 @@ def new_u_object_package_import(object_name):
 def new_static_mesh(object_name, outer_index):
     return new_package_import(object_name, outer_index, "/Script/Engine", "StaticMesh")
 
+def new_texture_import(object_name, outer_index):
+    return {
+      "$type": "UAssetAPI.Import, UAssetAPI",
+      "ObjectName": object_name,
+      "OuterIndex": outer_index,
+      "ClassPackage": "/Script/Engine",
+      "ClassName": "Texture2D",
+      "PackageName": None,
+      "bImportOptional": False
+    }
+
 def game_to_mt_path(path):
     return path.replace('/Game/', '/MotorTown/Content/')
 
@@ -180,7 +232,7 @@ if not new_attachment_template:
     print(f"No {NEW_TATTACHMENT_TEMPLATE_PATH} found in the current folder! It's required to create new attachments!")
     exit()
 
-def make_new_attachment(attachment_id, attachment_name, cost, mass, actor_index, mesh_index):
+def make_new_attachment(attachment_id, attachment_name, cost, mass, actor_index, mesh_index, icon_index, part_type):
     # TODO: attachment_name << nice format required 
     new_attachment = copy.deepcopy(new_attachment_template)
     new_attachment["Name"] = attachment_id
@@ -206,7 +258,7 @@ def make_new_attachment(attachment_id, attachment_name, cost, mass, actor_index,
                         "Flags": 0,
                         "HistoryType": "None",
                         "Namespace": None,
-                        "CultureInvariantString": attachment_name,
+                        "CultureInvariantString": clean_part_name(part_type) + ' ' + clean_part_name(attachment_name).replace(f' {part_type} ', ' ').replace( f' {clean_part_name(part_type)} ',' '),
                         "SourceFmt": None,
                         "Arguments": None,
                         "ArgumentsData": None,
@@ -235,7 +287,16 @@ def make_new_attachment(attachment_id, attachment_name, cost, mass, actor_index,
         if row["Name"] == "AttachmentPartActorClass":
             row["Value"] = actor_index
         if row["Name"] == "StaticMesh":
-            row["Value"] = -283
+            row["Value"] = MESH_ID_TO_USE
+        
+        if row["Name"] == "IconTexture":
+            if part_type in KNOWN_PART_ICONS:
+                if KNOWN_PART_ICONS[part_type]!=0:
+                    row["Value"] = KNOWN_PART_ICONS[part_type]
+                else:
+                    row["Value"] = icon_index
+            else:
+                row["Value"] = icon_index
 
     return new_attachment
 
@@ -286,13 +347,13 @@ def make_new_actor(path_base, actor_name, mesh_name, mesh_path, mesh_bounding):
     new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/MajasDetailWorks/Meshes/SideskirtCustomVeryLong", mesh_path)
     new_actor = new_actor.replace("SideskirtCustomVeryLong", mesh_name)
 
-    x = mesh_bounding[0]
-    y = mesh_bounding[1]
-    z = mesh_bounding[2]
+    x = mesh_bounding[0] or 0.0
+    y = mesh_bounding[1] or 0.0
+    z = mesh_bounding[2] or 0.0
 
-    new_actor = new_actor.replace("-0.96961", str((-1)*x))
-    new_actor = new_actor.replace("-0.96962", str(0.0))
-    new_actor = new_actor.replace("-0.96963", str(0.0))
+    new_actor = new_actor.replace("-0.96961", str(x))
+    new_actor = new_actor.replace("-0.96962", str(y))
+    new_actor = new_actor.replace("-0.96963", str(z))
 
 
     data = json.loads(new_actor)
@@ -317,7 +378,7 @@ if not vendor_data:
 
 # Clean up previously generated files
 output_content_dir = Path("../MoreAttachments_P/MotorTown/Content/Objects/MoreAttachments")
-if output_content_dir.exists():
+if output_content_dir.exists() and CLEAN_ACTORS:
     shutil.rmtree(output_content_dir)
     print(f"Cleaned up {output_content_dir}")
 output_content_dir.mkdir(parents=True, exist_ok=True)
@@ -338,6 +399,7 @@ for part in parts:
     mesh_index_for_part = None
     MassKg = None
     Cost = None
+    PartType = None
 
     current_part = copy.deepcopy(part)
 
@@ -354,6 +416,8 @@ for part in parts:
 
         if field_name == "MassKg":
             MassKg = field_value
+        if field_name == "PartType":
+            PartType = field_value
 
         if field_name == "Cost":
             Cost = field_value
@@ -373,8 +437,17 @@ for part in parts:
             "mesh_id": ObjectName,
             "price": Cost,
             "mass": MassKg,
+            "part_type": PartType if PartType else ""
         }
     )
+
+aero_attachments.sort(key=lambda x: x["part_type"])
+
+unique_types = sorted(list(set(item["part_type"] for item in aero_attachments)))
+
+# print("--- Unique Part Types ---")
+# for p_type in unique_types:
+#     print(f"- {p_type if p_type else '[Empty/None]'}")
 
 # print(aero_attachments)
 # this is where the processing of the new attachment is done
@@ -433,7 +506,38 @@ if TESTING:
 
 vendor_last_id = int(vendor_data["Exports"][8]["Data"][0]["Value"][-1]["Name"])+1
 
+
+# Default IMPORT for texture i guess. 
 index = len(data["Imports"])
+
+data["Imports"].append(new_texture_import("Decal",(-1)*index-2 ))
+data["Imports"].append(new_u_object_package_import("/Game/UI/Icons/Vehicle/Decal"))
+
+icon_index = (-1)*index-1
+
+data["Exports"][0]["CreateBeforeSerializationDependencies"].append((-1)*index-2)
+
+data["NameMap"].append("Decal")
+data["NameMap"].append("/Game/UI/Icons/Vehicle/Decal")
+
+index = len(data["Imports"])
+
+for new_icon_key in KNOWN_PART_ICONS.keys():
+    import_path = f"/Game/UI/MoreAttachments/{new_icon_key}"
+
+    data["NameMap"].append(new_icon_key)
+    data["NameMap"].append(import_path)
+
+    new_icon_index = (-1)*index-2
+
+    KNOWN_PART_ICONS[new_icon_key] = new_icon_index+1
+
+    data["Imports"].append(new_texture_import(new_icon_key, new_icon_index))
+    data["Imports"].append(new_u_object_package_import(import_path))
+
+    data["Exports"][0]["CreateBeforeSerializationDependencies"].append(new_icon_index)
+
+    index +=2
 
 attachments_count = len(aero_attachments)
 current_index = 1
@@ -465,6 +569,7 @@ for aero_attachment in aero_attachments:
     mesh_id = aero_attachment.get("mesh_id")
     price = aero_attachment.get("price")
     mass = aero_attachment.get("mass")
+    part_type = aero_attachment.get("part_type")
 
     name_part_id = 'Attachment_'+part_id
 
@@ -503,20 +608,21 @@ for aero_attachment in aero_attachments:
     # data["Imports"].append(new_u_object_package_import(mesh_path))
 
 
-    data["Exports"][0]["Table"]["Data"].append(make_new_attachment(name_part_id, part_id, price, mass, actor_index, mesh_index))
+    data["Exports"][0]["Table"]["Data"].append(make_new_attachment(name_part_id, part_id, price, mass, actor_index, mesh_index, icon_index, part_type))
     data["Exports"][0]["CreateBeforeSerializationDependencies"].append(actor_index)
     # data["Exports"][0]["CreateBeforeSerializationDependencies"].append(mesh_index)
 
     # Every new actor requires relative location
     # print("../../Output/Exports"+game_to_mt_path(mesh_path))
-    uasset_exported_path = "../../Output/Exports"+game_to_mt_path(mesh_path)+'.uasset'
-    convert_to_json(uasset_exported_path)
-    mesh_data = load_json_from_path(uasset_exported_path.replace('.uasset','.json'))
-    mesh_bounding = [(-1)*bounding for bounding in get_x_bounding(mesh_data)]
+    if CREATE_ACTORS:
+        uasset_exported_path = "../../Output/Exports"+game_to_mt_path(mesh_path)+'.uasset'
+        convert_to_json(uasset_exported_path)
+        mesh_data = load_json_from_path(uasset_exported_path.replace('.uasset','.json'))
+        mesh_bounding = [(-1)*bounding for bounding in get_x_bounding(mesh_data)]
 
-    new_actor = make_new_actor('/Game/Objects/MoreAttachments', name_part_id, mesh_id, mesh_path, mesh_bounding)
-    save_at_path_and_convert_clean(new_actor, f"../MoreAttachments_P/MotorTown/Content/Objects/MoreAttachments/{name_part_id}.json")
-    # write_json_at_path(new_actor, f"../MoreAttachments_P/MotorTown/Content/Objects/MoreAttachments/{name_part_id}.json")
+        new_actor = make_new_actor('/Game/Objects/MoreAttachments', name_part_id, mesh_id, mesh_path, mesh_bounding)
+        save_at_path_and_convert_clean(new_actor, f"../MoreAttachments_P/MotorTown/Content/Objects/MoreAttachments/{name_part_id}.json")
+        # write_json_at_path(new_actor, f"../MoreAttachments_P/MotorTown/Content/Objects/MoreAttachments/{name_part_id}.json")
 
 # Save result
 
