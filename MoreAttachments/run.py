@@ -10,8 +10,8 @@ from datetime import timedelta
 
 TESTING = False
 TESTING_GAP = 20
-CREATE_ACTORS = False
-CLEAN_ACTORS = False
+CREATE_ACTORS = True
+CLEAN_ACTORS = True
 
 MESH_ID_TO_USE = -283
 
@@ -493,12 +493,29 @@ for part in parts:
 
 # Template here
 # {
-#             "part_id": part_id,
-#             "mesh_path": PackageObjectName,
-#             "mesh_id": ObjectName,
-#             "price": Cost,
-#             "mass": MassKg,
+            # "part_id": part_id,
+            # "mesh_path": PackageObjectName,
+            # "mesh_id": ObjectName,
+            # "price": Cost,
+            # "mass": MassKg,
+            #  "part_type": "???"
 #         }
+
+# Add extra attachments by had here.
+
+EXTRA_ATTACHMENTS_FILE = "ExtraAttachments.json"
+
+extra_data = None
+with open(EXTRA_ATTACHMENTS_FILE, "r") as f:
+    extra_data = json.loads(f.read())
+
+
+if not extra_data:
+    print(f"No {EXTRA_ATTACHMENTS_FILE} found in the current folder! \nThis is required for generation of attachments!")
+    exit()
+
+for new_attachment in extra_data:
+    aero_attachments.append(new_attachment)
 
 if TESTING:
     aero_attachments = aero_attachments[:TESTING_GAP]
@@ -510,15 +527,15 @@ vendor_last_id = int(vendor_data["Exports"][8]["Data"][0]["Value"][-1]["Name"])+
 # Default IMPORT for texture i guess. 
 index = len(data["Imports"])
 
-data["Imports"].append(new_texture_import("Decal",(-1)*index-2 ))
-data["Imports"].append(new_u_object_package_import("/Game/UI/Icons/Vehicle/Decal"))
+data["Imports"].append(new_texture_import("Parts",(-1)*index-2 ))
+data["Imports"].append(new_u_object_package_import("/Game/UI/Icons/Vehicle/Parts"))
 
 icon_index = (-1)*index-1
 
 data["Exports"][0]["CreateBeforeSerializationDependencies"].append((-1)*index-2)
 
-data["NameMap"].append("Decal")
-data["NameMap"].append("/Game/UI/Icons/Vehicle/Decal")
+data["NameMap"].append("Parts")
+data["NameMap"].append("/Game/UI/Icons/Vehicle/Parts")
 
 index = len(data["Imports"])
 

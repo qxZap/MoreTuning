@@ -1,0 +1,626 @@
+[
+    {
+        "part_id": "Prop_AirFilter_01",
+        "mesh_path": "/Game/Models/PolygonStreetRacer/Meshes/Props/SM_Prop_AirFilter_01",
+        "mesh_id": "SM_Prop_AirFilter_01",
+        "price": 100,
+        "mass": 0.7,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_SocketSet_01",
+        "mesh_path": "/Game/Models/PolygonStreetRacer/Meshes/Props/SM_Prop_SocketSet_01",
+        "mesh_id": "SM_Prop_SocketSet_01",
+        "price": 250,
+        "mass": 4,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_SpeakerOval_01",
+        "mesh_path": "/Game/Models/PolygonStreetRacer/Meshes/Props/SM_Prop_SpeakerOval_01",
+        "mesh_id": "SM_Prop_SpeakerOval_01",
+        "price": 125,
+        "mass": 3,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_SubBox_DoubleBox_01",
+        "mesh_path": "/Game/Models/PolygonStreetRacer/Meshes/Props/SM_Prop_SubBox_DoubleBox_01",
+        "mesh_id": "SM_Prop_SubBox_DoubleBox_01",
+        "price": 300,
+        "mass": 15,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_SubBox_DoubleSlanted_01",
+        "mesh_path": "/Game/Models/PolygonStreetRacer/Meshes/Props/SM_Prop_SubBox_DoubleSlanted_01",
+        "mesh_id": "SM_Prop_SubBox_DoubleSlanted_01",
+        "price": 300,
+        "mass": 14,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_AirFilter_01",
+        "mesh_path": "/Game/Models/PolygonStreetRacer/Meshes/Props/SM_Prop_AirFilter_01",
+        "mesh_id": "SM_Prop_AirFilter_01",
+        "price": 100,
+        "mass": 0.7,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_SubLarge_01",
+        "mesh_path": "/Game/Models/PolygonStreetRacer/Meshes/Props/SM_Prop_SubLarge_01",
+        "mesh_id": "SM_Prop_SubLarge_01",
+        "price": 400,
+        "mass": 20,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_SubSmall_01",
+        "mesh_path": "/Game/Models/PolygonStreetRacer/Meshes/Props/SM_Prop_SubSmall_01",
+        "mesh_id": "SM_Prop_SubSmall_01",
+        "price": 200,
+        "mass": 8,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_Suspension_01",
+        "mesh_path": "/Game/Models/PolygonStreetRacer/Meshes/Props/SM_Prop_Suspension_01",
+        "mesh_id": "SM_Prop_Suspension_01",
+        "price": 750,
+        "mass": 12,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_Turbo_01",
+        "mesh_path": "/Game/Models/PolygonStreetRacer/Meshes/Props/SM_Prop_Turbo_01",
+        "mesh_id": "SM_Prop_Turbo_01",
+        "price": 3750,
+        "mass": 8,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Veh_Food_Trailer_02_Preset",
+        "mesh_path": "/Game/Models/PolygonShops/Meshes/Vehicles/SM_Veh_Food_Trailer_02_Preset",
+        "mesh_id": "SM_Veh_Food_Trailer_02_Preset",
+        "price": 150000,
+        "mass": 1200,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_Cafe_Divider_01",
+        "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Cafe_Divider_01",
+        "mesh_id": "SM_Prop_Cafe_Divider_01",
+        "price": 400,
+        "mass": 25,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_Computer_Camera_Tripod_01",
+        "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Computer_Camera_Tripod_01",
+        "mesh_id": "SM_Prop_Computer_Camera_Tripod_01",
+        "price": 125,
+        "mass": 2,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_Computer_Camera_DSLR_02",
+        "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Computer_Camera_DSLR_02",
+        "mesh_id": "SM_Prop_Computer_Camera_DSLR_02",
+        "price": 1250,
+        "mass": 1,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_Computer_Laptop_01_Preset",
+        "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Computer_Laptop_01_Preset",
+        "mesh_id": "SM_Prop_Computer_Laptop_01_Preset",
+        "price": 5000,
+        "mass": 1.5,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_Computer_Monitor_04",
+        "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Computer_Monitor_04",
+        "mesh_id": "SM_Prop_Computer_Monitor_04",
+        "price": 750,
+        "mass": 5,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_Computer_Speaker_Bluetooth_02",
+        "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Computer_Speaker_Bluetooth_02",
+        "mesh_id": "SM_Prop_Computer_Speaker_Bluetooth_02",
+        "price": 150,
+        "mass": 1,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_Computer_Laptop_01_Preset",
+        "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Computer_Laptop_01_Preset",
+        "mesh_id": "SM_Prop_Computer_Laptop_01_Preset",
+        "price": 5000,
+        "mass": 1.5,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_Computer_TV_Subwoofer_01",
+        "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Computer_TV_Subwoofer_01",
+        "mesh_id": "SM_Prop_Computer_TV_Subwoofer_01",
+        "price": 250,
+        "mass": 6,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_Computer_TV_Subwoofer_02",
+        "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Computer_TV_Subwoofer_02",
+        "mesh_id": "SM_Prop_Computer_TV_Subwoofer_02",
+        "price": 250,
+        "mass": 6,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_Hunting_Spotting_Scope_01_Pivot_01",
+        "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Hunting_Spotting_Scope_01_Pivot_01",
+        "mesh_id": "SM_Prop_Hunting_Spotting_Scope_01_Pivot_01",
+        "price": 750,
+        "mass": 2,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_Kitchen_Drinks_Machine_01",
+        "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Kitchen_Drinks_Machine_01",
+        "mesh_id": "SM_Prop_Kitchen_Drinks_Machine_01",
+        "price": 1500,
+        "mass": 12,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_Kitchen_Fries_Station_01",
+        "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Kitchen_Fries_Station_01",
+        "mesh_id": "SM_Prop_Kitchen_Fries_Station_01",
+        "price": 2500,
+        "mass": 25,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_Kitchen_Ice_Cream_Machine_01",
+        "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Kitchen_Ice_Cream_Machine_01",
+        "mesh_id": "SM_Prop_Kitchen_Ice_Cream_Machine_01",
+        "price": 4000,
+        "mass": 40,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_Kitchen_Grill_01_Preset",
+        "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Kitchen_Grill_01_Preset",
+        "mesh_id": "SM_Prop_Kitchen_Grill_01_Preset",
+        "price": 1500,
+        "mass": 30,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_Kitchen_Stove_Oven_01_Preset",
+        "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Kitchen_Stove_Oven_01_Preset",
+        "mesh_id": "SM_Prop_Kitchen_Stove_Oven_01_Preset",
+        "price": 2000,
+        "mass": 60,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_Music_Amplifier_01",
+        "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Music_Amplifier_01",
+        "mesh_id": "SM_Prop_Music_Amplifier_01",
+        "price": 750,
+        "mass": 10,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_Music_Boombox_01",
+        "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Music_Boombox_01",
+        "mesh_id": "SM_Prop_Music_Boombox_01",
+        "price": 250,
+        "mass": 4,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_Music_Electric_Guitar_01",
+        "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Music_Electric_Guitar_01",
+        "mesh_id": "SM_Prop_Music_Electric_Guitar_01",
+        "price": 1250,
+        "mass": 4,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_Camera_01_Head_01",
+        "mesh_path": "/Game/Models/PolygonProRacer/Models/Props/SM_Prop_Camera_01_Head_01",
+        "mesh_id": "SM_Prop_Camera_01_Head_01",
+        "price": 1500,
+        "mass": 2,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_Computer_Bank_01_Monitor_01",
+        "mesh_path": "/Game/Models/PolygonProRacer/Models/Props/SM_Prop_Computer_Bank_01_Monitor_01",
+        "mesh_id": "SM_Prop_Computer_Bank_01_Monitor_01",
+        "price": 1500,
+        "mass": 6,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_Computer_Bank_02_Monitor_01",
+        "mesh_path": "/Game/Models/PolygonProRacer/Models/Props/SM_Prop_Computer_Bank_02_Monitor_01",
+        "mesh_id": "SM_Prop_Computer_Bank_02_Monitor_01",
+        "price": 1500,
+        "mass": 6,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_Computer_Bank_03_Monitor_01",
+        "mesh_path": "/Game/Models/PolygonProRacer/Models/Props/SM_Prop_Computer_Bank_03_Monitor_01",
+        "mesh_id": "SM_Prop_Computer_Bank_03_Monitor_01",
+        "price": 1500,
+        "mass": 6,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_WalkieTalkie_01",
+        "mesh_path": "/Game/Models/PolygonProRacer/Models/Props/SM_Prop_WalkieTalkie_01",
+        "mesh_id": "SM_Prop_WalkieTalkie_01",
+        "price": 150,
+        "mass": 0.3,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_Chair_Folding_01",
+        "mesh_path": "/Game/Models/PolygonMilitary/Meshes/Props/SM_Prop_Chair_Folding_01",
+        "mesh_id": "SM_Prop_Chair_Folding_01",
+        "price": 50,
+        "mass": 5,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_Electronics_Tv_02",
+        "mesh_path": "/Game/Models/PolygonMilitary/Meshes/Props/SM_Prop_Electronics_Tv_02",
+        "mesh_id": "SM_Prop_Electronics_Tv_02",
+        "price": 750,
+        "mass": 12,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Prop_Pallet_01",
+        "mesh_path": "/Game/Models/PolygonMilitary/Meshes/Props/SM_Prop_Pallet_01",
+        "mesh_id": "SM_Prop_Pallet_01",
+        "price": 25,
+        "mass": 20,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Icon_Text_0",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_0",
+        "mesh_id": "SM_Icon_Text_0",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_1",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_1",
+        "mesh_id": "SM_Icon_Text_1",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_2",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_2",
+        "mesh_id": "SM_Icon_Text_2",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_3",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_3",
+        "mesh_id": "SM_Icon_Text_3",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_4",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_4",
+        "mesh_id": "SM_Icon_Text_4",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_5",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_5",
+        "mesh_id": "SM_Icon_Text_5",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_6",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_6",
+        "mesh_id": "SM_Icon_Text_6",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_7",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_7",
+        "mesh_id": "SM_Icon_Text_7",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_8",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_8",
+        "mesh_id": "SM_Icon_Text_8",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_9",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_9",
+        "mesh_id": "SM_Icon_Text_9",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_A",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_A",
+        "mesh_id": "SM_Icon_Text_A",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_B",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_B",
+        "mesh_id": "SM_Icon_Text_B",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_C",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_C",
+        "mesh_id": "SM_Icon_Text_C",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_D",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_D",
+        "mesh_id": "SM_Icon_Text_D",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_E",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_E",
+        "mesh_id": "SM_Icon_Text_E",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_F",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_F",
+        "mesh_id": "SM_Icon_Text_F",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_G",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_G",
+        "mesh_id": "SM_Icon_Text_G",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_H",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_H",
+        "mesh_id": "SM_Icon_Text_H",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_I",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_I",
+        "mesh_id": "SM_Icon_Text_I",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_J",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_J",
+        "mesh_id": "SM_Icon_Text_J",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_K",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_K",
+        "mesh_id": "SM_Icon_Text_K",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_L",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_L",
+        "mesh_id": "SM_Icon_Text_L",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_M",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_M",
+        "mesh_id": "SM_Icon_Text_M",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_N",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_N",
+        "mesh_id": "SM_Icon_Text_N",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_O",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_O",
+        "mesh_id": "SM_Icon_Text_O",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_P",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_P",
+        "mesh_id": "SM_Icon_Text_P",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_Q",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_Q",
+        "mesh_id": "SM_Icon_Text_Q",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_R",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_R",
+        "mesh_id": "SM_Icon_Text_R",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_S",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_S",
+        "mesh_id": "SM_Icon_Text_S",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_T",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_T",
+        "mesh_id": "SM_Icon_Text_T",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_U",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_U",
+        "mesh_id": "SM_Icon_Text_U",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_V",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_V",
+        "mesh_id": "SM_Icon_Text_V",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_W",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_W",
+        "mesh_id": "SM_Icon_Text_W",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_X",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_X",
+        "mesh_id": "SM_Icon_Text_X",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_Y",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_Y",
+        "mesh_id": "SM_Icon_Text_Y",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_Z",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_Z",
+        "mesh_id": "SM_Icon_Text_Z",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Icon_Text_Z",
+        "mesh_path": "/Game/Models/PolygonIcons/Meshes/Props/SM_Icon_Text_Z",
+        "mesh_id": "SM_Icon_Text_Z",
+        "price": 5,
+        "mass": 0.1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Prop_Money_Stack_03",
+        "mesh_path": "/Game/Models/PolygonHeist/Meshes/Props/SM_Prop_Money_Stack_03",
+        "mesh_id": "SM_Prop_Money_Stack_03",
+        "price": 10000,
+        "mass": 1,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Prop_Security_Monitors_01",
+        "mesh_path": "/Game/Models/PolygonGangWarfare/Meshes/Props/SM_Prop_Security_Monitors_01",
+        "mesh_id": "SM_Prop_Security_Monitors_01",
+        "price": 2000,
+        "mass": 15,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Prop_Wood_Frame_01",
+        "mesh_path": "/Game/Models/PolygonConstruction/Meshes/Props/SM_Prop_Wood_Frame_01",
+        "mesh_id": "SM_Prop_Wood_Frame_01",
+        "price": 150,
+        "mass": 10,
+        "part_type": "-"
+    },
+    {
+        "part_id": "Prop_SatDish_01",
+        "mesh_path": "/Game/Models/PolygonCity/Meshes/Props/SM_Prop_SatDish_01",
+        "mesh_id": "SM_Prop_SatDish_01",
+        "price": 250,
+        "mass": 8,
+        "part_type": "-"
+    }
+]
