@@ -1,6 +1,134 @@
 [
     {
-        "part_id": "Prop_Radiator_01",
+        "part_id": "CargoStopper_01",
+        "mesh_path": "/Game/Objects/VehicleAttachment/Meshes/CargoStopper_01",
+        "mesh_id": "CargoStopper_01",
+        "price": 200,
+        "mass": 25,
+        "part_type": "- "
+    },
+    {
+        "part_id": "BullbarMuhan_01",
+        "mesh_path": "/Game/Cars/Models/Muhan/Bullbar_01",
+        "mesh_id": "Bullbar_01",
+        "price": 1200,
+        "mass": 50,
+        "part_type": "- "
+    },
+    {
+        "part_id": "RoofrackMuhan_01",
+        "mesh_path": "/Game/Cars/Models/Muhan/Roofrack_01",
+        "mesh_id": "Roofrack_01",
+        "price": 800,
+        "mass": 50,
+        "part_type": "- "
+    },
+    {
+        "part_id": "RoofrackBongo_01",
+        "mesh_path": "/Game/Cars/Models/Bongo/Roofrack_01",
+        "mesh_id": "Roofrack_01",
+        "price": 2800,
+        "mass": 150,
+        "part_type": "- "
+    },
+    {
+        "part_id": "BongoSpareTire",
+        "mesh_path": "/Game/Cars/Models/Bongo/SpareTire",
+        "mesh_id": "SpareTire",
+        "price": 2800,
+        "mass": 150,
+        "part_type": "- "
+    },
+    {
+        "part_id": "BongoTrunk",
+        "mesh_path": "/Game/Cars/Models/Bongo/Trunk",
+        "mesh_id": "Trunk",
+        "price": 1800,
+        "mass": 85,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Cargobox_Pizza",
+        "mesh_path": "/Game/Cars/Models/Bike/Gunthoo/CargoBox_01",
+        "mesh_id": "CargoBox_01",
+        "price": 500,
+        "mass": 10,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Cargobox_Burger",
+        "mesh_path": "/Game/Cars/Models/Bike/Gunthoo/CargoBox_02",
+        "mesh_id": "CargoBox_02",
+        "price": 500,
+        "mass": 10,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Cargobox_Sushi",
+        "mesh_path": "/Game/Cars/Models/Bike/Gunthoo/CargoBox_03",
+        "mesh_id": "CargoBox_03",
+        "price": 500,
+        "mass": 10,
+        "part_type": "- "
+    },
+    {
+        "part_id": "CoraHeadlight_01",
+        "mesh_path": "/Game/Cars/Models/Cora/Headlight_01",
+        "mesh_id": "Headlight_01",
+        "price": 1500,
+        "mass": 10,
+        "part_type": "- "
+    },
+    {
+        "part_id": "CoraHeadlight_02",
+        "mesh_path": "/Game/Cars/Models/Cora/Headlight_02",
+        "mesh_id": "Headlight_02",
+        "price": 2500,
+        "mass": 20,
+        "part_type": "- "
+    },
+    {
+        "part_id": "DoryCargoBedSide_01",
+        "mesh_path": "/Game/Cars/Models/Dory/CargoBedSide_01",
+        "mesh_id": "CargoBedSide_01",
+        "price": 1200,
+        "mass": 60,
+        "part_type": "- "
+    },,
+    {
+        "part_id": "ZinoHeadlight_01",
+        "mesh_path": "/Game/Cars/Models/Zino/Headlight_01",
+        "mesh_id": "Headlight_01",
+        "price": 575,
+        "mass": 10,
+        "part_type": "- "
+    },
+    {
+        "part_id": "ZinoHeadlight_02",
+        "mesh_path": "/Game/Cars/Models/Zino/Headlight_02",
+        "mesh_id": "Headlight_02",
+        "price": 575,
+        "mass": 10,
+        "part_type": "- "
+    },
+    {
+        "part_id": "ZinoHeadlight_03",
+        "mesh_path": "/Game/Cars/Models/Zino/Headlight_03",
+        "mesh_id": "Headlight_03",
+        "price": 575,
+        "mass": 10,
+        "part_type": "- "
+    },
+    {
+        "part_id": "VulcanFolkRam_02",
+        "mesh_path": "/Game/Cars/Models/Vulcan/Folk2_Ram",
+        "mesh_id": "Folk2_Ram",
+        "price": 9800,
+        "mass": 295,
+        "part_type": "- "
+    },
+    {
+        "part_id": "Radiator_01",
         "mesh_path": "/Game/Models/PolygonStreetRacer/Meshes/Props/SM_Prop_Radiator_01",
         "mesh_id": "SM_Prop_Radiator_01",
         "price": 750,
@@ -8,7 +136,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_AirFilter_01",
+        "part_id": "AirFilter_01",
         "mesh_path": "/Game/Models/PolygonStreetRacer/Meshes/Props/SM_Prop_AirFilter_01",
         "mesh_id": "SM_Prop_AirFilter_01",
         "price": 100,
@@ -16,7 +144,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_SocketSet_01",
+        "part_id": "SocketSet_01",
         "mesh_path": "/Game/Models/PolygonStreetRacer/Meshes/Props/SM_Prop_SocketSet_01",
         "mesh_id": "SM_Prop_SocketSet_01",
         "price": 250,
@@ -24,7 +152,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_SpeakerOval_01",
+        "part_id": "SpeakerOval_01",
         "mesh_path": "/Game/Models/PolygonStreetRacer/Meshes/Props/SM_Prop_SpeakerOval_01",
         "mesh_id": "SM_Prop_SpeakerOval_01",
         "price": 125,
@@ -32,7 +160,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_SubBox_DoubleBox_01",
+        "part_id": "SubBox_DoubleBox_01",
         "mesh_path": "/Game/Models/PolygonStreetRacer/Meshes/Props/SM_Prop_SubBox_DoubleBox_01",
         "mesh_id": "SM_Prop_SubBox_DoubleBox_01",
         "price": 300,
@@ -40,7 +168,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_SubBox_DoubleSlanted_01",
+        "part_id": "SubBox_DoubleSlanted_01",
         "mesh_path": "/Game/Models/PolygonStreetRacer/Meshes/Props/SM_Prop_SubBox_DoubleSlanted_01",
         "mesh_id": "SM_Prop_SubBox_DoubleSlanted_01",
         "price": 300,
@@ -48,7 +176,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_AirFilter_01",
+        "part_id": "AirFilter_01",
         "mesh_path": "/Game/Models/PolygonStreetRacer/Meshes/Props/SM_Prop_AirFilter_01",
         "mesh_id": "SM_Prop_AirFilter_01",
         "price": 100,
@@ -56,7 +184,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_SubLarge_01",
+        "part_id": "SubLarge_01",
         "mesh_path": "/Game/Models/PolygonStreetRacer/Meshes/Props/SM_Prop_SubLarge_01",
         "mesh_id": "SM_Prop_SubLarge_01",
         "price": 400,
@@ -64,7 +192,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_SubSmall_01",
+        "part_id": "SubSmall_01",
         "mesh_path": "/Game/Models/PolygonStreetRacer/Meshes/Props/SM_Prop_SubSmall_01",
         "mesh_id": "SM_Prop_SubSmall_01",
         "price": 200,
@@ -72,7 +200,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_Suspension_01",
+        "part_id": "Suspension_01",
         "mesh_path": "/Game/Models/PolygonStreetRacer/Meshes/Props/SM_Prop_Suspension_01",
         "mesh_id": "SM_Prop_Suspension_01",
         "price": 750,
@@ -80,7 +208,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_Turbo_01",
+        "part_id": "Turbo_01",
         "mesh_path": "/Game/Models/PolygonStreetRacer/Meshes/Props/SM_Prop_Turbo_01",
         "mesh_id": "SM_Prop_Turbo_01",
         "price": 3750,
@@ -96,7 +224,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_Cafe_Divider_01",
+        "part_id": "Cafe_Divider_01",
         "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Cafe_Divider_01",
         "mesh_id": "SM_Prop_Cafe_Divider_01",
         "price": 400,
@@ -104,7 +232,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_Computer_Camera_Tripod_01",
+        "part_id": "Computer_Camera_Tripod_01",
         "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Computer_Camera_Tripod_01",
         "mesh_id": "SM_Prop_Computer_Camera_Tripod_01",
         "price": 125,
@@ -112,7 +240,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_Computer_Camera_DSLR_02",
+        "part_id": "Computer_Camera_DSLR_02",
         "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Computer_Camera_DSLR_02",
         "mesh_id": "SM_Prop_Computer_Camera_DSLR_02",
         "price": 1250,
@@ -120,7 +248,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_Computer_Laptop_01_Preset",
+        "part_id": "Computer_Laptop_01_Preset",
         "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Computer_Laptop_01_Preset",
         "mesh_id": "SM_Prop_Computer_Laptop_01_Preset",
         "price": 5000,
@@ -128,7 +256,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_Computer_Monitor_04",
+        "part_id": "Computer_Monitor_04",
         "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Computer_Monitor_04",
         "mesh_id": "SM_Prop_Computer_Monitor_04",
         "price": 750,
@@ -136,7 +264,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_Computer_Speaker_Bluetooth_02",
+        "part_id": "Computer_Speaker_Bluetooth_02",
         "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Computer_Speaker_Bluetooth_02",
         "mesh_id": "SM_Prop_Computer_Speaker_Bluetooth_02",
         "price": 150,
@@ -144,7 +272,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_Computer_Laptop_01_Preset",
+        "part_id": "Computer_Laptop_01_Preset",
         "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Computer_Laptop_01_Preset",
         "mesh_id": "SM_Prop_Computer_Laptop_01_Preset",
         "price": 5000,
@@ -152,7 +280,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_Computer_TV_Subwoofer_01",
+        "part_id": "Computer_TV_Subwoofer_01",
         "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Computer_TV_Subwoofer_01",
         "mesh_id": "SM_Prop_Computer_TV_Subwoofer_01",
         "price": 250,
@@ -160,7 +288,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_Computer_TV_Subwoofer_02",
+        "part_id": "Computer_TV_Subwoofer_02",
         "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Computer_TV_Subwoofer_02",
         "mesh_id": "SM_Prop_Computer_TV_Subwoofer_02",
         "price": 250,
@@ -168,7 +296,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_Hunting_Spotting_Scope_01_Pivot_01",
+        "part_id": "Hunting_Spotting_Scope_01_Pivot_01",
         "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Hunting_Spotting_Scope_01_Pivot_01",
         "mesh_id": "SM_Prop_Hunting_Spotting_Scope_01_Pivot_01",
         "price": 750,
@@ -176,7 +304,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_Kitchen_Drinks_Machine_01",
+        "part_id": "Kitchen_Drinks_Machine_01",
         "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Kitchen_Drinks_Machine_01",
         "mesh_id": "SM_Prop_Kitchen_Drinks_Machine_01",
         "price": 1500,
@@ -184,7 +312,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_Kitchen_Fries_Station_01",
+        "part_id": "Kitchen_Fries_Station_01",
         "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Kitchen_Fries_Station_01",
         "mesh_id": "SM_Prop_Kitchen_Fries_Station_01",
         "price": 2500,
@@ -192,7 +320,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_Kitchen_Ice_Cream_Machine_01",
+        "part_id": "Kitchen_Ice_Cream_Machine_01",
         "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Kitchen_Ice_Cream_Machine_01",
         "mesh_id": "SM_Prop_Kitchen_Ice_Cream_Machine_01",
         "price": 4000,
@@ -200,7 +328,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_Kitchen_Grill_01_Preset",
+        "part_id": "Kitchen_Grill_01_Preset",
         "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Kitchen_Grill_01_Preset",
         "mesh_id": "SM_Prop_Kitchen_Grill_01_Preset",
         "price": 1500,
@@ -208,7 +336,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_Kitchen_Stove_Oven_01_Preset",
+        "part_id": "Kitchen_Stove_Oven_01_Preset",
         "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Kitchen_Stove_Oven_01_Preset",
         "mesh_id": "SM_Prop_Kitchen_Stove_Oven_01_Preset",
         "price": 2000,
@@ -216,7 +344,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_Music_Amplifier_01",
+        "part_id": "Music_Amplifier_01",
         "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Music_Amplifier_01",
         "mesh_id": "SM_Prop_Music_Amplifier_01",
         "price": 750,
@@ -224,7 +352,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_Music_Boombox_01",
+        "part_id": "Music_Boombox_01",
         "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Music_Boombox_01",
         "mesh_id": "SM_Prop_Music_Boombox_01",
         "price": 250,
@@ -232,7 +360,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_Music_Electric_Guitar_01",
+        "part_id": "Music_Electric_Guitar_01",
         "mesh_path": "/Game/Models/PolygonShops/Meshes/Props/SM_Prop_Music_Electric_Guitar_01",
         "mesh_id": "SM_Prop_Music_Electric_Guitar_01",
         "price": 1250,
@@ -240,7 +368,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_Camera_01_Head_01",
+        "part_id": "Camera_01_Head_01",
         "mesh_path": "/Game/Models/PolygonProRacer/Models/Props/SM_Prop_Camera_01_Head_01",
         "mesh_id": "SM_Prop_Camera_01_Head_01",
         "price": 1500,
@@ -248,7 +376,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_Portaloo_01_Door",
+        "part_id": "Portaloo_01_Door",
         "mesh_path": "/Game/Models/PolygonProRacer/Models/Props/SM_Prop_Portaloo_01_Door",
         "mesh_id": "SM_Prop_Portaloo_01_Door",
         "price": 500,
@@ -256,7 +384,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_Portaloo_01",
+        "part_id": "Portaloo_01",
         "mesh_path": "/Game/Models/PolygonProRacer/Models/Props/SM_Prop_Portaloo_01",
         "mesh_id": "SM_Prop_Portaloo_01",
         "price": 1000,
@@ -264,7 +392,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_Computer_Bank_01_Monitor_01",
+        "part_id": "Computer_Bank_01_Monitor_01",
         "mesh_path": "/Game/Models/PolygonProRacer/Models/Props/SM_Prop_Computer_Bank_01_Monitor_01",
         "mesh_id": "SM_Prop_Computer_Bank_01_Monitor_01",
         "price": 1500,
@@ -272,7 +400,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_Computer_Bank_02_Monitor_01",
+        "part_id": "Computer_Bank_02_Monitor_01",
         "mesh_path": "/Game/Models/PolygonProRacer/Models/Props/SM_Prop_Computer_Bank_02_Monitor_01",
         "mesh_id": "SM_Prop_Computer_Bank_02_Monitor_01",
         "price": 1500,
@@ -280,7 +408,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_Computer_Bank_03_Monitor_01",
+        "part_id": "Computer_Bank_03_Monitor_01",
         "mesh_path": "/Game/Models/PolygonProRacer/Models/Props/SM_Prop_Computer_Bank_03_Monitor_01",
         "mesh_id": "SM_Prop_Computer_Bank_03_Monitor_01",
         "price": 1500,
@@ -288,7 +416,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_WalkieTalkie_01",
+        "part_id": "WalkieTalkie_01",
         "mesh_path": "/Game/Models/PolygonProRacer/Models/Props/SM_Prop_WalkieTalkie_01",
         "mesh_id": "SM_Prop_WalkieTalkie_01",
         "price": 150,
@@ -296,7 +424,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_Chair_Folding_01",
+        "part_id": "Chair_Folding_01",
         "mesh_path": "/Game/Models/PolygonMilitary/Meshes/Props/SM_Prop_Chair_Folding_01",
         "mesh_id": "SM_Prop_Chair_Folding_01",
         "price": 50,
@@ -304,7 +432,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_Electronics_Tv_02",
+        "part_id": "Electronics_Tv_02",
         "mesh_path": "/Game/Models/PolygonMilitary/Meshes/Props/SM_Prop_Electronics_Tv_02",
         "mesh_id": "SM_Prop_Electronics_Tv_02",
         "price": 750,
@@ -312,7 +440,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_Pallet_01",
+        "part_id": "Pallet_01",
         "mesh_path": "/Game/Models/PolygonMilitary/Meshes/Props/SM_Prop_Pallet_01",
         "mesh_id": "SM_Prop_Pallet_01",
         "price": 25,
@@ -320,7 +448,7 @@
         "part_type": "- "
     },
     {
-        "part_id": "Prop_Money_Stack_03",
+        "part_id": "Money_Stack_03",
         "mesh_path": "/Game/Models/PolygonHeist/Meshes/Props/SM_Prop_Money_Stack_03",
         "mesh_id": "SM_Prop_Money_Stack_03",
         "price": 10000,
@@ -328,7 +456,7 @@
         "part_type": "-"
     },
     {
-        "part_id": "Prop_Security_Monitors_01",
+        "part_id": "Security_Monitors_01",
         "mesh_path": "/Game/Models/PolygonGangWarfare/Meshes/Props/SM_Prop_Security_Monitors_01",
         "mesh_id": "SM_Prop_Security_Monitors_01",
         "price": 2000,
@@ -336,7 +464,7 @@
         "part_type": "-"
     },
     {
-        "part_id": "Prop_Wood_Frame_01",
+        "part_id": "Wood_Frame_01",
         "mesh_path": "/Game/Models/PolygonConstruction/Meshes/Props/SM_Prop_Wood_Frame_01",
         "mesh_id": "SM_Prop_Wood_Frame_01",
         "price": 150,
@@ -344,7 +472,15 @@
         "part_type": "-"
     },
     {
-        "part_id": "Prop_SatDish_01",
+        "part_id": "Ladder_Small_04",
+        "mesh_path": "/Game/Models/PolygonConstruction/Meshes/Props/SM_Prop_Ladder_Small_04",
+        "mesh_id": "SM_Prop_Ladder_Small_04",
+        "price": 850,
+        "mass": 25,
+        "part_type": "-"
+    },
+    {
+        "part_id": "SatDish_01",
         "mesh_path": "/Game/Models/PolygonCity/Meshes/Props/SM_Prop_SatDish_01",
         "mesh_id": "SM_Prop_SatDish_01",
         "price": 250,
@@ -352,7 +488,7 @@
         "part_type": "-"
     },
     {
-        "part_id": "Prop_Toilet_01",
+        "part_id": "Toilet_01",
         "mesh_path": "/Game/Models/PolygonHorrorMansion/Meshes/Props/SM_Prop_Toilet_01",
         "mesh_id": "SM_Prop_Toilet_01",
         "price": 500,
@@ -376,7 +512,7 @@
         "part_type": "-"
     },
     {
-        "part_id": "Prop_Generator_01",
+        "part_id": "Generator_01",
         "mesh_path": "/Game/Models/PolygonApocalypse/Meshes/Props/SM_Prop_Generator_01",
         "mesh_id": "SM_Prop_Generator_01",
         "price": 25000,

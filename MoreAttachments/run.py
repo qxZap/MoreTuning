@@ -8,10 +8,11 @@ import subprocess
 from pathlib import Path
 from datetime import timedelta
 
-TESTING = False
-TESTING_GAP = 10
-CREATE_ACTORS = True
-CLEAN_ACTORS = True
+TESTING = False # wanna test just a tailed number of attachments?
+TESTING_GAP = 10 # how many?
+CREATE_ACTORS = True #create actors? 
+CLEAN_ACTORS = False #clean all actors on run?
+DELTA_ONLY_ACTORS = True #create only missing actors
 
 MESH_ID_TO_USE = -283
 
@@ -151,8 +152,11 @@ def open_uasset_gui_target(json_path):
     except Exception as e:
         pass
 
+def file_exists(filepath):
+    return os.path.isfile(filepath)
+
 def remove_file_if_exists(filepath):
-    if os.path.isfile(filepath):
+    if file_exists(filepath):
         os.remove(filepath)
 
 def convert_and_delete(json_path):
@@ -648,13 +652,18 @@ for aero_attachment in aero_attachments:
     # Every new actor requires relative location
     # print("../../Output/Exports"+game_to_mt_path(mesh_path))
     if CREATE_ACTORS:
+        new_actor_path_json = f"../MoreAttachments_P/MotorTown/Content/Objects/MoreAttachments/{name_part_id}.json"
+        if DELTA_ONLY_ACTORS and file_exists(new_actor_path_json.replace('.json', '.uasset')) and file_exists(new_actor_path_json.replace('.json', '.uexp')):
+            continue
+
         uasset_exported_path = "../../Output/Exports"+game_to_mt_path(mesh_path)+'.uasset'
         convert_to_json(uasset_exported_path)
         mesh_data = load_json_from_path(uasset_exported_path.replace('.uasset','.json'))
         mesh_bounding = [(-1)*bounding for bounding in get_x_bounding(mesh_data)]
 
         new_actor = make_new_actor('/Game/Objects/MoreAttachments', name_part_id, mesh_id, mesh_path, mesh_bounding)
-        save_at_path_and_convert_clean(new_actor, f"../MoreAttachments_P/MotorTown/Content/Objects/MoreAttachments/{name_part_id}.json")
+        
+        save_at_path_and_convert_clean(new_actor, new_actor_path_json)
         # write_json_at_path(new_actor, f"../MoreAttachments_P/MotorTown/Content/Objects/MoreAttachments/{name_part_id}.json")
 
 # Save result
