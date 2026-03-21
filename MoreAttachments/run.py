@@ -28,7 +28,11 @@ KNOWN_PART_ICONS = {
   "RearWing": 0,
   "Roof": 0,
   "SideSkirt": 0,
-  "Trunk": 0
+  "Trunk": 0,
+  "Wheels":0,
+  "ControlPanel":0,
+  "Utility":0,
+  "Winch":0
 }
 
 def clean_part_name(ugly_str):
@@ -537,6 +541,23 @@ if TESTING:
     aero_attachments = aero_attachments[:TESTING_GAP]
     print(f"[TESTING] Limited to only {TESTING_GAP} attachments")
 
+# Extras but no specifics really!
+
+subparts = ["Wheels", "ControlPanel","Utility", "Winch"]
+for subpart in subparts:
+    fresh_new_parts_ids = [ file_path for file_path in os.listdir(f'../../Output/Exports/MotorTown/Content/Cars/Parts/{subpart}') if '.' in file_path]
+    fresh_new_parts_ids = sorted(list(set([fresh_new_part_id.split('.')[0] for fresh_new_part_id in fresh_new_parts_ids])))
+
+    for fresh_new_part_id in fresh_new_parts_ids:
+        aero_attachments.append({
+            "part_id": fresh_new_part_id,
+            "mesh_path": f"/Game/Cars/Parts/{subpart}/{fresh_new_part_id}",
+            "mesh_id": fresh_new_part_id,
+            "price": 2000,
+            "mass": 50,
+            "part_type": subpart
+        })
+
 for new_attachment in extra_data:
     aero_attachments.append(new_attachment)
 
@@ -547,15 +568,18 @@ vendor_last_id = int(vendor_data["Exports"][8]["Data"][0]["Value"][-1]["Name"])+
 # Default IMPORT for texture i guess. 
 index = len(data["Imports"])
 
-data["Imports"].append(new_texture_import("Parts",(-1)*index-2 ))
-data["Imports"].append(new_u_object_package_import("/Game/UI/Icons/Vehicle/Parts"))
+DEFAULT_IMPORT_PATH = "/Game/UI/Icons/Item/Ornament"
+DEFAULT_IMPORT_TEXTURE = "Ornament"
+
+data["Imports"].append(new_texture_import(DEFAULT_IMPORT_TEXTURE,(-1)*index-2 ))
+data["Imports"].append(new_u_object_package_import(DEFAULT_IMPORT_PATH))
 
 icon_index = (-1)*index-1
 
 data["Exports"][0]["CreateBeforeSerializationDependencies"].append((-1)*index-2)
 
-data["NameMap"].append("Parts")
-data["NameMap"].append("/Game/UI/Icons/Vehicle/Parts")
+data["NameMap"].append(DEFAULT_IMPORT_TEXTURE)
+data["NameMap"].append(DEFAULT_IMPORT_PATH)
 
 index = len(data["Imports"])
 

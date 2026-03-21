@@ -94,7 +94,7 @@
         "price": 1200,
         "mass": 60,
         "part_type": "- "
-    },,
+    },
     {
         "part_id": "ZinoHeadlight_01",
         "mesh_path": "/Game/Cars/Models/Zino/Headlight_01",
