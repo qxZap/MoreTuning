@@ -319,7 +319,6 @@ def make_new_attachment(attachment_id, attachment_name, cost, mass, actor_index,
     return new_attachment
 
 
-
 NEW_ACTOR_PATH = "ACTOR_TEMPLATE.json"
 new_actor_template = None
 with open(NEW_ACTOR_PATH, "r") as f:
@@ -521,7 +520,7 @@ for part in parts:
 
         elif field_name == "AttachmentScaleMax":
             old = field.get("Value")
-            field["Value"] = 5.0
+            field["Value"] = 2.75
 
 
 # Template here
