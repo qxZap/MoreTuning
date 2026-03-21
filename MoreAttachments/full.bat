@@ -1,4 +1,4 @@
 python run.py
 cd ..
-.\modp.bat MoreAttachments_P
+.\modp.bat qxZap_MoreAttachments_P
 cd MoreAttachments

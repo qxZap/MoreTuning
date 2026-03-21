@@ -493,7 +493,8 @@
         "mesh_id": "SM_Prop_Toilet_01",
         "price": 500,
         "mass": 50,
-        "part_type": "-"
+        "part_type": "-",
+        "premium" : true
     },
     {
         "part_id": "Veh_Loader_01_Bucket",
@@ -509,7 +510,8 @@
         "mesh_id": "SM_Bld_Crane_Top_01",
         "price": 1500000,
         "mass": 25000,
-        "part_type": "-"
+        "part_type": "-",
+        "premium" : true
     },
     {
         "part_id": "Generator_01",
@@ -523,72 +525,81 @@
         "part_id": "Veh_Preset_Muscle_01",
         "mesh_path": "/Game/Models/PolygonStreetRacer/Meshes/Vehicles_Preset/SM_Veh_Preset_Muscle_01",
         "mesh_id": "SM_Veh_Preset_Muscle_01",
-        "price": 1500000,
+        "price": 150000,
         "mass": 2500,
-        "part_type": "-"
+        "part_type": "-",
+        "premium" : true
     },
     {
         "part_id": "Veh_Preset_Muscle_02",
         "mesh_path": "/Game/Models/PolygonStreetRacer/Meshes/Vehicles_Preset/SM_Veh_Preset_Muscle_02",
         "mesh_id": "SM_Veh_Preset_Muscle_02",
-        "price": 1500000,
+        "price": 150000,
         "mass": 2500,
-        "part_type": "-"
+        "part_type": "-",
+        "premium" : true
     },
     {
         "part_id": "Veh_Preset_Muscle_03",
         "mesh_path": "/Game/Models/PolygonStreetRacer/Meshes/Vehicles_Preset/SM_Veh_Preset_Muscle_03",
         "mesh_id": "SM_Veh_Preset_Muscle_03",
-        "price": 1500000,
+        "price": 150000,
         "mass": 2500,
-        "part_type": "-"
+        "part_type": "-",
+        "premium" : true
     },
     {
         "part_id": "Veh_Preset_Sedan_04",
         "mesh_path": "/Game/Models/PolygonStreetRacer/Meshes/Vehicles_Preset/SM_Veh_Preset_Sedan_04",
         "mesh_id": "SM_Veh_Preset_Sedan_04",
-        "price": 1500000,
+        "price": 150000,
         "mass": 2500,
-        "part_type": "-"
+        "part_type": "-",
+        "premium" : true
     },
     {
         "part_id": "Veh_Preset_Truck_02",
         "mesh_path": "/Game/Models/PolygonStreetRacer/Meshes/Vehicles_Preset/SM_Veh_Preset_Truck_02",
         "mesh_id": "SM_Veh_Preset_Truck_02",
-        "price": 1500000,
+        "price": 150000,
         "mass": 2500,
-        "part_type": "-"
+        "part_type": "-",
+        "premium" : true
     },
     {
         "part_id": "Veh_Preset_Truck_03",
         "mesh_path": "/Game/Models/PolygonStreetRacer/Meshes/Vehicles_Preset/SM_Veh_Preset_Truck_03",
         "mesh_id": "SM_Veh_Preset_Truck_03",
-        "price": 1500000,
+        "price": 150000,
         "mass": 2500,
-        "part_type": "-"
+        "part_type": "-",
+        "premium" : true
     },
     {
         "part_id": "Veh_Preset_Ute_01",
         "mesh_path": "/Game/Models/PolygonStreetRacer/Meshes/Vehicles_Preset/SM_Veh_Preset_Ute_01",
         "mesh_id": "SM_Veh_Preset_Ute_01",
-        "price": 1500000,
+        "price": 150000,
         "mass": 2500,
-        "part_type": "-"
+        "part_type": "-",
+        "premium" : true
     },
     {
         "part_id": "Veh_Preset_Ute_03",
         "mesh_path": "/Game/Models/PolygonStreetRacer/Meshes/Vehicles_Preset/SM_Veh_Preset_Ute_03",
         "mesh_id": "SM_Veh_Preset_Ute_03",
-        "price": 1500000,
+        "price": 150000,
         "mass": 2500,
-        "part_type": "-"
+        "part_type": "-",
+        "premium" : true
     },
     {
         "part_id": "Veh_Preset_Ute_04",
         "mesh_path": "/Game/Models/PolygonStreetRacer/Meshes/Vehicles_Preset/SM_Veh_Preset_Ute_04",
         "mesh_id": "SM_Veh_Preset_Ute_04",
-        "price": 1500000,
+        "price": 150000,
         "mass": 2500,
-        "part_type": "-"
+        "part_type": "-",
+        "premium" : true
     }
 ]

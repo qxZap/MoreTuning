@@ -16,6 +16,8 @@ DELTA_ONLY_ACTORS = True #create only missing actors
 
 MESH_ID_TO_USE = -283
 
+paid_icon_index = None
+
 KNOWN_PART_ICONS = {
   "Bonnet": 0,
   "Fender": 0,
@@ -170,9 +172,10 @@ def convert_and_delete(json_path):
 def convert_to_json(uasset_path):
     run_uassetgui_uasset_to_json(uasset_path, uasset_path.replace('.uasset', '.json'))
 
-def save_at_path_and_convert_clean(json_data, save_path):
+def save_at_path_and_convert_clean(json_data, save_path, sike=False):
     write_json_at_path(json_data, save_path)
-    convert_and_delete(save_path)
+    if not sike:
+        convert_and_delete(save_path)
 
 # EXAMPLE
 # {
@@ -240,7 +243,7 @@ if not new_attachment_template:
     print(f"No {NEW_TATTACHMENT_TEMPLATE_PATH} found in the current folder! It's required to create new attachments!")
     exit()
 
-def make_new_attachment(attachment_id, attachment_name, cost, mass, actor_index, mesh_index, icon_index, part_type):
+def make_new_attachment(attachment_id, attachment_name, cost, mass, actor_index, mesh_index, icon_index, part_type, is_premium):
     # TODO: attachment_name << nice format required 
     new_attachment = copy.deepcopy(new_attachment_template)
     new_attachment["Name"] = attachment_id
@@ -286,6 +289,10 @@ def make_new_attachment(attachment_id, attachment_name, cost, mass, actor_index,
                   }
                 ]
             
+        if row["Name"] == "bNotForSale":
+            if is_premium:
+                row["Value"] = True
+        
         if row["Name"] == "Cost":
             row["Value"] = cost
         if row["Name"] == "MassKg":
@@ -298,13 +305,16 @@ def make_new_attachment(attachment_id, attachment_name, cost, mass, actor_index,
             row["Value"] = MESH_ID_TO_USE
         
         if row["Name"] == "IconTexture":
-            if part_type in KNOWN_PART_ICONS:
-                if KNOWN_PART_ICONS[part_type]!=0:
-                    row["Value"] = KNOWN_PART_ICONS[part_type]
+            if is_premium and paid_icon_index:
+                row["Value"] = paid_icon_index
+            else:
+                if part_type in KNOWN_PART_ICONS:
+                    if KNOWN_PART_ICONS[part_type]!=0:
+                        row["Value"] = KNOWN_PART_ICONS[part_type]
+                    else:
+                        row["Value"] = icon_index
                 else:
                     row["Value"] = icon_index
-            else:
-                row["Value"] = icon_index
 
     return new_attachment
 
@@ -400,7 +410,7 @@ if not vendor_data:
 # Logic Start
 
 # Clean up previously generated files
-output_content_dir = Path("../MoreAttachments_P/MotorTown/Content/Objects/MoreAttachments")
+output_content_dir = Path("../qxZap_MoreAttachments_P/MotorTown/Content/Objects/MoreAttachments")
 if output_content_dir.exists() and CLEAN_ACTORS:
     shutil.rmtree(output_content_dir)
     print(f"Cleaned up {output_content_dir}")
@@ -563,6 +573,7 @@ for new_attachment in extra_data:
 
 
 vendor_last_id = int(vendor_data["Exports"][8]["Data"][0]["Value"][-1]["Name"])+1
+vendor_premium_last_id = vendor_last_id
 
 
 # Default IMPORT for texture i guess. 
@@ -575,6 +586,24 @@ data["Imports"].append(new_texture_import(DEFAULT_IMPORT_TEXTURE,(-1)*index-2 ))
 data["Imports"].append(new_u_object_package_import(DEFAULT_IMPORT_PATH))
 
 icon_index = (-1)*index-1
+
+data["Exports"][0]["CreateBeforeSerializationDependencies"].append((-1)*index-2)
+
+data["NameMap"].append(DEFAULT_IMPORT_TEXTURE)
+data["NameMap"].append(DEFAULT_IMPORT_PATH)
+
+index = len(data["Imports"])
+
+# Premium content (paid one)
+index = len(data["Imports"])
+
+DEFAULT_IMPORT_PATH = "/Game/UI/Icons/GoldStar"
+DEFAULT_IMPORT_TEXTURE = "GoldStar"
+
+data["Imports"].append(new_texture_import(DEFAULT_IMPORT_TEXTURE,(-1)*index-2 ))
+data["Imports"].append(new_u_object_package_import(DEFAULT_IMPORT_PATH))
+
+paid_icon_index = (-1)*index-1
 
 data["Exports"][0]["CreateBeforeSerializationDependencies"].append((-1)*index-2)
 
@@ -604,6 +633,11 @@ attachments_count = len(aero_attachments)
 current_index = 1
 start_time = time.time()
 
+premium_data = data["Exports"][0]["Table"]["Data"]
+
+vendor_premium_listing = copy.deepcopy(vendor_data["Exports"][8]["Data"][0]["Value"])
+vendor_premium_names = copy.deepcopy(vendor_data["NameMap"])
+
 for aero_attachment in aero_attachments:
     # Your real work here
     # time.sleep(0.3)          # ← only for demonstration
@@ -631,22 +665,44 @@ for aero_attachment in aero_attachments:
     price = aero_attachment.get("price")
     mass = aero_attachment.get("mass")
     part_type = aero_attachment.get("part_type")
+    is_premium = aero_attachment.get("premium", False)
 
     name_part_id = 'Attachment_'+part_id
 
-    vendor_data["Exports"][8]["Data"][0]["Value"].append({
-              "$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI",
-              "Name": str(vendor_last_id),
-              "ArrayIndex": 0,
-              "IsZero": False,
-              "PropertyTagFlags": "None",
-              "PropertyTypeName": None,
-              "PropertyTagExtensions": "NoExtension",
-              "Value": name_part_id
-            })
-    vendor_last_id+=1
+    premium_entry = {
+        "$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI",
+        "Name": str(vendor_premium_last_id),
+        "ArrayIndex": 0,
+        "IsZero": False,
+        "PropertyTagFlags": "None",
+        "PropertyTypeName": None,
+        "PropertyTagExtensions": "NoExtension",
+        "Value": name_part_id
+    }
 
-    vendor_data["NameMap"].append(name_part_id)
+    # Premium list gets EVERYTHING
+    vendor_premium_listing.append(premium_entry)
+    vendor_premium_names.append(name_part_id)
+
+    vendor_premium_last_id += 1  # ALWAYS increment
+
+    # Default list gets ONLY non-premium
+    if not is_premium:
+        default_entry = {
+            "$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI",
+            "Name": str(vendor_last_id),
+            "ArrayIndex": 0,
+            "IsZero": False,
+            "PropertyTagFlags": "None",
+            "PropertyTypeName": None,
+            "PropertyTagExtensions": "NoExtension",
+            "Value": name_part_id
+        }
+
+        vendor_data["Exports"][8]["Data"][0]["Value"].append(default_entry)
+        vendor_data["NameMap"].append(name_part_id)
+
+        vendor_last_id += 1  # ONLY increment here
 
     # data["NameMap"].append(name_part_id)
     # data["NameMap"].append('/Game/Objects/MoreAttachments/'+name_part_id)
@@ -669,14 +725,15 @@ for aero_attachment in aero_attachments:
     # data["Imports"].append(new_u_object_package_import(mesh_path))
 
 
-    data["Exports"][0]["Table"]["Data"].append(make_new_attachment(name_part_id, part_id, price, mass, actor_index, mesh_index, icon_index, part_type))
+    data["Exports"][0]["Table"]["Data"].append(make_new_attachment(name_part_id, part_id, price, mass, actor_index, mesh_index, icon_index, part_type, is_premium))
+    premium_data.append(make_new_attachment(name_part_id, part_id, price, mass, actor_index, mesh_index, icon_index, part_type, False))
     data["Exports"][0]["CreateBeforeSerializationDependencies"].append(actor_index)
     # data["Exports"][0]["CreateBeforeSerializationDependencies"].append(mesh_index)
 
     # Every new actor requires relative location
     # print("../../Output/Exports"+game_to_mt_path(mesh_path))
     if CREATE_ACTORS:
-        new_actor_path_json = f"../MoreAttachments_P/MotorTown/Content/Objects/MoreAttachments/{name_part_id}.json"
+        new_actor_path_json = f"../qxZap_MoreAttachments_P/MotorTown/Content/Objects/MoreAttachments/{name_part_id}.json"
         if DELTA_ONLY_ACTORS and file_exists(new_actor_path_json.replace('.json', '.uasset')) and file_exists(new_actor_path_json.replace('.json', '.uexp')):
             continue
 
@@ -688,12 +745,12 @@ for aero_attachment in aero_attachments:
         new_actor = make_new_actor('/Game/Objects/MoreAttachments', name_part_id, mesh_id, mesh_path, mesh_bounding)
         
         save_at_path_and_convert_clean(new_actor, new_actor_path_json)
-        # write_json_at_path(new_actor, f"../MoreAttachments_P/MotorTown/Content/Objects/MoreAttachments/{name_part_id}.json")
+        # write_json_at_path(new_actor, f"../qxZap_MoreAttachments_P/MotorTown/Content/Objects/MoreAttachments/{name_part_id}.json")
 
 # Save result
 
 copy_base_bps_from = '../../Output/Exports/MotorTown/Content/Characters'
-copy_base_bps_to = '../MoreAttachments_P/MotorTown/Content/Characters'
+copy_base_bps_to = '../qxZap_MoreAttachments_P/MotorTown/Content/Characters'
 
 files = ['MotorTownCharacterBP', 'MTAICharacter', 'MTPlayerCharacter']
 extensions = ['.uasset','.uexp']
@@ -704,14 +761,36 @@ for file in files:
     for extension in extensions:
         copy_from = f'{copy_base_bps_from}/{file}{extension}'
         copy_to = f'{copy_base_bps_to}/{file}{extension}'
-        quick_copy(copy_from, copy_to)
 
+        # Free mod
+        quick_copy(copy_from, copy_to)
         copied.append(copy_to)
 
-save_at_path_and_convert_clean(data, "../MoreAttachments_P/MotorTown/Content/DataAsset/Items/Items_AttachmentPart.json")
-# write_json_at_path(data,  "../MoreAttachments_P/MotorTown/Content/DataAsset/Items/Items_AttachmentPart.json")
+        # Paid mod
+        new_one = copy_to.replace('qxZap_MoreAttachments_P','qxZap_MoreAttachments_Premium_P')
+        quick_copy(copy_from, new_one)
+        copied.append(new_one)
 
-save_at_path_and_convert_clean(vendor_data, "../MoreAttachments_P/MotorTown/Content/Characters/NPC/Vendor_Garage.json")
+# Free mod
+save_at_path_and_convert_clean(data, "../qxZap_MoreAttachments_P/MotorTown/Content/DataAsset/Items/Items_AttachmentPart.json")
+
+# Paid mod
+premium_mod_data = copy.deepcopy(data)
+premium_mod_data["Exports"][0]["Table"]["Data"]=premium_data
+save_at_path_and_convert_clean(premium_mod_data, "../qxZap_MoreAttachments_Premium_P/MotorTown/Content/DataAsset/Items/Items_AttachmentPart.json")
+
+# write_json_at_path(data,  "../qxZap_MoreAttachments_P/MotorTown/Content/DataAsset/Items/Items_AttachmentPart.json")
+
+# Free mod
+save_at_path_and_convert_clean(vendor_data, "../qxZap_MoreAttachments_P/MotorTown/Content/Characters/NPC/Vendor_Garage.json")
+
+# Paid mode
+premium_vendor_data = copy.deepcopy(vendor_data)
+premium_vendor_data["NameMap"] = vendor_premium_names
+premium_vendor_data["Exports"][8]["Data"][0]["Value"]=vendor_premium_listing
+
+save_at_path_and_convert_clean(premium_vendor_data, "../qxZap_MoreAttachments_Premium_P/MotorTown/Content/Characters/NPC/Vendor_Garage.json")
+
 
 for copied_file in copied:
     remove_file_if_exists(copied_file)
