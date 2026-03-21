@@ -9,7 +9,7 @@ from pathlib import Path
 from datetime import timedelta
 
 TESTING = False
-TESTING_GAP = 20
+TESTING_GAP = 10
 CREATE_ACTORS = True
 CLEAN_ACTORS = True
 
@@ -347,9 +347,24 @@ def make_new_actor(path_base, actor_name, mesh_name, mesh_path, mesh_bounding):
     new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/MajasDetailWorks/Meshes/SideskirtCustomVeryLong", mesh_path)
     new_actor = new_actor.replace("SideskirtCustomVeryLong", mesh_name)
 
-    x = mesh_bounding[0] or 0.0
-    y = mesh_bounding[1] or 0.0
-    z = mesh_bounding[2] or 0.0
+    x = 0.0
+    y = 0.0
+    z = 0.0
+
+    try:
+        x = float(mesh_bounding[0])
+    except Exception:
+        pass
+
+    try:
+        y = float(mesh_bounding[1])
+    except Exception:
+        pass
+
+    try:
+        z = float(mesh_bounding[2])
+    except Exception:
+        pass
 
     new_actor = new_actor.replace("-0.96961", str(x))
     new_actor = new_actor.replace("-0.96962", str(y))
@@ -514,12 +529,13 @@ if not extra_data:
     print(f"No {EXTRA_ATTACHMENTS_FILE} found in the current folder! \nThis is required for generation of attachments!")
     exit()
 
-for new_attachment in extra_data:
-    aero_attachments.append(new_attachment)
-
 if TESTING:
     aero_attachments = aero_attachments[:TESTING_GAP]
     print(f"[TESTING] Limited to only {TESTING_GAP} attachments")
+
+for new_attachment in extra_data:
+    aero_attachments.append(new_attachment)
+
 
 vendor_last_id = int(vendor_data["Exports"][8]["Data"][0]["Value"][-1]["Name"])+1
 
@@ -660,6 +676,8 @@ for file in files:
         copied.append(copy_to)
 
 save_at_path_and_convert_clean(data, "../MoreAttachments_P/MotorTown/Content/DataAsset/Items/Items_AttachmentPart.json")
+# write_json_at_path(data,  "../MoreAttachments_P/MotorTown/Content/DataAsset/Items/Items_AttachmentPart.json")
+
 save_at_path_and_convert_clean(vendor_data, "../MoreAttachments_P/MotorTown/Content/Characters/NPC/Vendor_Garage.json")
 
 for copied_file in copied:
