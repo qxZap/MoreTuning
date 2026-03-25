@@ -1,0 +1,751 @@
+{
+            "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
+            "StructType": "MTItemRow",
+            "SerializeNone": true,
+            "StructGUID": "{00000000-0000-0000-0000-000000000000}",
+            "SerializationControl": "NoExtension",
+            "Operation": "None",
+            "Name": "Attachment_OversizeLoad_Sign_7",
+            "ArrayIndex": 0,
+            "IsZero": false,
+            "PropertyTagFlags": "None",
+            "PropertyTypeName": null,
+            "PropertyTagExtensions": "NoExtension",
+            "Value": [
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.TextPropertyData, UAssetAPI",
+                "Flags": 0,
+                "HistoryType": "None",
+                "Namespace": null,
+                "CultureInvariantString": null,
+                "SourceFmt": null,
+                "Arguments": null,
+                "ArgumentsData": null,
+                "TransformType": "ToLower",
+                "SourceValue": null,
+                "FormatOptions": null,
+                "TargetCulture": null,
+                "Name": "ItemName",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": null
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
+                "StructType": "MTNameAndNumber",
+                "SerializeNone": true,
+                "StructGUID": "{00000000-0000-0000-0000-000000000000}",
+                "SerializationControl": "NoExtension",
+                "Operation": "None",
+                "Name": "ItemNameAndNumber",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": [
+                  {
+                    "$type": "UAssetAPI.PropertyTypes.Objects.TextPropertyData, UAssetAPI",
+                    "Flags": 0,
+                    "HistoryType": "None",
+                    "Namespace": null,
+                    "CultureInvariantString": null,
+                    "SourceFmt": null,
+                    "Arguments": null,
+                    "ArgumentsData": null,
+                    "TransformType": "ToLower",
+                    "SourceValue": null,
+                    "FormatOptions": null,
+                    "TargetCulture": null,
+                    "Name": "Name",
+                    "ArrayIndex": 0,
+                    "IsZero": false,
+                    "PropertyTagFlags": "None",
+                    "PropertyTypeName": null,
+                    "PropertyTagExtensions": "NoExtension",
+                    "Value": null
+                  },
+                  {
+                    "$type": "UAssetAPI.PropertyTypes.Objects.IntPropertyData, UAssetAPI",
+                    "Name": "Number",
+                    "ArrayIndex": 0,
+                    "IsZero": true,
+                    "PropertyTagFlags": "None",
+                    "PropertyTypeName": null,
+                    "PropertyTagExtensions": "NoExtension",
+                    "Value": 0
+                  }
+                ]
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
+                "StructType": "MTTextByTexts",
+                "SerializeNone": true,
+                "StructGUID": "{00000000-0000-0000-0000-000000000000}",
+                "SerializationControl": "NoExtension",
+                "Operation": "None",
+                "Name": "ItemNameTexts",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": [
+                  {
+                    "$type": "UAssetAPI.PropertyTypes.Objects.ArrayPropertyData, UAssetAPI",
+                    "ArrayType": "TextProperty",
+                    "Name": "Texts",
+                    "ArrayIndex": 0,
+                    "IsZero": false,
+                    "PropertyTagFlags": "None",
+                    "PropertyTypeName": null,
+                    "PropertyTagExtensions": "NoExtension",
+                    "Value": [
+                      {
+                        "$type": "UAssetAPI.PropertyTypes.Objects.TextPropertyData, UAssetAPI",
+                        "Flags": 0,
+                        "HistoryType": "StringTableEntry",
+                        "TableId": "/Game/DataAsset/StringTables/Item.Item",
+                        "Namespace": null,
+                        "CultureInvariantString": null,
+                        "SourceFmt": null,
+                        "Arguments": null,
+                        "ArgumentsData": null,
+                        "TransformType": "ToLower",
+                        "SourceValue": null,
+                        "FormatOptions": null,
+                        "TargetCulture": null,
+                        "Name": "0",
+                        "ArrayIndex": 0,
+                        "IsZero": false,
+                        "PropertyTagFlags": "None",
+                        "PropertyTypeName": null,
+                        "PropertyTagExtensions": "NoExtension",
+                        "Value": "Sign"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+                "Name": "IconTexture",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": -351
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.Int64PropertyData, UAssetAPI",
+                "Name": "Cost",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": 100
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
+                "Name": "bNotForSale",
+                "ArrayIndex": 0,
+                "IsZero": true,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": false
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.Int64PropertyData, UAssetAPI",
+                "Name": "MaxStack",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": 3
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.EnumPropertyData, UAssetAPI",
+                "EnumType": "EMTItemType",
+                "InnerType": "ByteProperty",
+                "Name": "ItemType",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": "VehicleAttachment"
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
+                "StructType": "GameplayTagContainer",
+                "SerializeNone": true,
+                "StructGUID": "{00000000-0000-0000-0000-000000000000}",
+                "SerializationControl": "NoExtension",
+                "Operation": "None",
+                "Name": "GameplayTags",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": [
+                  {
+                    "$type": "UAssetAPI.PropertyTypes.Structs.GameplayTagContainerPropertyData, UAssetAPI",
+                    "Name": "GameplayTags",
+                    "ArrayIndex": 0,
+                    "IsZero": false,
+                    "PropertyTagFlags": "None",
+                    "PropertyTypeName": null,
+                    "PropertyTagExtensions": "NoExtension",
+                    "Value": []
+                  }
+                ]
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+                "Name": "HoldableActorClass",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": -1
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+                "Name": "DropActorClass",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": -1
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+                "Name": "AttachmentPartActorClass",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": -34
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI",
+                "Name": "HoldableSocketName",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": "HoldingCargo"
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI",
+                "Name": "HoldableItemSocketName",
+                "ArrayIndex": 0,
+                "IsZero": true,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": null
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
+                "Name": "bHoldingOffsetUsingItemBounds",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": false
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
+                "Name": "bUseHandIK",
+                "ArrayIndex": 0,
+                "IsZero": true,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": false
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.EnumPropertyData, UAssetAPI",
+                "EnumType": "EMTItemHandRIKType",
+                "InnerType": "ByteProperty",
+                "Name": "HandIKType",
+                "ArrayIndex": 0,
+                "IsZero": true,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": "Flash"
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
+                "Name": "bUseCargoHoldingPose",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": true
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.EnumPropertyData, UAssetAPI",
+                "EnumType": "EMotorTownInteractableType",
+                "InnerType": "ByteProperty",
+                "Name": "InteractionType",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": "AttachToVehicle"
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.TextPropertyData, UAssetAPI",
+                "Flags": 0,
+                "HistoryType": "None",
+                "Namespace": null,
+                "CultureInvariantString": null,
+                "SourceFmt": null,
+                "Arguments": null,
+                "ArgumentsData": null,
+                "TransformType": "ToLower",
+                "SourceValue": null,
+                "FormatOptions": null,
+                "TargetCulture": null,
+                "Name": "InteractionName",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": null
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.ArrayPropertyData, UAssetAPI",
+                "ArrayType": "ObjectProperty",
+                "Name": "InteractionTargetActorClasses",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": [
+                  {
+                    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+                    "Name": "0",
+                    "ArrayIndex": 0,
+                    "IsZero": false,
+                    "PropertyTagFlags": "None",
+                    "PropertyTypeName": null,
+                    "PropertyTagExtensions": "NoExtension",
+                    "Value": -38
+                  }
+                ]
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.ArrayPropertyData, UAssetAPI",
+                "ArrayType": "ObjectProperty",
+                "DummyStruct": null,
+                "Name": "InteractionTargetComponentClasses",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": []
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.IntPropertyData, UAssetAPI",
+                "Name": "InteractionTargetActorMax",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": 1
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
+                "Name": "bTrashByInteraction",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": true
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.SetPropertyData, UAssetAPI",
+                "ArrayType": "EnumProperty",
+                "DummyStruct": null,
+                "Name": "ItemFeatures",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": []
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
+                "Name": "bIsPersistence",
+                "ArrayIndex": 0,
+                "IsZero": true,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": false
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
+                "Name": "bDropable",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": true
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
+                "Name": "bThrowable",
+                "ArrayIndex": 0,
+                "IsZero": true,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": false
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
+                "Name": "bSpawnActorOnDrop",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": false
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
+                "Name": "bHoldOnlyItem",
+                "ArrayIndex": 0,
+                "IsZero": true,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": false
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
+                "Name": "bCrosshairMode",
+                "ArrayIndex": 0,
+                "IsZero": true,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": false
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
+                "Name": "bCrosshairModeForInteraction",
+                "ArrayIndex": 0,
+                "IsZero": true,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": false
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
+                "Name": "bCrosshairModeGroundTargeting",
+                "ArrayIndex": 0,
+                "IsZero": true,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": false
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
+                "Name": "bCrosshairModeForDropping",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": true
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
+                "Name": "bHideHoldingItemOnValidCrosshairTarget",
+                "ArrayIndex": 0,
+                "IsZero": true,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": false
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
+                "Name": "bIsHeavy",
+                "ArrayIndex": 0,
+                "IsZero": true,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": false
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI",
+                "Name": "BuildingKey",
+                "ArrayIndex": 0,
+                "IsZero": true,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": null
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
+                "StructType": "Rotator",
+                "SerializeNone": true,
+                "StructGUID": "{00000000-0000-0000-0000-000000000000}",
+                "SerializationControl": "NoExtension",
+                "Operation": "None",
+                "Name": "DefaultHoldingRotation",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": [
+                  {
+                    "$type": "UAssetAPI.PropertyTypes.Structs.RotatorPropertyData, UAssetAPI",
+                    "Name": "DefaultHoldingRotation",
+                    "ArrayIndex": 0,
+                    "IsZero": false,
+                    "PropertyTagFlags": "None",
+                    "PropertyTypeName": null,
+                    "PropertyTagExtensions": "NoExtension",
+                    "Value": {
+                      "$type": "UAssetAPI.UnrealTypes.FRotator, UAssetAPI",
+                      "Pitch": 90.0,
+                      "Yaw": "+0",
+                      "Roll": "+0"
+                    }
+                  }
+                ]
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
+                "StructType": "Rotator",
+                "SerializeNone": true,
+                "StructGUID": "{00000000-0000-0000-0000-000000000000}",
+                "SerializationControl": "NoExtension",
+                "Operation": "None",
+                "Name": "AttachmentRotationStep",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": [
+                  {
+                    "$type": "UAssetAPI.PropertyTypes.Structs.RotatorPropertyData, UAssetAPI",
+                    "Name": "AttachmentRotationStep",
+                    "ArrayIndex": 0,
+                    "IsZero": false,
+                    "PropertyTagFlags": "None",
+                    "PropertyTypeName": null,
+                    "PropertyTagExtensions": "NoExtension",
+                    "Value": {
+                      "$type": "UAssetAPI.UnrealTypes.FRotator, UAssetAPI",
+                      "Pitch": 90.0,
+                      "Yaw": "+0",
+                      "Roll": "+0"
+                    }
+                  }
+                ]
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
+                "Name": "AttachmentScaleMin",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": 0.25
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
+                "Name": "AttachmentScaleMax",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": 5.0
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+                "Name": "PickupSound",
+                "ArrayIndex": 0,
+                "IsZero": true,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": 0
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+                "Name": "StaticMesh",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": -303
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
+                "StructType": "Vector",
+                "SerializeNone": true,
+                "StructGUID": "{00000000-0000-0000-0000-000000000000}",
+                "SerializationControl": "NoExtension",
+                "Operation": "None",
+                "Name": "StaticMeshScale",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": [
+                  {
+                    "$type": "UAssetAPI.PropertyTypes.Structs.VectorPropertyData, UAssetAPI",
+                    "Name": "StaticMeshScale",
+                    "ArrayIndex": 0,
+                    "IsZero": false,
+                    "PropertyTagFlags": "None",
+                    "PropertyTypeName": null,
+                    "PropertyTagExtensions": "NoExtension",
+                    "Value": {
+                      "$type": "UAssetAPI.UnrealTypes.FVector, UAssetAPI",
+                      "X": 1.0,
+                      "Y": 1.0,
+                      "Z": 1.0
+                    }
+                  }
+                ]
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
+                "Name": "MassKg",
+                "ArrayIndex": 0,
+                "IsZero": true,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": "+0"
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+                "Name": "Material",
+                "ArrayIndex": 0,
+                "IsZero": true,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": 0
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.ArrayPropertyData, UAssetAPI",
+                "ArrayType": "ObjectProperty",
+                "DummyStruct": null,
+                "Name": "Materials",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": []
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI",
+                "Name": "CostumeBodyKey",
+                "ArrayIndex": 0,
+                "IsZero": true,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": null
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI",
+                "Name": "DroneKey",
+                "ArrayIndex": 0,
+                "IsZero": true,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": null
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.MapPropertyData, UAssetAPI",
+                "Value": [],
+                "KeyType": "EnumProperty",
+                "ValueType": "IntProperty",
+                "KeysToRemove": [],
+                "Name": "LevelRequirementToBuy",
+                "ArrayIndex": 0,
+                "IsZero": false,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension"
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI",
+                "Name": "CouponKey",
+                "ArrayIndex": 0,
+                "IsZero": true,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": null
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
+                "Name": "bUsingCouponInventory",
+                "ArrayIndex": 0,
+                "IsZero": true,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": false
+              },
+              {
+                "$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI",
+                "Name": "CharacterPartKey",
+                "ArrayIndex": 0,
+                "IsZero": true,
+                "PropertyTagFlags": "None",
+                "PropertyTypeName": null,
+                "PropertyTagExtensions": "NoExtension",
+                "Value": null
+              }
+            ]
+          }

@@ -1,0 +1,36 @@
+1st import is 
+["/Script/Engine","BlueprintGeneratedClass","-172","OversizeLoad_Sign_7_C","False",""] @ -34
+
+at 172 is 
+
+["/Script/CoreUObject","Package","0","/Game/Objects/VehicleAttachment/OversizeLoadSigns/OversizeLoad_Sign_7","False",""]
+which is like a generic bp of some sorts for this sign, that seems to be used for AttachmentPartActorClass
+    
+So it's required actor ...
+
+
+next import for the new part is for -303 mesh at StaticMesh field
+
+
+["/Script/Engine","StaticMesh","-181","Sign_7","False",""]
+static mesh with outer index -181
+at this package
+["/Script/CoreUObject","Package","0","/Game/Objects/VehicleAttachment/OversizeLoadSigns/Sign_7","False",""]
+
+
+Ok so 2 things required for the propper usage of these:
+1. actor (what the fuck is an actor???)
+2. mesh (gathered from aero parts)
+
+
+actor seems to include data about collision and some callouts to the mesh and mesh package
+
+REMEMBER ABOUT CreateBeforeSerializationDependencies!!!!
+
+
+
+TODO:
+
+new attachments into the items path
+
+actor sets! in place?? whjere???
