@@ -11,8 +11,9 @@ from datetime import timedelta
 TESTING = False # wanna test just a tailed number of attachments?
 TESTING_GAP = 10 # how many?
 CREATE_ACTORS = True #create actors? 
-CLEAN_ACTORS = True #clean all actors on run?
+CLEAN_ACTORS = False #clean all actors on run?
 DELTA_ONLY_ACTORS = True #create only missing actors
+USE_EXTRAS = True
 
 MESH_ID_TO_USE = -283
 
@@ -328,41 +329,33 @@ if not new_actor_template:
     print(f"No {NEW_ACTOR_PATH} found in the current folder! It's required to create new attachments!")
     exit()
 
-# def make_new_actor(path_base, actor_name, mesh_name, mesh_path):
+NEW_ACTOR_PATH_NOCOLOR = "ACTOR_TEMPLATE_NOCOLOR.json"
+new_actor_template_nocolor = None
+with open(NEW_ACTOR_PATH_NOCOLOR, "r") as f:
+    new_actor_template_nocolor = f.read()
+
+if not new_actor_template_nocolor:
+    print(f"No {NEW_ACTOR_PATH_NOCOLOR} found in the current folder! It's required to create new attachments!")
+    exit()
+
+
+def make_new_actor(path_base, actor_name, mesh_name, mesh_path, mesh_bounding, colorable_actor=True):
     
-#     new_actor = copy.deepcopy(new_actor_template)
-#     new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/OversizeLoadSigns",path_base)
-#     new_actor = new_actor.replace("OversizeLoad_Sign_7_C", actor_name+"_C")
-#     new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/OversizeLoadSigns/Sign_7", mesh_path+"/"+mesh_name)
-#     new_actor = new_actor.replace("Sign_7", mesh_name)
-#     # new_actor = new_actor.replace("Default__MagisWing_C", "Default__"+actor_name+"_C")
-#     # new_actor = new_actor.replace("MagisWing_C", actor_name+"_C")
-#     # new_actor = new_actor.replace("MagisWing_GEN_VARIABLE", actor_name+"_GEN_VARIABLE")
-#     # new_actor = new_actor.replace("MagisWing", actor_name)
-#     # new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/MoreAttachmentsZS/Blueprints/RearWing/TypeA", mesh_path+"/"+mesh_name)
-#     # new_actor = new_actor.replace("/Game/Cars/Parts/RearWing/Magis", mesh_path)
-#     # new_actor = new_actor.replace("Magis", mesh_name)
+    new_actor = copy.deepcopy(new_actor_template_nocolor)
+    if colorable_actor:
+        new_actor = copy.deepcopy(new_actor_template)
 
-#     data = json.loads(new_actor)
-#     data["FolderName"] = path_base+"/"+actor_name
-#     for new_name in [mesh_path+"/"+mesh_name, mesh_name]:
-#         if new_name not in data["NameMap"]:
-#             data["NameMap"].append(new_name)
-    
-#     return data
 
-def make_new_actor(path_base, actor_name, mesh_name, mesh_path, mesh_bounding):
-    
-    new_actor = copy.deepcopy(new_actor_template)
 
-    # new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/OversizeLoadSigns",path_base)
-    # new_actor = new_actor.replace("OversizeLoad_Sign_7_C", actor_name+"_C")
-    # new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/OversizeLoadSigns/Sign_7", mesh_path)
-    # new_actor = new_actor.replace("Sign_7", mesh_name)
-
-    new_actor = new_actor.replace("Neutz_SSCustomL_C", actor_name+"_C")
-    new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/MajasDetailWorks/Meshes/SideskirtCustomVeryLong", mesh_path)
-    new_actor = new_actor.replace("SideskirtCustomVeryLong", mesh_name)
+    if colorable_actor:
+        new_actor = new_actor.replace("Attachment_Neo_RearSpoiler_01", actor_name)
+        new_actor = new_actor.replace("/Game/Cars/Models/Neo/RearSpoiler_01", mesh_path)
+        new_actor = new_actor.replace("RearSpoiler_01", mesh_name)
+    else:
+        new_actor = new_actor.replace("OversizeLoad_Sign_1_C", actor_name+"_C")
+        new_actor = new_actor.replace("OversizeLoad_Sign_1", actor_name)
+        new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/OversizeLoadSigns/Sign_1", mesh_path)
+        new_actor = new_actor.replace("Sign_1", mesh_name)
 
     x = 0.0
     y = 0.0
@@ -383,6 +376,13 @@ def make_new_actor(path_base, actor_name, mesh_name, mesh_path, mesh_bounding):
     except Exception:
         pass
 
+    # print(f"{actor_name} : {x} {y} {z}")
+
+    if not colorable_actor:
+        x = (-1)*x
+        y = (-1)*y
+        z = (-1)*z
+
     new_actor = new_actor.replace("-0.96961", str(x))
     new_actor = new_actor.replace("-0.96962", str(y))
     new_actor = new_actor.replace("-0.96963", str(z))
@@ -390,8 +390,10 @@ def make_new_actor(path_base, actor_name, mesh_name, mesh_path, mesh_bounding):
 
     data = json.loads(new_actor)
     data["FolderName"] = path_base+"/"+actor_name
-    data["NameMap"].append(mesh_path)
-    data["NameMap"].append(mesh_name)
+
+    if not colorable_actor:
+        data["NameMap"].append(mesh_path)
+        data["NameMap"].append(mesh_name)
 
     return data
 
@@ -469,7 +471,8 @@ for part in parts:
             "mesh_id": ObjectName,
             "price": Cost,
             "mass": MassKg,
-            "part_type": PartType if PartType else ""
+            "part_type": PartType if PartType else "",
+            "colorable_actor" : True
         }
     )
 
@@ -551,24 +554,24 @@ if TESTING:
     print(f"[TESTING] Limited to only {TESTING_GAP} attachments")
 
 # Extras but no specifics really!
+if USE_EXTRAS:
+    subparts = ["Wheels", "ControlPanel","Utility", "Winch"]
+    for subpart in subparts:
+        fresh_new_parts_ids = [ file_path for file_path in os.listdir(f'../../Output/Exports/MotorTown/Content/Cars/Parts/{subpart}') if '.' in file_path]
+        fresh_new_parts_ids = sorted(list(set([fresh_new_part_id.split('.')[0] for fresh_new_part_id in fresh_new_parts_ids])))
 
-subparts = ["Wheels", "ControlPanel","Utility", "Winch"]
-for subpart in subparts:
-    fresh_new_parts_ids = [ file_path for file_path in os.listdir(f'../../Output/Exports/MotorTown/Content/Cars/Parts/{subpart}') if '.' in file_path]
-    fresh_new_parts_ids = sorted(list(set([fresh_new_part_id.split('.')[0] for fresh_new_part_id in fresh_new_parts_ids])))
+        for fresh_new_part_id in fresh_new_parts_ids:
+            aero_attachments.append({
+                "part_id": fresh_new_part_id,
+                "mesh_path": f"/Game/Cars/Parts/{subpart}/{fresh_new_part_id}",
+                "mesh_id": fresh_new_part_id,
+                "price": 2000,
+                "mass": 50,
+                "part_type": subpart
+            })
 
-    for fresh_new_part_id in fresh_new_parts_ids:
-        aero_attachments.append({
-            "part_id": fresh_new_part_id,
-            "mesh_path": f"/Game/Cars/Parts/{subpart}/{fresh_new_part_id}",
-            "mesh_id": fresh_new_part_id,
-            "price": 2000,
-            "mass": 50,
-            "part_type": subpart
-        })
-
-for new_attachment in extra_data:
-    aero_attachments.append(new_attachment)
+    for new_attachment in extra_data:
+        aero_attachments.append(new_attachment)
 
 
 vendor_last_id = int(vendor_data["Exports"][8]["Data"][0]["Value"][-1]["Name"])+1
@@ -665,6 +668,7 @@ for aero_attachment in aero_attachments:
     mass = aero_attachment.get("mass")
     part_type = aero_attachment.get("part_type")
     is_premium = aero_attachment.get("premium", False)
+    colorable_actor = aero_attachment.get('colorable_actor', False)
 
     name_part_id = 'Attachment_'+part_id
 
@@ -741,7 +745,7 @@ for aero_attachment in aero_attachments:
         mesh_data = load_json_from_path(uasset_exported_path.replace('.uasset','.json'))
         mesh_bounding = [(-1)*bounding for bounding in get_x_bounding(mesh_data)]
 
-        new_actor = make_new_actor('/Game/Objects/MoreAttachments', name_part_id, mesh_id, mesh_path, mesh_bounding)
+        new_actor = make_new_actor('/Game/Objects/MoreAttachments', name_part_id, mesh_id, mesh_path, mesh_bounding, colorable_actor=colorable_actor)
         
         save_at_path_and_convert_clean(new_actor, new_actor_path_json)
         # write_json_at_path(new_actor, f"../qxZap_MoreAttachments_P/MotorTown/Content/Objects/MoreAttachments/{name_part_id}.json")

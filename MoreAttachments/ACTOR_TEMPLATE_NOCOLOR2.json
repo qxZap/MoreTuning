@@ -2,46 +2,53 @@
   "$type": "UAssetAPI.UAsset, UAssetAPI",
   "Info": "Serialized with UAssetAPI 1.0.2.0 (d6ca31f)",
   "NameMap": [
-    "/Game/Objects/VehicleAttachment/OversizeLoadSigns/Sign",
+    "/Game/Objects/VehicleAttachment/MajasDetailWorks/Meshes/SideskirtCustomVeryLong",
+    "AttachmentsCol",
     "BlueprintType",
     "Camera",
     "Cargo",
     "CargoSpace",
+    "Color",
     "DefaultSceneRoot",
-    "Destructible",
     "Engine",
-    "Interaction",
+    "MTInteractable",
+    "MTLightControl",
     "None",
     "ObjectProperty",
-    "Pawn",
+    "Paint",
     "PhysicsBody",
-    "Plate_TestDriver",
+    "SideSkirt",
     "Vehicle",
-    "VehicleRay",
-    "Visibility",
     "WorldDynamic",
     "WorldStatic",
-    "/Game/Objects/VehicleAttachment/OversizeLoadSigns/OversizeLoad_Sign",
+    "/Game/Objects/VehicleAttachment/MajasDetailWorks/Blueprints/SideSkirts/Neutz_SSCustomL",
     "/Script/CoreUObject",
     "/Script/Engine",
+    "/Script/MotorTown",
     "Actor",
     "BlueprintGeneratedClass",
     "Class",
     "Default__Actor",
     "Default__BlueprintGeneratedClass",
-    "Default__OversizeLoad_Sign_7_C",
+    "Default__MTInteractableComponent",
+    "Default__MTLightControlComponent",
+    "Default__Neutz_SSCustomL_C",
     "Default__SceneComponent",
     "Default__SCS_Node",
     "Default__SimpleConstructionScript",
     "Default__StaticMeshComponent",
     "DefaultSceneRoot_GEN_VARIABLE",
+    "MTInteractable_GEN_VARIABLE",
+    "MTInteractableComponent",
+    "MTLightControl_GEN_VARIABLE",
+    "MTLightControlComponent",
+    "Neutz_SSCustomL_C",
     "Object",
-    "OversizeLoad_Sign_7_C",
     "Package",
-    "Plate_TestDriver_GEN_VARIABLE",
     "SceneComponent",
     "SCS_Node",
-    "Sign",
+    "SideSkirt_GEN_VARIABLE",
+    "SideskirtCustomVeryLong",
     "SimpleConstructionScript",
     "StaticMesh",
     "StaticMeshComponent"
@@ -163,10 +170,52 @@
       "ClassGeneratedBy": 0,
       "bDeprecatedForceScriptOrder": false,
       "bCooked": true,
-      "ClassDefaultObject": 2,
+      "ClassDefaultObject": 4,
       "SuperStruct": -4,
       "Children": [],
       "LoadedProperties": [
+        {
+          "$type": "UAssetAPI.FieldTypes.FObjectProperty, UAssetAPI",
+          "PropertyClass": -11,
+          "ArrayDim": "TArray",
+          "ElementSize": 8,
+          "PropertyFlags": "CPF_BlueprintVisible, CPF_InstancedReference, CPF_NonTransactional",
+          "RepIndex": 0,
+          "RepNotifyFunc": "None",
+          "BlueprintReplicationCondition": "COND_None",
+          "RawValue": null,
+          "UsmapPropertyTypeOverrides": {
+            "$type": "System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib],[UAssetAPI.Unversioned.EPropertyType, UAssetAPI]], System.Private.CoreLib",
+            "MulticastInlineDelegateProperty": "MulticastDelegateProperty",
+            "ClassProperty": "ObjectProperty",
+            "SoftClassProperty": "SoftObjectProperty"
+          },
+          "SerializedType": "ObjectProperty",
+          "Name": "MTLightControl",
+          "Flags": "RF_Public, RF_LoadCompleted",
+          "MetaDataMap": null
+        },
+        {
+          "$type": "UAssetAPI.FieldTypes.FObjectProperty, UAssetAPI",
+          "PropertyClass": -10,
+          "ArrayDim": "TArray",
+          "ElementSize": 8,
+          "PropertyFlags": "CPF_BlueprintVisible, CPF_InstancedReference, CPF_NonTransactional",
+          "RepIndex": 0,
+          "RepNotifyFunc": "None",
+          "BlueprintReplicationCondition": "COND_None",
+          "RawValue": null,
+          "UsmapPropertyTypeOverrides": {
+            "$type": "System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib],[UAssetAPI.Unversioned.EPropertyType, UAssetAPI]], System.Private.CoreLib",
+            "MulticastInlineDelegateProperty": "MulticastDelegateProperty",
+            "ClassProperty": "ObjectProperty",
+            "SoftClassProperty": "SoftObjectProperty"
+          },
+          "SerializedType": "ObjectProperty",
+          "Name": "MTInteractable",
+          "Flags": "RF_Public, RF_LoadCompleted",
+          "MetaDataMap": null
+        },
         {
           "$type": "UAssetAPI.FieldTypes.FObjectProperty, UAssetAPI",
           "PropertyClass": -9,
@@ -184,7 +233,28 @@
             "SoftClassProperty": "SoftObjectProperty"
           },
           "SerializedType": "ObjectProperty",
-          "Name": "Plate_TestDriver",
+          "Name": "SideSkirt",
+          "Flags": "RF_Public, RF_LoadCompleted",
+          "MetaDataMap": null
+        },
+        {
+          "$type": "UAssetAPI.FieldTypes.FObjectProperty, UAssetAPI",
+          "PropertyClass": -6,
+          "ArrayDim": "TArray",
+          "ElementSize": 8,
+          "PropertyFlags": "CPF_BlueprintVisible, CPF_InstancedReference, CPF_NonTransactional",
+          "RepIndex": 0,
+          "RepNotifyFunc": "None",
+          "BlueprintReplicationCondition": "COND_None",
+          "RawValue": null,
+          "UsmapPropertyTypeOverrides": {
+            "$type": "System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib],[UAssetAPI.Unversioned.EPropertyType, UAssetAPI]], System.Private.CoreLib",
+            "MulticastInlineDelegateProperty": "MulticastDelegateProperty",
+            "ClassProperty": "ObjectProperty",
+            "SoftClassProperty": "SoftObjectProperty"
+          },
+          "SerializedType": "ObjectProperty",
+          "Name": "DefaultSceneRoot",
           "Flags": "RF_Public, RF_LoadCompleted",
           "MetaDataMap": null
         }
@@ -194,7 +264,7 @@
       "ScriptBytecodeRaw": null,
       "Field": {
         "$type": "UAssetAPI.FieldTypes.UField, UAssetAPI",
-        "Next": null
+        "Next": 0
       },
       "Data": [
         {
@@ -205,21 +275,21 @@
           "PropertyTagFlags": "None",
           "PropertyTypeName": null,
           "PropertyTagExtensions": "NoExtension",
-          "Value": 6
+          "Value": 10
         }
       ],
       "ObjectGuid": null,
       "SerializationControl": "NoExtension",
       "Operation": "None",
       "HasLeadingFourNullBytes": false,
-      "ObjectName": "OversizeLoad_Sign_7_C",
+      "ObjectName": "Neutz_SSCustomL_C",
       "OuterIndex": 0,
       "ClassIndex": -5,
       "SuperIndex": -4,
       "TemplateIndex": -2,
       "ObjectFlags": "RF_Public, RF_Transactional",
-      "SerialSize": 159,
-      "SerialOffset": 2774,
+      "SerialSize": 312,
+      "SerialOffset": 3765,
       "ScriptSerializationStartOffset": 0,
       "ScriptSerializationEndOffset": 0,
       "bForcedExport": false,
@@ -234,10 +304,13 @@
       "SerializationBeforeSerializationDependencies": [
         -4,
         -1,
-        6
+        10
       ],
       "CreateBeforeSerializationDependencies": [
-        -9
+        -11,
+        -10,
+        -9,
+        -6
       ],
       "SerializationBeforeCreateDependencies": [
         -5,
@@ -246,23 +319,95 @@
       "CreateBeforeCreateDependencies": [
         -4
       ],
-      "Extras": "AQAAAAEAAAAAAAAADgAAAEJQVFlQRV9Ob3JtYWwA"
+      "Extras": "AQAAAAIAAAAAAAAADgAAAEJQVFlQRV9Ob3JtYWwA"
     },
     {
       "$type": "UAssetAPI.ExportTypes.NormalExport, UAssetAPI",
-      "Data": [],
+      "Data": [
+        {
+          "$type": "UAssetAPI.PropertyTypes.Objects.ArrayPropertyData, UAssetAPI",
+          "ArrayType": "StructProperty",
+          "Name": "InteractionParams",
+          "ArrayIndex": 0,
+          "IsZero": false,
+          "PropertyTagFlags": "None",
+          "PropertyTypeName": null,
+          "PropertyTagExtensions": "NoExtension",
+          "Value": [
+            {
+              "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
+              "StructType": "MTInteractionParams",
+              "SerializeNone": true,
+              "StructGUID": "{00000000-0000-0000-0000-000000000000}",
+              "SerializationControl": "NoExtension",
+              "Operation": "None",
+              "Name": "0",
+              "ArrayIndex": 0,
+              "IsZero": false,
+              "PropertyTagFlags": "None",
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": [
+                {
+                  "$type": "UAssetAPI.PropertyTypes.Objects.EnumPropertyData, UAssetAPI",
+                  "EnumType": "EMotorTownInteractableType",
+                  "InnerType": "ByteProperty",
+                  "Name": "InteractionType",
+                  "ArrayIndex": 0,
+                  "IsZero": false,
+                  "PropertyTagFlags": "None",
+                  "PropertyTypeName": null,
+                  "PropertyTagExtensions": "NoExtension",
+                  "Value": "ToggleLight"
+                },
+                {
+                  "$type": "UAssetAPI.PropertyTypes.Objects.TextPropertyData, UAssetAPI",
+                  "Flags": 0,
+                  "HistoryType": "Base",
+                  "Namespace": "",
+                  "CultureInvariantString": "Change Color",
+                  "SourceFmt": null,
+                  "Arguments": null,
+                  "ArgumentsData": null,
+                  "TransformType": "ToLower",
+                  "SourceValue": null,
+                  "FormatOptions": null,
+                  "TargetCulture": null,
+                  "Name": "CustomName",
+                  "ArrayIndex": 0,
+                  "IsZero": false,
+                  "PropertyTagFlags": "None",
+                  "PropertyTypeName": null,
+                  "PropertyTagExtensions": "NoExtension",
+                  "Value": "0DC8D14F43740A5D67DBF3B6EF2756B7"
+                },
+                {
+                  "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
+                  "Name": "bHideOnList",
+                  "ArrayIndex": 0,
+                  "IsZero": true,
+                  "PropertyTagFlags": "None",
+                  "PropertyTypeName": null,
+                  "PropertyTagExtensions": "NoExtension",
+                  "Value": false
+                }
+              ]
+            }
+          ]
+        }
+      ],
       "ObjectGuid": null,
       "SerializationControl": "NoExtension",
       "Operation": "None",
       "HasLeadingFourNullBytes": false,
-      "ObjectName": "Default__OversizeLoad_Sign_7_C",
-      "OuterIndex": 0,
-      "ClassIndex": 1,
+      "ObjectName": "MTInteractable_GEN_VARIABLE",
+      "OuterIndex": 1,
+      "ClassIndex": -10,
       "SuperIndex": 0,
-      "TemplateIndex": -1,
-      "ObjectFlags": "RF_Public, RF_ClassDefaultObject, RF_ArchetypeObject",
-      "SerialSize": 6,
-      "SerialOffset": 2933,
+      "TemplateIndex": -12,
+      "ObjectFlags": "RF_Public, RF_Transactional, RF_ArchetypeObject",
+      "SerialSize": 86,
+      "SerialOffset": 4077,
       "ScriptSerializationStartOffset": 0,
       "ScriptSerializationEndOffset": 0,
       "bForcedExport": false,
@@ -275,8 +420,53 @@
       "bIsAsset": false,
       "GeneratePublicHash": false,
       "SerializationBeforeSerializationDependencies": [
+        1
+      ],
+      "CreateBeforeSerializationDependencies": [],
+      "SerializationBeforeCreateDependencies": [
+        -10,
+        -12
+      ],
+      "CreateBeforeCreateDependencies": [
+        1
+      ],
+      "Extras": "AAAAAA=="
+    },
+    {
+      "$type": "UAssetAPI.ExportTypes.NormalExport, UAssetAPI",
+      "Data": [],
+      "ObjectGuid": null,
+      "SerializationControl": "NoExtension",
+      "Operation": "None",
+      "HasLeadingFourNullBytes": false,
+      "ObjectName": "Default__Neutz_SSCustomL_C",
+      "OuterIndex": 0,
+      "ClassIndex": 1,
+      "SuperIndex": 0,
+      "TemplateIndex": -1,
+      "ObjectFlags": "RF_Public, RF_ClassDefaultObject, RF_ArchetypeObject",
+      "SerialSize": 6,
+      "SerialOffset": 4214,
+      "ScriptSerializationStartOffset": 0,
+      "ScriptSerializationEndOffset": 0,
+      "bForcedExport": false,
+      "bNotForClient": false,
+      "bNotForServer": false,
+      "PackageGuid": "{00000000-0000-0000-0000-000000000000}",
+      "IsInheritedInstance": false,
+      "PackageFlags": "PKG_None",
+      "bNotAlwaysLoadedForEditorGame": false,
+      "bIsAsset": false,
+      "GeneratePublicHash": false,
+      "SerializationBeforeSerializationDependencies": [
+        6,
         5,
-        7
+        7,
+        11,
+        8,
+        2,
+        9,
+        3
       ],
       "CreateBeforeSerializationDependencies": [],
       "SerializationBeforeCreateDependencies": [
@@ -297,10 +487,10 @@
       "OuterIndex": 1,
       "ClassIndex": -6,
       "SuperIndex": 0,
-      "TemplateIndex": -13,
+      "TemplateIndex": -18,
       "ObjectFlags": "RF_Public, RF_Transactional, RF_ArchetypeObject",
       "SerialSize": 10,
-      "SerialOffset": 2939,
+      "SerialOffset": 4220,
       "ScriptSerializationStartOffset": 0,
       "ScriptSerializationEndOffset": 0,
       "bForcedExport": false,
@@ -318,7 +508,7 @@
       "CreateBeforeSerializationDependencies": [],
       "SerializationBeforeCreateDependencies": [
         -6,
-        -13
+        -18
       ],
       "CreateBeforeCreateDependencies": [
         1
@@ -346,7 +536,39 @@
           "PropertyTagFlags": "None",
           "PropertyTypeName": null,
           "PropertyTagExtensions": "NoExtension",
-          "Value": 3
+          "Value": 5
+        },
+        {
+          "$type": "UAssetAPI.PropertyTypes.Objects.ArrayPropertyData, UAssetAPI",
+          "ArrayType": "ObjectProperty",
+          "Name": "ChildNodes",
+          "ArrayIndex": 0,
+          "IsZero": false,
+          "PropertyTagFlags": "None",
+          "PropertyTypeName": null,
+          "PropertyTagExtensions": "NoExtension",
+          "Value": [
+            {
+              "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+              "Name": "0",
+              "ArrayIndex": 0,
+              "IsZero": false,
+              "PropertyTagFlags": "None",
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": 7
+            },
+            {
+              "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+              "Name": "1",
+              "ArrayIndex": 0,
+              "IsZero": false,
+              "PropertyTagFlags": "None",
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": 8
+            }
+          ]
         },
         {
           "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
@@ -370,7 +592,7 @@
               "PropertyTagFlags": "None",
               "PropertyTypeName": null,
               "PropertyTagExtensions": "NoExtension",
-              "Value": "{640FDEA8-4E24-3912-CF0E-8B86A7D68A61}"
+              "Value": "{66E52A71-460E-867B-38D6-06B6812A1A4B}"
             }
           ]
         },
@@ -390,13 +612,13 @@
       "Operation": "None",
       "HasLeadingFourNullBytes": false,
       "ObjectName": "SCS_Node_0",
-      "OuterIndex": 6,
+      "OuterIndex": 10,
       "ClassIndex": -7,
       "SuperIndex": 0,
-      "TemplateIndex": -14,
+      "TemplateIndex": -19,
       "ObjectFlags": "RF_Transactional",
-      "SerialSize": 40,
-      "SerialOffset": 2949,
+      "SerialSize": 54,
+      "SerialOffset": 4230,
       "ScriptSerializationStartOffset": 0,
       "ScriptSerializationEndOffset": 0,
       "bForcedExport": false,
@@ -410,15 +632,17 @@
       "GeneratePublicHash": false,
       "SerializationBeforeSerializationDependencies": [],
       "CreateBeforeSerializationDependencies": [
-        3,
+        5,
+        7,
+        8,
         -6
       ],
       "SerializationBeforeCreateDependencies": [
         -7,
-        -14
+        -19
       ],
       "CreateBeforeCreateDependencies": [
-        6
+        10
       ],
       "Extras": ""
     },
@@ -443,7 +667,7 @@
           "PropertyTagFlags": "None",
           "PropertyTypeName": null,
           "PropertyTagExtensions": "NoExtension",
-          "Value": 7
+          "Value": 11
         },
         {
           "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
@@ -467,7 +691,7 @@
               "PropertyTagFlags": "None",
               "PropertyTypeName": null,
               "PropertyTagExtensions": "NoExtension",
-              "Value": "{B66D3C92-4FA8-5A56-EA72-C5902A2DF417}"
+              "Value": "{8F095AFD-46AF-72BA-48C9-41B6298F2533}"
             }
           ]
         },
@@ -479,7 +703,7 @@
           "PropertyTagFlags": "None",
           "PropertyTypeName": null,
           "PropertyTagExtensions": "NoExtension",
-          "Value": "Plate_TestDriver"
+          "Value": "SideSkirt"
         }
       ],
       "ObjectGuid": null,
@@ -487,13 +711,13 @@
       "Operation": "None",
       "HasLeadingFourNullBytes": false,
       "ObjectName": "SCS_Node_1",
-      "OuterIndex": 6,
+      "OuterIndex": 10,
       "ClassIndex": -7,
       "SuperIndex": 0,
-      "TemplateIndex": -14,
+      "TemplateIndex": -19,
       "ObjectFlags": "RF_Transactional",
       "SerialSize": 40,
-      "SerialOffset": 2989,
+      "SerialOffset": 4284,
       "ScriptSerializationStartOffset": 0,
       "ScriptSerializationEndOffset": 0,
       "bForcedExport": false,
@@ -507,15 +731,112 @@
       "GeneratePublicHash": false,
       "SerializationBeforeSerializationDependencies": [],
       "CreateBeforeSerializationDependencies": [
-        7,
+        11,
         -9
       ],
       "SerializationBeforeCreateDependencies": [
         -7,
-        -14
+        -19
       ],
       "CreateBeforeCreateDependencies": [
-        6
+        10
+      ],
+      "Extras": ""
+    },
+    {
+      "$type": "UAssetAPI.ExportTypes.NormalExport, UAssetAPI",
+      "Data": [
+        {
+          "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+          "Name": "ComponentClass",
+          "ArrayIndex": 0,
+          "IsZero": false,
+          "PropertyTagFlags": "None",
+          "PropertyTypeName": null,
+          "PropertyTagExtensions": "NoExtension",
+          "Value": -10
+        },
+        {
+          "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+          "Name": "ComponentTemplate",
+          "ArrayIndex": 0,
+          "IsZero": false,
+          "PropertyTagFlags": "None",
+          "PropertyTypeName": null,
+          "PropertyTagExtensions": "NoExtension",
+          "Value": 2
+        },
+        {
+          "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
+          "StructType": "Guid",
+          "SerializeNone": true,
+          "StructGUID": "{00000000-0000-0000-0000-000000000000}",
+          "SerializationControl": "NoExtension",
+          "Operation": "None",
+          "Name": "VariableGuid",
+          "ArrayIndex": 0,
+          "IsZero": false,
+          "PropertyTagFlags": "None",
+          "PropertyTypeName": null,
+          "PropertyTagExtensions": "NoExtension",
+          "Value": [
+            {
+              "$type": "UAssetAPI.PropertyTypes.Structs.GuidPropertyData, UAssetAPI",
+              "Name": "VariableGuid",
+              "ArrayIndex": 0,
+              "IsZero": false,
+              "PropertyTagFlags": "None",
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": "{D5E55E84-4140-B997-EC19-7A950D278E2B}"
+            }
+          ]
+        },
+        {
+          "$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI",
+          "Name": "InternalVariableName",
+          "ArrayIndex": 0,
+          "IsZero": false,
+          "PropertyTagFlags": "None",
+          "PropertyTypeName": null,
+          "PropertyTagExtensions": "NoExtension",
+          "Value": "MTInteractable"
+        }
+      ],
+      "ObjectGuid": null,
+      "SerializationControl": "NoExtension",
+      "Operation": "None",
+      "HasLeadingFourNullBytes": false,
+      "ObjectName": "SCS_Node_2",
+      "OuterIndex": 10,
+      "ClassIndex": -7,
+      "SuperIndex": 0,
+      "TemplateIndex": -19,
+      "ObjectFlags": "RF_Transactional",
+      "SerialSize": 40,
+      "SerialOffset": 4324,
+      "ScriptSerializationStartOffset": 0,
+      "ScriptSerializationEndOffset": 0,
+      "bForcedExport": false,
+      "bNotForClient": false,
+      "bNotForServer": false,
+      "PackageGuid": "{00000000-0000-0000-0000-000000000000}",
+      "IsInheritedInstance": false,
+      "PackageFlags": "PKG_None",
+      "bNotAlwaysLoadedForEditorGame": false,
+      "bIsAsset": false,
+      "GeneratePublicHash": false,
+      "SerializationBeforeSerializationDependencies": [],
+      "CreateBeforeSerializationDependencies": [
+        2,
+        -10
+      ],
+      "SerializationBeforeCreateDependencies": [
+        -7,
+        -19
+      ],
+      "CreateBeforeCreateDependencies": [
+        10
       ],
       "Extras": ""
     },
@@ -540,7 +861,17 @@
               "PropertyTagFlags": "None",
               "PropertyTypeName": null,
               "PropertyTagExtensions": "NoExtension",
-              "Value": 5
+              "Value": 6
+            },
+            {
+              "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+              "Name": "1",
+              "ArrayIndex": 0,
+              "IsZero": false,
+              "PropertyTagFlags": "None",
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": 9
             }
           ]
         },
@@ -562,7 +893,37 @@
               "PropertyTagFlags": "None",
               "PropertyTypeName": null,
               "PropertyTagExtensions": "NoExtension",
-              "Value": 5
+              "Value": 6
+            },
+            {
+              "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+              "Name": "1",
+              "ArrayIndex": 0,
+              "IsZero": false,
+              "PropertyTagFlags": "None",
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": 7
+            },
+            {
+              "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+              "Name": "2",
+              "ArrayIndex": 0,
+              "IsZero": false,
+              "PropertyTagFlags": "None",
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": 8
+            },
+            {
+              "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+              "Name": "3",
+              "ArrayIndex": 0,
+              "IsZero": false,
+              "PropertyTagFlags": "None",
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": 9
             }
           ]
         },
@@ -574,7 +935,7 @@
           "PropertyTagFlags": "None",
           "PropertyTypeName": null,
           "PropertyTagExtensions": "NoExtension",
-          "Value": 4
+          "Value": 6
         }
       ],
       "ObjectGuid": null,
@@ -585,10 +946,10 @@
       "OuterIndex": 1,
       "ClassIndex": -8,
       "SuperIndex": 0,
-      "TemplateIndex": -15,
+      "TemplateIndex": -20,
       "ObjectFlags": "RF_Transactional",
-      "SerialSize": 26,
-      "SerialOffset": 3029,
+      "SerialSize": 42,
+      "SerialOffset": 4404,
       "ScriptSerializationStartOffset": 0,
       "ScriptSerializationEndOffset": 0,
       "bForcedExport": false,
@@ -602,12 +963,14 @@
       "GeneratePublicHash": false,
       "SerializationBeforeSerializationDependencies": [],
       "CreateBeforeSerializationDependencies": [
-        5,
-        4
+        6,
+        9,
+        7,
+        8
       ],
       "SerializationBeforeCreateDependencies": [
         -8,
-        -15
+        -20
       ],
       "CreateBeforeCreateDependencies": [
         1
@@ -625,7 +988,7 @@
           "PropertyTagFlags": "None",
           "PropertyTypeName": null,
           "PropertyTagExtensions": "NoExtension",
-          "Value": -16
+          "Value": -21
         },
         {
           "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
@@ -636,6 +999,16 @@
           "PropertyTypeName": null,
           "PropertyTagExtensions": "NoExtension",
           "Value": false
+        },
+        {
+          "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
+          "Name": "BoundsScale",
+          "ArrayIndex": 0,
+          "IsZero": false,
+          "PropertyTagFlags": "None",
+          "PropertyTypeName": null,
+          "PropertyTagExtensions": "NoExtension",
+          "Value": 1.2000000476837158
         },
         {
           "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
@@ -653,15 +1026,15 @@
           "Value": [
             {
               "$type": "UAssetAPI.PropertyTypes.Objects.EnumPropertyData, UAssetAPI",
-              "EnumType": "ECollisionEnabled",
+              "EnumType": "ECollisionChannel",
               "InnerType": "ByteProperty",
-              "Name": "CollisionEnabled",
+              "Name": "ObjectType",
               "ArrayIndex": 0,
               "IsZero": false,
               "PropertyTagFlags": "None",
               "PropertyTypeName": null,
               "PropertyTagExtensions": "NoExtension",
-              "Value": "QueryOnly"
+              "Value": "ECC_Vehicle"
             },
             {
               "$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI",
@@ -671,7 +1044,7 @@
               "PropertyTagFlags": "None",
               "PropertyTypeName": null,
               "PropertyTagExtensions": "NoExtension",
-              "Value": "Interaction"
+              "Value": "AttachmentsCol"
             },
             {
               "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
@@ -727,11 +1100,11 @@
                           "InnerType": "ByteProperty",
                           "Name": "Response",
                           "ArrayIndex": 0,
-                          "IsZero": true,
+                          "IsZero": false,
                           "PropertyTagFlags": "None",
                           "PropertyTypeName": null,
                           "PropertyTagExtensions": "NoExtension",
-                          "Value": "ECR_Ignore"
+                          "Value": "ECR_Overlap"
                         }
                       ]
                     },
@@ -765,11 +1138,11 @@
                           "InnerType": "ByteProperty",
                           "Name": "Response",
                           "ArrayIndex": 0,
-                          "IsZero": true,
+                          "IsZero": false,
                           "PropertyTagFlags": "None",
                           "PropertyTypeName": null,
                           "PropertyTagExtensions": "NoExtension",
-                          "Value": "ECR_Ignore"
+                          "Value": "ECR_Overlap"
                         }
                       ]
                     },
@@ -781,82 +1154,6 @@
                       "SerializationControl": "NoExtension",
                       "Operation": "None",
                       "Name": "2",
-                      "ArrayIndex": 0,
-                      "IsZero": false,
-                      "PropertyTagFlags": "None",
-                      "PropertyTypeName": null,
-                      "PropertyTagExtensions": "NoExtension",
-                      "Value": [
-                        {
-                          "$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI",
-                          "Name": "Channel",
-                          "ArrayIndex": 0,
-                          "IsZero": false,
-                          "PropertyTagFlags": "None",
-                          "PropertyTypeName": null,
-                          "PropertyTagExtensions": "NoExtension",
-                          "Value": "Pawn"
-                        },
-                        {
-                          "$type": "UAssetAPI.PropertyTypes.Objects.EnumPropertyData, UAssetAPI",
-                          "EnumType": "ECollisionResponse",
-                          "InnerType": "ByteProperty",
-                          "Name": "Response",
-                          "ArrayIndex": 0,
-                          "IsZero": true,
-                          "PropertyTagFlags": "None",
-                          "PropertyTypeName": null,
-                          "PropertyTagExtensions": "NoExtension",
-                          "Value": "ECR_Ignore"
-                        }
-                      ]
-                    },
-                    {
-                      "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
-                      "StructType": "ResponseChannel",
-                      "SerializeNone": true,
-                      "StructGUID": "{00000000-0000-0000-0000-000000000000}",
-                      "SerializationControl": "NoExtension",
-                      "Operation": "None",
-                      "Name": "3",
-                      "ArrayIndex": 0,
-                      "IsZero": false,
-                      "PropertyTagFlags": "None",
-                      "PropertyTypeName": null,
-                      "PropertyTagExtensions": "NoExtension",
-                      "Value": [
-                        {
-                          "$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI",
-                          "Name": "Channel",
-                          "ArrayIndex": 0,
-                          "IsZero": false,
-                          "PropertyTagFlags": "None",
-                          "PropertyTypeName": null,
-                          "PropertyTagExtensions": "NoExtension",
-                          "Value": "Visibility"
-                        },
-                        {
-                          "$type": "UAssetAPI.PropertyTypes.Objects.EnumPropertyData, UAssetAPI",
-                          "EnumType": "ECollisionResponse",
-                          "InnerType": "ByteProperty",
-                          "Name": "Response",
-                          "ArrayIndex": 0,
-                          "IsZero": true,
-                          "PropertyTagFlags": "None",
-                          "PropertyTypeName": null,
-                          "PropertyTagExtensions": "NoExtension",
-                          "Value": "ECR_Ignore"
-                        }
-                      ]
-                    },
-                    {
-                      "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
-                      "StructType": "ResponseChannel",
-                      "SerializeNone": true,
-                      "StructGUID": "{00000000-0000-0000-0000-000000000000}",
-                      "SerializationControl": "NoExtension",
-                      "Operation": "None",
-                      "Name": "4",
                       "ArrayIndex": 0,
                       "IsZero": false,
                       "PropertyTagFlags": "None",
@@ -894,7 +1191,7 @@
                       "StructGUID": "{00000000-0000-0000-0000-000000000000}",
                       "SerializationControl": "NoExtension",
                       "Operation": "None",
-                      "Name": "5",
+                      "Name": "3",
                       "ArrayIndex": 0,
                       "IsZero": false,
                       "PropertyTagFlags": "None",
@@ -917,11 +1214,11 @@
                           "InnerType": "ByteProperty",
                           "Name": "Response",
                           "ArrayIndex": 0,
-                          "IsZero": true,
+                          "IsZero": false,
                           "PropertyTagFlags": "None",
                           "PropertyTypeName": null,
                           "PropertyTagExtensions": "NoExtension",
-                          "Value": "ECR_Ignore"
+                          "Value": "ECR_Overlap"
                         }
                       ]
                     },
@@ -932,7 +1229,7 @@
                       "StructGUID": "{00000000-0000-0000-0000-000000000000}",
                       "SerializationControl": "NoExtension",
                       "Operation": "None",
-                      "Name": "6",
+                      "Name": "4",
                       "ArrayIndex": 0,
                       "IsZero": false,
                       "PropertyTagFlags": "None",
@@ -959,7 +1256,7 @@
                           "PropertyTagFlags": "None",
                           "PropertyTypeName": null,
                           "PropertyTagExtensions": "NoExtension",
-                          "Value": "ECR_Ignore"
+                          "Value": "ECR_Overlap"
                         }
                       ]
                     },
@@ -970,83 +1267,7 @@
                       "StructGUID": "{00000000-0000-0000-0000-000000000000}",
                       "SerializationControl": "NoExtension",
                       "Operation": "None",
-                      "Name": "7",
-                      "ArrayIndex": 0,
-                      "IsZero": false,
-                      "PropertyTagFlags": "None",
-                      "PropertyTypeName": null,
-                      "PropertyTagExtensions": "NoExtension",
-                      "Value": [
-                        {
-                          "$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI",
-                          "Name": "Channel",
-                          "ArrayIndex": 0,
-                          "IsZero": false,
-                          "PropertyTagFlags": "None",
-                          "PropertyTypeName": null,
-                          "PropertyTagExtensions": "NoExtension",
-                          "Value": "Destructible"
-                        },
-                        {
-                          "$type": "UAssetAPI.PropertyTypes.Objects.EnumPropertyData, UAssetAPI",
-                          "EnumType": "ECollisionResponse",
-                          "InnerType": "ByteProperty",
-                          "Name": "Response",
-                          "ArrayIndex": 0,
-                          "IsZero": true,
-                          "PropertyTagFlags": "None",
-                          "PropertyTypeName": null,
-                          "PropertyTagExtensions": "NoExtension",
-                          "Value": "ECR_Ignore"
-                        }
-                      ]
-                    },
-                    {
-                      "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
-                      "StructType": "ResponseChannel",
-                      "SerializeNone": true,
-                      "StructGUID": "{00000000-0000-0000-0000-000000000000}",
-                      "SerializationControl": "NoExtension",
-                      "Operation": "None",
-                      "Name": "8",
-                      "ArrayIndex": 0,
-                      "IsZero": false,
-                      "PropertyTagFlags": "None",
-                      "PropertyTypeName": null,
-                      "PropertyTagExtensions": "NoExtension",
-                      "Value": [
-                        {
-                          "$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI",
-                          "Name": "Channel",
-                          "ArrayIndex": 0,
-                          "IsZero": false,
-                          "PropertyTagFlags": "None",
-                          "PropertyTypeName": null,
-                          "PropertyTagExtensions": "NoExtension",
-                          "Value": "VehicleRay"
-                        },
-                        {
-                          "$type": "UAssetAPI.PropertyTypes.Objects.EnumPropertyData, UAssetAPI",
-                          "EnumType": "ECollisionResponse",
-                          "InnerType": "ByteProperty",
-                          "Name": "Response",
-                          "ArrayIndex": 0,
-                          "IsZero": true,
-                          "PropertyTagFlags": "None",
-                          "PropertyTypeName": null,
-                          "PropertyTagExtensions": "NoExtension",
-                          "Value": "ECR_Ignore"
-                        }
-                      ]
-                    },
-                    {
-                      "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
-                      "StructType": "ResponseChannel",
-                      "SerializeNone": true,
-                      "StructGUID": "{00000000-0000-0000-0000-000000000000}",
-                      "SerializationControl": "NoExtension",
-                      "Operation": "None",
-                      "Name": "9",
+                      "Name": "5",
                       "ArrayIndex": 0,
                       "IsZero": false,
                       "PropertyTagFlags": "None",
@@ -1073,7 +1294,7 @@
                           "PropertyTagFlags": "None",
                           "PropertyTypeName": null,
                           "PropertyTagExtensions": "NoExtension",
-                          "Value": "ECR_Ignore"
+                          "Value": "ECR_Overlap"
                         }
                       ]
                     },
@@ -1084,7 +1305,7 @@
                       "StructGUID": "{00000000-0000-0000-0000-000000000000}",
                       "SerializationControl": "NoExtension",
                       "Operation": "None",
-                      "Name": "10",
+                      "Name": "6",
                       "ArrayIndex": 0,
                       "IsZero": false,
                       "PropertyTagFlags": "None",
@@ -1111,13 +1332,97 @@
                           "PropertyTagFlags": "None",
                           "PropertyTypeName": null,
                           "PropertyTagExtensions": "NoExtension",
-                          "Value": "ECR_Ignore"
+                          "Value": "ECR_Overlap"
                         }
                       ]
                     }
                   ]
                 }
               ]
+            }
+          ]
+        },
+        {
+          "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
+          "StructType": "Rotator",
+          "SerializeNone": true,
+          "StructGUID": "{00000000-0000-0000-0000-000000000000}",
+          "SerializationControl": "NoExtension",
+          "Operation": "None",
+          "Name": "RelativeLocation",
+          "ArrayIndex": 0,
+          "IsZero": false,
+          "PropertyTagFlags": "None",
+          "PropertyTypeName": null,
+          "PropertyTagExtensions": "NoExtension",
+          "Value": [
+            {
+              "$type": "UAssetAPI.PropertyTypes.Structs.VectorPropertyData, UAssetAPI",
+              "Name": "RelativeLocation",
+              "ArrayIndex": 0,
+              "IsZero": false,
+              "PropertyTagFlags": "None",
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": {
+                "$type": "UAssetAPI.UnrealTypes.FVector, UAssetAPI",
+                "X": -0.96961,
+                "Y": -0.96962,
+                "Z": -0.96963
+              }
+            }
+          ]
+        },
+        {
+          "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
+          "StructType": "Rotator",
+          "SerializeNone": true,
+          "StructGUID": "{00000000-0000-0000-0000-000000000000}",
+          "SerializationControl": "NoExtension",
+          "Operation": "None",
+          "Name": "RelativeRotation",
+          "ArrayIndex": 0,
+          "IsZero": false,
+          "PropertyTagFlags": "None",
+          "PropertyTypeName": null,
+          "PropertyTagExtensions": "NoExtension",
+          "Value": [
+            {
+              "$type": "UAssetAPI.PropertyTypes.Structs.RotatorPropertyData, UAssetAPI",
+              "Name": "RelativeRotation",
+              "ArrayIndex": 0,
+              "IsZero": false,
+              "PropertyTagFlags": "None",
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": {
+                "$type": "UAssetAPI.UnrealTypes.FRotator, UAssetAPI",
+                "Pitch": -8.526512829121202E-14,
+                "Yaw": "+0",
+                "Roll": "+0"
+              }
+            }
+          ]
+        },
+        {
+          "$type": "UAssetAPI.PropertyTypes.Objects.ArrayPropertyData, UAssetAPI",
+          "ArrayType": "NameProperty",
+          "Name": "ComponentTags",
+          "ArrayIndex": 0,
+          "IsZero": false,
+          "PropertyTagFlags": "None",
+          "PropertyTypeName": null,
+          "PropertyTagExtensions": "NoExtension",
+          "Value": [
+            {
+              "$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI",
+              "Name": "0",
+              "ArrayIndex": 0,
+              "IsZero": false,
+              "PropertyTagFlags": "None",
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": "Color"
             }
           ]
         },
@@ -1136,14 +1441,14 @@
       "SerializationControl": "NoExtension",
       "Operation": "None",
       "HasLeadingFourNullBytes": false,
-      "ObjectName": "Plate_TestDriver_GEN_VARIABLE",
+      "ObjectName": "SideSkirt_GEN_VARIABLE",
       "OuterIndex": 1,
       "ClassIndex": -9,
       "SuperIndex": 0,
-      "TemplateIndex": -17,
+      "TemplateIndex": -22,
       "ObjectFlags": "RF_Public, RF_Transactional, RF_ArchetypeObject",
-      "SerialSize": 174,
-      "SerialOffset": 3055,
+      "SerialSize": 176,
+      "SerialOffset": 4446,
       "ScriptSerializationStartOffset": 0,
       "ScriptSerializationEndOffset": 0,
       "bForcedExport": false,
@@ -1159,11 +1464,11 @@
         1
       ],
       "CreateBeforeSerializationDependencies": [
-        -16
+        -21
       ],
       "SerializationBeforeCreateDependencies": [
         -9,
-        -17
+        -22
       ],
       "CreateBeforeCreateDependencies": [
         1
@@ -1185,7 +1490,7 @@
     {
       "$type": "UAssetAPI.Import, UAssetAPI",
       "ObjectName": "Default__Actor",
-      "OuterIndex": -12,
+      "OuterIndex": -16,
       "ClassPackage": "/Script/Engine",
       "ClassName": "Actor",
       "PackageName": null,
@@ -1194,7 +1499,7 @@
     {
       "$type": "UAssetAPI.Import, UAssetAPI",
       "ObjectName": "Default__BlueprintGeneratedClass",
-      "OuterIndex": -12,
+      "OuterIndex": -16,
       "ClassPackage": "/Script/Engine",
       "ClassName": "BlueprintGeneratedClass",
       "PackageName": null,
@@ -1203,7 +1508,7 @@
     {
       "$type": "UAssetAPI.Import, UAssetAPI",
       "ObjectName": "Object",
-      "OuterIndex": -11,
+      "OuterIndex": -15,
       "ClassPackage": "/Script/CoreUObject",
       "ClassName": "Class",
       "PackageName": null,
@@ -1212,7 +1517,7 @@
     {
       "$type": "UAssetAPI.Import, UAssetAPI",
       "ObjectName": "Actor",
-      "OuterIndex": -12,
+      "OuterIndex": -16,
       "ClassPackage": "/Script/CoreUObject",
       "ClassName": "Class",
       "PackageName": null,
@@ -1221,7 +1526,7 @@
     {
       "$type": "UAssetAPI.Import, UAssetAPI",
       "ObjectName": "BlueprintGeneratedClass",
-      "OuterIndex": -12,
+      "OuterIndex": -16,
       "ClassPackage": "/Script/CoreUObject",
       "ClassName": "Class",
       "PackageName": null,
@@ -1230,7 +1535,7 @@
     {
       "$type": "UAssetAPI.Import, UAssetAPI",
       "ObjectName": "SceneComponent",
-      "OuterIndex": -12,
+      "OuterIndex": -16,
       "ClassPackage": "/Script/CoreUObject",
       "ClassName": "Class",
       "PackageName": null,
@@ -1239,7 +1544,7 @@
     {
       "$type": "UAssetAPI.Import, UAssetAPI",
       "ObjectName": "SCS_Node",
-      "OuterIndex": -12,
+      "OuterIndex": -16,
       "ClassPackage": "/Script/CoreUObject",
       "ClassName": "Class",
       "PackageName": null,
@@ -1248,7 +1553,7 @@
     {
       "$type": "UAssetAPI.Import, UAssetAPI",
       "ObjectName": "SimpleConstructionScript",
-      "OuterIndex": -12,
+      "OuterIndex": -16,
       "ClassPackage": "/Script/CoreUObject",
       "ClassName": "Class",
       "PackageName": null,
@@ -1257,7 +1562,7 @@
     {
       "$type": "UAssetAPI.Import, UAssetAPI",
       "ObjectName": "StaticMeshComponent",
-      "OuterIndex": -12,
+      "OuterIndex": -16,
       "ClassPackage": "/Script/CoreUObject",
       "ClassName": "Class",
       "PackageName": null,
@@ -1265,7 +1570,43 @@
     },
     {
       "$type": "UAssetAPI.Import, UAssetAPI",
-      "ObjectName": "/Game/Objects/VehicleAttachment/OversizeLoadSigns/Sign_7",
+      "ObjectName": "MTInteractableComponent",
+      "OuterIndex": -17,
+      "ClassPackage": "/Script/CoreUObject",
+      "ClassName": "Class",
+      "PackageName": null,
+      "bImportOptional": false
+    },
+    {
+      "$type": "UAssetAPI.Import, UAssetAPI",
+      "ObjectName": "MTLightControlComponent",
+      "OuterIndex": -17,
+      "ClassPackage": "/Script/CoreUObject",
+      "ClassName": "Class",
+      "PackageName": null,
+      "bImportOptional": false
+    },
+    {
+      "$type": "UAssetAPI.Import, UAssetAPI",
+      "ObjectName": "Default__MTInteractableComponent",
+      "OuterIndex": -17,
+      "ClassPackage": "/Script/MotorTown",
+      "ClassName": "MTInteractableComponent",
+      "PackageName": null,
+      "bImportOptional": false
+    },
+    {
+      "$type": "UAssetAPI.Import, UAssetAPI",
+      "ObjectName": "Default__MTLightControlComponent",
+      "OuterIndex": -17,
+      "ClassPackage": "/Script/MotorTown",
+      "ClassName": "MTLightControlComponent",
+      "PackageName": null,
+      "bImportOptional": false
+    },
+    {
+      "$type": "UAssetAPI.Import, UAssetAPI",
+      "ObjectName": "/Game/Objects/VehicleAttachment/MajasDetailWorks/Meshes/SideskirtCustomVeryLong",
       "OuterIndex": 0,
       "ClassPackage": "/Script/CoreUObject",
       "ClassName": "Package",
@@ -1292,8 +1633,17 @@
     },
     {
       "$type": "UAssetAPI.Import, UAssetAPI",
+      "ObjectName": "/Script/MotorTown",
+      "OuterIndex": 0,
+      "ClassPackage": "/Script/CoreUObject",
+      "ClassName": "Package",
+      "PackageName": null,
+      "bImportOptional": false
+    },
+    {
+      "$type": "UAssetAPI.Import, UAssetAPI",
       "ObjectName": "Default__SceneComponent",
-      "OuterIndex": -12,
+      "OuterIndex": -16,
       "ClassPackage": "/Script/Engine",
       "ClassName": "SceneComponent",
       "PackageName": null,
@@ -1302,7 +1652,7 @@
     {
       "$type": "UAssetAPI.Import, UAssetAPI",
       "ObjectName": "Default__SCS_Node",
-      "OuterIndex": -12,
+      "OuterIndex": -16,
       "ClassPackage": "/Script/Engine",
       "ClassName": "SCS_Node",
       "PackageName": null,
@@ -1311,7 +1661,7 @@
     {
       "$type": "UAssetAPI.Import, UAssetAPI",
       "ObjectName": "Default__SimpleConstructionScript",
-      "OuterIndex": -12,
+      "OuterIndex": -16,
       "ClassPackage": "/Script/Engine",
       "ClassName": "SimpleConstructionScript",
       "PackageName": null,
@@ -1319,8 +1669,8 @@
     },
     {
       "$type": "UAssetAPI.Import, UAssetAPI",
-      "ObjectName": "Sign_7",
-      "OuterIndex": -10,
+      "ObjectName": "SideskirtCustomVeryLong",
+      "OuterIndex": -14,
       "ClassPackage": "/Script/Engine",
       "ClassName": "StaticMesh",
       "PackageName": null,
@@ -1329,7 +1679,7 @@
     {
       "$type": "UAssetAPI.Import, UAssetAPI",
       "ObjectName": "Default__StaticMeshComponent",
-      "OuterIndex": -12,
+      "OuterIndex": -16,
       "ClassPackage": "/Script/Engine",
       "ClassName": "StaticMeshComponent",
       "PackageName": null,
@@ -1337,6 +1687,10 @@
     }
   ],
   "DependsMap": [
+    [],
+    [],
+    [],
+    [],
     [],
     [],
     [],
@@ -1353,11 +1707,11 @@
   "Generations": [
     {
       "$type": "UAssetAPI.FGenerationInfo, UAssetAPI",
-      "ExportCount": 7,
-      "NameCount": 43
+      "ExportCount": 11,
+      "NameCount": 50
     }
   ],
-  "PackageGuid": "{D9D4A3AD-4B72-3EF4-986D-FF8CE2DAA06B}",
+  "PackageGuid": "{383D05CD-47D1-9CA2-5239-A6B1797F5BEB}",
   "PersistentGuid": "{00000000-0000-0000-0000-000000000000}",
   "RecordedEngineVersion": {
     "$type": "UAssetAPI.FEngineVersion, UAssetAPI",
@@ -1376,11 +1730,11 @@
     "Branch": null
   },
   "ChunkIDs": [],
-  "PackageSource": 3089320170,
-  "FolderName": "/Game/Objects/VehicleAttachment/OversizeLoadSigns/OversizeLoad_Sign_7",
+  "PackageSource": 3188888226,
+  "FolderName": "/Game/Objects/VehicleAttachment/MajasDetailWorks/Blueprints/SideSkirts/Neutz_SSCustomL",
   "LocalizationId": null,
   "SoftObjectPathsCount": 0,
-  "SoftObjectPathsOffset": 1386,
+  "SoftObjectPathsOffset": 1693,
   "SearchableNamesOffset": 0,
   "ThumbnailTableOffset": 0,
   "SavedHash": null,
@@ -1391,7 +1745,7 @@
   "DataResourceOffset": -1,
   "doWeHaveAssetRegistryData": true,
   "doWeHaveWorldTileInfo": false,
-  "PackageFlags": "PKG_Cooked, PKG_UnversionedProperties, PKG_FilterEditorOnly",
+  "PackageFlags": "PKG_Cooked, PKG_UnversionedProperties, PKG_RequiresLocalizationGather, PKG_FilterEditorOnly",
   "HasUnversionedProperties": true,
   "IsFilterEditorOnly": true
 }
