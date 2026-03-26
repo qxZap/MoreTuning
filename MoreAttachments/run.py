@@ -11,7 +11,7 @@ from datetime import timedelta
 TESTING = False # wanna test just a tailed number of attachments?
 TESTING_GAP = 10 # how many?
 CREATE_ACTORS = True #create actors? 
-CLEAN_ACTORS = False #clean all actors on run?
+CLEAN_ACTORS = True #clean all actors on run?
 DELTA_ONLY_ACTORS = True #create only missing actors
 USE_EXTRAS = True
 
@@ -345,17 +345,10 @@ def make_new_actor(path_base, actor_name, mesh_name, mesh_path, mesh_bounding, c
     if colorable_actor:
         new_actor = copy.deepcopy(new_actor_template)
 
+    new_actor = new_actor.replace("Attachment_Neo_RearSpoiler_01", actor_name)
+    new_actor = new_actor.replace("/Game/Cars/Models/Neo/RearSpoiler_01", mesh_path)
+    new_actor = new_actor.replace("RearSpoiler_01", mesh_name)
 
-
-    if colorable_actor:
-        new_actor = new_actor.replace("Attachment_Neo_RearSpoiler_01", actor_name)
-        new_actor = new_actor.replace("/Game/Cars/Models/Neo/RearSpoiler_01", mesh_path)
-        new_actor = new_actor.replace("RearSpoiler_01", mesh_name)
-    else:
-        new_actor = new_actor.replace("OversizeLoad_Sign_1_C", actor_name+"_C")
-        new_actor = new_actor.replace("OversizeLoad_Sign_1", actor_name)
-        new_actor = new_actor.replace("/Game/Objects/VehicleAttachment/OversizeLoadSigns/Sign_1", mesh_path)
-        new_actor = new_actor.replace("Sign_1", mesh_name)
 
     x = 0.0
     y = 0.0
@@ -378,22 +371,21 @@ def make_new_actor(path_base, actor_name, mesh_name, mesh_path, mesh_bounding, c
 
     # print(f"{actor_name} : {x} {y} {z}")
 
-    if not colorable_actor:
-        x = (-1)*x
-        y = (-1)*y
-        z = (-1)*z
+    # if not colorable_actor:
+    #     x = (-1)*x
+    #     y = (-1)*y
+    #     z = (-1)*z
 
     new_actor = new_actor.replace("-0.96961", str(x))
     new_actor = new_actor.replace("-0.96962", str(y))
     new_actor = new_actor.replace("-0.96963", str(z))
 
-
     data = json.loads(new_actor)
     data["FolderName"] = path_base+"/"+actor_name
 
-    if not colorable_actor:
-        data["NameMap"].append(mesh_path)
-        data["NameMap"].append(mesh_name)
+    # if not colorable_actor:
+    #     data["NameMap"].append(mesh_path)
+    #     data["NameMap"].append(mesh_name)
 
     return data
 
@@ -560,9 +552,18 @@ if USE_EXTRAS:
         fresh_new_parts_ids = [ file_path for file_path in os.listdir(f'../../Output/Exports/MotorTown/Content/Cars/Parts/{subpart}') if '.' in file_path]
         fresh_new_parts_ids = sorted(list(set([fresh_new_part_id.split('.')[0] for fresh_new_part_id in fresh_new_parts_ids])))
 
+        if subpart == "Wheels":
+            clean_fresh_new_parts_ids = []
+            for fresh_new_part_id in fresh_new_parts_ids:
+                if not (fresh_new_part_id.endswith('_RL') or fresh_new_part_id.endswith('_R') or fresh_new_part_id.endswith('_RRD')):
+                    clean_fresh_new_parts_ids.append(fresh_new_part_id)
+            fresh_new_parts_ids = clean_fresh_new_parts_ids
+
         for fresh_new_part_id in fresh_new_parts_ids:
+            part_id_to_use = fresh_new_part_id[:-2] if fresh_new_part_id.endswith('_L') else fresh_new_part_id
+            
             aero_attachments.append({
-                "part_id": fresh_new_part_id,
+                "part_id": part_id_to_use,
                 "mesh_path": f"/Game/Cars/Parts/{subpart}/{fresh_new_part_id}",
                 "mesh_id": fresh_new_part_id,
                 "price": 2000,
