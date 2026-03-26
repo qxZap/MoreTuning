@@ -12,12 +12,14 @@ TESTING = False # wanna test just a tailed number of attachments?
 TESTING_GAP = 10 # how many?
 CREATE_ACTORS = True #create actors? 
 CLEAN_ACTORS = True #clean all actors on run?
-DELTA_ONLY_ACTORS = True #create only missing actors
+DELTA_ONLY_ACTORS = False #create only missing actors
 USE_EXTRAS = True
 
 MESH_ID_TO_USE = -283
 
 paid_icon_index = None
+
+print("Preparing Content")
 
 KNOWN_PART_ICONS = {
   "Bonnet": 0,
@@ -403,7 +405,7 @@ if not vendor_data:
 # Logic Start
 
 # Clean up previously generated files
-output_content_dir = Path("../qxZap_MoreAttachments_P/MotorTown/Content/Objects/MoreAttachments")
+output_content_dir = Path("../qxZap_satigt3_MoreAttachments_P/MotorTown/Content/Objects/MoreAttachments")
 if output_content_dir.exists() and CLEAN_ACTORS:
     shutil.rmtree(output_content_dir)
     print(f"Cleaned up {output_content_dir}")
@@ -547,6 +549,8 @@ if TESTING:
 
 # Extras but no specifics really!
 if USE_EXTRAS:
+    extras_to_add = []
+
     subparts = ["Wheels", "ControlPanel","Utility", "Winch"]
     for subpart in subparts:
         fresh_new_parts_ids = [ file_path for file_path in os.listdir(f'../../Output/Exports/MotorTown/Content/Cars/Parts/{subpart}') if '.' in file_path]
@@ -555,25 +559,30 @@ if USE_EXTRAS:
         if subpart == "Wheels":
             clean_fresh_new_parts_ids = []
             for fresh_new_part_id in fresh_new_parts_ids:
-                if not (fresh_new_part_id.endswith('_RL') or fresh_new_part_id.endswith('_R') or fresh_new_part_id.endswith('_RRD')):
+                if not (fresh_new_part_id.endswith('_RL') or fresh_new_part_id.endswith('_R') or fresh_new_part_id.endswith('_RRD')) and fresh_new_part_id not in clean_fresh_new_parts_ids:
                     clean_fresh_new_parts_ids.append(fresh_new_part_id)
             fresh_new_parts_ids = clean_fresh_new_parts_ids
 
         for fresh_new_part_id in fresh_new_parts_ids:
             part_id_to_use = fresh_new_part_id[:-2] if fresh_new_part_id.endswith('_L') else fresh_new_part_id
             
-            aero_attachments.append({
-                "part_id": part_id_to_use,
-                "mesh_path": f"/Game/Cars/Parts/{subpart}/{fresh_new_part_id}",
-                "mesh_id": fresh_new_part_id,
-                "price": 2000,
-                "mass": 50,
-                "part_type": subpart
-            })
+            new_part = {
+                        "part_id": part_id_to_use,
+                        "mesh_path": f"/Game/Cars/Parts/{subpart}/{fresh_new_part_id}",
+                        "mesh_id": fresh_new_part_id,
+                        "price": 2000,
+                        "mass": 50,
+                        "part_type": subpart
+                    }
+            
+            aero_attachments.append(new_part)
 
-    for new_attachment in extra_data:
-        aero_attachments.append(new_attachment)
+print("Loading props")
+for new_attachment in extra_data:
+    aero_attachments.append(new_attachment)
 
+
+print("Initializing Mod Creation")
 
 vendor_last_id = int(vendor_data["Exports"][8]["Data"][0]["Value"][-1]["Name"])+1
 vendor_premium_last_id = vendor_last_id
@@ -636,10 +645,12 @@ attachments_count = len(aero_attachments)
 current_index = 1
 start_time = time.time()
 
-premium_data = data["Exports"][0]["Table"]["Data"]
+premium_data = copy.deepcopy(data["Exports"][0]["Table"]["Data"])
 
 vendor_premium_listing = copy.deepcopy(vendor_data["Exports"][8]["Data"][0]["Value"])
 vendor_premium_names = copy.deepcopy(vendor_data["NameMap"])
+
+used_part_ids = []
 
 for aero_attachment in aero_attachments:
     # Your real work here
@@ -737,7 +748,7 @@ for aero_attachment in aero_attachments:
     # Every new actor requires relative location
     # print("../../Output/Exports"+game_to_mt_path(mesh_path))
     if CREATE_ACTORS:
-        new_actor_path_json = f"../qxZap_MoreAttachments_P/MotorTown/Content/Objects/MoreAttachments/{name_part_id}.json"
+        new_actor_path_json = f"../qxZap_satigt3_MoreAttachments_P/MotorTown/Content/Objects/MoreAttachments/{name_part_id}.json"
         if DELTA_ONLY_ACTORS and file_exists(new_actor_path_json.replace('.json', '.uasset')) and file_exists(new_actor_path_json.replace('.json', '.uexp')):
             continue
 
@@ -749,12 +760,12 @@ for aero_attachment in aero_attachments:
         new_actor = make_new_actor('/Game/Objects/MoreAttachments', name_part_id, mesh_id, mesh_path, mesh_bounding, colorable_actor=colorable_actor)
         
         save_at_path_and_convert_clean(new_actor, new_actor_path_json)
-        # write_json_at_path(new_actor, f"../qxZap_MoreAttachments_P/MotorTown/Content/Objects/MoreAttachments/{name_part_id}.json")
+        # write_json_at_path(new_actor, f"../qxZap_satigt3_MoreAttachments_P/MotorTown/Content/Objects/MoreAttachments/{name_part_id}.json")
 
 # Save result
 
 copy_base_bps_from = '../../Output/Exports/MotorTown/Content/Characters'
-copy_base_bps_to = '../qxZap_MoreAttachments_P/MotorTown/Content/Characters'
+copy_base_bps_to = '../qxZap_satigt3_MoreAttachments_P/MotorTown/Content/Characters'
 
 files = ['MotorTownCharacterBP', 'MTAICharacter', 'MTPlayerCharacter']
 extensions = ['.uasset','.uexp']
@@ -771,29 +782,29 @@ for file in files:
         copied.append(copy_to)
 
         # Paid mod
-        new_one = copy_to.replace('qxZap_MoreAttachments_P','qxZap_MoreAttachments_Premium_P')
+        new_one = copy_to.replace('qxZap_satigt3_MoreAttachments_P','qxZap_satigt3_MoreAttachments_Premium_P')
         quick_copy(copy_from, new_one)
         copied.append(new_one)
 
 # Free mod
-save_at_path_and_convert_clean(data, "../qxZap_MoreAttachments_P/MotorTown/Content/DataAsset/Items/Items_AttachmentPart.json")
+save_at_path_and_convert_clean(data, "../qxZap_satigt3_MoreAttachments_P/MotorTown/Content/DataAsset/Items/Items_AttachmentPart.json")
 
 # Paid mod
 premium_mod_data = copy.deepcopy(data)
 premium_mod_data["Exports"][0]["Table"]["Data"]=premium_data
-save_at_path_and_convert_clean(premium_mod_data, "../qxZap_MoreAttachments_Premium_P/MotorTown/Content/DataAsset/Items/Items_AttachmentPart.json")
+save_at_path_and_convert_clean(premium_mod_data, "../qxZap_satigt3_MoreAttachments_Premium_P/MotorTown/Content/DataAsset/Items/Items_AttachmentPart.json")
 
-# write_json_at_path(data,  "../qxZap_MoreAttachments_P/MotorTown/Content/DataAsset/Items/Items_AttachmentPart.json")
+# write_json_at_path(data,  "../qxZap_satigt3_MoreAttachments_P/MotorTown/Content/DataAsset/Items/Items_AttachmentPart.json")
 
 # Free mod
-save_at_path_and_convert_clean(vendor_data, "../qxZap_MoreAttachments_P/MotorTown/Content/Characters/NPC/Vendor_Garage.json")
+save_at_path_and_convert_clean(vendor_data, "../qxZap_satigt3_MoreAttachments_P/MotorTown/Content/Characters/NPC/Vendor_Garage.json")
 
 # Paid mode
 premium_vendor_data = copy.deepcopy(vendor_data)
 premium_vendor_data["NameMap"] = vendor_premium_names
 premium_vendor_data["Exports"][8]["Data"][0]["Value"]=vendor_premium_listing
 
-save_at_path_and_convert_clean(premium_vendor_data, "../qxZap_MoreAttachments_Premium_P/MotorTown/Content/Characters/NPC/Vendor_Garage.json")
+save_at_path_and_convert_clean(premium_vendor_data, "../qxZap_satigt3_MoreAttachments_Premium_P/MotorTown/Content/Characters/NPC/Vendor_Garage.json")
 
 
 for copied_file in copied:
