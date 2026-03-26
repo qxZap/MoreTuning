@@ -40,7 +40,7 @@ def load_new_transmission_part(transmission_id, transmission_name, weight, price
         row_value = row.get("Value")
 
         if row_name == 'Name':
-            row['CultureInvariantString'] = '[MOD] Z> '+transmission_name
+            row['CultureInvariantString'] = transmission_name
         if row_name == 'Desciption':
             row['CultureInvariantString'] = description
         if row_name == 'Cost':
