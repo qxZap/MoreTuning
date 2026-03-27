@@ -477,7 +477,7 @@ for part in parts:
         }
     )
 
-aero_attachments.sort(key=lambda x: x["part_type"])
+aero_attachments.sort(key=lambda x: (x["part_type"], x["part_id"].split('_')[0] if '_' in x["part_id"] else x["part_id"]))
 
 unique_types = sorted(list(set(item["part_type"] for item in aero_attachments)))
 

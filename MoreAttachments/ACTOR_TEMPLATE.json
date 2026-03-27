@@ -1,6 +1,6 @@
 {
   "$type": "UAssetAPI.UAsset, UAssetAPI",
-  "Info": "Serialized with UAssetAPI 1.0.2.0",
+  "Info": "Serialized with UAssetAPI 1.0.2.0 (d6ca31f)",
   "NameMap": [
     "/Game/Cars/Models/Neo/RearSpoiler_01",
     "/Game/Objects/VehicleAttachment/MajasDetailWorks/Materials/M_PaintableMetal",
@@ -295,7 +295,7 @@
       "ScriptBytecodeRaw": null,
       "Field": {
         "$type": "UAssetAPI.FieldTypes.UField, UAssetAPI",
-        "Next": 0
+        "Next": null
       },
       "Data": [
         {
@@ -312,6 +312,7 @@
       "ObjectGuid": null,
       "SerializationControl": "NoExtension",
       "Operation": "None",
+      "HasLeadingFourNullBytes": false,
       "ObjectName": "Attachment_Neo_RearSpoiler_01_C",
       "OuterIndex": 0,
       "ClassIndex": -5,
@@ -358,6 +359,7 @@
       "ObjectGuid": null,
       "SerializationControl": "NoExtension",
       "Operation": "None",
+      "HasLeadingFourNullBytes": false,
       "ObjectName": "Default__Attachment_Neo_RearSpoiler_01_C",
       "OuterIndex": 0,
       "ClassIndex": 1,
@@ -485,6 +487,7 @@
       "ObjectGuid": null,
       "SerializationControl": "NoExtension",
       "Operation": "None",
+      "HasLeadingFourNullBytes": false,
       "ObjectName": "MTInteractable_GEN_VARIABLE",
       "OuterIndex": 1,
       "ClassIndex": -11,
@@ -523,6 +526,7 @@
       "ObjectGuid": null,
       "SerializationControl": "NoExtension",
       "Operation": "None",
+      "HasLeadingFourNullBytes": false,
       "ObjectName": "MTLightControl_GEN_VARIABLE",
       "OuterIndex": 1,
       "ClassIndex": -12,
@@ -561,6 +565,7 @@
       "ObjectGuid": null,
       "SerializationControl": "NoExtension",
       "Operation": "None",
+      "HasLeadingFourNullBytes": false,
       "ObjectName": "DefaultSceneRoot_GEN_VARIABLE",
       "OuterIndex": 1,
       "ClassIndex": -6,
@@ -599,6 +604,7 @@
       "ObjectGuid": null,
       "SerializationControl": "NoExtension",
       "Operation": "None",
+      "HasLeadingFourNullBytes": false,
       "ObjectName": "Scene_GEN_VARIABLE",
       "OuterIndex": 1,
       "ClassIndex": -6,
@@ -694,6 +700,7 @@
       "ObjectGuid": null,
       "SerializationControl": "NoExtension",
       "Operation": "None",
+      "HasLeadingFourNullBytes": false,
       "ObjectName": "SCS_Node_0",
       "OuterIndex": 13,
       "ClassIndex": -7,
@@ -832,6 +839,7 @@
       "ObjectGuid": null,
       "SerializationControl": "NoExtension",
       "Operation": "None",
+      "HasLeadingFourNullBytes": false,
       "ObjectName": "SCS_Node_1",
       "OuterIndex": 13,
       "ClassIndex": -7,
@@ -931,6 +939,7 @@
       "ObjectGuid": null,
       "SerializationControl": "NoExtension",
       "Operation": "None",
+      "HasLeadingFourNullBytes": false,
       "ObjectName": "SCS_Node_2",
       "OuterIndex": 13,
       "ClassIndex": -7,
@@ -1027,6 +1036,7 @@
       "ObjectGuid": null,
       "SerializationControl": "NoExtension",
       "Operation": "None",
+      "HasLeadingFourNullBytes": false,
       "ObjectName": "SCS_Node_3",
       "OuterIndex": 13,
       "ClassIndex": -7,
@@ -1123,6 +1133,7 @@
       "ObjectGuid": null,
       "SerializationControl": "NoExtension",
       "Operation": "None",
+      "HasLeadingFourNullBytes": false,
       "ObjectName": "SCS_Node_4",
       "OuterIndex": 13,
       "ClassIndex": -7,
@@ -1219,6 +1230,7 @@
       "ObjectGuid": null,
       "SerializationControl": "NoExtension",
       "Operation": "None",
+      "HasLeadingFourNullBytes": false,
       "ObjectName": "SCS_Node_5",
       "OuterIndex": 13,
       "ClassIndex": -7,
@@ -1363,6 +1375,7 @@
       "ObjectGuid": null,
       "SerializationControl": "NoExtension",
       "Operation": "None",
+      "HasLeadingFourNullBytes": false,
       "ObjectName": "SimpleConstructionScript_0",
       "OuterIndex": 1,
       "ClassIndex": -8,
@@ -1405,33 +1418,33 @@
       "Data": [
         {
           "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-          "Value": 50.0,
           "Name": "OuterConeAngle",
           "ArrayIndex": 0,
           "IsZero": false,
           "PropertyTagFlags": "None",
           "PropertyTypeName": null,
-          "PropertyTagExtensions": "NoExtension"
+          "PropertyTagExtensions": "NoExtension",
+          "Value": 50.0
         },
         {
           "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-          "Value": 3.0,
           "Name": "SourceRadius",
           "ArrayIndex": 0,
           "IsZero": false,
           "PropertyTagFlags": "None",
           "PropertyTypeName": null,
-          "PropertyTagExtensions": "NoExtension"
+          "PropertyTagExtensions": "NoExtension",
+          "Value": 3.0
         },
         {
           "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-          "Value": 5.0,
           "Name": "SoftSourceRadius",
           "ArrayIndex": 0,
           "IsZero": false,
           "PropertyTagFlags": "None",
           "PropertyTypeName": null,
-          "PropertyTagExtensions": "NoExtension"
+          "PropertyTagExtensions": "NoExtension",
+          "Value": 5.0
         },
         {
           "$type": "UAssetAPI.PropertyTypes.Objects.EnumPropertyData, UAssetAPI",
@@ -1447,13 +1460,13 @@
         },
         {
           "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-          "Value": 4000.0,
           "Name": "Temperature",
           "ArrayIndex": 0,
           "IsZero": false,
           "PropertyTagFlags": "None",
           "PropertyTypeName": null,
-          "PropertyTagExtensions": "NoExtension"
+          "PropertyTagExtensions": "NoExtension",
+          "Value": 4000.0
         },
         {
           "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
@@ -1467,13 +1480,13 @@
         },
         {
           "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-          "Value": 50.0,
           "Name": "Intensity",
           "ArrayIndex": 0,
           "IsZero": false,
           "PropertyTagFlags": "None",
           "PropertyTypeName": null,
-          "PropertyTagExtensions": "NoExtension"
+          "PropertyTagExtensions": "NoExtension",
+          "Value": 50.0
         },
         {
           "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
@@ -1520,6 +1533,7 @@
       "ObjectGuid": null,
       "SerializationControl": "NoExtension",
       "Operation": "None",
+      "HasLeadingFourNullBytes": false,
       "ObjectName": "SpotLight_GEN_VARIABLE",
       "OuterIndex": 1,
       "ClassIndex": -9,
@@ -1575,16 +1589,6 @@
           "PropertyTypeName": null,
           "PropertyTagExtensions": "NoExtension",
           "Value": [
-            {
-              "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
-              "Name": "0",
-              "ArrayIndex": 0,
-              "IsZero": false,
-              "PropertyTagFlags": "None",
-              "PropertyTypeName": null,
-              "PropertyTagExtensions": "NoExtension",
-              "Value": -13
-            },
             {
               "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
               "Name": "0",
@@ -2129,6 +2133,7 @@
       "ObjectGuid": null,
       "SerializationControl": "NoExtension",
       "Operation": "None",
+      "HasLeadingFourNullBytes": false,
       "ObjectName": "Mesh_GEN_VARIABLE",
       "OuterIndex": 1,
       "ClassIndex": -10,
