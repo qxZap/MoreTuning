@@ -40,6 +40,32 @@ KNOWN_PART_ICONS = {
   "Winch":0
 }
 
+def load_json_from_path(path, required=True):
+    """Load JSON from path with optional error handling"""
+    try:
+        with open(path, 'r') as f:
+            data = json.loads(f.read())
+        if not data:
+            raise ValueError(f"Empty JSON in {path}")
+        return data
+    except (FileNotFoundError, json.JSONDecodeError, ValueError) as e:
+        if required:
+            print(f"❌ Error loading {path}: {e}")
+            exit(1)
+        print(f"⚠️  Warning: Could not load {path}: {e}")
+        return None
+
+def load_file_from_path(path, required=True):
+    try:
+        with open(path,'r') as f:
+            return f.read()
+    except Exception as e:
+        if required:
+            print(f"❌ Error loading {path}: {e}")
+            exit(1)
+        print(f"⚠️  Warning: Could not load {path}: {e}")
+        return None
+
 def clean_part_name(ugly_str):
     """
     Cleans strings by replacing separators with spaces and 
@@ -60,16 +86,6 @@ def clean_part_name(ugly_str):
     
     # 4. Strip extra whitespace and return
     return ' '.join(cleaned.split())
-
-def load_json_from_path(path):
-    data = None
-    with open(path, 'r') as f:
-        data = json.loads(f.read())
-
-    if not data:
-        print(f"Error reading from {path} !!")
-    
-    return data
 
 def get_x_bounding(mesh_data):
     for export in mesh_data["Exports"]:
@@ -227,24 +243,12 @@ def game_to_mt_path(path):
 
 IN_FILE = "AeroParts.json"
 
-data = None
-with open(IN_FILE, "r") as f:
-    data = json.loads(f.read())
-
-
-if not data:
-    print(f"No {IN_FILE} found in the current folder! ")
-    exit()
+data = load_json_from_path(IN_FILE, required=True)
 
 
 NEW_TATTACHMENT_TEMPLATE_PATH = "NEW_ATTACHMENT_PART.json"
-new_attachment_template = None
-with open(NEW_TATTACHMENT_TEMPLATE_PATH, "r") as f:
-    new_attachment_template = json.loads(f.read())
+new_attachment_template = load_json_from_path(NEW_TATTACHMENT_TEMPLATE_PATH, required=True)
 
-if not new_attachment_template:
-    print(f"No {NEW_TATTACHMENT_TEMPLATE_PATH} found in the current folder! It's required to create new attachments!")
-    exit()
 
 def make_new_attachment(attachment_id, attachment_name, cost, mass, actor_index, mesh_index, icon_index, part_type, is_premium):
     # TODO: attachment_name << nice format required 
@@ -323,23 +327,17 @@ def make_new_attachment(attachment_id, attachment_name, cost, mass, actor_index,
 
 
 NEW_ACTOR_PATH = "ACTOR_TEMPLATE.json"
-new_actor_template = None
-with open(NEW_ACTOR_PATH, "r") as f:
-    new_actor_template = f.read()
-
-if not new_actor_template:
-    print(f"No {NEW_ACTOR_PATH} found in the current folder! It's required to create new attachments!")
-    exit()
+new_actor_template = load_file_from_path(NEW_ACTOR_PATH, required=True)
 
 NEW_ACTOR_PATH_NOCOLOR = "ACTOR_TEMPLATE_NOCOLOR.json"
-new_actor_template_nocolor = None
-with open(NEW_ACTOR_PATH_NOCOLOR, "r") as f:
-    new_actor_template_nocolor = f.read()
+new_actor_template_nocolor = load_file_from_path(NEW_ACTOR_PATH_NOCOLOR, required=True)
 
-if not new_actor_template_nocolor:
-    print(f"No {NEW_ACTOR_PATH_NOCOLOR} found in the current folder! It's required to create new attachments!")
-    exit()
+NEW_ACTOR_PATH_SINGLECOLOR = "ACTOR_TEMPLATE_SINGLE_COLOR.json"
+new_actor_template_singlecolor = load_file_from_path(NEW_ACTOR_PATH_SINGLECOLOR, required=True)
 
+DOUBLE_COLOR_VEHICLES = "DoubleColorVehicles.json"
+double_color_vehicles_raw = load_json_from_path(DOUBLE_COLOR_VEHICLES, required=True)
+deouble_color_vehicles = double_color_vehicles_raw.get('vehicles')
 
 def make_new_actor(path_base, actor_name, mesh_name, mesh_path, mesh_bounding, colorable_actor=True):
     
@@ -347,10 +345,19 @@ def make_new_actor(path_base, actor_name, mesh_name, mesh_path, mesh_bounding, c
     if colorable_actor:
         new_actor = copy.deepcopy(new_actor_template)
 
+        from_vehicle = None
+        try:
+            from_vehicle = actor_name.split('_')[1]
+        except Exception as e:
+            pass
+
+        if from_vehicle:
+            if from_vehicle in deouble_color_vehicles:
+                new_actor = copy.deepcopy(new_actor_template_singlecolor)
+
     new_actor = new_actor.replace("Attachment_Neo_RearSpoiler_01", actor_name)
     new_actor = new_actor.replace("/Game/Cars/Models/Neo/RearSpoiler_01", mesh_path)
     new_actor = new_actor.replace("RearSpoiler_01", mesh_name)
-
 
     x = 0.0
     y = 0.0
@@ -484,14 +491,7 @@ unique_types = sorted(list(set(item["part_type"] for item in aero_attachments)))
 ITEM_ATTACHMENTS_FILE = "Items_AttachmentPart.json"
 OUTPUT_FILE = "NEW_Items_AttachmentPart.json"
 
-data = None
-with open(ITEM_ATTACHMENTS_FILE, "r") as f:
-    data = json.loads(f.read())
-
-
-if not data:
-    print(f"No {ITEM_ATTACHMENTS_FILE} found in the current folder! \nThis is required for generation of attachments!")
-    exit()
+data = load_json_from_path(ITEM_ATTACHMENTS_FILE, required=True)
 
 
 part_names = data.get("NameMap")
@@ -534,14 +534,7 @@ for part in parts:
 
 EXTRA_ATTACHMENTS_FILE = "ExtraAttachments.json"
 
-extra_data = None
-with open(EXTRA_ATTACHMENTS_FILE, "r") as f:
-    extra_data = json.loads(f.read())
-
-
-if not extra_data:
-    print(f"No {EXTRA_ATTACHMENTS_FILE} found in the current folder! \nThis is required for generation of attachments!")
-    exit()
+extra_data = load_json_from_path(EXTRA_ATTACHMENTS_FILE, required=True)
 
 if TESTING:
     aero_attachments = aero_attachments[:TESTING_GAP]
