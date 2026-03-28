@@ -535,6 +535,7 @@ for part in parts:
 EXTRA_ATTACHMENTS_FILE = "ExtraAttachments.json"
 
 extra_data = load_json_from_path(EXTRA_ATTACHMENTS_FILE, required=True)
+extra_data = sorted(list((set(extra_data_item["part_id"] for extra_data_item in extra_data))))
 
 if TESTING:
     aero_attachments = aero_attachments[:TESTING_GAP]
