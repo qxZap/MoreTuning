@@ -11,8 +11,8 @@ from datetime import timedelta
 TESTING = False # wanna test just a tailed number of attachments?
 TESTING_GAP = 10 # how many?
 CREATE_ACTORS = True #create actors? 
-CLEAN_ACTORS = True #clean all actors on run?
-DELTA_ONLY_ACTORS = False #create only missing actors
+CLEAN_ACTORS = False #clean all actors on run?
+DELTA_ONLY_ACTORS = True #create only missing actors
 USE_EXTRAS = True
 
 MESH_ID_TO_USE = -283
@@ -735,7 +735,7 @@ for aero_attachment in aero_attachments:
 
 
     data["Exports"][0]["Table"]["Data"].append(make_new_attachment(name_part_id, part_id, price, mass, actor_index, mesh_index, icon_index, part_type, is_premium))
-    premium_data.append(make_new_attachment(name_part_id, part_id, price, mass, actor_index, mesh_index, icon_index, part_type, False))
+    premium_data.append(make_new_attachment(name_part_id, part_id, price, mass, actor_index, mesh_index, icon_index, part_type, is_premium))
     data["Exports"][0]["CreateBeforeSerializationDependencies"].append(actor_index)
     # data["Exports"][0]["CreateBeforeSerializationDependencies"].append(mesh_index)
 
