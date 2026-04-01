@@ -10,7 +10,7 @@ from datetime import timedelta
 
 TESTING = False # wanna test just a tailed number of attachments?
 TESTING_GAP = 10 # how many?
-CREATE_ACTORS = True #create actors? 
+CREATE_ACTORS = False #create actors? 
 CLEAN_ACTORS = False #clean all actors on run?
 DELTA_ONLY_ACTORS = True #create only missing actors
 USE_EXTRAS = True
