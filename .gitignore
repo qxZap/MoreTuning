@@ -5,3 +5,5 @@ Rebase/work/
 Rebase/old/
 *.pre719
 *.pre719.json
+SoundTools/in/
+SoundTools/out/
