@@ -1,6 +1,6 @@
 {
   "$type": "UAssetAPI.UAsset, UAssetAPI",
-  "Info": "Serialized with UAssetAPI 1.0.2.0 (39a20ea)",
+  "Info": "Serialized with UAssetAPI v1.1.1x (e3eb798)",
   "NameMap": [
     "/Game/Cars/Parts/Transmission/NEW_TRANSMISSION",
     "/Game/Sounds/Vehicle/Transmission/Grinding/SC_Grinding",
@@ -9,18 +9,18 @@
     "/Script/MotorTown",
     "Class",
     "Default__MTTransmissionDataAsset",
-    "NEW_TRANSMISSION",
     "MTTransmissionDataAsset",
     "Package",
     "SC_Grinding",
-    "SoundCue"
+    "SoundCue",
+    "NEW_TRANSMISSION"
   ],
   "CustomSerializationFlags": "None",
   "UseSeparateBulkDataFiles": true,
   "IsUnversioned": true,
   "FileVersionLicenseeUE": 0,
   "ObjectVersion": "VER_UE4_CORRECT_LICENSEE_FLAG",
-  "ObjectVersionUE5": "ASSETREGISTRY_PACKAGEBUILDDEPENDENCIES",
+  "ObjectVersionUE5": "PROPERTY_TAG_COMPLETE_TYPE_NAME",
   "CustomVersionContainer": [
     {
       "$type": "UAssetAPI.CustomVersion, UAssetAPI",
@@ -67,7 +67,7 @@
       "Name": null,
       "Key": "{601D1886-AC64-4F84-AA16-D3DE0DEAC7D6}",
       "FriendlyName": "FFortniteMainBranchObjectVersion",
-      "Version": 170,
+      "Version": 134,
       "IsSerialized": false
     },
     {
@@ -115,7 +115,7 @@
       "Name": null,
       "Key": "{FCF57AFA-5076-4283-B9A9-E658FFA02D32}",
       "FriendlyName": "FNiagaraCustomVersion",
-      "Version": 90,
+      "Version": 86,
       "IsSerialized": false
     }
   ],
@@ -134,8 +134,10 @@
           "Operation": "None",
           "Name": "TransmissionProperty",
           "ArrayIndex": 0,
+          "PropertyGuid": null,
           "IsZero": false,
           "PropertyTagFlags": "None",
+          "PropertyTypeName": null,
           "PropertyTagExtensions": "NoExtension",
           "Value": [
             {
@@ -144,8 +146,10 @@
               "InnerType": "ByteProperty",
               "Name": "ClutchType",
               "ArrayIndex": 0,
+              "PropertyGuid": null,
               "IsZero": false,
               "PropertyTagFlags": "None",
+              "PropertyTypeName": null,
               "PropertyTagExtensions": "NoExtension",
               "Value": "MultiPlateClutch"
             },
@@ -154,8 +158,10 @@
               "ArrayType": "StructProperty",
               "Name": "Gears",
               "ArrayIndex": 0,
+              "PropertyGuid": null,
               "IsZero": false,
               "PropertyTagFlags": "None",
+              "PropertyTypeName": null,
               "PropertyTagExtensions": "NoExtension",
               "Value": [
                 {
@@ -167,34 +173,42 @@
                   "Operation": "None",
                   "Name": "0",
                   "ArrayIndex": 0,
+                  "PropertyGuid": null,
                   "IsZero": false,
                   "PropertyTagFlags": "None",
+                  "PropertyTypeName": null,
                   "PropertyTagExtensions": "NoExtension",
                   "Value": [
                     {
                       "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-                      "Value": -2.691999912261963,
                       "Name": "GearRatio",
                       "ArrayIndex": 0,
+                      "PropertyGuid": null,
                       "IsZero": false,
                       "PropertyTagFlags": "None",
-                      "PropertyTagExtensions": "NoExtension"
+                      "PropertyTypeName": null,
+                      "PropertyTagExtensions": "NoExtension",
+                      "Value": -8.069999694824219
                     },
                     {
                       "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-                      "Value": 100.0,
                       "Name": "Inertia",
                       "ArrayIndex": 0,
+                      "PropertyGuid": null,
                       "IsZero": false,
                       "PropertyTagFlags": "None",
-                      "PropertyTagExtensions": "NoExtension"
+                      "PropertyTypeName": null,
+                      "PropertyTagExtensions": "NoExtension",
+                      "Value": 100.0
                     },
                     {
                       "$type": "UAssetAPI.PropertyTypes.Objects.StrPropertyData, UAssetAPI",
                       "Name": "Name",
                       "ArrayIndex": 0,
+                      "PropertyGuid": null,
                       "IsZero": false,
                       "PropertyTagFlags": "None",
+                      "PropertyTypeName": null,
                       "PropertyTagExtensions": "NoExtension",
                       "Value": "R"
                     }
@@ -209,34 +223,42 @@
                   "Operation": "None",
                   "Name": "1",
                   "ArrayIndex": 0,
+                  "PropertyGuid": null,
                   "IsZero": false,
                   "PropertyTagFlags": "None",
+                  "PropertyTypeName": null,
                   "PropertyTagExtensions": "NoExtension",
                   "Value": [
                     {
                       "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-                      "Value": "+0",
                       "Name": "GearRatio",
                       "ArrayIndex": 0,
+                      "PropertyGuid": null,
                       "IsZero": true,
                       "PropertyTagFlags": "None",
-                      "PropertyTagExtensions": "NoExtension"
+                      "PropertyTypeName": null,
+                      "PropertyTagExtensions": "NoExtension",
+                      "Value": "+0"
                     },
                     {
                       "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-                      "Value": 100.0,
                       "Name": "Inertia",
                       "ArrayIndex": 0,
+                      "PropertyGuid": null,
                       "IsZero": false,
                       "PropertyTagFlags": "None",
-                      "PropertyTagExtensions": "NoExtension"
+                      "PropertyTypeName": null,
+                      "PropertyTagExtensions": "NoExtension",
+                      "Value": 100.0
                     },
                     {
                       "$type": "UAssetAPI.PropertyTypes.Objects.StrPropertyData, UAssetAPI",
                       "Name": "Name",
                       "ArrayIndex": 0,
+                      "PropertyGuid": null,
                       "IsZero": false,
                       "PropertyTagFlags": "None",
+                      "PropertyTypeName": null,
                       "PropertyTagExtensions": "NoExtension",
                       "Value": "N"
                     }
@@ -251,34 +273,42 @@
                   "Operation": "None",
                   "Name": "2",
                   "ArrayIndex": 0,
+                  "PropertyGuid": null,
                   "IsZero": false,
                   "PropertyTagFlags": "None",
+                  "PropertyTypeName": null,
                   "PropertyTagExtensions": "NoExtension",
                   "Value": [
                     {
                       "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-                      "Value": 3.0910000801086426,
                       "Name": "GearRatio",
                       "ArrayIndex": 0,
+                      "PropertyGuid": null,
                       "IsZero": false,
                       "PropertyTagFlags": "None",
-                      "PropertyTagExtensions": "NoExtension"
+                      "PropertyTypeName": null,
+                      "PropertyTagExtensions": "NoExtension",
+                      "Value": 9.029999732971191
                     },
                     {
                       "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-                      "Value": 100.0,
                       "Name": "Inertia",
                       "ArrayIndex": 0,
+                      "PropertyGuid": null,
                       "IsZero": false,
                       "PropertyTagFlags": "None",
-                      "PropertyTagExtensions": "NoExtension"
+                      "PropertyTypeName": null,
+                      "PropertyTagExtensions": "NoExtension",
+                      "Value": 100.0
                     },
                     {
                       "$type": "UAssetAPI.PropertyTypes.Objects.StrPropertyData, UAssetAPI",
                       "Name": "Name",
                       "ArrayIndex": 0,
+                      "PropertyGuid": null,
                       "IsZero": false,
                       "PropertyTagFlags": "None",
+                      "PropertyTypeName": null,
                       "PropertyTagExtensions": "NoExtension",
                       "Value": "1"
                     }
@@ -293,34 +323,42 @@
                   "Operation": "None",
                   "Name": "3",
                   "ArrayIndex": 0,
+                  "PropertyGuid": null,
                   "IsZero": false,
                   "PropertyTagFlags": "None",
+                  "PropertyTypeName": null,
                   "PropertyTagExtensions": "NoExtension",
                   "Value": [
                     {
                       "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-                      "Value": 2.1050000190734863,
                       "Name": "GearRatio",
                       "ArrayIndex": 0,
+                      "PropertyGuid": null,
                       "IsZero": false,
                       "PropertyTagFlags": "None",
-                      "PropertyTagExtensions": "NoExtension"
+                      "PropertyTypeName": null,
+                      "PropertyTagExtensions": "NoExtension",
+                      "Value": 5.25
                     },
                     {
                       "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-                      "Value": 100.0,
                       "Name": "Inertia",
                       "ArrayIndex": 0,
+                      "PropertyGuid": null,
                       "IsZero": false,
                       "PropertyTagFlags": "None",
-                      "PropertyTagExtensions": "NoExtension"
+                      "PropertyTypeName": null,
+                      "PropertyTagExtensions": "NoExtension",
+                      "Value": 100.0
                     },
                     {
                       "$type": "UAssetAPI.PropertyTypes.Objects.StrPropertyData, UAssetAPI",
                       "Name": "Name",
                       "ArrayIndex": 0,
+                      "PropertyGuid": null,
                       "IsZero": false,
                       "PropertyTagFlags": "None",
+                      "PropertyTypeName": null,
                       "PropertyTagExtensions": "NoExtension",
                       "Value": "2"
                     }
@@ -335,34 +373,42 @@
                   "Operation": "None",
                   "Name": "4",
                   "ArrayIndex": 0,
+                  "PropertyGuid": null,
                   "IsZero": false,
                   "PropertyTagFlags": "None",
+                  "PropertyTypeName": null,
                   "PropertyTagExtensions": "NoExtension",
                   "Value": [
                     {
                       "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-                      "Value": 1.565000057220459,
                       "Name": "GearRatio",
                       "ArrayIndex": 0,
+                      "PropertyGuid": null,
                       "IsZero": false,
                       "PropertyTagFlags": "None",
-                      "PropertyTagExtensions": "NoExtension"
+                      "PropertyTypeName": null,
+                      "PropertyTagExtensions": "NoExtension",
+                      "Value": 3.0999999046325684
                     },
                     {
                       "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-                      "Value": 100.0,
                       "Name": "Inertia",
                       "ArrayIndex": 0,
+                      "PropertyGuid": null,
                       "IsZero": false,
                       "PropertyTagFlags": "None",
-                      "PropertyTagExtensions": "NoExtension"
+                      "PropertyTypeName": null,
+                      "PropertyTagExtensions": "NoExtension",
+                      "Value": 100.0
                     },
                     {
                       "$type": "UAssetAPI.PropertyTypes.Objects.StrPropertyData, UAssetAPI",
                       "Name": "Name",
                       "ArrayIndex": 0,
+                      "PropertyGuid": null,
                       "IsZero": false,
                       "PropertyTagFlags": "None",
+                      "PropertyTypeName": null,
                       "PropertyTagExtensions": "NoExtension",
                       "Value": "3"
                     }
@@ -377,34 +423,42 @@
                   "Operation": "None",
                   "Name": "5",
                   "ArrayIndex": 0,
+                  "PropertyGuid": null,
                   "IsZero": false,
                   "PropertyTagFlags": "None",
+                  "PropertyTypeName": null,
                   "PropertyTagExtensions": "NoExtension",
                   "Value": [
                     {
                       "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-                      "Value": 1.2410000562667847,
                       "Name": "GearRatio",
                       "ArrayIndex": 0,
+                      "PropertyGuid": null,
                       "IsZero": false,
                       "PropertyTagFlags": "None",
-                      "PropertyTagExtensions": "NoExtension"
+                      "PropertyTypeName": null,
+                      "PropertyTagExtensions": "NoExtension",
+                      "Value": 2.0
                     },
                     {
                       "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-                      "Value": 100.0,
                       "Name": "Inertia",
                       "ArrayIndex": 0,
+                      "PropertyGuid": null,
                       "IsZero": false,
                       "PropertyTagFlags": "None",
-                      "PropertyTagExtensions": "NoExtension"
+                      "PropertyTypeName": null,
+                      "PropertyTagExtensions": "NoExtension",
+                      "Value": 100.0
                     },
                     {
                       "$type": "UAssetAPI.PropertyTypes.Objects.StrPropertyData, UAssetAPI",
                       "Name": "Name",
                       "ArrayIndex": 0,
+                      "PropertyGuid": null,
                       "IsZero": false,
                       "PropertyTagFlags": "None",
+                      "PropertyTypeName": null,
                       "PropertyTagExtensions": "NoExtension",
                       "Value": "4"
                     }
@@ -419,34 +473,42 @@
                   "Operation": "None",
                   "Name": "6",
                   "ArrayIndex": 0,
+                  "PropertyGuid": null,
                   "IsZero": false,
                   "PropertyTagFlags": "None",
+                  "PropertyTypeName": null,
                   "PropertyTagExtensions": "NoExtension",
                   "Value": [
                     {
                       "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-                      "Value": 1.065000057220459,
                       "Name": "GearRatio",
                       "ArrayIndex": 0,
+                      "PropertyGuid": null,
                       "IsZero": false,
                       "PropertyTagFlags": "None",
-                      "PropertyTagExtensions": "NoExtension"
+                      "PropertyTypeName": null,
+                      "PropertyTagExtensions": "NoExtension",
+                      "Value": 1.3799999952316284
                     },
                     {
                       "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-                      "Value": 100.0,
                       "Name": "Inertia",
                       "ArrayIndex": 0,
+                      "PropertyGuid": null,
                       "IsZero": false,
                       "PropertyTagFlags": "None",
-                      "PropertyTagExtensions": "NoExtension"
+                      "PropertyTypeName": null,
+                      "PropertyTagExtensions": "NoExtension",
+                      "Value": 100.0
                     },
                     {
                       "$type": "UAssetAPI.PropertyTypes.Objects.StrPropertyData, UAssetAPI",
                       "Name": "Name",
                       "ArrayIndex": 0,
+                      "PropertyGuid": null,
                       "IsZero": false,
                       "PropertyTagFlags": "None",
+                      "PropertyTypeName": null,
                       "PropertyTagExtensions": "NoExtension",
                       "Value": "5"
                     }
@@ -461,34 +523,42 @@
                   "Operation": "None",
                   "Name": "7",
                   "ArrayIndex": 0,
+                  "PropertyGuid": null,
                   "IsZero": false,
                   "PropertyTagFlags": "None",
+                  "PropertyTypeName": null,
                   "PropertyTagExtensions": "NoExtension",
                   "Value": [
                     {
                       "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-                      "Value": 0.9390000104904175,
                       "Name": "GearRatio",
                       "ArrayIndex": 0,
+                      "PropertyGuid": null,
                       "IsZero": false,
                       "PropertyTagFlags": "None",
-                      "PropertyTagExtensions": "NoExtension"
+                      "PropertyTypeName": null,
+                      "PropertyTagExtensions": "NoExtension",
+                      "Value": 1.0
                     },
                     {
                       "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-                      "Value": 100.0,
                       "Name": "Inertia",
                       "ArrayIndex": 0,
+                      "PropertyGuid": null,
                       "IsZero": false,
                       "PropertyTagFlags": "None",
-                      "PropertyTagExtensions": "NoExtension"
+                      "PropertyTypeName": null,
+                      "PropertyTagExtensions": "NoExtension",
+                      "Value": 100.0
                     },
                     {
                       "$type": "UAssetAPI.PropertyTypes.Objects.StrPropertyData, UAssetAPI",
                       "Name": "Name",
                       "ArrayIndex": 0,
+                      "PropertyGuid": null,
                       "IsZero": false,
                       "PropertyTagFlags": "None",
+                      "PropertyTypeName": null,
                       "PropertyTagExtensions": "NoExtension",
                       "Value": "6"
                     }
@@ -500,26 +570,76 @@
               "$type": "UAssetAPI.PropertyTypes.Objects.IntPropertyData, UAssetAPI",
               "Name": "DefaultGearIndex",
               "ArrayIndex": 0,
+              "PropertyGuid": null,
               "IsZero": false,
               "PropertyTagFlags": "None",
+              "PropertyTypeName": null,
               "PropertyTagExtensions": "NoExtension",
               "Value": 1
             },
             {
               "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-              "Value": 2.0,
-              "Name": "TorqueConvertorStallRatioPower",
+              "Name": "ShiftTimeSeconds",
               "ArrayIndex": 0,
+              "PropertyGuid": null,
               "IsZero": false,
               "PropertyTagFlags": "None",
-              "PropertyTagExtensions": "NoExtension"
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": 0.800000011920929
+            },
+            {
+              "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
+              "Name": "AutoShiftComportRPM",
+              "ArrayIndex": 0,
+              "PropertyGuid": null,
+              "IsZero": false,
+              "PropertyTagFlags": "None",
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": 2000.0
+            },
+            {
+              "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
+              "Name": "TorqueConvertorStallRPM",
+              "ArrayIndex": 0,
+              "PropertyGuid": null,
+              "IsZero": false,
+              "PropertyTagFlags": "None",
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": 2000.0
+            },
+            {
+              "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
+              "Name": "TorqueConvertorStallRatioPower",
+              "ArrayIndex": 0,
+              "PropertyGuid": null,
+              "IsZero": false,
+              "PropertyTagFlags": "None",
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": 3.0
+            },
+            {
+              "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
+              "Name": "TorqueConvertorTorqueRate",
+              "ArrayIndex": 0,
+              "PropertyGuid": null,
+              "IsZero": false,
+              "PropertyTagFlags": "None",
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": 80.0
             },
             {
               "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
               "Name": "GearGrindingSound",
               "ArrayIndex": 0,
+              "PropertyGuid": null,
               "IsZero": false,
               "PropertyTagFlags": "None",
+              "PropertyTypeName": null,
               "PropertyTagExtensions": "NoExtension",
               "Value": -5
             }
@@ -529,8 +649,10 @@
           "$type": "UAssetAPI.PropertyTypes.Objects.StrPropertyData, UAssetAPI",
           "Name": "DevComment",
           "ArrayIndex": 0,
+          "PropertyGuid": null,
           "IsZero": false,
           "PropertyTagFlags": "None",
+          "PropertyTypeName": null,
           "PropertyTagExtensions": "NoExtension",
           "Value": "new qxZap Transmission"
         }
@@ -538,14 +660,15 @@
       "ObjectGuid": null,
       "SerializationControl": "NoExtension",
       "Operation": "None",
+      "HasLeadingFourNullBytes": false,
       "ObjectName": "NEW_TRANSMISSION",
       "OuterIndex": 0,
       "ClassIndex": -1,
       "SuperIndex": 0,
       "TemplateIndex": -2,
       "ObjectFlags": "RF_Public, RF_Standalone, RF_Transactional",
-      "SerialSize": 175,
-      "SerialOffset": 923,
+      "SerialSize": 196,
+      "SerialOffset": 887,
       "ScriptSerializationStartOffset": 0,
       "ScriptSerializationEndOffset": 0,
       "bForcedExport": false,
@@ -570,6 +693,8 @@
     }
   ],
   "SearchableNames": null,
+  "ImportTypeHierarchies": null,
+  "MetaData": null,
   "Thumbnails": null,
   "WorldTileInfo": null,
   "AppendedNullBytes": 0,
@@ -630,8 +755,14 @@
     []
   ],
   "SoftPackageReferenceList": null,
-  "AssetRegistryData": "AAAAAA==",
-  "BulkData": "wYMqng==",
+  "AssetRegistryDependencyDataOffset": -1,
+  "AssetRegistryRecords": [],
+  "ImportBits": null,
+  "SoftPackageBits": null,
+  "ExtraPackageDependencies": null,
+  "BulkData": null,
+  "AdditionalFiles": "wYMqng==",
+  "Trailer": null,
   "ValorantGarbageData": null,
   "SeaOfThievesGarbageData": null,
   "Generations": [
@@ -641,7 +772,7 @@
       "NameCount": 12
     }
   ],
-  "PackageGuid": "{01BB12D3-4AB5-62A4-FA73-E3BE95DDC365}",
+  "PackageGuid": "{87AD8701-4FD7-4053-F691-7E9707DEDEB3}",
   "PersistentGuid": "{00000000-0000-0000-0000-000000000000}",
   "RecordedEngineVersion": {
     "$type": "UAssetAPI.FEngineVersion, UAssetAPI",
@@ -660,13 +791,16 @@
     "Branch": null
   },
   "ChunkIDs": [],
-  "PackageSource": 2905869995,
+  "PackageSource": 1591877322,
   "FolderName": "/Game/Cars/Parts/Transmission/NEW_TRANSMISSION",
   "LocalizationId": null,
   "SoftObjectPathsCount": 0,
-  "SoftObjectPathsOffset": 647,
+  "SoftObjectPathsOffset": 611,
   "SearchableNamesOffset": 0,
   "ThumbnailTableOffset": 0,
+  "ImportTypeHierarchiesCount": 0,
+  "ImportTypeHierarchiesOffset": 0,
+  "SavedHash": null,
   "CompressionFlags": 0,
   "AdditionalPackagesToCook": [],
   "NamesReferencedFromExportDataCount": 0,
@@ -676,5 +810,6 @@
   "doWeHaveWorldTileInfo": false,
   "PackageFlags": "PKG_Cooked, PKG_UnversionedProperties, PKG_FilterEditorOnly",
   "HasUnversionedProperties": true,
-  "IsFilterEditorOnly": true
+  "IsFilterEditorOnly": true,
+  "IsPreDependencyFormat": true
 }

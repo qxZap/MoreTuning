@@ -3,8 +3,22 @@ import json
 import os
 import shutil
 import subprocess
+import sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'Rebase'))
+from rebase import fname_base, fnames_in  # noqa: E402
 
 NEW_ENG_FOLDER = 'new_eng'
+
+# NOT the ..\UAssetGUI.exe next to this repo -- that one is v1.0.4 and writes an
+# older JSON schema, so anything it exports fails to build again on 0.7.19.
+UASSETGUI = r'D:\MT\UAssetGUI.exe'
+MAPPINGS = 'MotorTown719'
+
+# Since 0.7.19 the table points at engine assets by soft path -- no import table
+# surgery. EnginesIN.json is the mod's engine table minus the EV rows this
+# script adds; regenerate it with Rebase/rebuild.py after a game update.
+ENGINE_DIR = '/Game/Cars/Parts/Engine/'
 
 def create_folder_if_not_exists(path):
     if not os.path.exists(path):
@@ -33,17 +47,6 @@ def get_base_motor(name):
         base_file = base_file.replace('Electric_670HP', name)
         return json.loads(base_file)
     
-def new_engine_asset(index, asset_name):
-    return {
-      "$type": "UAssetAPI.Import, UAssetAPI",
-      "ObjectName": asset_name,
-      "OuterIndex": index,
-      "ClassPackage": "/Script/MotorTown",
-      "ClassName": "MHEngineDataAsset",
-      "PackageName": None,
-      "bImportOptional": False
-    }
-
 def get_level_req_row(level):
     return {
                 "$type": "UAssetAPI.PropertyTypes.Objects.MapPropertyData, UAssetAPI",
@@ -80,17 +83,17 @@ def get_level_req_row(level):
               }
 
 def get_engine_package_path(asset_name):
-    return "/Game/Cars/Parts/Engine/"+asset_name
+    return ENGINE_DIR + asset_name
 
-def new_package_import(asset_name):
+def soft_object_path(asset_name):
     return {
-      "$type": "UAssetAPI.Import, UAssetAPI",
-      "ObjectName": get_engine_package_path(asset_name),
-      "OuterIndex": 0,
-      "ClassPackage": "/Script/CoreUObject",
-      "ClassName": "Package",
-      "PackageName": None,
-      "bImportOptional": False
+        "$type": "UAssetAPI.PropertyTypes.Objects.FSoftObjectPath, UAssetAPI",
+        "AssetPath": {
+            "$type": "UAssetAPI.PropertyTypes.Objects.FTopLevelAssetPath, UAssetAPI",
+            "PackageName": get_engine_package_path(asset_name),
+            "AssetName": asset_name,
+        },
+        "SubPathString": None,
     }
 
 def save_engine(path, content):
@@ -120,25 +123,19 @@ def copy_all_files(src_folder, dest_folder):
             print(f"Copied: {src_path} -> {dest_path}")
 
 
-def run_uassetgui(json_path, output_path, game_name="MotorTown"):
-    try:
-        subprocess.run([
-            "..\\UAssetGUI.exe",
-            "fromjson",
-            json_path,
-            output_path,
-            game_name
-        ], check=True)
-        return True
-    except subprocess.CalledProcessError as e:
-        print(f"Command failed with return code {e.returncode}")
-        return False
-    except FileNotFoundError:
-        print("UAssetGUI.exe not found. Check the path.")
-
 def remove_file_if_exists(filepath):
     if os.path.isfile(filepath):
         os.remove(filepath)
+
+def run_uassetgui(json_path, output_path, game_name=MAPPINGS):
+    # UAssetGUI is a WinForms app: it exits 0 whether or not it wrote anything,
+    # so the only reliable success check is the output file existing.
+    remove_file_if_exists(output_path)
+    try:
+        subprocess.run([UASSETGUI, "fromjson", json_path, output_path, game_name], check=True)
+    except FileNotFoundError:
+        raise SystemExit(f"{UASSETGUI} not found. Check the path.")
+    return os.path.exists(output_path)
 
 def load_new_engine_part(transmission_id, engine_name, weight, price, req, index, description):
     data = {}
@@ -161,7 +158,7 @@ def load_new_engine_part(transmission_id, engine_name, weight, price, req, index
         if row_name == 'LevelRequirementToBuy':
             row['Value'] = get_level_req_row(req)['Value']
         if row_name == 'EngineAsset':
-            row['Value'] = index
+            row['Value'] = soft_object_path(transmission_id)
 
     return data
 
@@ -171,12 +168,10 @@ create_folder_if_not_exists(NEW_ENG_FOLDER)
 with open('EnginesIN.json', 'r') as f:
     engine_listing_asset = json.loads(f.read())
 
-start_index = len(engine_listing_asset['Imports'])*(-1)-1
-
-imports = engine_listing_asset['Imports']
 NameMap = engine_listing_asset['NameMap']
-CreateBeforeSerializationDependencies = engine_listing_asset['Exports'][0]['CreateBeforeSerializationDependencies']
 parts = engine_listing_asset['Exports'][0]['Table']['Data']
+existing_rows = {row['Name'] for row in parts}
+new_names = []
 
 motors = None
 with open('motors.json', 'r') as f:
@@ -274,25 +269,26 @@ if motors:
         if conversion:
             remove_file_if_exists(new_engine_path)
 
-            new_transmission_asset_to_add = new_engine_asset(start_index-1, motor_key)
-            CreateBeforeSerializationDependencies.append(start_index)
-            parts.append(load_new_engine_part(motor_key, name,get_weight(hp)+extra_weight, price, get_level_req(hp),start_index, description))
-            start_index-=1
-            new_import = new_package_import(motor_key)
-            start_index-=1
+            if motor_key in existing_rows:
+                print(f'skipping {motor_key}: EnginesIN.json already has that row')
+                continue
 
-            imports.append(new_transmission_asset_to_add)
-            imports.append(new_import)
-
-            NameMap.append(motor_key)
-            NameMap.append(get_engine_package_path(motor_key))
+            new_row = load_new_engine_part(motor_key, name, get_weight(hp)+extra_weight, price,
+                                           get_level_req(hp), None, description)
+            parts.append(new_row)
+            # Every FName the row touches has to be in the map or UAssetGUI writes
+            # nothing at all. Only the base goes in: "Foo_12" is stored as "Foo" + 12.
+            new_names += [fname_base(n) for n in (motor_key, *fnames_in(new_row))]
 
         else:
             print(f'issue with {motor_key}')
-    
-engine_listing_asset['Imports'] = imports
-engine_listing_asset['NameMap'] = NameMap
-engine_listing_asset['Exports'][0]['CreateBeforeSerializationDependencies'] = CreateBeforeSerializationDependencies
+
+# New names belong in the block the header counts as referenced by export data,
+# which vanilla keeps at the front of the map.
+boundary = engine_listing_asset['NamesReferencedFromExportDataCount']
+fresh = [n for n in dict.fromkeys(new_names) if n not in set(NameMap)]
+engine_listing_asset['NameMap'] = NameMap[:boundary] + fresh + NameMap[boundary:]
+engine_listing_asset['NamesReferencedFromExportDataCount'] = boundary + len(fresh)
 engine_listing_asset['Exports'][0]['Table']['Data'] = parts
 
 with open('Engines.json', 'w+') as f:

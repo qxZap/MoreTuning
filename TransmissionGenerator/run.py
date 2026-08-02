@@ -2,8 +2,23 @@
 import json
 import os
 import subprocess
+import sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'Rebase'))
+from rebase import fname_base, fnames_in  # noqa: E402
 
 NEW_TRANS_FOLDERS = 'new_trans'
+
+# Since 0.7.19 the table points at transmission assets by soft path, so the
+# vanilla export can be used as the base directly -- no import table surgery,
+# and vanilla's own balance changes come along for free. See Rebase/rebase.py.
+VANILLA_TABLE = r'D:\MT\Output\Exports\MotorTown\Content\DataAsset\VehicleParts\Transmissions.uasset'
+MAPPINGS = 'MotorTown719'
+TRANSMISSION_DIR = '/Game/Cars/Parts/Transmission/'
+
+# NOT the ..\UAssetGUI.exe next to this repo -- that one is v1.0.4 and writes an
+# older JSON schema, so anything it exports fails to build again on 0.7.19.
+UASSETGUI = r'D:\MT\UAssetGUI.exe'
 
 def create_folder_if_not_exists(path):
     if not os.path.exists(path):
@@ -50,31 +65,49 @@ def load_new_transmission_part(transmission_id, transmission_name, weight, price
         if row_name == 'LevelRequirementToBuy':
             row['Value'][0][1]['Value'] = req
         if row_name == 'TransmissionAsset':
-            row['Value'] = index
+            row['Value'] = soft_object_path(transmission_id)
 
     return data
 
-# To be used with type_t
-def get_clutch_type(clutch_type):
-#   ClutchType EMTTransmissionClutchType MultiPlateClutch
-#   Type EMTTransmissionType MultiPlateClutch
-#   ClutchType EMTTransmissionClutchType TorqueConvertorV2
-    clutch_type_name = 'ClutchType'
-    enum_type = 'EMTTransmissionClutchType'
-    if clutch_type not in ['TorqueConvertorV2', 'MultiPlateClutch']:
-        clutch_type_name = 'Type'
-        enum_type = 'EMTTransmissionType'
+
+def soft_object_path(asset_name):
     return {
+        "$type": "UAssetAPI.PropertyTypes.Objects.FSoftObjectPath, UAssetAPI",
+        "AssetPath": {
+            "$type": "UAssetAPI.PropertyTypes.Objects.FTopLevelAssetPath, UAssetAPI",
+            "PackageName": get_transmission_package_path(asset_name),
+            "AssetName": asset_name,
+        },
+        "SubPathString": None,
+    }
+
+def get_enum_p(name, enum_type, value):
+   return {
               "$type": "UAssetAPI.PropertyTypes.Objects.EnumPropertyData, UAssetAPI",
               "EnumType": enum_type,
               "InnerType": "ByteProperty",
-              "Name": clutch_type_name,
+              "Name": name,
               "ArrayIndex": 0,
               "IsZero": False,
               "PropertyTagFlags": "None",
               "PropertyTagExtensions": "NoExtension",
-              "Value": clutch_type
+              "Value": value
             }
+
+
+# Two separate enums, and vanilla sets both where it matters:
+#   ClutchType (EMTTransmissionClutchType): MultiPlateClutch | TorqueConvertorV2
+#   Type       (EMTTransmissionType):       CVT | EatonFuller13 | EatonFuller18
+# Type is what gives a box its shift model -- the range + splitter handling on
+# the Eaton twin-countershaft gearboxes. Leave it off and an 18 speed is just
+# 18 sequential gears. Set it via "type" on the entry in tras_s.json.
+def get_type_properties(clutch_type, shift_type):
+   props = []
+   if shift_type:
+      props.append(get_enum_p('Type', 'EMTTransmissionType', shift_type))
+   if clutch_type:
+      props.append(get_enum_p('ClutchType', 'EMTTransmissionClutchType', clutch_type))
+   return props
 
 # 3 (3.5, 100, 4)
 def new_gear(index_gear, gear_data):
@@ -239,46 +272,33 @@ def get_cvt_gear_ratios(x,y):
               ]
             }
 
-def run_uassetgui(json_path, output_path, game_name="MotorTown"):
+def run_uassetgui(json_path, output_path, game_name=MAPPINGS):
+    # UAssetGUI is a WinForms app: it exits 0 whether or not it wrote anything,
+    # so the only reliable success check is the output file existing.
+    remove_file_if_exists(output_path)
     try:
-        subprocess.run([
-            "..\\UAssetGUI.exe",
-            "fromjson",
-            json_path,
-            output_path,
-            game_name
-        ], check=True)
-        return True
-    except subprocess.CalledProcessError as e:
-        print(f"Command failed with return code {e.returncode}")
-        return False
+        subprocess.run([UASSETGUI, "fromjson", json_path, output_path, game_name], check=True)
     except FileNotFoundError:
-        print("UAssetGUI.exe not found. Check the path.")
-
-def new_transmission_asset(index, asset_name):
-    return {
-      "$type": "UAssetAPI.Import, UAssetAPI",
-      "ObjectName": asset_name,
-      "OuterIndex": index,
-      "ClassPackage": "/Script/MotorTown",
-      "ClassName": "MTTransmissionDataAsset",
-      "PackageName": None,
-      "bImportOptional": False
-    }
+        raise SystemExit(f"{UASSETGUI} not found. Check the path.")
+    return os.path.exists(output_path)
 
 def get_transmission_package_path(asset_name):
-    return "/Game/Cars/Parts/Transmission/"+asset_name
+    return TRANSMISSION_DIR + asset_name
 
-def new_package_import(asset_name):
-    return {
-      "$type": "UAssetAPI.Import, UAssetAPI",
-      "ObjectName": get_transmission_package_path(asset_name),
-      "OuterIndex": 0,
-      "ClassPackage": "/Script/CoreUObject",
-      "ClassName": "Package",
-      "PackageName": None,
-      "bImportOptional": False
-    }
+def load_vanilla_table():
+    """Freshly exported vanilla Transmissions table, as JSON."""
+    out = 'Transmissions_vanilla.json'
+    remove_file_if_exists(out)
+    subprocess.run([UASSETGUI, "tojson", VANILLA_TABLE, out, "VER_UE5_4", MAPPINGS],
+                   check=True)
+    if not os.path.exists(out):
+        raise SystemExit(f"could not read {VANILLA_TABLE} with mappings {MAPPINGS}")
+    with open(out, 'r') as f:
+        data = json.loads(f.read())
+    remove_file_if_exists(out)
+    if data['Exports'][0]['$type'].startswith('UAssetAPI.ExportTypes.RawExport'):
+        raise SystemExit(f"{VANILLA_TABLE} did not parse as a DataTable -- wrong usmap")
+    return data
 
 
 transmissions = {}
@@ -303,17 +323,12 @@ r_name_keys ={
     "8":"R8"
 }
 
-transmission_asset = {}
+transmission_asset = load_vanilla_table()
 
-with open('Transmissions2.json', 'r') as f:
-    transmission_asset = json.loads(f.read())
-
-start_index = len(transmission_asset['Imports'])*(-1)-1
-
-imports = transmission_asset['Imports']
 NameMap = transmission_asset['NameMap']
-CreateBeforeSerializationDependencies = transmission_asset['Exports'][0]['CreateBeforeSerializationDependencies']
 parts = transmission_asset['Exports'][0]['Table']['Data']
+vanilla_rows = {row['Name'] for row in parts}
+new_names = []
 
 
 for trans_key in transmissions:
@@ -407,7 +422,10 @@ for trans_key in transmissions:
     new_transmission_json = load_new_transmission(trans_key, transmission_name)
     transmission_values = []
     
-    transmission_values.append(get_clutch_type(type_t))
+    if type_t == 'CVT':
+        transmission_values.extend(get_type_properties(None, 'CVT'))
+    else:
+        transmission_values.extend(get_type_properties(type_t, transmission.get('type')))
     transmission_values.append(get_gears(ratios))
     transmission_values.append(get_def_gear_index(def_gear))
     transmission_values.append(get_float_p('ShiftTimeSeconds', shift_time))
@@ -438,28 +456,26 @@ for trans_key in transmissions:
     if conversion:
         remove_file_if_exists(new_transmission_path)
 
-        
-        new_transmission_asset_to_add = new_transmission_asset(start_index-1, trans_key)
-        CreateBeforeSerializationDependencies.append(start_index)
-        parts.append(load_new_transmission_part(trans_key, transmission_name,weight, price, lvl_req,start_index, description))
-        start_index-=1
-        new_import = new_package_import(trans_key)
-        start_index-=1
+        if trans_key in vanilla_rows:
+            print(f'skipping {trans_key}: vanilla already ships a row with that key')
+            continue
 
-        imports.append(new_transmission_asset_to_add)
-        imports.append(new_import)
-
-        NameMap.append(trans_key)
-        NameMap.append(get_transmission_package_path(trans_key))
+        new_row = load_new_transmission_part(trans_key, transmission_name, weight, price,
+                                             lvl_req, None, description)
+        parts.append(new_row)
+        # Every FName the row touches has to be in the map or UAssetGUI writes
+        # nothing at all. Only the base goes in: "Foo_12" is stored as "Foo" + 12.
+        new_names += [fname_base(n) for n in (trans_key, *fnames_in(new_row))]
 
     else:
         print(f'issue with {trans_key}')
-    
-# NameMap.append('CL_Driver')
-# NameMap.append('LevelRequirementToBuy')
-transmission_asset['Imports'] = imports
-transmission_asset['NameMap'] = NameMap
-transmission_asset['Exports'][0]['CreateBeforeSerializationDependencies'] = CreateBeforeSerializationDependencies
+
+# New names belong in the block the header counts as referenced by export data,
+# which vanilla keeps at the front of the map.
+boundary = transmission_asset['NamesReferencedFromExportDataCount']
+fresh = [n for n in dict.fromkeys(new_names) if n not in set(NameMap)]
+transmission_asset['NameMap'] = NameMap[:boundary] + fresh + NameMap[boundary:]
+transmission_asset['NamesReferencedFromExportDataCount'] = boundary + len(fresh)
 transmission_asset['Exports'][0]['Table']['Data'] = parts
 
 with open('Transmissions.json', 'w+') as f:

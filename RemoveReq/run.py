@@ -1,134 +1,155 @@
-import json
-import copy
+"""Strip the "which vehicle can fit this" gates off a part table.
 
-#130/kg real => 650c /kg real
-# Weight /2 , then apply 650c/kg 
+    python run.py                       # the tables MoreTuning ships stripped
+    python run.py License Wheels        # just these
+    python run.py --nolimits            # AeroParts + Headlights -> xNoLimits pak
 
-IN_FILE = 'input.json'
-OUT_FILE = 'output.json'
+Every row loses its vehicle restrictions, so any vehicle can buy any part -- and
+for the License tables, any vehicle can buy any license. Reads each table from
+the mod folder if it is already there (so this runs *after* Rebase/rebuild.py
+and keeps the mod's own rows), otherwise straight from the vanilla export.
 
-data = None
-with open(IN_FILE, 'r') as f:
-    data = json.loads(f.read())
+`--nolimits` is the same strip with `VehicleKeys` included, which is the gate
+that ties a bumper or a headlight to one specific car -- that is what makes any
+body part fit any vehicle, and it goes in its own pak because it is a much
+bigger change than the rest.
 
+Rerun this after every rebuild: rebase.py keeps vanilla's version of shared rows,
+which puts the restrictions back.
+"""
+import os
+import re
+import sys
 
-def price_and_weight(weight):
-    weight = int(weight)
-    return round(weight/2*650),round(weight/2,1)
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Rebase"))
+from pipeline import MOD, NOLIMITS, build_table, name_property  # noqa: E402
 
+# Cleared on every row. Matches what the shipped tables actually had cleared --
+# VehicleKeys is deliberately left alone here, the mod keeps those.
+GATE_ARRAYS = ("VehicleTypes", "TruckClasses", "OverrideAllowedVehicleKeys")
+GATE_QUERY = "VehicleRowGameplayTagQuery"
 
-def get_vehicle_tag_query():
-    return [
-                  {
-                    "$type": "UAssetAPI.PropertyTypes.Objects.IntPropertyData, UAssetAPI",
-                    "Name": "TokenStreamVersion",
-                    "ArrayIndex": 0,
-                    "IsZero": True,
-                    "PropertyTagFlags": "None",
-                    "PropertyTagExtensions": "NoExtension",
-                    "Value": 0
-                  },
-                  {
-                    "$type": "UAssetAPI.PropertyTypes.Objects.ArrayPropertyData, UAssetAPI",
-                    "ArrayType": "StructProperty",
-                    "DummyStruct": None,
-                    "Name": "TagDictionary",
-                    "ArrayIndex": 0,
-                    "IsZero": False,
-                    "PropertyTagFlags": "None",
-                    "PropertyTagExtensions": "NoExtension",
-                    "Value": []
-                  },
-                  {
-                    "$type": "UAssetAPI.PropertyTypes.Objects.ArrayPropertyData, UAssetAPI",
-                    "ArrayType": "ByteProperty",
-                    "DummyStruct": None,
-                    "Name": "QueryTokenStream",
-                    "ArrayIndex": 0,
-                    "IsZero": False,
-                    "PropertyTagFlags": "None",
-                    "PropertyTagExtensions": "NoExtension",
-                    "Value": []
-                  },
-                  {
-                    "$type": "UAssetAPI.PropertyTypes.Objects.StrPropertyData, UAssetAPI",
-                    "Name": "UserDescription",
-                    "ArrayIndex": 0,
-                    "IsZero": False,
-                    "PropertyTagFlags": "None",
-                    "PropertyTagExtensions": "NoExtension",
-                    "Value": None
-                  },
-                  {
-                    "$type": "UAssetAPI.PropertyTypes.Objects.StrPropertyData, UAssetAPI",
-                    "Name": "AutoDescription",
-                    "ArrayIndex": 0,
-                    "IsZero": False,
-                    "PropertyTagFlags": "None",
-                    "PropertyTagExtensions": "NoExtension",
-                    "Value": None
-                  }
-                ]
+# Plus the per-car lock, for the pak whose whole point is removing it.
+NOLIMIT_GATES = GATE_ARRAYS + ("VehicleKeys",)
+
+TABLES = ["License", "License_OversizeEscort", "License_OversizeEscort1", "VehicleParts0"]
+NOLIMIT_TABLES = ["AeroParts", "Headlights"]
 
 
-if data:
-    part_names = data.get('NameMap')
-    previous_parts = data.get('Exports')[0].get('Table').get('Data')
-
-    parts = data.get('Exports')[0].get('Table').get('Data')
-
-    new_parts = []
-    new_part_exportids = []
-
-    clean_parts = []
-
-    for part in parts:
-        part_id = part.get('Name')
-        part_name = part.get('Value')[0].get('CultureInvariantString')
-        current_part = copy.deepcopy(part)
+def clear_query(prop):
+    """Empty a GameplayTagQuery in place rather than substituting a hand-built one,
+    so the struct keeps whatever shape the current game uses."""
+    changed = False
+    for sub in prop.get("Value") or []:
+        name, value = sub.get("Name"), sub.get("Value")
+        if name in ("TagDictionary", "QueryTokenStream") and value:
+            sub["Value"] = []
+            changed = True
+        elif name in ("UserDescription", "AutoDescription") and value is not None:
+            sub["Value"] = None
+            changed = True
+    return changed
 
 
-        price_index = None
-        weight_index = None
-        type_index = None
-        vehicle_keys_index = None
-        VehicleRowGameplayTagQuery_index = None
-        truck_keys_value = None
-
-        for i in range(0, len(current_part['Value'])):
-            current_line_json = current_part['Value'][i]
-            if current_line_json.get('Name') == 'bIsHidden':
-                current_part['Value'][i]['Value'] = False
-            if current_line_json.get('Name') == 'Cost':
-                price_index = i
-            if current_line_json.get('Name') == 'MassKg':
-                weight_index = i
-            if current_line_json.get('Name') == 'VehicleTypes':
-                type_index = i
-            if current_line_json.get('Name') == 'VehicleKeys':
-                vehicle_keys_index = i
-            if current_line_json.get('Name') == 'TruckClasses':
-                truck_keys_value = i
-            if current_line_json.get('Name') == 'VehicleRowGameplayTagQuery':
-                VehicleRowGameplayTagQuery_index = i
+def strip_row(row, gates=GATE_ARRAYS):
+    changed = False
+    for prop in row["Value"]:
+        if prop["Name"] in gates and prop.get("Value"):
+            prop["Value"] = []
+            changed = True
+        elif prop["Name"] == GATE_QUERY:
+            changed |= clear_query(prop)
+    return changed
 
 
-        if price_index and weight_index:
-            # new_price,new_weight = price_and_weight(current_part['Value'][weight_index]['Value'])
+# A name that is nothing but a variant marker: "#1", " #12 ". Anything with a
+# word in it -- "Dabo #1", "Type-A" -- already says which car it belongs to.
+BARE_NUMBER = re.compile(r"^\s*#\d+\s*$")
 
-            current_part['Value'][type_index]['Value'] = []
-            current_part['Value'][vehicle_keys_index]['Value'] = []
-            current_part['Value'][truck_keys_value]['Value'] = []
-            current_part['Value'][VehicleRowGameplayTagQuery_index]['Value'] = get_vehicle_tag_query()
-            new_parts.append(current_part)
-        
-        part['Value'][type_index]['Value'] = []
-        part['Value'][vehicle_keys_index]['Value'] = []
-        clean_parts.append(part)
-        
 
-    with open(OUT_FILE, 'w+') as f:
-        data['Exports'][0]['Table']['Data'] = new_parts
-            
-        f.write(json.dumps(data, indent=4))
-    
+def rename_numbered(row):
+    """Give a part a name that means something outside its own car's menu.
+
+    Most body parts are named just "#1", "#2" ... -- fine in vanilla, where only
+    the one car they fit ever lists them, useless once every car does. The row
+    key already carries the car and the variant (Vista_Bonnet_01), so use that.
+    Parts that are already named, including a mod's own "Dabo #1", are left alone.
+    """
+    for prop in row["Value"]:
+        if prop["Name"] != "Name":
+            continue
+        if not BARE_NUMBER.match(prop.get("CultureInvariantString") or ""):
+            return False
+        prop.clear()
+        prop.update(name_property(row["Name"].replace("_", " ")))
+        return True
+    return False
+
+
+def stripper(gates, rename=False):
+    def strip_requirements(rows, table):
+        stripped = sum(strip_row(row, gates) for row in rows)
+        print(f"  stripped {stripped} of {len(rows)} rows")
+        if rename:
+            print(f"  renamed {sum(rename_numbered(row) for row in rows)} '#n' parts")
+        return rows
+    return strip_requirements
+
+
+def main():
+    args = sys.argv[1:]
+    nolimits = "--nolimits" in args
+    args = [a for a in args if a != "--nolimits"]
+
+    gates = NOLIMIT_GATES if nolimits else GATE_ARRAYS
+    dest = NOLIMITS if nolimits else MOD
+    wanted = args or (NOLIMIT_TABLES if nolimits else TABLES)
+
+    for name in wanted:
+        build_table(name, stripper(gates, rename=nolimits), dest=dest)
+    pak = "qxZap_MoreTuning_xNoLimits_P" if nolimits else "qxZap_MoreTuning_P"
+    print(f"\nDone. Pack with: modp.bat {pak}")
+
+
+def demo():
+    row = {"Name": "TaxiLicense0", "Value": [
+        {"Name": "VehicleTypes", "Value": [{"Value": "EMTVehicleType::Small"}]},
+        {"Name": "VehicleKeys", "Value": [{"Value": "Terra"}]},
+        {"Name": "VehicleRowGameplayTagQuery", "Value": [
+            {"Name": "TokenStreamVersion", "Value": 0},
+            {"Name": "QueryTokenStream", "Value": [1, 2, 3]},
+            {"Name": "AutoDescription", "Value": " ALL( Vehicle.EV )"}]},
+    ]}
+    assert strip_row(row) is True
+    by_name = {p["Name"]: p for p in row["Value"]}
+    assert by_name["VehicleTypes"]["Value"] == []
+    assert by_name["VehicleKeys"]["Value"] == [{"Value": "Terra"}]   # deliberately kept
+    query = {s["Name"]: s["Value"] for s in by_name["VehicleRowGameplayTagQuery"]["Value"]}
+    assert query["QueryTokenStream"] == [] and query["AutoDescription"] is None
+    assert strip_row(row) is False, "second pass should be a no-op"
+
+    numbered = {"Name": "Vista_Bonnet_01", "Value": [
+        {"Name": "Name", "CultureInvariantString": "#1", "Namespace": "AeroParts",
+         "HistoryType": "Base", "Value": "Vista_Bonnet_01_Name"}]}
+    named = {"Name": "Voltex_Bumper_01", "Value": [
+        {"Name": "Name", "CultureInvariantString": "Voltex Bumper", "Namespace": "AeroParts",
+         "HistoryType": "Base", "Value": "Voltex_Bumper_01_Name"}]}
+    prefixed = {"Name": "Dabo_01", "Value": [
+        {"Name": "Name", "CultureInvariantString": "Dabo #1", "Namespace": None,
+         "HistoryType": None, "Value": None}]}
+    assert rename_numbered(numbered) is True
+    assert rename_numbered(named) is False, "a real name must survive"
+    assert rename_numbered(prefixed) is False, "a mod's own '<car> #n' must survive"
+    prop = numbered["Value"][0]
+    assert prop["CultureInvariantString"] == "Vista Bonnet 01"
+    assert prop["Flags"] == "CultureInvariant" and prop["Namespace"] is None
+    assert prop["Value"] is None, "the localisation key has to go, or it wins"
+    assert rename_numbered(numbered) is False, "second pass should be a no-op"
+    print("ok")
+
+
+if __name__ == "__main__":
+    if len(sys.argv) == 2 and sys.argv[1] == "demo":
+        demo()
+    else:
+        main()

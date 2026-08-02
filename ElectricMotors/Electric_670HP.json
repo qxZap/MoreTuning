@@ -1,6 +1,6 @@
 {
   "$type": "UAssetAPI.UAsset, UAssetAPI",
-  "Info": "Serialized with UAssetAPI 1.0.2.0 (ec758cf)",
+  "Info": "Serialized with UAssetAPI v1.1.1x (e3eb798)",
   "NameMap": [
     "/Game/Cars/Parts/Engine/Electric_670HP",
     "/Game/Cars/Parts/Engine/Sound/Electric/SC_ElectricMotor",
@@ -23,7 +23,7 @@
   "IsUnversioned": true,
   "FileVersionLicenseeUE": 0,
   "ObjectVersion": "VER_UE4_CORRECT_LICENSEE_FLAG",
-  "ObjectVersionUE5": "ASSETREGISTRY_PACKAGEBUILDDEPENDENCIES",
+  "ObjectVersionUE5": "PROPERTY_TAG_COMPLETE_TYPE_NAME",
   "CustomVersionContainer": [
     {
       "$type": "UAssetAPI.CustomVersion, UAssetAPI",
@@ -70,7 +70,7 @@
       "Name": null,
       "Key": "{601D1886-AC64-4F84-AA16-D3DE0DEAC7D6}",
       "FriendlyName": "FFortniteMainBranchObjectVersion",
-      "Version": 170,
+      "Version": 134,
       "IsSerialized": false
     },
     {
@@ -118,7 +118,7 @@
       "Name": null,
       "Key": "{FCF57AFA-5076-4283-B9A9-E658FFA02D32}",
       "FriendlyName": "FNiagaraCustomVersion",
-      "Version": 90,
+      "Version": 86,
       "IsSerialized": false
     }
   ],
@@ -137,90 +137,110 @@
           "Operation": "None",
           "Name": "EngineProperty",
           "ArrayIndex": 0,
+          "PropertyGuid": null,
           "IsZero": false,
           "PropertyTagFlags": "None",
+          "PropertyTypeName": null,
           "PropertyTagExtensions": "NoExtension",
           "Value": [
             {
               "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
               "Name": "TorqueCurve",
               "ArrayIndex": 0,
+              "PropertyGuid": null,
               "IsZero": false,
               "PropertyTagFlags": "None",
+              "PropertyTypeName": null,
               "PropertyTagExtensions": "NoExtension",
               "Value": -2
             },
             {
               "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-              "Value": 3000.0,
               "Name": "Inertia",
               "ArrayIndex": 0,
+              "PropertyGuid": null,
               "IsZero": false,
               "PropertyTagFlags": "None",
-              "PropertyTagExtensions": "NoExtension"
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": 3000.0
             },
             {
               "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-              "Value": "+0",
               "Name": "StarterTorque",
               "ArrayIndex": 0,
+              "PropertyGuid": null,
               "IsZero": true,
               "PropertyTagFlags": "None",
-              "PropertyTagExtensions": "NoExtension"
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": "+0"
             },
             {
               "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-              "Value": "+0",
               "Name": "StarterRPM",
               "ArrayIndex": 0,
+              "PropertyGuid": null,
               "IsZero": true,
               "PropertyTagFlags": "None",
-              "PropertyTagExtensions": "NoExtension"
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": "+0"
             },
             {
               "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-              "Value": 9020000.0,
               "Name": "MaxTorque",
               "ArrayIndex": 0,
+              "PropertyGuid": null,
               "IsZero": false,
               "PropertyTagFlags": "None",
-              "PropertyTagExtensions": "NoExtension"
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": 9020000.0
             },
             {
               "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-              "Value": 21000.0,
               "Name": "MaxRPM",
               "ArrayIndex": 0,
+              "PropertyGuid": null,
               "IsZero": false,
               "PropertyTagFlags": "None",
-              "PropertyTagExtensions": "NoExtension"
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": 21000.0
             },
             {
               "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-              "Value": 100.0,
               "Name": "FrictionCoulombCoeff",
               "ArrayIndex": 0,
+              "PropertyGuid": null,
               "IsZero": false,
               "PropertyTagFlags": "None",
-              "PropertyTagExtensions": "NoExtension"
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": 100.0
             },
             {
               "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-              "Value": 100.0,
               "Name": "FrictionViscosityCoeff",
               "ArrayIndex": 0,
+              "PropertyGuid": null,
               "IsZero": false,
               "PropertyTagFlags": "None",
-              "PropertyTagExtensions": "NoExtension"
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": 100.0
             },
             {
               "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-              "Value": "+0",
               "Name": "IdleThrottle",
               "ArrayIndex": 0,
+              "PropertyGuid": null,
               "IsZero": true,
               "PropertyTagFlags": "None",
-              "PropertyTagExtensions": "NoExtension"
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": "+0"
             },
             {
               "$type": "UAssetAPI.PropertyTypes.Objects.EnumPropertyData, UAssetAPI",
@@ -228,55 +248,67 @@
               "InnerType": "ByteProperty",
               "Name": "FuelType",
               "ArrayIndex": 0,
+              "PropertyGuid": null,
               "IsZero": false,
               "PropertyTagFlags": "None",
+              "PropertyTypeName": null,
               "PropertyTagExtensions": "NoExtension",
               "Value": "Electric"
             },
             {
               "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-              "Value": 670.0,
               "Name": "FuelConsumption",
               "ArrayIndex": 0,
+              "PropertyGuid": null,
               "IsZero": false,
               "PropertyTagFlags": "None",
-              "PropertyTagExtensions": "NoExtension"
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": 670.0
             },
             {
               "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-              "Value": "+0",
               "Name": "BlipThrottle",
               "ArrayIndex": 0,
+              "PropertyGuid": null,
               "IsZero": true,
               "PropertyTagFlags": "None",
-              "PropertyTagExtensions": "NoExtension"
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": "+0"
             },
             {
               "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-              "Value": 0.30000001192092896,
               "Name": "MaxRegenTorqueRatio",
               "ArrayIndex": 0,
+              "PropertyGuid": null,
               "IsZero": false,
               "PropertyTagFlags": "None",
-              "PropertyTagExtensions": "NoExtension"
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": 0.30000001192092896
             },
             {
               "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-              "Value": 5050000.0,
               "Name": "MotorMaxPower",
               "ArrayIndex": 0,
+              "PropertyGuid": null,
               "IsZero": false,
               "PropertyTagFlags": "None",
-              "PropertyTagExtensions": "NoExtension"
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": 5050000.0
             },
             {
               "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-              "Value": 6700000.0,
               "Name": "MotorMaxVoltage",
               "ArrayIndex": 0,
+              "PropertyGuid": null,
               "IsZero": false,
               "PropertyTagFlags": "None",
-              "PropertyTagExtensions": "NoExtension"
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": 6700000.0
             }
           ]
         },
@@ -284,8 +316,10 @@
           "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
           "Name": "EnginesSound",
           "ArrayIndex": 0,
+          "PropertyGuid": null,
           "IsZero": false,
           "PropertyTagFlags": "None",
+          "PropertyTypeName": null,
           "PropertyTagExtensions": "NoExtension",
           "Value": -7
         }
@@ -293,6 +327,7 @@
       "ObjectGuid": null,
       "SerializationControl": "NoExtension",
       "Operation": "None",
+      "HasLeadingFourNullBytes": false,
       "ObjectName": "Electric_670HP",
       "OuterIndex": 0,
       "ClassIndex": -1,
@@ -326,6 +361,8 @@
     }
   ],
   "SearchableNames": null,
+  "ImportTypeHierarchies": null,
+  "MetaData": null,
   "Thumbnails": null,
   "WorldTileInfo": null,
   "AppendedNullBytes": 0,
@@ -404,8 +441,14 @@
     []
   ],
   "SoftPackageReferenceList": null,
-  "AssetRegistryData": "AAAAAA==",
-  "BulkData": "wYMqng==",
+  "AssetRegistryDependencyDataOffset": -1,
+  "AssetRegistryRecords": [],
+  "ImportBits": null,
+  "SoftPackageBits": null,
+  "ExtraPackageDependencies": null,
+  "BulkData": null,
+  "AdditionalFiles": "wYMqng==",
+  "Trailer": null,
   "ValorantGarbageData": null,
   "SeaOfThievesGarbageData": null,
   "Generations": [
@@ -441,6 +484,9 @@
   "SoftObjectPathsOffset": 740,
   "SearchableNamesOffset": 0,
   "ThumbnailTableOffset": 0,
+  "ImportTypeHierarchiesCount": 0,
+  "ImportTypeHierarchiesOffset": 0,
+  "SavedHash": null,
   "CompressionFlags": 0,
   "AdditionalPackagesToCook": [],
   "NamesReferencedFromExportDataCount": 0,
@@ -450,5 +496,6 @@
   "doWeHaveWorldTileInfo": false,
   "PackageFlags": "PKG_Cooked, PKG_UnversionedProperties, PKG_FilterEditorOnly",
   "HasUnversionedProperties": true,
-  "IsFilterEditorOnly": true
+  "IsFilterEditorOnly": true,
+  "IsPreDependencyFormat": true
 }

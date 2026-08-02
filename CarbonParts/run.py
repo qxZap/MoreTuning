@@ -1,159 +1,135 @@
-import json
+"""Add a carbon-fibre variant of every body part, into the yCarbon mod.
+
+    python run.py                       # AeroParts, Headlights, Wheels
+    python run.py Wheels                # just this one
+    python run.py --wheelworks          # Maja's Wheels + carbon -> ZZb compat pak
+
+Each row gets a `<id>_Carbon` twin at half the mass and a price set by that mass
+(650c per remaining kg). Both the original and the twin lose their vehicle
+restrictions -- carbon body kits are meant to fit anything, which is what the
+shipped pak already did.
+
+The carbon pak replaces the whole table, so it is built on top of MoreTuning's
+own copy where there is one (AeroParts) and on vanilla otherwise. Run it after
+Rebase/rebuild.py and RemoveReq.
+
+`--wheelworks` builds the same thing on top of Maja's Mo Wheel Works instead of
+vanilla. Her Wheels table is not just an unlock: it repoints every row at her
+replacement meshes and adds colour slots and decal slots. Overriding it with a
+vanilla-based table throws all of that away, hence a separate pak that mounts
+after both. Refresh her table with FModel when she updates -- see AGENTS.md.
+"""
 import copy
+import os
+import sys
 
-#130/kg real => 650c /kg real
-# Weight /2 , then apply 650c/kg 
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(HERE, "..", "Rebase"))
+sys.path.insert(0, os.path.join(HERE, "..", "RemoveReq"))
+from pipeline import (CARBON, WHEELWORKS, WHEELWORKS_CARBON, build_table,  # noqa: E402
+                      name_property, register_names, table_path)
+from rebase import fnames_in  # noqa: E402
+from run import rename_numbered, strip_row  # noqa: E402  (RemoveReq/run.py)
 
-IN_FILE = 'input.json'
-OUT_FILE = 'output.json'
+TABLES = ["AeroParts", "Headlights", "Wheels"]
 
-data = None
-with open(IN_FILE, 'r') as f:
-    data = json.loads(f.read())
+# Carbon parts fit anything, so unlike RemoveReq this also drops VehicleKeys.
+GATES = ("VehicleTypes", "TruckClasses", "VehicleKeys", "OverrideAllowedVehicleKeys")
+
+SUFFIX = "_Carbon"
 
 
 def price_and_weight(weight):
-    weight = int(weight)
-    return round(weight/2*650),round(weight/2,1)
+    return 10 + round(weight / 2 * 650), round(weight / 2, 1)
 
 
-def get_vehicle_tag_query():
-    return [
-                  {
-                    "$type": "UAssetAPI.PropertyTypes.Objects.IntPropertyData, UAssetAPI",
-                    "Name": "TokenStreamVersion",
-                    "ArrayIndex": 0,
-                    "IsZero": True,
-                    "PropertyTagFlags": "None",
-                    "PropertyTagExtensions": "NoExtension",
-                    "Value": 0
-                  },
-                  {
-                    "$type": "UAssetAPI.PropertyTypes.Objects.ArrayPropertyData, UAssetAPI",
-                    "ArrayType": "StructProperty",
-                    "DummyStruct": None,
-                    "Name": "TagDictionary",
-                    "ArrayIndex": 0,
-                    "IsZero": False,
-                    "PropertyTagFlags": "None",
-                    "PropertyTagExtensions": "NoExtension",
-                    "Value": []
-                  },
-                  {
-                    "$type": "UAssetAPI.PropertyTypes.Objects.ArrayPropertyData, UAssetAPI",
-                    "ArrayType": "ByteProperty",
-                    "DummyStruct": None,
-                    "Name": "QueryTokenStream",
-                    "ArrayIndex": 0,
-                    "IsZero": False,
-                    "PropertyTagFlags": "None",
-                    "PropertyTagExtensions": "NoExtension",
-                    "Value": []
-                  },
-                  {
-                    "$type": "UAssetAPI.PropertyTypes.Objects.StrPropertyData, UAssetAPI",
-                    "Name": "UserDescription",
-                    "ArrayIndex": 0,
-                    "IsZero": False,
-                    "PropertyTagFlags": "None",
-                    "PropertyTagExtensions": "NoExtension",
-                    "Value": None
-                  },
-                  {
-                    "$type": "UAssetAPI.PropertyTypes.Objects.StrPropertyData, UAssetAPI",
-                    "Name": "AutoDescription",
-                    "ArrayIndex": 0,
-                    "IsZero": False,
-                    "PropertyTagFlags": "None",
-                    "PropertyTagExtensions": "NoExtension",
-                    "Value": None
-                  }
-                ]
+def carbon_twin(row):
+    """A carbon copy of a row, or None if it has no mass to halve."""
+    twin = copy.deepcopy(row)
+    twin["Name"] = row["Name"] + SUFFIX
 
-def namerow(part_name):
-    return {
-                                "$type": "UAssetAPI.PropertyTypes.Objects.TextPropertyData, UAssetAPI",
-                                "Flags": "CultureInvariant",
-                                "HistoryType": "None",
-                                "Namespace": None,
-                                "CultureInvariantString": part_name,
-                                "SourceFmt": None,
-                                "Arguments": None,
-                                "ArgumentsData": None,
-                                "TransformType": "ToLower",
-                                "SourceValue": None,
-                                "FormatOptions": None,
-                                "TargetCulture": None,
-                                "Name": "Name",
-                                "ArrayIndex": 0,
-                                "IsZero": False,
-                                "PropertyTagFlags": "None",
-                                "PropertyTagExtensions": "NoExtension",
-                                "Value": None
-                            }
+    props = {p["Name"]: p for p in twin["Value"]}
+    # UAssetAPI writes float zero as the string "+0", which is truthy -- check the
+    # number, not the field. A massless row (the No_* removal parts) gets no twin.
+    mass = props.get("MassKg", {}).get("Value")
+    mass = mass if isinstance(mass, (int, float)) else 0.0
+    if "Cost" not in props or not mass:
+        return None
 
-if data:
-    part_names = data.get('NameMap')
-    previous_parts = data.get('Exports')[0].get('Table').get('Data')
-
-    parts = data.get('Exports')[0].get('Table').get('Data')
-
-    new_parts = []
-    new_part_exportids = []
-
-    clean_parts = []
-
-    for part in parts:
-        part_id = part.get('Name')
-        part_name = part.get('Value')[0].get('CultureInvariantString')
-
-        # new_part_name = '[MOD] Z> '+part_id.replace('_',' ')+' Carbon'
-        new_part_name = part_id.replace('_',' ')+' Carbon'
-        new_part_id = part_id+'_Carbon'
-        current_part = copy.deepcopy(part)
-
-        current_part['Name'] = new_part_id
-        current_part['Value'][0] = namerow(new_part_name)
-
-        price_index = None
-        weight_index = None
-        type_index = None
-        vehicle_keys_index = None
-        VehicleRowGameplayTagQuery_index = None
-
-        for i in range(0, len(current_part['Value'])):
-            current_line_json = current_part['Value'][i]
-            if current_line_json.get('Name') == 'Cost':
-                price_index = i
-            if current_line_json.get('Name') == 'MassKg':
-                weight_index = i
-            if current_line_json.get('Name') == 'VehicleTypes':
-                type_index = i
-            if current_line_json.get('Name') == 'VehicleKeys':
-                vehicle_keys_index = i
-            if current_line_json.get('Name') == 'VehicleRowGameplayTagQuery':
-                VehicleRowGameplayTagQuery_index = i
+    price, weight = price_and_weight(mass)
+    props["MassKg"]["Value"] = float(weight)
+    props["Cost"]["Value"] = price
+    if "Name" in props:
+        props["Name"].clear()
+        props["Name"].update(name_property(row["Name"].replace("_", " ") + " Carbon"))
+    strip_row(twin, GATES)
+    return twin
 
 
-        if price_index and weight_index:
-            new_price,new_weight = price_and_weight(current_part['Value'][weight_index]['Value'])
+def add_carbon(rows, table):
+    rows = [r for r in rows if not r["Name"].endswith(SUFFIX)]  # rerunnable
+    # This pak sorts after xNoLimits and overrides the same table, so it has to
+    # carry the "#1" -> "Vista Bonnet 01" rename too or it undoes it.
+    renamed = sum(rename_numbered(row) for row in rows)
+    twins = [t for t in (carbon_twin(r) for r in rows) if t]
+    for row in rows:
+        strip_row(row, GATES)
 
-            current_part['Value'][weight_index]['Value'] = new_weight
-            current_part['Value'][price_index]['Value'] = 10+new_price
-            current_part['Value'][type_index]['Value'] = []
-            current_part['Value'][vehicle_keys_index]['Value'] = []
-            current_part['Value'][VehicleRowGameplayTagQuery_index]['Value'] = get_vehicle_tag_query()
-            new_parts.append(current_part)
-            new_part_exportids.append(new_part_id)
-        
-        part['Value'][type_index]['Value'] = []
-        part['Value'][vehicle_keys_index]['Value'] = []
-        clean_parts.append(part)
-        
+    names = []
+    for twin in twins:
+        names += [twin["Name"], *fnames_in(twin)]
+    register_names(table, names)
 
-    with open(OUT_FILE, 'w+') as f:
-        data['Exports'][0]['Table']['Data'] = clean_parts + new_parts
-        data['NameMap'] = data['NameMap'] + new_part_exportids
-            
-        f.write(json.dumps(data, indent=4))
-    
+    print(f"  {len(rows)} rows + {len(twins)} carbon variants, {renamed} '#n' renamed")
+    return rows + twins
+
+
+def main():
+    args = sys.argv[1:]
+    if "--wheelworks" in args:
+        # Never silently fall back to vanilla here -- that would quietly ship a
+        # "compat" pak that undoes the mod it is supposed to be compatible with.
+        if not os.path.isfile(table_path(WHEELWORKS, "Wheels")):
+            sys.exit(f"missing {table_path(WHEELWORKS, 'Wheels')}\n"
+                     f"Export Wheels.uasset/.uexp from Maja's pak with FModel first.")
+        build_table("Wheels", add_carbon, source=WHEELWORKS, dest=WHEELWORKS_CARBON)
+        print("\nDone. Pack with: modp.bat ZZb_qxZap_MoreTuning_yWheelWorksCarbon_P")
+        return
+
+    for name in args or TABLES:
+        build_table(name, add_carbon, dest=CARBON)
+    print("\nDone. Pack with: modp.bat qxZap_MoreTuning_yCarbon_P")
+
+
+def demo():
+    row = {"Name": "RearWing_A", "Value": [
+        {"Name": "Name", "CultureInvariantString": "Rear Wing A", "Value": "abc"},
+        {"Name": "Cost", "Value": 500},
+        {"Name": "MassKg", "Value": 5.0},
+        {"Name": "VehicleKeys", "Value": [{"Value": "Terra"}]},
+    ]}
+    massless = {"Name": "No_Bonnet", "Value": [{"Name": "Cost", "Value": 0},
+                                               {"Name": "MassKg", "Value": 0}]}
+    table = {"NameMap": ["RearWing_A"], "NamesReferencedFromExportDataCount": 1}
+    out = add_carbon([copy.deepcopy(row), massless], table)
+
+    assert [r["Name"] for r in out] == ["RearWing_A", "No_Bonnet", "RearWing_A_Carbon"]
+    twin = {p["Name"]: p for p in out[-1]["Value"]}
+    assert twin["MassKg"]["Value"] == 2.5
+    assert twin["Cost"]["Value"] == 10 + round(2.5 * 650)
+    assert twin["Name"]["CultureInvariantString"] == "RearWing A Carbon"
+    assert twin["VehicleKeys"]["Value"] == []          # carbon fits anything
+    assert {p["Name"]: p for p in out[0]["Value"]}["VehicleKeys"]["Value"] == []
+    assert "RearWing_A_Carbon" in table["NameMap"]
+
+    # rerunning must not stack _Carbon_Carbon rows
+    again = add_carbon(out, table)
+    assert [r["Name"] for r in again] == [r["Name"] for r in out]
+    print("ok")
+
+
+if __name__ == "__main__":
+    if len(sys.argv) == 2 and sys.argv[1] == "demo":
+        demo()
+    else:
+        main()
