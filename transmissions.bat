@@ -13,8 +13,14 @@ move /Y Transmissions.json ..\Transmissions.json
 :: Go back to root
 cd ..
 
-:: Run UAssetGUI
-UAssetGUI.exe fromjson .\Transmissions.json .\Transmissions.uasset MotorTown
+:: Run UAssetGUI -- D:\MT\UAssetGUI.exe (v1.1.1), NOT the v1.0.4 copy in this
+:: folder, and the 0.7.19 mappings. The old pair writes files the game ignores.
+del /Q .\Transmissions.uasset 2>nul
+"D:\MT\UAssetGUI.exe" fromjson .\Transmissions.json .\Transmissions.uasset MotorTown719
+if not exist .\Transmissions.uasset (
+    echo Error: UAssetGUI wrote nothing - table not rebuilt.
+    exit /b 1
+)
 
 :: Move generated files into VehicleParts
 move /Y Transmissions.uasset .\qxZap_MoreTuning_P\MotorTown\Content\DataAsset\VehicleParts\Transmissions.uasset
