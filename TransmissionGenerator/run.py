@@ -323,6 +323,29 @@ r_name_keys ={
     "8":"R8"
 }
 
+
+# The gear list runs shallowest reverse first down to the deepest, then N, then
+# the forward gears -- same as vanilla's Eaton boxes. R is the deepest reverse,
+# R2 the next, and so on.
+#
+# This used to name them by the keys in tras_s.json ("1" -> R, "2" -> R2), which
+# silently produced a wrong box whenever an entry listed its reverses the other
+# way round: Allison 4700 RDS had "1": 4.8, "2": 17.12, so R was the shallow
+# ratio and R2 the deep one, in the wrong order. Deriving both from the ratios
+# means the key numbering no longer has to be right.
+def reverse_gears(r_ratios):
+    deepest_first = sorted((abs(float(r)) for r in r_ratios.values()), reverse=True)
+    return [(-ratio, 100, r_name_keys[str(depth)])
+            for depth, ratio in reversed(list(enumerate(deepest_first, start=1)))]
+
+
+assert reverse_gears({"1": 4.8, "2": 17.12}) == [(-4.8, 100, "R2"), (-17.12, 100, "R")]
+assert reverse_gears({"1": 17.12, "2": 4.8}) == [(-4.8, 100, "R2"), (-17.12, 100, "R")]
+assert reverse_gears({"1": 4.82, "2": 2.41}) == [(-2.41, 100, "R2"), (-4.82, 100, "R")]
+assert reverse_gears({"1": 2.857}) == [(-2.857, 100, "R")]
+assert [g[2] for g in reverse_gears({"1": 15.05, "2": 12.85, "3": 4.02, "4": 3.43})] == \
+    ["R4", "R3", "R2", "R"]
+
 transmission_asset = load_vanilla_table()
 
 NameMap = transmission_asset['NameMap']
@@ -399,16 +422,8 @@ for trans_key in transmissions:
       if TorqueConvertorStallRatioPower == 2:
          type_t = 'TorqueConvertorV2'
 
-      gear_index = 0      
-      for r_ratio in sorted(transmission.get('r_ratios', {}), reverse=True):
-          ratio = transmission.get('r_ratios')[r_ratio]
-          if ratio>0:
-              ratio = ratio*(-1)
-          ratios.append((ratio, 100, r_name_keys[r_ratio] ))
-          gear_index+=1
-
+      ratios.extend(reverse_gears(transmission.get('r_ratios', {})))
       ratios.append((0, 100, 'N'))
-      gear_index+=1
 
       for gear_index in transmission.get('f_ratios'):
           gear_ratio = transmission.get('f_ratios')[gear_index]
