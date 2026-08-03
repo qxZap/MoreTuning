@@ -180,7 +180,10 @@ it ignores them.
 
 **Export into that folder, not into `D:\MT\Output\Exports`** — an FModel export
 clears its output directory, which will wipe the vanilla tables everything else
-is built from.
+is built from. This has bitten twice: once taking out
+`DataAsset/VehicleParts/`, once taking out all of `DataAsset/` except the two
+files being exported. If a tool suddenly reports "could not read vanilla ..." or
+silently stops rebasing, check that folder first.
 
 Empty a `GameplayTagQuery` in place rather than substituting a hand-built struct
 — the result then matches an unrestricted vanilla row exactly, whatever shape the
