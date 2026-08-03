@@ -148,6 +148,20 @@ def build_engine(spec):
 
     props = {p["Name"]: p for p in asset["Exports"][0]["Data"]}
     engine = {q["Name"]: q for q in props["EngineProperty"]["Value"]}
+
+    # Friction and starter torque are torque-dimensioned, so they have to be
+    # scaled by the same rule of three as MaxTorque. Rescaling only MaxTorque
+    # leaves a small engine carrying a big one's drag, and it will not idle --
+    # that is what killed the Detroit 4-71 (44% of its own torque in friction).
+    _, ref_hp, ref_rpm, ref_torque, _, _ = REFS[spec["ref"]]
+    by_torque = spec["torque"] / ref_torque
+    by_speed = by_torque * (ref_rpm / spec["rpm"])
+    scaled = {"FrictionCoulombCoeff": by_torque, "StarterTorque": by_torque,
+              "FrictionViscosityCoeff": by_speed}
+    for name, factor in scaled.items():
+        if name in engine and isinstance(engine[name].get("Value"), float):
+            engine[name]["Value"] = float(round(engine[name]["Value"] * factor))
+
     for name, value in (("MaxTorque", spec["torque"]), ("MaxRPM", float(spec["rpm"])),
                         ("Inertia", float(spec["inertia"])),
                         ("FuelConsumption", float(spec["fuel"]))):

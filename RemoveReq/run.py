@@ -32,7 +32,11 @@ GATE_QUERY = "VehicleRowGameplayTagQuery"
 # Plus the per-car lock, for the pak whose whole point is removing it.
 NOLIMIT_GATES = GATE_ARRAYS + ("VehicleKeys",)
 
-TABLES = ["License", "License_OversizeEscort", "License_OversizeEscort1", "VehicleParts0"]
+# Engines is in here so a kart engine, a V20 or anything vanilla drops into any
+# vehicle. The mod's own engine rows are already unrestricted; it is the vanilla
+# rows the table is built on that carry VehicleTypes and TruckClasses.
+TABLES = ["Engines", "License", "License_OversizeEscort", "License_OversizeEscort1",
+          "VehicleParts0"]
 NOLIMIT_TABLES = ["AeroParts", "Headlights"]
 
 
