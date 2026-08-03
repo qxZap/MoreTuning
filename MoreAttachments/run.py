@@ -10,7 +10,7 @@ from datetime import timedelta
 
 TESTING = False # wanna test just a tailed number of attachments?
 TESTING_GAP = 10 # how many?
-CREATE_ACTORS = False #create actors? 
+CREATE_ACTORS = False #create actors?
 CLEAN_ACTORS = False #clean all actors on run?
 DELTA_ONLY_ACTORS = True #create only missing actors
 USE_EXTRAS = True
@@ -760,9 +760,13 @@ for aero_attachment in aero_attachments:
             continue
 
         uasset_exported_path = "../../Output/Exports"+game_to_mt_path(mesh_path)+'.uasset'
+        mesh_json_path = uasset_exported_path.replace('.uasset','.json')
         convert_to_json(uasset_exported_path)
-        mesh_data = load_json_from_path(uasset_exported_path.replace('.uasset','.json'))
+        mesh_data = load_json_from_path(mesh_json_path)
         mesh_bounding = [(-1)*bounding for bounding in get_x_bounding(mesh_data)]
+        # Don't leave scratch JSON behind in the vanilla export -- that folder is
+        # the reference every other tool reads from.
+        remove_file_if_exists(mesh_json_path)
 
         new_actor = make_new_actor('/Game/Objects/MoreAttachments', name_part_id, mesh_id, mesh_path, mesh_bounding, colorable_actor=colorable_actor)
         
