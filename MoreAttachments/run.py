@@ -134,43 +134,50 @@ def copy_and_rename(source_path, destination_path):
         print(f"An error occurred: {e}")
         return False
 
-def run_uassetgui(json_path, output_path, game_name="MotorTown718"):
+# D:\MT\UAssetGUI.exe (v1.1.1) with the 0.7.19 mappings. NOT the v1.0.4 copy in
+# the repo root -- it writes an older JSON schema, and assets it produces are
+# what the game reports as corrupt data.
+UASSETGUI = r"D:\MT\UAssetGUI.exe"
+MAPPINGS = "MotorTown719"
+
+def run_uassetgui(json_path, output_path, game_name=MAPPINGS):
     try:
         subprocess.run([
-            "..\\UAssetGUI.exe",
+            UASSETGUI,
             "fromjson",
             json_path,
             output_path,
             game_name
         ], check=True)
-        return True
+        # WinForms app: it exits 0 whether or not it wrote anything.
+        return os.path.isfile(output_path)
     except subprocess.CalledProcessError as e:
         print(f"Command failed with return code {e.returncode}")
         return False
     except FileNotFoundError:
-        print("UAssetGUI.exe not found. Check the path.")
+        print(f"{UASSETGUI} not found. Check the path.")
 
-def run_uassetgui_uasset_to_json(uasset_path, json_path, game_name="MotorTown718"):
+def run_uassetgui_uasset_to_json(uasset_path, json_path, game_name=MAPPINGS):
     try:
         subprocess.run([
-            "..\\UAssetGUI.exe",
+            UASSETGUI,
             "tojson",
             uasset_path,
             json_path,
-            'VER_UE5_5',
+            'VER_UE5_4',
             game_name
         ], check=True)
-        return True
+        return os.path.isfile(json_path)
     except subprocess.CalledProcessError as e:
         print(f"Command failed with return code {e.returncode}")
         return False
     except FileNotFoundError:
-        print("UAssetGUI.exe not found. Check the path.")
+        print(f"{UASSETGUI} not found. Check the path.")
 
 def open_uasset_gui_target(json_path):
     try:
         subprocess.run([
-            "..\\UAssetGUI.exe",
+            UASSETGUI,
             json_path,
         ], check=True)
         return True
@@ -185,8 +192,12 @@ def remove_file_if_exists(filepath):
         os.remove(filepath)
 
 def convert_and_delete(json_path):
-    run_uassetgui(json_path, json_path.replace(".json",".uasset"))
-    remove_file_if_exists(json_path)
+    # Tables go out through migrate.build, which rebases them onto the current
+    # vanilla table first. 0.7.19 turned MTItemRow's asset references into soft
+    # object paths, so a table still carrying import indices is the "corrupt
+    # data" the game complains about.
+    import migrate
+    migrate.build(json_path)
 
 def convert_to_json(uasset_path):
     run_uassetgui_uasset_to_json(uasset_path, uasset_path.replace('.uasset', '.json'))
