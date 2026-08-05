@@ -1,22 +1,31 @@
-"""Merge another mod's part tables with MoreTuning's, into a compat pak.
+"""Fold Maja's Motor Works into MoreTuning's own tables.
 
     python compat.py                 # every table both mods ship
     python compat.py VehicleParts0   # just this one
 
-Maja's Motor Works ships AeroParts, Engines, Transmissions, VehicleParts0 and
-Wheels -- the same tables MoreTuning ships. Pak names decide load order and
-`qxZap_MoreTuning_P` sorts after `MajasMotorWorks...`, so hers is discarded
-wholesale: her added parts (the trailer hitch hook among them) simply vanish,
-which is what shows up as winching and towing being broken.
+Motor Works is a hard dependency, not an optional companion -- MoreTuning is
+built on top of it and ships its content, so the two are never meant to be
+installed apart. That is a deliberate choice: it sends people to the mod this
+one is founded on.
 
-The merge keeps her version of any row both mods touch, then appends the rows
-only MoreTuning has, then strips the vehicle gates again -- rebase hands back
-the donor's rows, so RemoveReq's work has to be redone on top. The result goes
-in a pak that sorts after both.
+It ships AeroParts, Engines, Transmissions, VehicleParts0 and Wheels, the same
+tables MoreTuning does, and `qxZap_MoreTuning_P` sorts after
+`MajasMotorWorks...`, so without this its tables are discarded wholesale and the
+parts it adds vanish -- the trailer hitch hook and two winches among them.
 
-Her tables have to be extracted first; repak cannot read her pak (Oodle). Export
-them with FModel to THEIR_TABLES below -- not into the vanilla export, which
-FModel wipes.
+The merge keeps its version of any row both mods touch, appends the rows only
+MoreTuning has, and re-strips the vehicle gates, since rebase hands the donor's
+rows back and RemoveReq's pass has to be redone on top. The result is written
+into MoreTuning itself, which is why it has to run before RemoveReq, NoLimits
+and CarbonParts -- those build on these tables and inherit the merge.
+
+Extract its tables first. repak reads its pak fine as long as the repak used has
+oo2core_9_win64.dll beside its own exe, which D:\\MT\\PakMerge\\repak.exe does:
+
+    D:\\MT\\PakMerge\\repak.exe unpack -o <dir> "<...>\\MajasMotorWorksV7.1-7.19_P.pak"
+
+then copy DataAsset/VehicleParts/* into THEIR_TABLES below. No FModel needed --
+and do not point FModel at the vanilla export, which it wipes.
 """
 import json
 import os
@@ -31,19 +40,19 @@ from pipeline import CURRENT_MAPPINGS, MOD, REPO, TABLE_DIR, WORK, from_json, to
 from rebase import count_live_refs, rebase  # noqa: E402
 from run import GATE_ARRAYS, strip_row  # noqa: E402  (RemoveReq)
 
-# Their tables, extracted with FModel. Mirrors the MajasMoWheelWorks layout.
+# Their tables, extracted from their pak. Mirrors the MajasMoWheelWorks layout.
 THEIR_TABLES = os.path.join(REPO, "MajasMotorWorksV7.1-7.19_P", "MotorTown", "Content")
-COMPAT = os.path.join(REPO, "ZZa_MajaMotorWorks_qxZap_MoreTuning_P", "MotorTown", "Content")
 
-# AeroParts is deliberately not here. ZZa_ sorts after the xNoLimits and yCarbon
-# paks, so shipping it would override them and cost the carbon body parts. What
-# she changes there is 54 rows of VehicleKeys and 48 names -- unlocking parts and
-# renaming them -- and NoLimits already clears VehicleKeys outright and renames
-# the "#n" parts, so it is a superset. Pass it explicitly if you ever want it.
-#
-# Nothing mounts after ZZa_ that ships the three below (ZZb_ is Wheels only), so
-# they are safe to take.
-TABLES = ["VehicleParts0", "Engines", "Transmissions"]
+# Straight into MoreTuning. There used to be a ZZa_ compat pak for this, but a
+# pak mounting after MoreTuning also mounts after xNoLimits and yCarbon and
+# would override them -- costing the carbon body parts. Merging in here instead
+# means those two are built from the merged tables and inherit the changes.
+DEST = MOD
+
+# AeroParts is safe to take now that the merge lands in MoreTuning rather than a
+# pak mounting after xNoLimits and yCarbon. Wheels is skipped only because
+# MoreTuning does not ship it; the WheelWorks compat pak handles wheels.
+TABLES = ["VehicleParts0", "Engines", "Transmissions", "AeroParts", "Wheels"]
 
 
 def build(name):
@@ -78,7 +87,7 @@ def build(name):
     subprocess.run([sys.executable, os.path.join(HERE, "verify.py"), check,
                     MOD, THEIR_TABLES, r"D:\MT\Output\Exports\MotorTown\Content"], check=True)
 
-    dest = os.path.join(COMPAT, TABLE_DIR)
+    dest = os.path.join(DEST, TABLE_DIR)
     os.makedirs(dest, exist_ok=True)
     for ext in (".uasset", ".uexp"):
         shutil.copy2(os.path.join(work, name + ext), os.path.join(dest, name + ext))
@@ -94,21 +103,19 @@ def load(path):
 
 
 def main():
-    if not os.path.isdir(os.path.join(THEIR_TABLES, TABLE_DIR)):
-        sys.exit(f"nothing to merge -- extract their tables to\n  "
-                 f"{os.path.join(THEIR_TABLES, TABLE_DIR)}\n"
-                 f"with FModel (repak cannot read their pak: Oodle).")
+    where = os.path.join(THEIR_TABLES, TABLE_DIR)
+    missing = (f"extract Motor Works' tables to\n  {where}\n"
+               f"with D:\\MT\\PakMerge\\repak.exe, which has oo2core_9_win64.dll "
+               f"beside it.")
+    if not os.path.isdir(where):
+        sys.exit(f"nothing to merge -- {missing}")
 
     wanted = sys.argv[1:] or TABLES
     done = [n for n in wanted if build(n) is not None]
     if not done:
-        sys.exit(f"none of {wanted} found in\n  "
-                 f"{os.path.join(THEIR_TABLES, TABLE_DIR)}\n"
-                 f"Extract their .uasset/.uexp there with FModel first "
-                 f"(repak cannot read their pak: Oodle).")
-    print(f"\n{len(done)} tables merged into {os.path.relpath(COMPAT, REPO)}: "
-          f"{', '.join(done)}")
-    print("Pack with: modp.bat ZZa_MajaMotorWorks_qxZap_MoreTuning_P")
+        sys.exit(f"none of {wanted} found -- {missing}")
+    print(f"\n{len(done)} tables merged into MoreTuning: {', '.join(done)}")
+    print("Now rerun RemoveReq, RemoveReq --nolimits and CarbonParts, then pack.")
 
 
 if __name__ == "__main__":

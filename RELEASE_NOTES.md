@@ -2,6 +2,10 @@
 
 Updated for Motor Town 0.7.19.
 
+**Requires [Maja's Motor Works].** MoreTuning is built on it and now ships its
+content directly — its parts, including the trailer hitch hook and its two
+winches, come through instead of being overwritten. Install both.
+
 ## Fixed
 
 - **Works again on 0.7.19.** The game changed how part tables reference their
@@ -38,6 +42,9 @@ Updated for Motor Town 0.7.19.
 - **Licences have no vehicle requirements.**
 
 ## Other paks
+
+- **Maja's Motor Works** is a required dependency now, not an optional extra.
+  Its tables are merged into MoreTuning rather than fighting it for load order.
 
 - **xNoLimits** — any aero part or headlight on any car. Parts that were called
   "#1", "#2" now use real names, since every car lists all of them.

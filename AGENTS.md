@@ -92,15 +92,19 @@ The three row tools run in sequence, and the order matters:
 
 ```
 python Rebase/rebuild.py         # 1. onto the new vanilla  (reverts stripping)
-python RemoveReq/run.py          # 2. strip vehicle gates   (re-applies it)
-python RemoveReq/run.py --nolimits   # 3. any body part on any car -> xNoLimits pak
-python CarbonParts/run.py        # 4. carbon twins -> yCarbon pak
-python CarbonParts/run.py --wheelworks   # 5. Maja compat -> ZZb pak (optional)
+python Rebase/compat.py          # 2. fold Maja's Motor Works in  (see below)
+python RemoveReq/run.py          # 3. strip vehicle gates   (re-applies it)
+python RemoveReq/run.py --nolimits   # 4. any body part on any car -> xNoLimits pak
+python CarbonParts/run.py        # 5. carbon twins -> yCarbon pak
+python CarbonParts/run.py --wheelworks   # 6. Wheel Works compat -> ZZb pak
 modp.bat qxZap_MoreTuning_P
 modp.bat qxZap_MoreTuning_xNoLimits_P
 modp.bat qxZap_MoreTuning_yCarbon_P
 modp.bat ZZb_qxZap_MoreTuning_yWheelWorksCarbon_P
 ```
+
+Step 2 has to come before 3-5: it writes into MoreTuning's own tables, and
+everything after builds on them.
 
 Pak names decide load order (alphabetical, last wins), which is what the `x` and
 `y` prefixes are for: `_P` < `x`NoLimits < `y`Carbon. Each later pak's AeroParts
@@ -160,6 +164,42 @@ well as the twins, which is what the shipped pak did. It carries the `#n` rename
 too: it sorts after xNoLimits and overrides the same tables, so without it
 packing carbon would put the `#1` names back. Both tools are rerunnable;
 CarbonParts drops existing `_Carbon` rows before regenerating.
+
+### Maja's Motor Works is a hard dependency
+
+MoreTuning is built on Motor Works and ships its content, deliberately: it sends
+people to the mod this one is founded on. `Rebase/compat.py` folds its
+AeroParts, Engines, Transmissions and VehicleParts0 into MoreTuning's own tables
+— its rows win where both touch the same part, MoreTuning's extra rows go on
+top, and the vehicle gates are re-stripped because the merge hands its rows back.
+
+Without it, `qxZap_MoreTuning_P` sorts after `MajasMotorWorks…` and discards its
+tables whole, so the parts it adds vanish — `TrailerHitch_Hook`, `Winch_06_MMW`
+and `Winch_Tow_05_MMW` among them. That reads in game as the winches being
+broken.
+
+This is why the merge goes *into* MoreTuning rather than a separate pak: a pak
+mounting after MoreTuning also mounts after xNoLimits and yCarbon and would
+override them, costing the carbon body parts. Merged in, those two are built
+from the merged tables and inherit it.
+
+Refresh its tables from its pak — no FModel needed:
+
+```
+D:\MT\PakMerge\repak.exe unpack -o <dir> "<Paks>\MajasMotorWorksV7.1-7.19_P.pak"
+```
+
+then copy `DataAsset/VehicleParts/*` into `MajasMotorWorksV7.1-7.19_P/MotorTown/Content/`.
+
+### repak and Oodle
+
+repak refuses Oodle-compressed paks with "failed to fetch oodle" unless
+`oo2core_9_win64.dll` sits **next to its own exe** — not the working directory,
+not PATH. `D:\MT\PakMerge\repak.exe` has it, and its SHA-256 matches the one the
+loader expects (`6f5d41a7…f457`), so that copy works offline. Use it for any
+mod pak. The game's own `MotorTown-Windows.pak` is AES-encrypted on top of that
+and the key files in `D:\MT\aes` are empty, so vanilla still has to come from an
+FModel export.
 
 ### Maja's Mo Wheel Works compat
 

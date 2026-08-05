@@ -11,6 +11,12 @@ compat pak for Maja's Mo Wheel Works: her wheel table plus our carbon variants,
 mounted after both. The other `*_P` folders are companion/variant mods. Each is an unpacked pak tree;
 `modp.bat <ModFolder>` packs one with `repak` and copies it into the game.
 
+## Requires Maja's Motor Works
+
+MoreTuning is built on **Maja's Motor Works** and ships its content — install it
+too. Without it you lose the parts it adds (the trailer hitch hook and two
+winches) and the tuning it applies to the vanilla tables.
+
 ## Current state - game 0.7.19
 
 0.7.19 changed how part tables reference their assets (hard imports -> soft
@@ -43,6 +49,7 @@ The part `.uasset` files themselves were unaffected.
 
    ```
    python Rebase/rebuild.py            # rebase onto the new vanilla
+   python Rebase/compat.py             # fold Maja's Motor Works in
    python RemoveReq/run.py             # strip vehicle/licence requirements
    python RemoveReq/run.py --nolimits  # any body part on any car -> xNoLimits pak
    python CarbonParts/run.py           # carbon variants -> yCarbon pak
