@@ -35,7 +35,15 @@ from run import GATE_ARRAYS, strip_row  # noqa: E402  (RemoveReq)
 THEIR_TABLES = os.path.join(REPO, "MajasMotorWorksV7.1-7.19_P", "MotorTown", "Content")
 COMPAT = os.path.join(REPO, "ZZa_MajaMotorWorks_qxZap_MoreTuning_P", "MotorTown", "Content")
 
-TABLES = ["VehicleParts0", "Engines", "Transmissions", "AeroParts", "Wheels"]
+# AeroParts is deliberately not here. ZZa_ sorts after the xNoLimits and yCarbon
+# paks, so shipping it would override them and cost the carbon body parts. What
+# she changes there is 54 rows of VehicleKeys and 48 names -- unlocking parts and
+# renaming them -- and NoLimits already clears VehicleKeys outright and renames
+# the "#n" parts, so it is a superset. Pass it explicitly if you ever want it.
+#
+# Nothing mounts after ZZa_ that ships the three below (ZZb_ is Wheels only), so
+# they are safe to take.
+TABLES = ["VehicleParts0", "Engines", "Transmissions"]
 
 
 def build(name):
