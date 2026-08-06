@@ -133,12 +133,23 @@ NEW_MESH = "/Game/Cars/Parts/Winch/Winch_01_Body"
 TEMPLATE = os.path.join(HERE, "ACTOR_TEMPLATE.json")
 TEMPLATE_NAME = "Attachment_Neo_RearSpoiler_01"
 TEMPLATE_MESH = "/Game/Cars/Models/Neo/RearSpoiler_01"
-ITEMS = os.path.join(HERE, "..", "qxZap_satigt3_MoreAttachments_P", "MotorTown", "Content",
-                     "DataAsset", "Items", "Items_AttachmentPart.uasset")
-# A row in Items_AttachmentPart only defines the part. It does not appear in game
+def _pak(name, *parts):
+    return os.path.join(HERE, "..", name, "MotorTown", "Content", *parts)
+
+
+# Both paks ship the table and the vendor, and _Premium_P sorts after _P, so the
+# premium one wins wherever both are installed. Editing only the free pak leaves
+# the change invisible. run.py writes both for the same reason.
+#
+# A row in Items_AttachmentPart only defines the part; it does not appear in game
 # until the vendor is told to sell it -- MTVendor's SellItems on Vendor_Garage.
-VENDOR = os.path.join(HERE, "..", "qxZap_satigt3_MoreAttachments_P", "MotorTown", "Content",
-                      "Characters", "NPC", "Vendor_Garage.uasset")
+PAKS = [
+    (_pak("qxZap_satigt3_MoreAttachments_P", "DataAsset", "Items", "Items_AttachmentPart.uasset"),
+     _pak("qxZap_satigt3_MoreAttachments_P", "Characters", "NPC", "Vendor_Garage.uasset")),
+    (_pak("qxZap_satigt3_MoreAttachments_Premium_P",
+          "DataAsset", "Items", "Items_AttachmentPart.uasset"),
+     _pak("qxZap_satigt3_MoreAttachments_Premium_P", "Characters", "NPC", "Vendor_Garage.uasset")),
+]
 
 
 def sell_first(vendor_asset, key):
@@ -201,8 +212,18 @@ def create():
         shutil.copy2(os.path.join(work, NEW_ACTOR + ext), os.path.join(ACTORS, NEW_ACTOR + ext))
     print(f"  actor {NEW_ACTOR}: {COMPONENT} attached, mesh {NEW_MESH.rsplit('/', 1)[-1]}")
 
+    for items_path, vendor_path in PAKS:
+        if not os.path.isfile(items_path):
+            print(f"  skipped {os.path.basename(os.path.dirname(items_path))}: not built")
+            continue
+        add_to_pak(items_path, vendor_path, work)
+    print("\nPack both MoreAttachments paks and look at the top of the list.")
+
+
+def add_to_pak(ITEMS, VENDOR, work):
+    tag = ITEMS.split(os.sep)[-6]
     # 2. the row, cloned off a real attachment so every field is already valid
-    with open(to_json(ITEMS, os.path.join(work, "items.json")), encoding="utf-8") as f:
+    with open(to_json(ITEMS, os.path.join(work, tag + ".items.json")), encoding="utf-8") as f:
         table = json.load(f)
     rows = table["Exports"][0]["Table"]["Data"]
     rows[:] = [r for r in rows if r["Name"] != NEW_ROW]
@@ -235,34 +256,34 @@ def create():
     register_names(table, [NEW_ROW, f"/Game/Objects/MoreAttachments/{NEW_ACTOR}",
                            NEW_ACTOR + "_C", NEW_MESH, NEW_MESH.rsplit("/", 1)[-1]])
 
-    items_json = os.path.join(work, "items.edited.json")
+    items_json = os.path.join(work, tag + ".items.edited.json")
     with open(items_json, "w", encoding="utf-8") as f:
         json.dump(table, f, indent=1)
-    built = from_json(items_json, os.path.join(work, "Items_AttachmentPart.uasset"))
-    check = to_json(built, os.path.join(work, "items.check.json"))
+    built = from_json(items_json, os.path.join(work, tag + "_Items_AttachmentPart.uasset"))
+    check = to_json(built, os.path.join(work, tag + ".items.check.json"))
     with open(check, encoding="utf-8") as f:
         back = json.load(f)
     order = [r["Name"] for r in back["Exports"][0]["Table"]["Data"]]
     if order[0] != NEW_ROW:
         sys.exit(f"row did not land first, list starts {order[:3]}")
     for ext in (".uasset", ".uexp"):
-        shutil.copy2(os.path.join(work, "Items_AttachmentPart" + ext),
+        shutil.copy2(os.path.join(work, tag + "_Items_AttachmentPart" + ext),
                      ITEMS.replace(".uasset", ext))
-    print(f"  row {NEW_ROW} first of {len(order)}, cloned from {donor['Name']}")
+    print(f"  {tag}: row first of {len(order)}", end="")
 
     # 3. tell the vendor to sell it, or the row never shows up in game
-    with open(to_json(VENDOR, os.path.join(work, "vendor.json")), encoding="utf-8") as f:
+    with open(to_json(VENDOR, os.path.join(work, tag + ".vendor.json")), encoding="utf-8") as f:
         vendor = json.load(f)
     count = sell_first(vendor, NEW_ROW)
     if count is None:
         sys.exit("no SellItems on the vendor")
     register_names(vendor, [NEW_ROW])
 
-    vendor_json = os.path.join(work, "vendor.edited.json")
+    vendor_json = os.path.join(work, tag + ".vendor.edited.json")
     with open(vendor_json, "w", encoding="utf-8") as f:
         json.dump(vendor, f, indent=1)
-    built = from_json(vendor_json, os.path.join(work, "Vendor_Garage.uasset"))
-    check = to_json(built, os.path.join(work, "vendor.check.json"))
+    built = from_json(vendor_json, os.path.join(work, tag + "_Vendor_Garage.uasset"))
+    check = to_json(built, os.path.join(work, tag + ".vendor.check.json"))
     with open(check, encoding="utf-8") as f:
         back = json.load(f)
     sold = next(([i.get("Value") if isinstance(i, dict) else i for i in e["Value"]]
@@ -271,9 +292,8 @@ def create():
     if not sold or sold[0] != NEW_ROW:
         sys.exit(f"vendor does not sell it first, list starts {sold[:3]}")
     for ext in (".uasset", ".uexp"):
-        shutil.copy2(os.path.join(work, "Vendor_Garage" + ext), VENDOR.replace(".uasset", ext))
-    print(f"  vendor sells it first of {count}")
-    print("\nPack qxZap_satigt3_MoreAttachments_P and look at the top of the list.")
+        shutil.copy2(os.path.join(work, tag + "_Vendor_Garage" + ext), VENDOR.replace(".uasset", ext))
+    print(f", vendor sells it first of {count}")
 
 
 def main():
