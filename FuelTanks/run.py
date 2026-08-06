@@ -33,24 +33,72 @@ from pipeline import MOD, TABLE_DIR, WORK, from_json, register_names, to_json  #
 # added to VehicleParts0 never appear in the list. Donor and target are both this
 # one table, and MoreTuning has to ship it. Nothing else does, mod or vanilla, so
 # there is no override to lose a fight with.
-VANILLA_TABLE = (r"D:\MT\Output\Exports\MotorTown\Content\DataAsset\VehicleParts"
-                 r"\UtilityParts.uasset")
+VANILLA_ROOT = r"D:\MT\Output\Exports\MotorTown\Content"
+VANILLA_TABLE = os.path.join(VANILLA_ROOT, "DataAsset", "VehicleParts", "UtilityParts.uasset")
 DONOR_ROW = "FuelTank_01"
 TARGET = "UtilityParts"
 
-# key, display name, litres, kg, cost, mesh package
+# The row carries no transform -- MTVehiclePartAero is only Mesh, SkelealMesh,
+# bUseCustomSocket, CustomSocketName, ComponentTags and AttachParentComponentName
+# -- so a mesh appears at the slot in its own orientation and there is no way to
+# rotate or scale it from here. Which mesh you pick IS the look.
+#
+# The stock tank is 51 x 69 x 46 cm: it lies down, wider than tall. Upright
+# barrels (SM_barrel_2 at 72x72x106, SM_Prop_Rusted_Drum_01 at 70x71x105) stand
+# on end in a slot shaped for a lying tank, which is what read as stretched. The
+# meshes below all lie down, and the refinery stacks are barrels on their sides
+# -- closest in proportion to the stock tank of anything in the game.
+#
+# Every row this script owns starts with this, so a rerun can clear its own work.
+KEY_PREFIX = "qxFuelTank"
+
+# key, display name, mesh package
 TANKS = [
-    ("qxFuelTank_Small_60", "Fuel Tank 60L", 60.0, 14.0, 700,
+    ("qxFuelTank_Small", "Fuel Tank - Small",
      "/Game/Cars/Parts/Utility/FuelTank_01"),
-    ("qxFuelTank_Large_200", "Fuel Tank 200L", 200.0, 38.0, 2600,
-     "/Game/Cars/Parts/Utility/FuelTank_01"),
-    ("qxFuelTank_Drum_300", "Rusted Drum 300L", 300.0, 55.0, 3800,
-     "/Game/PolygonFarm/Meshes/Props/SM_Prop_Rusted_Drum_01"),
-    ("qxFuelTank_Barrel_500", "Oil Barrel 500L", 500.0, 80.0, 6200,
-     "/Game/AssetsvilleTown/Meshes/StreetProps/SM_barrel_2"),
-    ("qxFuelTank_Refinery_900", "Refinery Barrel 900L", 900.0, 130.0, 11000,
-     "/Game/Env/Meshes/Refinery/SM_Refinery_OilBarrel_04"),
+    ("qxFuelTank_Half", "Half Barrel Tank",
+     "/Game/PolygonFarm/Meshes/Props/SM_Prop_Barrel_Half_01"),
+    ("qxFuelTank_Pallet", "Barrel Pallet Tank",
+     "/Game/Env/Meshes/Refinery/SM_Refinery_OilBarrel_Pallet_01"),
+    ("qxFuelTank_Stack", "Barrel Stack Tank",
+     "/Game/Env/Meshes/Refinery/SM_Refinery_OilBarrel_Stack_01"),
+    ("qxFuelTank_StackBig", "Double Barrel Stack Tank",
+     "/Game/Env/Meshes/Refinery/SM_Refinery_OilBarrel_Stack_02"),
 ]
+
+# The stock tank holds 100 litres in a 51x69x46 box, so the game rates a tank at
+# roughly 0.61 litres per litre of bounding box. Deriving capacity from the mesh
+# the same way keeps a barrel that looks twice the size actually holding twice as
+# much, instead of a 900L label on something the size of the stock tank.
+REFERENCE_MESH = "/Game/Cars/Parts/Utility/FuelTank_01"
+REFERENCE_LITRES = 100.0
+SMALL_TANK_LITRES = 60.0        # same mesh as stock, just a cheaper smaller one
+COST_PER_LITRE = 13
+KG_PER_LITRE = 0.16
+
+
+def mesh_box_litres(package, work):
+    """Bounding box volume of a static mesh, in litres."""
+    path = os.path.join(VANILLA_ROOT, package[len("/Game/"):].replace("/", os.sep) + ".uasset")
+    if not os.path.isfile(path):
+        sys.exit(f"mesh not in the game: {package}")
+    data = json.load(open(to_json(path, os.path.join(work, package.rsplit("/", 1)[-1] + ".json")),
+                          encoding="utf-8"))
+
+    def walk(node):
+        if isinstance(node, dict):
+            if node.get("Name") == "BoxExtent" and isinstance(node.get("Value"), dict):
+                yield node["Value"]
+            for value in node.values():
+                yield from walk(value)
+        elif isinstance(node, list):
+            for value in node:
+                yield from walk(value)
+
+    for extent in walk(data):
+        if all(k in extent for k in "XYZ"):
+            return (extent["X"] * 2) * (extent["Y"] * 2) * (extent["Z"] * 2) / 1000
+    sys.exit(f"no bounds on {package}")
 
 
 def import_entry(object_name, outer, class_package, class_name):
@@ -142,13 +190,24 @@ def main():
         table = json.load(f)
     rows = table["Exports"][0]["Table"]["Data"]
 
-    keys = {k for k, *_ in TANKS}
-    rows[:] = [r for r in rows if r["Name"] not in keys]          # rerunnable
-    for key, display, litres, mass, cost, mesh in TANKS:
+    # Drop by prefix, not by the current key list, so renaming a tank does not
+    # leave the old row stranded in the table.
+    rows[:] = [r for r in rows if not r["Name"].startswith(KEY_PREFIX)]
+    per_litre = REFERENCE_LITRES / mesh_box_litres(REFERENCE_MESH, work)
+    sizes = {}
+    for key, display, mesh in TANKS:
+        box = mesh_box_litres(mesh, work)
+        litres = SMALL_TANK_LITRES if mesh == REFERENCE_MESH else round(box * per_litre)
+        mass = round(litres * KG_PER_LITRE + 8)
+        cost = int(round(litres * COST_PER_LITRE, -2))
+        sizes[key] = float(litres)
+
         link = add_mesh_import(table, mesh)
-        rows.append(make_tank(donor, key, display, litres, mass, cost, link))
+        rows.append(make_tank(donor, key, f"{display} {litres:.0f}L",
+                              float(litres), float(mass), cost, link))
         register_names(table, [key])
-        print(f"  {key:26} {litres:6.0f}L {mass:5.0f}kg {cost:>7}c  {mesh.rsplit('/', 1)[-1]}")
+        print(f"  {key:22} {litres:6.0f}L {mass:5.0f}kg {cost:>7}c  "
+              f"box {box:5.0f}L  {mesh.rsplit('/', 1)[-1]}")
 
     merged = os.path.join(work, TARGET + ".json")
     with open(merged, "w", encoding="utf-8") as f:
@@ -159,7 +218,7 @@ def main():
     with open(check, encoding="utf-8") as f:
         after = json.load(f)
     back = {r["Name"]: r for r in after["Exports"][0]["Table"]["Data"]}
-    for key, _, litres, *_ in TANKS:
+    for key, litres in sizes.items():
         if key not in back:
             sys.exit(f"{key} missing after the round trip")
         got = sub(prop(back[key], "FuelTank"), "FuelLiter")["Value"]
