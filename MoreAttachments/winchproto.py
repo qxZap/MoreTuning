@@ -39,9 +39,17 @@ COMPONENT = "MTWinchComponent"
 VARIABLE = "MTWinch"
 MOTORTOWN = "/Script/MotorTown"
 
+# The component keeps its own PartRow and looks it up by key, so the winch's
+# pulling force and rope length come from an existing row rather than anything
+# new: Winch_Tow_04 is the 20t one, the strongest without Motor Works installed.
+PART_KEY = "Winch_Tow_04"
+NODE_GUID = "{7A19C400-0000-0000-0000-00000000B17C}"
+
 # Copy the shape of a component the template already carries rather than
 # inventing one: same import layout, same export layout, same SCS wiring.
-MODEL_COMPONENT = "MTLightControl_GEN_VARIABLE"
+# The interactable, not the light control -- that one is a plain ActorComponent
+# and this is a scene component, which the loader treats differently.
+MODEL_COMPONENT = "MTInteractable_GEN_VARIABLE"
 
 
 def find_export(asset, name):
@@ -58,8 +66,29 @@ def find_import(asset, name):
     return None, None
 
 
+def prop_of(export, name):
+    for entry in export.get("Data") or []:
+        if isinstance(entry, dict) and entry["Name"] == name:
+            return entry
+    return None
+
+
+def name_prop(name, value):
+    return {"$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI",
+            "Name": name, "ArrayIndex": 0, "PropertyGuid": None, "IsZero": False,
+            "PropertyTagFlags": "None", "PropertyTypeName": None,
+            "PropertyTagExtensions": "NoExtension", "Value": value}
+
+
 def add_component(asset):
-    """Add COMPONENT as an SCS node. Returns False if it is already there."""
+    """Add COMPONENT as an SCS node. Returns False if it is already there.
+
+    An export is not just its class and data -- the package header also declares
+    what has to exist before it can be created and before it can be read, in four
+    dependency arrays. Clone an export without rewriting those and the file still
+    points at whatever the donor needed, which is how the first attempt at this
+    produced "corrupt data found" on load rather than a running winch.
+    """
     if find_export(asset, VARIABLE + "_GEN_VARIABLE")[1] is not None:
         return False
 
@@ -79,6 +108,7 @@ def add_component(asset):
     motortown, _ = find_import(asset, MOTORTOWN)
     if motortown is None:
         sys.exit(f"{MOTORTOWN} is not imported")
+    class_export = model["OuterIndex"]                 # the generated Blueprint class
 
     # Class import, then its default object -- mirrors MTLightControlComponent.
     asset["Imports"].append({"$type": "UAssetAPI.Import, UAssetAPI",
@@ -92,12 +122,17 @@ def add_component(asset):
                              "PackageName": None, "bImportOptional": False})
     default_link = -len(asset["Imports"])
 
-    # The component template, at defaults.
+    # The component template. MTWinchComponent derives from StaticMeshComponent,
+    # so it is a scene component and has to hang off the actor's root like one.
     component = copy.deepcopy(model)
     component["ObjectName"] = VARIABLE + "_GEN_VARIABLE"
     component["ClassIndex"] = class_link
     component["TemplateIndex"] = default_link
-    component["Data"] = []
+    component["Data"] = [name_prop("Net_WinchPartKey", PART_KEY)]
+    component["SerializationBeforeSerializationDependencies"] = [class_export]
+    component["CreateBeforeSerializationDependencies"] = []
+    component["SerializationBeforeCreateDependencies"] = [class_link, default_link]
+    component["CreateBeforeCreateDependencies"] = [class_export]
     asset["Exports"].append(component)
     component_index = len(asset["Exports"])            # exports are 1-based when referenced
 
@@ -111,18 +146,44 @@ def add_component(asset):
             entry["Value"] = component_index
         elif entry["Name"] == "InternalVariableName":
             entry["Value"] = VARIABLE
+        elif entry["Name"] == "VariableGuid":
+            # Cloned wholesale this repeats the donor's guid, and two nodes
+            # claiming the same variable is its own kind of broken.
+            for field in entry["Value"]:
+                field["Value"] = NODE_GUID
+    node["SerializationBeforeSerializationDependencies"] = []
+    node["CreateBeforeSerializationDependencies"] = [component_index, class_link]
+    node["CreateBeforeCreateDependencies"] = [script_index + 1]
     asset["Exports"].append(node)
     node_ref = len(asset["Exports"])
 
-    for entry in script.get("Data", []):
-        if entry["Name"] in ("RootNodes", "AllNodes"):
-            item = copy.deepcopy(entry["Value"][0])
-            item["Name"] = str(len(entry["Value"]))
-            item["Value"] = node_ref
-            entry["Value"].append(item)
+    # A scene component is parented, not rooted: it goes under the actor's own
+    # scene node. RootNodes is for the loose ActorComponents like the light
+    # control, and putting a scene component there is what the game rejects.
+    scene_index, _ = find_export(asset, "Scene_GEN_VARIABLE")
+    parent = next((e for e in asset["Exports"]
+                   if e["ObjectName"].startswith("SCS_Node_")
+                   and (prop_of(e, "ComponentTemplate") or {}).get("Value") == scene_index + 1),
+                  None)
+    children = prop_of(parent, "ChildNodes") if parent is not None else None
+    if children is None:
+        sys.exit("no scene SCS node to parent the winch under")
+    item = copy.deepcopy(children["Value"][0])
+    item["Name"] = str(len(children["Value"]))
+    item["Value"] = node_ref
+    children["Value"].append(item)
 
-    register_names(asset, [COMPONENT, "Default__" + COMPONENT,
-                           VARIABLE + "_GEN_VARIABLE", "SCS_Node_" + VARIABLE, VARIABLE])
+    all_nodes = prop_of(script, "AllNodes")
+    item = copy.deepcopy(all_nodes["Value"][0])
+    item["Name"] = str(len(all_nodes["Value"]))
+    item["Value"] = node_ref
+    all_nodes["Value"].append(item)
+    # The script has to know to build the node before it is read back.
+    script.setdefault("CreateBeforeSerializationDependencies", []).append(node_ref)
+
+    register_names(asset, [COMPONENT, "Default__" + COMPONENT, PART_KEY,
+                           "Net_WinchPartKey", VARIABLE + "_GEN_VARIABLE",
+                           "SCS_Node_" + VARIABLE, VARIABLE])
     return True
 
 
@@ -191,9 +252,13 @@ def create():
     # 1. the actor: the template, repointed at a winch body, plus the component
     with open(TEMPLATE, encoding="utf-8") as f:
         text = f.read()
+    # Actor name first. The template's own name ends in the mesh's name, so
+    # renaming the mesh first eats it -- which leaves the package called
+    # Attachment_qxWinch while its class is still called after the donor mesh,
+    # and a row pointing at a class that does not exist.
+    text = text.replace(TEMPLATE_NAME, NEW_ACTOR)
     text = text.replace(TEMPLATE_MESH, NEW_MESH)
     text = text.replace(TEMPLATE_MESH.rsplit("/", 1)[-1], NEW_MESH.rsplit("/", 1)[-1])
-    text = text.replace(TEMPLATE_NAME, NEW_ACTOR)
     asset = json.loads(text)
     if not add_component(asset):
         sys.exit("template already carries the component")
@@ -207,6 +272,9 @@ def create():
         after = json.load(f)
     if find_export(after, VARIABLE + "_GEN_VARIABLE")[1] is None:
         sys.exit("component did not survive the actor round trip")
+    if find_export(after, NEW_ACTOR + "_C")[1] is None:
+        sys.exit(f"the class is not called {NEW_ACTOR}_C, so the row will not resolve it: "
+                 f"{[e['ObjectName'] for e in after['Exports'][:2]]}")
     os.makedirs(ACTORS, exist_ok=True)
     for ext in (".uasset", ".uexp"):
         shutil.copy2(os.path.join(work, NEW_ACTOR + ext), os.path.join(ACTORS, NEW_ACTOR + ext))
@@ -342,27 +410,56 @@ def demo():
                      "ClassPackage": "/Script/CoreUObject", "ClassName": "Package"}],
         "Exports": [
             {"ObjectName": "Thing_C", "ClassIndex": -1, "TemplateIndex": 0, "Data": []},
-            {"ObjectName": MODEL_COMPONENT, "ClassIndex": -1, "TemplateIndex": -1, "Data": []},
+            {"ObjectName": MODEL_COMPONENT, "ClassIndex": -1, "TemplateIndex": -1,
+             "OuterIndex": 1, "Data": []},
+            {"ObjectName": "Scene_GEN_VARIABLE", "ClassIndex": -1, "TemplateIndex": -1,
+             "OuterIndex": 1, "Data": []},
+            {"ObjectName": "SCS_Node_1", "ClassIndex": -1, "TemplateIndex": -1, "Data": [
+                {"Name": "ComponentClass", "Value": -6},
+                {"Name": "ComponentTemplate", "Value": 3},
+                {"Name": "ChildNodes", "Value": [{"Name": "0", "Value": 5}]},
+                {"Name": "InternalVariableName", "Value": "Scene"}]},
             {"ObjectName": "SCS_Node_2", "ClassIndex": -1, "TemplateIndex": -1, "Data": [
                 {"Name": "ComponentClass", "Value": -9},
                 {"Name": "ComponentTemplate", "Value": 2},
+                {"Name": "VariableGuid", "Value": [{"Value": "{DEAD-DEAD}"}]},
                 {"Name": "InternalVariableName", "Value": "SpotLight"}]},
             {"ObjectName": "SimpleConstructionScript_0", "ClassIndex": -1, "TemplateIndex": -1,
-             "Data": [{"Name": "RootNodes", "Value": [{"Name": "0", "Value": 3}]},
-                      {"Name": "AllNodes", "Value": [{"Name": "0", "Value": 3}]}]}],
+             "Data": [{"Name": "RootNodes", "Value": [{"Name": "0", "Value": 4}]},
+                      {"Name": "AllNodes", "Value": [{"Name": "0", "Value": 4},
+                                                     {"Name": "1", "Value": 5}]}]}],
     }
     assert add_component(asset) is True
     names = [e["ObjectName"] for e in asset["Exports"]]
     assert names[-2:] == ["MTWinch_GEN_VARIABLE", "SCS_Node_MTWinch"], names
+
     comp = asset["Exports"][-2]
     assert comp["ClassIndex"] == -2 and comp["TemplateIndex"] == -3
-    node = {p["Name"]: p["Value"] for p in asset["Exports"][-1]["Data"]}
-    assert node["ComponentClass"] == -2
-    assert node["ComponentTemplate"] == 5, node
-    assert node["InternalVariableName"] == "MTWinch"
-    script = {p["Name"]: p["Value"] for p in asset["Exports"][3]["Data"]}
-    assert [v["Value"] for v in script["AllNodes"]] == [3, 6]
-    assert COMPONENT in asset["NameMap"]
+    assert prop_of(comp, "Net_WinchPartKey")["Value"] == PART_KEY
+    assert comp["SerializationBeforeCreateDependencies"] == [-2, -3], \
+        "the loader must know to make the class before reading the template"
+    assert comp["CreateBeforeCreateDependencies"] == [1], "outer is the generated class"
+
+    node = asset["Exports"][-1]
+    fields = {p["Name"]: p["Value"] for p in node["Data"]}
+    assert fields["ComponentClass"] == -2
+    assert fields["ComponentTemplate"] == 7, fields
+    assert fields["InternalVariableName"] == "MTWinch"
+    assert fields["VariableGuid"][0]["Value"] == NODE_GUID, "must not reuse the donor's"
+    assert node["CreateBeforeSerializationDependencies"] == [7, -2]
+    assert node["CreateBeforeCreateDependencies"] == [6], "outer is the construction script"
+
+    script = asset["Exports"][5]
+    by_name = {p["Name"]: p["Value"] for p in script["Data"]}
+    assert [v["Value"] for v in by_name["AllNodes"]] == [4, 5, 8]
+    assert [v["Value"] for v in by_name["RootNodes"]] == [4], \
+        "a scene component is parented, not rooted"
+    assert script["CreateBeforeSerializationDependencies"] == [8]
+    scene_children = prop_of(asset["Exports"][3], "ChildNodes")
+    assert [v["Value"] for v in scene_children["Value"]] == [5, 8], \
+        "the winch hangs off the actor's scene node"
+
+    assert COMPONENT in asset["NameMap"] and PART_KEY in asset["NameMap"]
     assert add_component(asset) is False, "second run must be a no-op"
 
     vendor = {"Exports": [{"Data": [{"Name": "SellItems", "Value": [
