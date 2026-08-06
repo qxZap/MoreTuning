@@ -29,15 +29,14 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "Rebase"))
 from pipeline import MOD, TABLE_DIR, WORK, from_json, register_names, to_json  # noqa: E402
 
-# The one vanilla fuel tank, to clone the row shape from. The export folder gets
-# wiped by FModel runs, so fall back to the copy ZMTLoader keeps.
-DONOR_TABLE = [
-    r"D:\MT\Output\Exports\MotorTown\Content\DataAsset\VehicleParts\UtilityParts.uasset",
-    r"D:\MT\ZMTLoader\ZMTLoader\BASE_GAME_DATA\MotorTown\Content\DataAsset\VehicleParts"
-    r"\UtilityParts.uasset",
-]
+# The game reads the Utility slot from UtilityParts, not VehicleParts0 -- rows
+# added to VehicleParts0 never appear in the list. Donor and target are both this
+# one table, and MoreTuning has to ship it. Nothing else does, mod or vanilla, so
+# there is no override to lose a fight with.
+VANILLA_TABLE = (r"D:\MT\Output\Exports\MotorTown\Content\DataAsset\VehicleParts"
+                 r"\UtilityParts.uasset")
 DONOR_ROW = "FuelTank_01"
-TARGET = "VehicleParts0"
+TARGET = "UtilityParts"
 
 # key, display name, litres, kg, cost, mesh package
 TANKS = [
@@ -115,10 +114,16 @@ def make_tank(donor, key, display, litres, mass, cost, mesh_link):
 
 
 def main():
-    donor_path = next((p for p in DONOR_TABLE if os.path.isfile(p)), None)
-    if not donor_path:
-        sys.exit("no UtilityParts to clone FuelTank_01 from; tried:\n  "
-                 + "\n  ".join(DONOR_TABLE))
+    # Deliberately no fallback to the ZMTLoader BASE_GAME_DATA copy. It is from
+    # December 2025 -- its VehicleParts0 does not even parse under the 0.7.19
+    # mappings -- so shipping its UtilityParts as an override could silently drop
+    # whatever the game has added to that table since.
+    donor_path = VANILLA_TABLE
+    if not os.path.isfile(donor_path):
+        sys.exit(f"missing {donor_path}\n"
+                 f"Export UtilityParts .uasset/.uexp there with FModel. The game "
+                 f"pak is AES encrypted, so repak cannot reach it and the only "
+                 f"other copies on disk are stale.")
 
     work = os.path.join(WORK, "fueltanks")
     os.makedirs(work, exist_ok=True)
@@ -130,7 +135,9 @@ def main():
     if donor is None:
         sys.exit(f"{DONOR_ROW} not found in {donor_path}")
 
-    target_path = os.path.join(MOD, TABLE_DIR, TARGET + ".uasset")
+    # Build on what MoreTuning already ships if it does, else start from vanilla.
+    shipped = os.path.join(MOD, TABLE_DIR, TARGET + ".uasset")
+    target_path = shipped if os.path.isfile(shipped) else donor_path
     with open(to_json(target_path, os.path.join(work, "target.json")), encoding="utf-8") as f:
         table = json.load(f)
     rows = table["Exports"][0]["Table"]["Data"]
