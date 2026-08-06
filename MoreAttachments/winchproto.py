@@ -1,6 +1,7 @@
 """Prototype: give an attachment actor a real winch component.
 
-    python winchproto.py <ActorName>   # e.g. Attachment_Neo_RearSpoiler_01
+    python winchproto.py create        # build the winch attachment, first in the list
+    python winchproto.py <ActorName>   # or add the component to an existing actor
     python winchproto.py demo
 
 Winches in this game are driven by MTWinchComponent, which is C++ -- it appears
@@ -125,9 +126,110 @@ def add_component(asset):
     return True
 
 
+NEW_ACTOR = "Attachment_qxWinch"
+NEW_ROW = "Attachment_qxWinch"
+NEW_LABEL = "Winch (test)"
+NEW_MESH = "/Game/Cars/Parts/Winch/Winch_01_Body"
+TEMPLATE = os.path.join(HERE, "ACTOR_TEMPLATE.json")
+TEMPLATE_NAME = "Attachment_Neo_RearSpoiler_01"
+TEMPLATE_MESH = "/Game/Cars/Models/Neo/RearSpoiler_01"
+ITEMS = os.path.join(HERE, "..", "qxZap_satigt3_MoreAttachments_P", "MotorTown", "Content",
+                     "DataAsset", "Items", "Items_AttachmentPart.uasset")
+
+
+def soft_path(package, asset):
+    return {"$type": "UAssetAPI.PropertyTypes.Objects.FSoftObjectPath, UAssetAPI",
+            "AssetPath": {"$type": "UAssetAPI.PropertyTypes.Objects.FTopLevelAssetPath, UAssetAPI",
+                          "PackageName": package, "AssetName": asset},
+            "SubPathString": None}
+
+
+def create():
+    """Build a winch attachment of its own and put its row first in the list."""
+    work = os.path.join(WORK, "winch")
+    os.makedirs(work, exist_ok=True)
+
+    # 1. the actor: the template, repointed at a winch body, plus the component
+    with open(TEMPLATE, encoding="utf-8") as f:
+        text = f.read()
+    text = text.replace(TEMPLATE_MESH, NEW_MESH)
+    text = text.replace(TEMPLATE_MESH.rsplit("/", 1)[-1], NEW_MESH.rsplit("/", 1)[-1])
+    text = text.replace(TEMPLATE_NAME, NEW_ACTOR)
+    asset = json.loads(text)
+    if not add_component(asset):
+        sys.exit("template already carries the component")
+
+    actor_json = os.path.join(work, NEW_ACTOR + ".json")
+    with open(actor_json, "w", encoding="utf-8") as f:
+        json.dump(asset, f, indent=1)
+    built = from_json(actor_json, os.path.join(work, NEW_ACTOR + ".uasset"))
+    check = to_json(built, os.path.join(work, NEW_ACTOR + ".check.json"))
+    with open(check, encoding="utf-8") as f:
+        after = json.load(f)
+    if find_export(after, VARIABLE + "_GEN_VARIABLE")[1] is None:
+        sys.exit("component did not survive the actor round trip")
+    os.makedirs(ACTORS, exist_ok=True)
+    for ext in (".uasset", ".uexp"):
+        shutil.copy2(os.path.join(work, NEW_ACTOR + ext), os.path.join(ACTORS, NEW_ACTOR + ext))
+    print(f"  actor {NEW_ACTOR}: {COMPONENT} attached, mesh {NEW_MESH.rsplit('/', 1)[-1]}")
+
+    # 2. the row, cloned off a real attachment so every field is already valid
+    with open(to_json(ITEMS, os.path.join(work, "items.json")), encoding="utf-8") as f:
+        table = json.load(f)
+    rows = table["Exports"][0]["Table"]["Data"]
+    rows[:] = [r for r in rows if r["Name"] != NEW_ROW]
+    donor = next((r for r in rows if r["Name"].startswith("Attachment_")
+                  and any(p["Name"] == "AttachmentPartActorClass"
+                          and isinstance(p.get("Value"), dict)
+                          and (p["Value"]["AssetPath"]["PackageName"] or "").startswith(
+                              "/Game/Objects/MoreAttachments/") for p in r["Value"])), None)
+    if donor is None:
+        sys.exit("no MoreAttachments row to clone")
+
+    row = copy.deepcopy(donor)
+    row["Name"] = NEW_ROW
+    for entry in row["Value"]:
+        if entry["Name"] == "AttachmentPartActorClass":
+            entry["Value"] = soft_path(f"/Game/Objects/MoreAttachments/{NEW_ACTOR}",
+                                       NEW_ACTOR + "_C")
+        elif entry["Name"] == "StaticMesh":
+            entry["Value"] = soft_path(NEW_MESH, NEW_MESH.rsplit("/", 1)[-1])
+        elif entry["Name"] == "ItemName":
+            entry["CultureInvariantString"] = NEW_LABEL
+            entry["Namespace"] = None
+            entry["Value"] = None
+            entry["HistoryType"] = "None"
+            entry["Flags"] = "CultureInvariant"
+        elif entry["Name"] == "Cost":
+            entry["Value"] = 1000
+
+    rows.insert(0, row)                                    # first in the whole list
+    register_names(table, [NEW_ROW, f"/Game/Objects/MoreAttachments/{NEW_ACTOR}",
+                           NEW_ACTOR + "_C", NEW_MESH, NEW_MESH.rsplit("/", 1)[-1]])
+
+    items_json = os.path.join(work, "items.edited.json")
+    with open(items_json, "w", encoding="utf-8") as f:
+        json.dump(table, f, indent=1)
+    built = from_json(items_json, os.path.join(work, "Items_AttachmentPart.uasset"))
+    check = to_json(built, os.path.join(work, "items.check.json"))
+    with open(check, encoding="utf-8") as f:
+        back = json.load(f)
+    order = [r["Name"] for r in back["Exports"][0]["Table"]["Data"]]
+    if order[0] != NEW_ROW:
+        sys.exit(f"row did not land first, list starts {order[:3]}")
+    for ext in (".uasset", ".uexp"):
+        shutil.copy2(os.path.join(work, "Items_AttachmentPart" + ext),
+                     ITEMS.replace(".uasset", ext))
+    print(f"  row {NEW_ROW} first of {len(order)}, cloned from {donor['Name']}")
+    print("\nPack qxZap_satigt3_MoreAttachments_P and look at the top of the list.")
+
+
 def main():
     if len(sys.argv) != 2:
         sys.exit(__doc__)
+    if sys.argv[1] == "create":
+        create()
+        return
     name = sys.argv[1]
     source = os.path.join(ACTORS, name + ".uasset")
     if not os.path.isfile(source):
