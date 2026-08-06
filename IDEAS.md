@@ -3,7 +3,41 @@
 Parked for later. Each one has what was already checked, so the next go does not
 start from scratch.
 
-## Extra fuel tanks as a part
+## Extra fuel tanks as a part — prototyped, reverted
+
+Built and tested in game, then backed out of MoreTuning to keep the release
+clean. `FuelTanks/run.py` still builds it; nothing is shipped. What it proved:
+
+**They work.** A fuel tank is a `VehiclePartRow` with `FuelTank.FuelLiter` set
+and a mesh on `Aero.Mesh`. No new part type, no actor, no blueprint.
+
+**They have to be in `UtilityParts`.** The Utility slot reads that table only —
+rows added to `VehicleParts0` never appear in the list, however well formed.
+Nothing else ships `UtilityParts` (checked every installed pak, vanilla mods
+included), so MoreTuning taking it is uncontested.
+
+**There is no transform on the row.** `MTVehiclePartAero` is only `Mesh`,
+`SkelealMesh`, `bUseCustomSocket`, `CustomSocketName`, `ComponentTags` and
+`AttachParentComponentName`. Nothing can be rotated, scaled or offset from the
+row — the mesh lands at the slot in its own orientation, so *which mesh you pick
+is the whole of the look*.
+
+**Pick meshes by shape.** The stock `FuelTank_01` is 51 x 69 x 46 cm: it lies
+down, wider than tall. Upright barrels (`SM_barrel_2` 72x72x106,
+`SM_Prop_Rusted_Drum_01` 70x71x105) stand on end in a slot shaped for a lying
+tank and read as stretched. The refinery *stacks* are barrels on their sides —
+`SM_Refinery_OilBarrel_Stack_01` at 127x142x86 is the closest proportional match
+to the stock tank in the game.
+
+**Rate capacity off the mesh.** The stock tank is 100 L in a 163 L bounding box,
+so ~0.61 litres per box litre. Deriving capacity that way stops a barrel the size
+of the stock tank being labelled 900 L; it gave 60 / 284 / 673 / 951 / 1075 L.
+
+**Still open:** placement. The stacks sit outward but do not fit neatly, and with
+no transform on the row the only lever left is `CustomSocketName` — some utility
+parts set it, the stock tank does not. Worth trying before anything else.
+
+## Extra fuel tanks — the original idea
 
 Fuelling options tied to what each vehicle can carry: a vehicle that can take an
 extra tank gets one as a buyable part, and bigger vehicles get bigger, uglier
