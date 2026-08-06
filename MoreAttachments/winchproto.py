@@ -135,6 +135,34 @@ TEMPLATE_NAME = "Attachment_Neo_RearSpoiler_01"
 TEMPLATE_MESH = "/Game/Cars/Models/Neo/RearSpoiler_01"
 ITEMS = os.path.join(HERE, "..", "qxZap_satigt3_MoreAttachments_P", "MotorTown", "Content",
                      "DataAsset", "Items", "Items_AttachmentPart.uasset")
+# A row in Items_AttachmentPart only defines the part. It does not appear in game
+# until the vendor is told to sell it -- MTVendor's SellItems on Vendor_Garage.
+VENDOR = os.path.join(HERE, "..", "qxZap_satigt3_MoreAttachments_P", "MotorTown", "Content",
+                      "Characters", "NPC", "Vendor_Garage.uasset")
+
+
+def sell_first(vendor_asset, key):
+    """Put an item key at the front of the vendor's SellItems. True if it moved."""
+    for export in vendor_asset["Exports"]:
+        for entry in export.get("Data") or []:
+            if entry["Name"] != "SellItems":
+                continue
+            items = entry["Value"]
+            existing = [i for i in items
+                        if (i.get("Value") if isinstance(i, dict) else i) == key]
+            for item in existing:
+                items.remove(item)
+            first = copy.deepcopy(items[0])
+            if isinstance(first, dict):
+                first["Value"] = key
+            else:
+                first = key
+            items.insert(0, first)
+            for index, item in enumerate(items):
+                if isinstance(item, dict) and "Name" in item:
+                    item["Name"] = str(index)
+            return len(items)
+    return None
 
 
 def soft_path(package, asset):
@@ -221,6 +249,30 @@ def create():
         shutil.copy2(os.path.join(work, "Items_AttachmentPart" + ext),
                      ITEMS.replace(".uasset", ext))
     print(f"  row {NEW_ROW} first of {len(order)}, cloned from {donor['Name']}")
+
+    # 3. tell the vendor to sell it, or the row never shows up in game
+    with open(to_json(VENDOR, os.path.join(work, "vendor.json")), encoding="utf-8") as f:
+        vendor = json.load(f)
+    count = sell_first(vendor, NEW_ROW)
+    if count is None:
+        sys.exit("no SellItems on the vendor")
+    register_names(vendor, [NEW_ROW])
+
+    vendor_json = os.path.join(work, "vendor.edited.json")
+    with open(vendor_json, "w", encoding="utf-8") as f:
+        json.dump(vendor, f, indent=1)
+    built = from_json(vendor_json, os.path.join(work, "Vendor_Garage.uasset"))
+    check = to_json(built, os.path.join(work, "vendor.check.json"))
+    with open(check, encoding="utf-8") as f:
+        back = json.load(f)
+    sold = next(([i.get("Value") if isinstance(i, dict) else i for i in e["Value"]]
+                 for x in back["Exports"] for e in (x.get("Data") or [])
+                 if e["Name"] == "SellItems"), [])
+    if not sold or sold[0] != NEW_ROW:
+        sys.exit(f"vendor does not sell it first, list starts {sold[:3]}")
+    for ext in (".uasset", ".uexp"):
+        shutil.copy2(os.path.join(work, "Vendor_Garage" + ext), VENDOR.replace(".uasset", ext))
+    print(f"  vendor sells it first of {count}")
     print("\nPack qxZap_satigt3_MoreAttachments_P and look at the top of the list.")
 
 
@@ -292,6 +344,14 @@ def demo():
     assert [v["Value"] for v in script["AllNodes"]] == [3, 6]
     assert COMPONENT in asset["NameMap"]
     assert add_component(asset) is False, "second run must be a no-op"
+
+    vendor = {"Exports": [{"Data": [{"Name": "SellItems", "Value": [
+        {"Name": "0", "Value": "Coolant_01"}, {"Name": "1", "Value": "CargoStrap"}]}]}]}
+    assert sell_first(vendor, "Attachment_qxWinch") == 3
+    items = vendor["Exports"][0]["Data"][0]["Value"]
+    assert [i["Value"] for i in items] == ["Attachment_qxWinch", "Coolant_01", "CargoStrap"]
+    assert [i["Name"] for i in items] == ["0", "1", "2"], "array indices must renumber"
+    assert sell_first(vendor, "Attachment_qxWinch") == 3, "must not duplicate on rerun"
     print("ok")
 
 
