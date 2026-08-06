@@ -90,10 +90,33 @@ def rename_numbered(row):
     return False
 
 
+def unlock_winches(rows):
+    """Winches also lose VehicleKeys, so any winch fits any vehicle.
+
+    VehicleKeys is left alone everywhere else on purpose -- it is what ties a
+    bumper to the car it was modelled for. A winch is a bolt-on box with a rope,
+    so the per-car lock buys nothing, and the heavy ones ship locked to a single
+    truck. Everything else about them is already unrestricted.
+    """
+    freed = 0
+    for row in rows:
+        props = {p["Name"]: p for p in row["Value"]}
+        if (props.get("PartType") or {}).get("Value") != "Winch":
+            continue
+        keys = props.get("VehicleKeys")
+        if keys and keys.get("Value"):
+            keys["Value"] = []
+            freed += 1
+    return freed
+
+
 def stripper(gates, rename=False):
     def strip_requirements(rows, table):
         stripped = sum(strip_row(row, gates) for row in rows)
         print(f"  stripped {stripped} of {len(rows)} rows")
+        freed = unlock_winches(rows)
+        if freed:
+            print(f"  unlocked {freed} winches from their per-vehicle keys")
         if rename:
             print(f"  renamed {sum(rename_numbered(row) for row in rows)} '#n' parts")
         return rows
@@ -149,6 +172,17 @@ def demo():
     assert prop["Flags"] == "CultureInvariant" and prop["Namespace"] is None
     assert prop["Value"] is None, "the localisation key has to go, or it wins"
     assert rename_numbered(numbered) is False, "second pass should be a no-op"
+
+    winch = {"Name": "Winch_Tow_05_MMW", "Value": [
+        {"Name": "PartType", "Value": "Winch"},
+        {"Name": "VehicleKeys", "Value": [{"Value": "GolimaRotator"}]}]}
+    bumper = {"Name": "Terra_Bumper", "Value": [
+        {"Name": "PartType", "Value": "FrontBumper"},
+        {"Name": "VehicleKeys", "Value": [{"Value": "Terra"}]}]}
+    assert unlock_winches([winch, bumper]) == 1
+    assert winch["Value"][1]["Value"] == []
+    assert bumper["Value"][1]["Value"] == [{"Value": "Terra"}], "only winches lose their keys"
+    assert unlock_winches([winch, bumper]) == 0, "second pass should be a no-op"
     print("ok")
 
 
