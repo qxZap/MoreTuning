@@ -3,6 +3,62 @@
 Parked for later. Each one has what was already checked, so the next go does not
 start from scratch.
 
+## Winches as attachments — tried hard, does not work
+
+The goal was winches you bolt on like any other attachment, so you could hang
+twenty off a bike. Three builds, three crashes. **Do not try this again without
+new information** — what follows is why, so nobody re-runs it.
+
+`MTWinchComponent` was added to an attachment blueprint as an SCS node. Every
+structural objection was found and fixed, and it still crashes:
+
+- the four export dependency arrays were the donor component's, so the package
+  declared it needed `MTLightControlComponent` while its class said
+  `MTWinchComponent` — that mismatch is what "corrupt data found" means
+- the node was in `RootNodes`. The mappings say `MTWinchComponent` derives from
+  `StaticMeshComponent`, so it is a *scene* component and must be parented; it
+  was moved under the actor's own scene node
+- the template renames ran in the wrong order, leaving the package called
+  `Attachment_qxWinch` with a class named after the donor's mesh
+
+With all three fixed and the component shipping completely unconfigured — no
+`Net_WinchPartKey`, nothing — it still crashes. That last run is the one that
+matters: there was no configuration left to blame.
+
+**The tell was there from the start: `MTWinchComponent` appears in zero content
+assets.** `MTInteractableComponent` appears in 1102, `MTLightControlComponent`
+in 48, and both are used as SCS nodes exactly the way this was. A component
+meant to be authored gets authored somewhere. This one never is, in the game or
+in any installed mod. It is spawned by the vehicle, and its state is
+vehicle-shaped: `CachedAttachedVehicle`, `Net_WinchPartSlot`, `Server_Winches`.
+
+Worth knowing anyway, from the mappings (`scratchpad/props.py` reads them):
+
+| | |
+|---|---|
+| `MTWinchComponent : StaticMeshComponent` | 20 properties |
+| `PartRow` | it carries its own row, so force and length need no part entry |
+| `InteractableComponent`, `AxleMeshComponent`, `HookMeshComponent`, `CableComponent` | sub-components it drives, all null when authored by hand |
+| `PickupWinchHook`, `PickupWinchController`, `AttachWinch`, `CutWinchCable` | the interaction types — grab the hook, grab the remote |
+
+What would change the answer: the game shipping a winch component in a content
+asset, or an `MTInteractableComponent` interaction type that starts a winch
+without one. Neither exists in 0.7.19.
+
+### The other route, which does work but was not wanted
+
+The garage offers `EMTVehiclePartSlot::Winch0` only when the vehicle's body mesh
+has a static mesh socket literally named `Winch0` — socket name is slot name,
+the same way `Utility0` gates the fuel tank slot. 12 vehicles ship one; adding
+one to the rest is a verified working change (UAssetGUI round-trips a body mesh
+byte-for-byte, and the socket is just a name plus a vector). Measured off the
+bodies that have both, a winch sits at **1.07x the trailer hitch's distance from
+centre, mirrored to the front, at 1.4x its height**.
+
+Rejected on purpose: it means shipping ~70 whole vehicle body meshes (~70 MB),
+which collides with every car mod and breaks on any game update that touches a
+body. It also is not the idea — the point was attachments, not sockets.
+
 ## Extra fuel tanks as a part — prototyped, reverted
 
 Built and tested in game, then backed out of MoreTuning to keep the release
