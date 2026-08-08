@@ -9,14 +9,18 @@ but only the light was ever configured, and badly -- 50 lumens with no
 AttenuationRadius, so it fell back to the 1000 unit default and washed a great
 unaimed pool of light over everything. lightsout.py turned all of that off.
 
-This turns it back on for the few that are meant to be lamps, copying the setup
-off a light bar that works (Maja's DetailWorks, `Neutz_Light_Aux2`) rather than
-guessing. Two things make the difference:
+This turns it back on for the few that are meant to be lamps, using the game's
+own light attachment as the donor -- `Objects/VehicleAttachment/Light_01`, which
+is first-party and already 0.7.19, so there is nothing to guess and nothing to
+migrate.
 
-  * the beam is shaped -- 5 lumens, 150 unit radius, exponent 2 falloff, aimed
-  * `MTLightControlComponent.LightIntensity` is set, which is what lets the game
-    switch the light on and off with the vehicle's own lights; with it unset the
-    component has no baseline to scale and the lamp is inert
+The interesting part is what the difference actually was. Vanilla's spot light
+is set exactly the way ours already were: 50 lumens, 50 degree cone, 4000K, no
+attenuation radius. Its MTLightControlComponent has no properties at all. The
+one thing it has that ours did not is `InteractionParams` -- ToggleLight,
+ChangeLightMode, ChangeLightColor. Without those the lamp is not switchable, so
+it can only sit there lit, which is exactly what was wrong with the painted
+parts before lightsout.py turned them off.
 
 `LIGHT_PROFILE.json` holds the harvested settings, so retuning is a data edit.
 """
@@ -39,28 +43,28 @@ HEADLIGHTS = ["Attachment_CoraHeadlight_01", "Attachment_CoraHeadlight_02",
               "Attachment_ZinoHeadlight_01", "Attachment_ZinoHeadlight_02",
               "Attachment_ZinoHeadlight_03", "Attachment_Micky_Light"]
 
-# ponytail: aimed straight down the parent's forward axis. Maja's bar carries a
-# baked-in rotation because its mesh sits at an angle; ours are square to the
-# vehicle, so zero is the honest starting point -- and this is the knob to turn
-# first if the beam points somewhere silly in game.
-AIM = {"Pitch": 0.0, "Yaw": 0.0, "Roll": 0.0}
+# No aim and no colour override: vanilla sets neither. The light points down its
+# component's own forward axis and takes its colour from a 4000K temperature,
+# and ChangeLightColor lets the player pick anyway.
 
-# The donor is an amber warning bar. Headlights are white, so the colour is
-# overridden in both places it is held, and they are not the same shape: the
-# light's own FColor is written as a "R, G, B" string in 0-255, the control
-# component's FLinearColor as fields in 0-1. Leave them disagreeing and the lamp
-# changes colour the moment the game first toggles it.
-WHITE_255 = "255, 255, 255"
-WHITE_LINEAR = {"R": 1.0, "G": 1.0, "B": 1.0, "A": 1.0}
+
+# An enum entry and an FName are stored as names, not as text, so "ToggleLight"
+# has to be in the map like any property name. Miss these and the write drops
+# the interactions on the floor without saying anything.
+NAME_VALUED = ("EnumPropertyData", "NamePropertyData")
 
 
 def names_in(value):
     """Every FName a property blob mentions, so the name map can be topped up."""
     out = []
     if isinstance(value, dict):
+        kind = value.get("$type", "")
         for key, item in value.items():
             if key in ("Name", "StructType", "EnumType", "InnerType", "ArrayType") \
                     and isinstance(item, str):
+                out.append(item)
+            elif key == "Value" and isinstance(item, str) \
+                    and any(k in kind for k in NAME_VALUED):
                 out.append(item)
             else:
                 out += names_in(item)
@@ -70,28 +74,28 @@ def names_in(value):
     return out
 
 
-def light_up(asset, profile, aim=AIM):
+def light_up(asset, profile):
     """Give this actor the working light setup. True if anything changed."""
     changed = False
     for export in asset["Exports"]:
         obj = str(export.get("ObjectName"))
         if "SpotLight" in obj:
+            # Placement is per attachment; the beam itself comes from vanilla.
             keep = [p for p in export.get("Data") or []
                     if isinstance(p, dict) and p["Name"] == "RelativeLocation"]
-            fresh = copy.deepcopy(profile["SpotLight"])
-            for prop in fresh:
-                if prop["Name"] == "RelativeRotation":
-                    prop["Value"][0]["Value"].update(aim)
-                elif prop["Name"] == "LightColor":
-                    prop["Value"][0]["Value"] = WHITE_255
-            export["Data"] = keep + fresh
+            export["Data"] = keep + copy.deepcopy(profile["SpotLight"])
             changed = True
         elif "MTLightControl" in obj:
-            fresh = copy.deepcopy(profile["MTLightControl"])
-            for prop in fresh:
-                if prop["Name"] == "Net_LightColor":
-                    prop["Value"][0]["Value"].update(WHITE_LINEAR)
-            export["Data"] = fresh
+            export["Data"] = copy.deepcopy(profile["MTLightControl"])
+            changed = True
+        elif "MTInteractable" in obj:
+            # Without this the lamp is wired but unreachable: there is no
+            # ToggleLight on the interaction menu, so nothing ever switches it
+            # on. Keep whatever the actor already declared about how it is
+            # interacted with, and add the light options.
+            keep = [p for p in export.get("Data") or []
+                    if isinstance(p, dict) and p["Name"] != "InteractionParams"]
+            export["Data"] = keep + copy.deepcopy(profile["MTInteractable"])
             changed = True
     if changed:
         register_names(asset, names_in(profile))
@@ -127,36 +131,38 @@ def main(wanted):
 def demo():
     profile = {
         "SpotLight": [
-            {"Name": "Intensity", "Value": 5.0},
-            {"Name": "AttenuationRadius", "Value": 150.0},
-            {"Name": "LightColor", "StructType": "Color",
-             "Value": [{"Name": "LightColor", "Value": "255, 166, 0"}]},
-            {"Name": "RelativeRotation", "Value": [
-                {"Value": {"Pitch": 90.0, "Yaw": 374.0, "Roll": 284.0}}]}],
-        "MTLightControl": [
-            {"Name": "LightIntensity", "Value": 30.0},
-            {"Name": "Net_LightColor", "Value": [{"Value": {"R": 1.0, "G": 0.25, "B": 0.0, "A": 0.0}}]}],
+            {"Name": "Intensity", "Value": 50.0},
+            {"Name": "Temperature", "Value": 4000.0}],
+        "MTInteractable": [{"Name": "InteractionParams", "Value": [
+            {"StructType": "MTInteractionParams", "Name": "0", "Value": [
+                {"$type": "...EnumPropertyData, UAssetAPI", "Name": "InteractionType",
+                 "EnumType": "EMotorTownInteractableType", "Value": "ToggleLight"}]}]}],
+        "MTLightControl": [],
     }
     asset = {"NameMap": [], "NamesReferencedFromExportDataCount": 0, "Exports": [
         {"ObjectName": "SpotLight_GEN_VARIABLE", "Data": [
             {"Name": "Intensity", "Value": 0.0},
             {"Name": "RelativeLocation", "Value": [{"Value": {"X": 7.0}}]}]},
         {"ObjectName": "MTLightControl_GEN_VARIABLE", "Data": []},
+        {"ObjectName": "MTInteractable_GEN_VARIABLE", "Data": [
+            {"Name": "bInteractbyActor", "Value": True},
+            {"Name": "InteractionParams", "Value": []}]},
         {"ObjectName": "StaticMesh_GEN_VARIABLE", "Data": [{"Name": "Intensity", "Value": 1.0}]}]}
 
     assert light_up(asset, profile) is True
     spot = {p["Name"]: p.get("Value") for p in asset["Exports"][0]["Data"]}
-    assert spot["Intensity"] == 5.0
-    assert spot["AttenuationRadius"] == 150.0, "the default 1000 radius is the whole problem"
+    assert spot["Intensity"] == 50.0, "vanilla's own setting, not a guess"
     assert spot["RelativeLocation"][0]["Value"]["X"] == 7.0, "placement must survive"
-    assert spot["RelativeRotation"][0]["Value"] == AIM, "aim is ours, not the donor's"
-    control = {p["Name"]: p["Value"] for p in asset["Exports"][1]["Data"]}
-    assert control["LightIntensity"] == 30.0, "without this the lamp is inert"
-    assert spot["LightColor"][0]["Value"] == WHITE_255, "donor is amber, headlights are not"
-    linear = {p["Name"]: p["Value"] for p in asset["Exports"][1]["Data"]}["Net_LightColor"]
-    assert linear[0]["Value"] == WHITE_LINEAR, "both colours must agree"
-    assert asset["Exports"][2]["Data"][0]["Value"] == 1.0, "must not touch other exports"
-    assert "LightColor" in asset["NameMap"] and "Color" in asset["NameMap"], \
+    assert asset["Exports"][1]["Data"] == [], "vanilla sets nothing on the light control"
+    inter = asset["Exports"][2]["Data"]
+    kinds = [f["Value"] for p in inter if p["Name"] == "InteractionParams"
+             for st in p["Value"] for f in st["Value"] if f["Name"] == "InteractionType"]
+    assert kinds == ["ToggleLight"], kinds
+    assert any(p["Name"] == "bInteractbyActor" for p in inter),         "the actor's own interaction settings must survive"
+    assert "ToggleLight" in asset["NameMap"], "an enum entry is a name, or it is dropped"
+    assert "MTInteractionParams" in asset["NameMap"]
+    assert asset["Exports"][3]["Data"][0]["Value"] == 1.0, "must not touch other exports"
+    assert "Temperature" in asset["NameMap"], \
         "new properties need their names, or the write drops them"
     print("ok")
 

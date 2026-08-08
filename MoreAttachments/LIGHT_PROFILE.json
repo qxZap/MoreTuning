@@ -1,51 +1,4 @@
 {
- "MTLightControl": [
-  {
-   "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
-   "StructType": "LinearColor",
-   "SerializeNone": true,
-   "StructGUID": "{00000000-0000-0000-0000-000000000000}",
-   "SerializationControl": "NoExtension",
-   "Operation": "None",
-   "Name": "Net_LightColor",
-   "ArrayIndex": 0,
-   "PropertyGuid": null,
-   "IsZero": false,
-   "PropertyTagFlags": "None",
-   "PropertyTypeName": null,
-   "PropertyTagExtensions": "NoExtension",
-   "Value": [
-    {
-     "$type": "UAssetAPI.PropertyTypes.Structs.LinearColorPropertyData, UAssetAPI",
-     "Name": "Net_LightColor",
-     "ArrayIndex": 0,
-     "PropertyGuid": null,
-     "IsZero": false,
-     "PropertyTagFlags": "None",
-     "PropertyTypeName": null,
-     "PropertyTagExtensions": "NoExtension",
-     "Value": {
-      "$type": "UAssetAPI.UnrealTypes.FLinearColor, UAssetAPI",
-      "R": 1.0,
-      "G": 0.25818300247192383,
-      "B": "+0",
-      "A": "+0"
-     }
-    }
-   ]
-  },
-  {
-   "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-   "Name": "LightIntensity",
-   "ArrayIndex": 0,
-   "PropertyGuid": null,
-   "IsZero": false,
-   "PropertyTagFlags": "None",
-   "PropertyTypeName": null,
-   "PropertyTagExtensions": "NoExtension",
-   "Value": 30.0
-  }
- ],
  "SpotLight": [
   {
    "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
@@ -56,29 +9,7 @@
    "PropertyTagFlags": "None",
    "PropertyTypeName": null,
    "PropertyTagExtensions": "NoExtension",
-   "Value": 65.0
-  },
-  {
-   "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
-   "Name": "bUseInverseSquaredFalloff",
-   "ArrayIndex": 0,
-   "PropertyGuid": null,
-   "IsZero": false,
-   "PropertyTagFlags": "None",
-   "PropertyTypeName": null,
-   "PropertyTagExtensions": "NoExtension",
-   "Value": false
-  },
-  {
-   "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-   "Name": "LightFalloffExponent",
-   "ArrayIndex": 0,
-   "PropertyGuid": null,
-   "IsZero": false,
-   "PropertyTagFlags": "None",
-   "PropertyTypeName": null,
-   "PropertyTagExtensions": "NoExtension",
-   "Value": 2.0
+   "Value": 50.0
   },
   {
    "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
@@ -89,7 +20,7 @@
    "PropertyTagFlags": "None",
    "PropertyTypeName": null,
    "PropertyTagExtensions": "NoExtension",
-   "Value": 1.0
+   "Value": 3.0
   },
   {
    "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
@@ -100,40 +31,42 @@
    "PropertyTagFlags": "None",
    "PropertyTypeName": null,
    "PropertyTagExtensions": "NoExtension",
-   "Value": 3.0
+   "Value": 5.0
   },
   {
-   "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-   "Name": "SourceLength",
+   "$type": "UAssetAPI.PropertyTypes.Objects.EnumPropertyData, UAssetAPI",
+   "EnumType": "ELightUnits",
+   "InnerType": "ByteProperty",
+   "Name": "IntensityUnits",
    "ArrayIndex": 0,
    "PropertyGuid": null,
    "IsZero": false,
    "PropertyTagFlags": "None",
    "PropertyTypeName": null,
    "PropertyTagExtensions": "NoExtension",
-   "Value": 6.0
+   "Value": "Lumens"
   },
   {
    "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-   "Name": "AttenuationRadius",
+   "Name": "Temperature",
    "ArrayIndex": 0,
    "PropertyGuid": null,
    "IsZero": false,
    "PropertyTagFlags": "None",
    "PropertyTypeName": null,
    "PropertyTagExtensions": "NoExtension",
-   "Value": 150.0
+   "Value": 4000.0
   },
   {
-   "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
-   "Name": "SpecularScale",
+   "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
+   "Name": "bUseTemperature",
    "ArrayIndex": 0,
    "PropertyGuid": null,
    "IsZero": false,
    "PropertyTagFlags": "None",
    "PropertyTypeName": null,
    "PropertyTagExtensions": "NoExtension",
-   "Value": 0.4000000059604645
+   "Value": true
   },
   {
    "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
@@ -144,35 +77,7 @@
    "PropertyTagFlags": "None",
    "PropertyTypeName": null,
    "PropertyTagExtensions": "NoExtension",
-   "Value": 5.0
-  },
-  {
-   "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
-   "StructType": "Color",
-   "SerializeNone": true,
-   "StructGUID": "{00000000-0000-0000-0000-000000000000}",
-   "SerializationControl": "NoExtension",
-   "Operation": "None",
-   "Name": "LightColor",
-   "ArrayIndex": 0,
-   "PropertyGuid": null,
-   "IsZero": false,
-   "PropertyTagFlags": "None",
-   "PropertyTypeName": null,
-   "PropertyTagExtensions": "NoExtension",
-   "Value": [
-    {
-     "$type": "UAssetAPI.PropertyTypes.Structs.ColorPropertyData, UAssetAPI",
-     "Name": "LightColor",
-     "ArrayIndex": 0,
-     "PropertyGuid": null,
-     "IsZero": false,
-     "PropertyTagFlags": "None",
-     "PropertyTypeName": null,
-     "PropertyTagExtensions": "NoExtension",
-     "Value": "255, 166, 0"
-    }
-   ]
+   "Value": 50.0
   },
   {
    "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
@@ -184,15 +89,13 @@
    "PropertyTypeName": null,
    "PropertyTagExtensions": "NoExtension",
    "Value": false
-  },
+  }
+ ],
+ "MTInteractable": [
   {
-   "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
-   "StructType": "Rotator",
-   "SerializeNone": true,
-   "StructGUID": "{00000000-0000-0000-0000-000000000000}",
-   "SerializationControl": "NoExtension",
-   "Operation": "None",
-   "Name": "RelativeRotation",
+   "$type": "UAssetAPI.PropertyTypes.Objects.ArrayPropertyData, UAssetAPI",
+   "ArrayType": "StructProperty",
+   "Name": "InteractionParams",
    "ArrayIndex": 0,
    "PropertyGuid": null,
    "IsZero": false,
@@ -201,22 +104,196 @@
    "PropertyTagExtensions": "NoExtension",
    "Value": [
     {
-     "$type": "UAssetAPI.PropertyTypes.Structs.RotatorPropertyData, UAssetAPI",
-     "Name": "RelativeRotation",
+     "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
+     "StructType": "MTInteractionParams",
+     "SerializeNone": true,
+     "StructGUID": "{00000000-0000-0000-0000-000000000000}",
+     "SerializationControl": "NoExtension",
+     "Operation": "None",
+     "Name": "0",
      "ArrayIndex": 0,
      "PropertyGuid": null,
      "IsZero": false,
      "PropertyTagFlags": "None",
      "PropertyTypeName": null,
      "PropertyTagExtensions": "NoExtension",
-     "Value": {
-      "$type": "UAssetAPI.UnrealTypes.FRotator, UAssetAPI",
-      "Pitch": 90.0,
-      "Yaw": 374.03624346792645,
-      "Roll": 284.03624416509945
-     }
+     "Value": [
+      {
+       "$type": "UAssetAPI.PropertyTypes.Objects.EnumPropertyData, UAssetAPI",
+       "EnumType": "EMotorTownInteractableType",
+       "InnerType": "ByteProperty",
+       "Name": "InteractionType",
+       "ArrayIndex": 0,
+       "PropertyGuid": null,
+       "IsZero": false,
+       "PropertyTagFlags": "None",
+       "PropertyTypeName": null,
+       "PropertyTagExtensions": "NoExtension",
+       "Value": "ToggleLight"
+      },
+      {
+       "$type": "UAssetAPI.PropertyTypes.Objects.TextPropertyData, UAssetAPI",
+       "Flags": 0,
+       "HistoryType": "None",
+       "Namespace": null,
+       "CultureInvariantString": null,
+       "SourceFmt": null,
+       "Arguments": null,
+       "ArgumentsData": null,
+       "TransformType": "ToLower",
+       "SourceValue": null,
+       "FormatOptions": null,
+       "TargetCulture": null,
+       "Name": "CustomName",
+       "ArrayIndex": 0,
+       "PropertyGuid": null,
+       "IsZero": false,
+       "PropertyTagFlags": "None",
+       "PropertyTypeName": null,
+       "PropertyTagExtensions": "NoExtension",
+       "Value": null
+      },
+      {
+       "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
+       "Name": "bHideOnList",
+       "ArrayIndex": 0,
+       "PropertyGuid": null,
+       "IsZero": true,
+       "PropertyTagFlags": "None",
+       "PropertyTypeName": null,
+       "PropertyTagExtensions": "NoExtension",
+       "Value": false
+      }
+     ]
+    },
+    {
+     "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
+     "StructType": "MTInteractionParams",
+     "SerializeNone": true,
+     "StructGUID": "{00000000-0000-0000-0000-000000000000}",
+     "SerializationControl": "NoExtension",
+     "Operation": "None",
+     "Name": "1",
+     "ArrayIndex": 0,
+     "PropertyGuid": null,
+     "IsZero": false,
+     "PropertyTagFlags": "None",
+     "PropertyTypeName": null,
+     "PropertyTagExtensions": "NoExtension",
+     "Value": [
+      {
+       "$type": "UAssetAPI.PropertyTypes.Objects.EnumPropertyData, UAssetAPI",
+       "EnumType": "EMotorTownInteractableType",
+       "InnerType": "ByteProperty",
+       "Name": "InteractionType",
+       "ArrayIndex": 0,
+       "PropertyGuid": null,
+       "IsZero": false,
+       "PropertyTagFlags": "None",
+       "PropertyTypeName": null,
+       "PropertyTagExtensions": "NoExtension",
+       "Value": "ChangeLightMode"
+      },
+      {
+       "$type": "UAssetAPI.PropertyTypes.Objects.TextPropertyData, UAssetAPI",
+       "Flags": 0,
+       "HistoryType": "None",
+       "Namespace": null,
+       "CultureInvariantString": null,
+       "SourceFmt": null,
+       "Arguments": null,
+       "ArgumentsData": null,
+       "TransformType": "ToLower",
+       "SourceValue": null,
+       "FormatOptions": null,
+       "TargetCulture": null,
+       "Name": "CustomName",
+       "ArrayIndex": 0,
+       "PropertyGuid": null,
+       "IsZero": false,
+       "PropertyTagFlags": "None",
+       "PropertyTypeName": null,
+       "PropertyTagExtensions": "NoExtension",
+       "Value": null
+      },
+      {
+       "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
+       "Name": "bHideOnList",
+       "ArrayIndex": 0,
+       "PropertyGuid": null,
+       "IsZero": true,
+       "PropertyTagFlags": "None",
+       "PropertyTypeName": null,
+       "PropertyTagExtensions": "NoExtension",
+       "Value": false
+      }
+     ]
+    },
+    {
+     "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
+     "StructType": "MTInteractionParams",
+     "SerializeNone": true,
+     "StructGUID": "{00000000-0000-0000-0000-000000000000}",
+     "SerializationControl": "NoExtension",
+     "Operation": "None",
+     "Name": "2",
+     "ArrayIndex": 0,
+     "PropertyGuid": null,
+     "IsZero": false,
+     "PropertyTagFlags": "None",
+     "PropertyTypeName": null,
+     "PropertyTagExtensions": "NoExtension",
+     "Value": [
+      {
+       "$type": "UAssetAPI.PropertyTypes.Objects.EnumPropertyData, UAssetAPI",
+       "EnumType": "EMotorTownInteractableType",
+       "InnerType": "ByteProperty",
+       "Name": "InteractionType",
+       "ArrayIndex": 0,
+       "PropertyGuid": null,
+       "IsZero": false,
+       "PropertyTagFlags": "None",
+       "PropertyTypeName": null,
+       "PropertyTagExtensions": "NoExtension",
+       "Value": "ChangeLightColor"
+      },
+      {
+       "$type": "UAssetAPI.PropertyTypes.Objects.TextPropertyData, UAssetAPI",
+       "Flags": 0,
+       "HistoryType": "None",
+       "Namespace": null,
+       "CultureInvariantString": null,
+       "SourceFmt": null,
+       "Arguments": null,
+       "ArgumentsData": null,
+       "TransformType": "ToLower",
+       "SourceValue": null,
+       "FormatOptions": null,
+       "TargetCulture": null,
+       "Name": "CustomName",
+       "ArrayIndex": 0,
+       "PropertyGuid": null,
+       "IsZero": false,
+       "PropertyTagFlags": "None",
+       "PropertyTypeName": null,
+       "PropertyTagExtensions": "NoExtension",
+       "Value": null
+      },
+      {
+       "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
+       "Name": "bHideOnList",
+       "ArrayIndex": 0,
+       "PropertyGuid": null,
+       "IsZero": true,
+       "PropertyTagFlags": "None",
+       "PropertyTypeName": null,
+       "PropertyTagExtensions": "NoExtension",
+       "Value": false
+      }
+     ]
     }
    ]
   }
- ]
+ ],
+ "MTLightControl": []
 }
