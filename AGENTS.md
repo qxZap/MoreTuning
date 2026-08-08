@@ -269,24 +269,25 @@ two crawlers, then eight L/H splits (23 entries, `DefaultGearIndex` 4).
 
 ## MoreAttachments
 
-### Never reorder `Items_AttachmentPart`
+### `Items_AttachmentPart` is keyed by row name, not by position
 
-A saved vehicle stores its parts by **position** in that table, not by row name.
-Move a row and every row below it shifts, and existing builds come back wearing
-whatever slid into the slot. There is no warning and nothing in the file looks
-wrong afterwards.
+Rows carry no numeric id. The DataTable row name *is* the key — `Attachment_
+ZinoHeadlight_03` — and that is what a save stores. This is why the game can add
+attachments in an update without repainting everyone's vehicles, and it is worth
+knowing before panicking about order the way this repo once did.
 
-This bit twice in one session. Putting a winch row first shifted all 622 rows by
-one; lifting six headlights to index 35 shifted 587 rows by six. Moving them to
-the *end* is not a fix either — they were interleaved alphabetically, so pulling
-them out of the middle shifts everything after their old homes.
+So **removing or renaming a row is the breaking change**, not moving one. A row
+that disappears takes it off every vehicle wearing it. Adding is free; reordering
+is cosmetic.
 
-Appending is safe, and `run.py` already appends. If a part is hard to find in the
-menu, that is a vendor or UI problem. `order.py` existed to move rows and was
-deleted for it.
+Verified rather than assumed, and the checking is the useful part: read the row
+names out of the table at every commit that touched it and compare sets, not
+positions. Across this repo's whole history no row has ever been removed or
+renamed — the 0.7.19 migration added 46 and dropped none — with one exception,
+the `Attachment_qxWinch` test row, which shipped briefly and was then deleted.
 
-To check an ordering claim rather than trust one, read the row names out at each
-commit that touched the table and compare — positions, not contents.
+Reordering was still reverted, because a diff nobody can justify is not worth
+carrying, and menu position is a vendor concern.
 
 ### An attachment actor, and what makes a lamp work
 
