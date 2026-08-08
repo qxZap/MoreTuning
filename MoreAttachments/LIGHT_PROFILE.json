@@ -1,0 +1,222 @@
+{
+ "MTLightControl": [
+  {
+   "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
+   "StructType": "LinearColor",
+   "SerializeNone": true,
+   "StructGUID": "{00000000-0000-0000-0000-000000000000}",
+   "SerializationControl": "NoExtension",
+   "Operation": "None",
+   "Name": "Net_LightColor",
+   "ArrayIndex": 0,
+   "PropertyGuid": null,
+   "IsZero": false,
+   "PropertyTagFlags": "None",
+   "PropertyTypeName": null,
+   "PropertyTagExtensions": "NoExtension",
+   "Value": [
+    {
+     "$type": "UAssetAPI.PropertyTypes.Structs.LinearColorPropertyData, UAssetAPI",
+     "Name": "Net_LightColor",
+     "ArrayIndex": 0,
+     "PropertyGuid": null,
+     "IsZero": false,
+     "PropertyTagFlags": "None",
+     "PropertyTypeName": null,
+     "PropertyTagExtensions": "NoExtension",
+     "Value": {
+      "$type": "UAssetAPI.UnrealTypes.FLinearColor, UAssetAPI",
+      "R": 1.0,
+      "G": 0.25818300247192383,
+      "B": "+0",
+      "A": "+0"
+     }
+    }
+   ]
+  },
+  {
+   "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
+   "Name": "LightIntensity",
+   "ArrayIndex": 0,
+   "PropertyGuid": null,
+   "IsZero": false,
+   "PropertyTagFlags": "None",
+   "PropertyTypeName": null,
+   "PropertyTagExtensions": "NoExtension",
+   "Value": 30.0
+  }
+ ],
+ "SpotLight": [
+  {
+   "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
+   "Name": "OuterConeAngle",
+   "ArrayIndex": 0,
+   "PropertyGuid": null,
+   "IsZero": false,
+   "PropertyTagFlags": "None",
+   "PropertyTypeName": null,
+   "PropertyTagExtensions": "NoExtension",
+   "Value": 65.0
+  },
+  {
+   "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
+   "Name": "bUseInverseSquaredFalloff",
+   "ArrayIndex": 0,
+   "PropertyGuid": null,
+   "IsZero": false,
+   "PropertyTagFlags": "None",
+   "PropertyTypeName": null,
+   "PropertyTagExtensions": "NoExtension",
+   "Value": false
+  },
+  {
+   "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
+   "Name": "LightFalloffExponent",
+   "ArrayIndex": 0,
+   "PropertyGuid": null,
+   "IsZero": false,
+   "PropertyTagFlags": "None",
+   "PropertyTypeName": null,
+   "PropertyTagExtensions": "NoExtension",
+   "Value": 2.0
+  },
+  {
+   "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
+   "Name": "SourceRadius",
+   "ArrayIndex": 0,
+   "PropertyGuid": null,
+   "IsZero": false,
+   "PropertyTagFlags": "None",
+   "PropertyTypeName": null,
+   "PropertyTagExtensions": "NoExtension",
+   "Value": 1.0
+  },
+  {
+   "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
+   "Name": "SoftSourceRadius",
+   "ArrayIndex": 0,
+   "PropertyGuid": null,
+   "IsZero": false,
+   "PropertyTagFlags": "None",
+   "PropertyTypeName": null,
+   "PropertyTagExtensions": "NoExtension",
+   "Value": 3.0
+  },
+  {
+   "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
+   "Name": "SourceLength",
+   "ArrayIndex": 0,
+   "PropertyGuid": null,
+   "IsZero": false,
+   "PropertyTagFlags": "None",
+   "PropertyTypeName": null,
+   "PropertyTagExtensions": "NoExtension",
+   "Value": 6.0
+  },
+  {
+   "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
+   "Name": "AttenuationRadius",
+   "ArrayIndex": 0,
+   "PropertyGuid": null,
+   "IsZero": false,
+   "PropertyTagFlags": "None",
+   "PropertyTypeName": null,
+   "PropertyTagExtensions": "NoExtension",
+   "Value": 150.0
+  },
+  {
+   "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
+   "Name": "SpecularScale",
+   "ArrayIndex": 0,
+   "PropertyGuid": null,
+   "IsZero": false,
+   "PropertyTagFlags": "None",
+   "PropertyTypeName": null,
+   "PropertyTagExtensions": "NoExtension",
+   "Value": 0.4000000059604645
+  },
+  {
+   "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
+   "Name": "Intensity",
+   "ArrayIndex": 0,
+   "PropertyGuid": null,
+   "IsZero": false,
+   "PropertyTagFlags": "None",
+   "PropertyTypeName": null,
+   "PropertyTagExtensions": "NoExtension",
+   "Value": 5.0
+  },
+  {
+   "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
+   "StructType": "Color",
+   "SerializeNone": true,
+   "StructGUID": "{00000000-0000-0000-0000-000000000000}",
+   "SerializationControl": "NoExtension",
+   "Operation": "None",
+   "Name": "LightColor",
+   "ArrayIndex": 0,
+   "PropertyGuid": null,
+   "IsZero": false,
+   "PropertyTagFlags": "None",
+   "PropertyTypeName": null,
+   "PropertyTagExtensions": "NoExtension",
+   "Value": [
+    {
+     "$type": "UAssetAPI.PropertyTypes.Structs.ColorPropertyData, UAssetAPI",
+     "Name": "LightColor",
+     "ArrayIndex": 0,
+     "PropertyGuid": null,
+     "IsZero": false,
+     "PropertyTagFlags": "None",
+     "PropertyTypeName": null,
+     "PropertyTagExtensions": "NoExtension",
+     "Value": "255, 166, 0"
+    }
+   ]
+  },
+  {
+   "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
+   "Name": "CastShadows",
+   "ArrayIndex": 0,
+   "PropertyGuid": null,
+   "IsZero": false,
+   "PropertyTagFlags": "None",
+   "PropertyTypeName": null,
+   "PropertyTagExtensions": "NoExtension",
+   "Value": false
+  },
+  {
+   "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
+   "StructType": "Rotator",
+   "SerializeNone": true,
+   "StructGUID": "{00000000-0000-0000-0000-000000000000}",
+   "SerializationControl": "NoExtension",
+   "Operation": "None",
+   "Name": "RelativeRotation",
+   "ArrayIndex": 0,
+   "PropertyGuid": null,
+   "IsZero": false,
+   "PropertyTagFlags": "None",
+   "PropertyTypeName": null,
+   "PropertyTagExtensions": "NoExtension",
+   "Value": [
+    {
+     "$type": "UAssetAPI.PropertyTypes.Structs.RotatorPropertyData, UAssetAPI",
+     "Name": "RelativeRotation",
+     "ArrayIndex": 0,
+     "PropertyGuid": null,
+     "IsZero": false,
+     "PropertyTagFlags": "None",
+     "PropertyTypeName": null,
+     "PropertyTagExtensions": "NoExtension",
+     "Value": {
+      "$type": "UAssetAPI.UnrealTypes.FRotator, UAssetAPI",
+      "Pitch": 90.0,
+      "Yaw": 374.03624346792645,
+      "Roll": 284.03624416509945
+     }
+    }
+   ]
+  }
+ ]
+}
