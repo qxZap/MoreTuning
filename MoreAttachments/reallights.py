@@ -70,9 +70,11 @@ LIGHT_MATERIALS = ("M_HeadLight",)
 # neither, which is why it throws a beam out of an unlit housing;
 # Light_09_Blinker sets both, and is where the wiring here is harvested from.
 #
-# ponytail: 2000 is the blinker's own figure and reads as a lens at night. The
-# knob to turn if a headlight glows like a torch pointed at you.
-EMISSIVE_INTENSITY = 2000.0
+# Across the vanilla lamps this runs 8, 15, 20, 80 -- and then 2000, once, for
+# the emergency blinker. Taking that outlier made a headlight glow like a high
+# beam. 150 is a little under twice the brightest ordinary vanilla lamp, so these
+# still read as stronger than anything the game ships, without being a light bar.
+EMISSIVE_INTENSITY = 150.0
 EMISSIVE_WHITE = {"R": 1.0, "G": 1.0, "B": 1.0, "A": 1.0}
 
 # And none of that does anything on a car headlight mesh, because M_HeadLight is
@@ -250,6 +252,117 @@ def beam_origin(facts):
     return {"X": float(extent["X"]) if extent else 0.0, "Y": 0.0, "Z": 0.0}
 
 
+# A headlight mesh is usually the whole front of the car in one piece -- the Zino
+# is 8.8cm deep and 70cm wide -- so one lamp in the middle is wrong twice over:
+# it lights from a place with no bulb in it, and it lights once where there are
+# two. Anything much wider than it is deep is a pair, and gets one beam per side.
+#
+# ponytail: the bulbs are at 0.6 of the half width. The mesh knows exactly where
+# they are and this does not -- that needs the vertices of the lamp sections, not
+# the bounding box -- so this is the knob to turn if the beams sit too far in or
+# too far out.
+PAIR_RATIO = 2.0
+BULB_SPREAD = 0.6
+
+
+def beam_places(facts):
+    """One position per bulb: at the lens face, and out at the lamps if it is a pair."""
+    bounds = (facts or {}).get("bounds") or {}
+    extent = bounds.get("BoxExtent")
+    if not extent:
+        return [{"X": 0.0, "Y": 0.0, "Z": 0.0}]
+    depth, width = float(extent["X"]), float(extent["Y"])
+    if width > depth * PAIR_RATIO:
+        offset = width * BULB_SPREAD
+        return [{"X": depth, "Y": -offset, "Z": 0.0},
+                {"X": depth, "Y": offset, "Z": 0.0}]
+    return [{"X": depth, "Y": 0.0, "Z": 0.0}]
+
+
+def scs_node_for(asset, template_index):
+    for index, export in enumerate(asset["Exports"], 1):
+        if not str(export.get("ObjectName")).startswith("SCS_Node"):
+            continue
+        for prop in export.get("Data") or []:
+            if isinstance(prop, dict) and prop["Name"] == "ComponentTemplate" \
+                    and prop["Value"] == template_index:
+                return index, export
+    return None, None
+
+
+def add_spotlights(asset, count):
+    """Make sure the actor has `count` spot lights, cloning the one it has.
+
+    A clone of a valid component is already correct about its class and its
+    dependency arrays -- same class, same template -- so only the identity has to
+    change: a fresh name, a fresh variable guid, and an SCS node pointing at the
+    new export rather than the old one.
+    """
+    lights = [(i, e) for i, e in enumerate(asset["Exports"], 1)
+              if "SpotLight" in str(e.get("ObjectName"))]
+    if not lights or count <= len(lights):
+        return [i for i, _ in lights][:count]
+
+    first_index, first = lights[0]
+    node_index, node = scs_node_for(asset, first_index)
+    if node is None:
+        return [i for i, _ in lights]
+    parent = next((e for e in asset["Exports"]
+                   if any(p["Name"] == "ChildNodes" and
+                          any(v["Value"] == node_index for v in p["Value"])
+                          for p in export_props(e))), None)
+    script = next((e for e in asset["Exports"]
+                   if "SimpleConstructionScript" in str(e.get("ObjectName"))), None)
+    if parent is None or script is None:
+        return [i for i, _ in lights]
+
+    made = [first_index]
+    for extra in range(1, count):
+        light = copy.deepcopy(first)
+        light["ObjectName"] = f"SpotLight{extra}_GEN_VARIABLE"
+        asset["Exports"].append(light)
+        light_index = len(asset["Exports"])
+
+        fresh = copy.deepcopy(node)
+        fresh["ObjectName"] = f"SCS_Node_SpotLight{extra}"
+        for prop in fresh.get("Data") or []:
+            if prop["Name"] == "ComponentTemplate":
+                prop["Value"] = light_index
+            elif prop["Name"] == "InternalVariableName":
+                prop["Value"] = f"SpotLight{extra}"
+            elif prop["Name"] == "VariableGuid":
+                for field in prop["Value"]:
+                    field["Value"] = f"{{7A19C4{extra:02d}-0000-0000-0000-00000000B17C}}"
+        deps = fresh.get("CreateBeforeSerializationDependencies") or []
+        fresh["CreateBeforeSerializationDependencies"] = \
+            [light_index if d == first_index else d for d in deps]
+        asset["Exports"].append(fresh)
+        node_ref = len(asset["Exports"])
+
+        for holder, field in ((parent, "ChildNodes"), (script, "AllNodes")):
+            for prop in export_props(holder):
+                if prop["Name"] != field:
+                    continue
+                entry = copy.deepcopy(prop["Value"][0])
+                entry["Name"] = str(len(prop["Value"]))
+                entry["Value"] = node_ref
+                prop["Value"].append(entry)
+            # Listing a child is not enough: a node also declares the children it
+            # has to build before it can be read, and the parent's own
+            # CreateBeforeSerializationDependencies is where that lives. Leave it
+            # out and the package is inconsistent and simply refuses to write.
+            holder.setdefault("CreateBeforeSerializationDependencies", []).append(node_ref)
+
+        register_names(asset, [light["ObjectName"], fresh["ObjectName"],
+                               f"SpotLight{extra}"])
+        made.append(light_index)
+    return made
+
+
+def export_props(export):
+    return [p for p in export.get("Data") or [] if isinstance(p, dict)]
+
+
 def set_emissive(control, slots):
     """Point the light control at the mesh slots that should glow."""
     for prop in control:
@@ -269,14 +382,24 @@ def set_emissive(control, slots):
     return control
 
 
-def light_up(asset, profile, aim=AIM, place=None, slots=None):
+def light_up(asset, profile, aim=AIM, places=None, slots=None):
     """Give this actor the working light setup. True if anything changed."""
     changed = False
-    for export in asset["Exports"]:
+    places = places or [{"X": 0.0, "Y": 0.0, "Z": 0.0}]
+    made = add_spotlights(asset, len(places))
+    at = {index: place for index, place in zip(made, places)}
+
+    for index, export in enumerate(asset["Exports"], 1):
         obj = str(export.get("ObjectName"))
+        if obj.startswith("SCS_Node"):
+            # The node that mounts a light is not the light. Matching loosely
+            # here overwrites SCS_Node_SpotLight1 with spot light properties and
+            # quietly produces a file that will not write at all.
+            continue
         if "SpotLight" in obj:
             keep = [p for p in export.get("Data") or []
                     if isinstance(p, dict) and p["Name"] == "RelativeLocation"]
+            place = at.get(index)
             if place is not None:
                 for prop in keep:
                     prop["Value"][0]["Value"].update(place)
@@ -332,10 +455,10 @@ def main(wanted):
         if facts and not any(m in facts["materials"] for m in LIGHT_MATERIALS):
             print(f"  {name}: no lamp material on {package.rsplit('/', 1)[-1]}, left dark")
             continue
-        place = beam_origin(facts)
+        places = beam_places(facts)
 
         slots = (facts or {}).get("lamp_slots") or []
-        if not light_up(asset, profile, place=place, slots=slots):
+        if not light_up(asset, profile, places=places, slots=slots):
             print(f"  {name}: no light components")
             continue
         override_lamp_materials(asset, slots, (facts or {}).get("slot_count") or 0)
@@ -344,8 +467,9 @@ def main(wanted):
         built = from_json(js, os.path.join(work, name + ".uasset"))
         for ext in (".uasset", ".uexp"):
             shutil.copy2(built[: -len(".uasset")] + ext, os.path.join(ACTORS, name + ext))
-        print(f"  {name}: beam at X={place['X']:.0f}, "
-              f"glows {[n for _, n in slots] or '(no slot)'}")
+        where = ", ".join("X{X:.0f} Y{Y:.0f}".format(**p) for p in places)
+        glow = ", ".join(n for _, n in slots) or "(no slot)"
+        print(f"  {name}: {len(places)} beam(s) at {where}; glows {glow}")
         done += 1
     print(f"\n{done} attachments now cast light")
     print("Pack with: modp.bat qxZap_satigt3_MoreAttachments_P")
@@ -372,9 +496,11 @@ def demo():
         {"ObjectName": "MTInteractable_GEN_VARIABLE", "Data": [
             {"Name": "bInteractbyActor", "Value": True},
             {"Name": "InteractionParams", "Value": []}]},
-        {"ObjectName": "StaticMesh_GEN_VARIABLE", "Data": [{"Name": "Intensity", "Value": 1.0}]}]}
+        {"ObjectName": "StaticMesh_GEN_VARIABLE", "Data": [{"Name": "Intensity", "Value": 1.0}]},
+        {"ObjectName": "SCS_Node_SpotLight1", "Data": [
+            {"Name": "InternalVariableName", "Value": "SpotLight1"}]}]}
 
-    assert light_up(asset, profile, place={"X": 12.0, "Y": 0.0, "Z": 0.0}) is True
+    assert light_up(asset, profile, places=[{"X": 12.0, "Y": 0.0, "Z": 0.0}]) is True
     spot = {p["Name"]: p.get("Value") for p in asset["Exports"][0]["Data"]}
     assert spot["Intensity"] == 200.0, "vanilla's own setting, not a guess"
     assert spot["RelativeRotation"][0]["Value"] == AIM, "the donor's aim is not ours"
@@ -407,9 +533,14 @@ def demo():
     assert got["LightIntensity"] == EMISSIVE_INTENSITY
     assert got["Net_LightColor"][0]["Value"] == EMISSIVE_WHITE
 
-    facts = {"bounds": {"BoxExtent": {"X": 8.8, "Y": 69.9, "Z": 9.6}}}
-    assert beam_origin(facts) == {"X": 8.8, "Y": 0.0, "Z": 0.0}
-    assert beam_origin(None) == {"X": 0.0, "Y": 0.0, "Z": 0.0}, "no mesh, no guess"
+    wide = {"bounds": {"BoxExtent": {"X": 8.8, "Y": 69.9, "Z": 9.6}}}
+    pair = beam_places(wide)
+    assert len(pair) == 2, "a full width headlight is two lamps, not one"
+    assert pair[0]["Y"] == -pair[1]["Y"] and pair[0]["Y"] < 0
+    assert pair[0]["X"] == 8.8, "both still sit at the lens face"
+    narrow = {"bounds": {"BoxExtent": {"X": 20.0, "Y": 20.0, "Z": 9.6}}}
+    assert len(beam_places(narrow)) == 1, "a single lamp stays single"
+    assert beam_places(None) == [{"X": 0.0, "Y": 0.0, "Z": 0.0}], "no mesh, no guess"
     assert spot["RelativeLocation"][0]["Value"]["X"] == 12.0,         "the light goes to the lens, not to the mesh's pivot correction"
     assert asset["Exports"][1]["Data"] == profile["MTLightControl"]
     inter = asset["Exports"][2]["Data"]
@@ -420,6 +551,8 @@ def demo():
     assert "ToggleLight" in asset["NameMap"], "an enum entry is a name, or it is dropped"
     assert "MTInteractionParams" in asset["NameMap"]
     assert asset["Exports"][3]["Data"][0]["Value"] == 1.0, "must not touch other exports"
+    node = asset["Exports"][4]
+    assert [p["Name"] for p in node["Data"]] == ["InternalVariableName"],         "the node that mounts a light is not the light"
     assert "Temperature" in asset["NameMap"], \
         "new properties need their names, or the write drops them"
     print("ok")
