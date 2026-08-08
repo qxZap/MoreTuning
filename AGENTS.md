@@ -267,6 +267,75 @@ sequential gears. Set it with `"type": "EatonFuller18"` on the entry in
 `tras_s.json`. The gear list has to match vanilla's layout for it: reverses, `N`,
 two crawlers, then eight L/H splits (23 entries, `DefaultGearIndex` 4).
 
+## MoreAttachments
+
+### Never reorder `Items_AttachmentPart`
+
+A saved vehicle stores its parts by **position** in that table, not by row name.
+Move a row and every row below it shifts, and existing builds come back wearing
+whatever slid into the slot. There is no warning and nothing in the file looks
+wrong afterwards.
+
+This bit twice in one session. Putting a winch row first shifted all 622 rows by
+one; lifting six headlights to index 35 shifted 587 rows by six. Moving them to
+the *end* is not a fix either — they were interleaved alphabetically, so pulling
+them out of the middle shifts everything after their old homes.
+
+Appending is safe, and `run.py` already appends. If a part is hard to find in the
+menu, that is a vendor or UI problem. `order.py` existed to move rows and was
+deleted for it.
+
+To check an ordering claim rather than trust one, read the row names out at each
+commit that touched the table and compare — positions, not contents.
+
+### An attachment actor, and what makes a lamp work
+
+An attachment is a `BlueprintGeneratedClass` actor with an SCS carrying
+`DefaultSceneRoot`, `Scene`, a `StaticMeshComponent`, a `SpotLightComponent`,
+`MTLightControlComponent` and `MTInteractableComponent`. All 585 carry all of it,
+because they all come from one template.
+
+What separates a working lamp from a dead one is **`InteractionParams`** on the
+interactable: `ToggleLight`, `ChangeLightMode`, `ChangeLightColor`. Without them
+a light cannot be switched, so it can only sit on — which is why every painted
+part used to glow. It is not `MTLightControlComponent.LightIntensity`; vanilla's
+own light attachments set nothing at all on that component.
+
+The donor to copy is the game's own, `Objects/VehicleAttachment/Light_01..15` —
+first party and already 0.7.19, so nothing to migrate. They differ a lot: 5 to
+200 lumens, `AttenuationRadius` unset to 1500. `Light_05` is the bright one and
+is what `LIGHT_PROFILE.json` is harvested from. `Light_01` reads as a glow
+because it sets no attenuation radius at all and falls back to 1000.
+
+Enum entries are FNames. `ToggleLight` has to reach the NameMap or the write
+drops the interactions silently — `reallights.names_in` collects enum and name
+property *values*, not just property names.
+
+### Mesh offset vs light offset
+
+Car part meshes are authored in **vehicle space** — a Zino headlight's geometry
+sits at X=199 because that is where it lives on the car. `run.py`'s
+`get_x_bounding` reads `ExtendedBounds.Origin` and the actor shifts the mesh
+component by `-origin` so the geometry lands on the attachment point.
+
+That offset must **not** be given to a light. A spot light is a point with no
+geometry to cancel, so the same number just moves the lamp two metres behind and
+half a metre under the car. They share a sentinel in the old templates and that
+was the bug. Mesh gets `-0.96961..3`, the lamp gets `-0.96971..3`, filled with
+the mesh's half depth so the beam starts at the lens face.
+
+`migrate_templates.py` re-derives templates from a *built* actor, whose offsets
+are one Neo spoiler's real numbers, so every migration silently ate the
+sentinels. It now puts them back — check they survive after any regeneration.
+
+### Which parts are lamps is a question for the mesh
+
+A mesh section painted `M_HeadLight` is a lamp; anything else is trim. That is
+how `Micky_Light_L` — a wheel arch cover with nothing but `M_Palette` — stays
+dark without being on a hand-kept list. `ACTOR_TEMPLATE_LIGHT.json` is picked on
+that basis at generation time, and `reallights.py` uses the same test when
+repairing built actors, so the two cannot drift.
+
 ## Conventions
 
 - Windows paths are absolute and machine-specific throughout. That is deliberate;
@@ -274,5 +343,8 @@ two crawlers, then eight L/H splits (23 entries, `DefaultGearIndex` 4).
 - Non-trivial scripts carry a `demo` self-check (`python rebase.py demo`,
   `RemoveReq/run.py demo`, `CarbonParts/run.py demo`). Run them before a build.
 - Back up a template before regenerating it (`*.pre719` here).
+- Anything that changes row order in a table players have already built against
+  is a breaking change to their saves, not a cosmetic one. Verify order against
+  an earlier commit rather than assuming a change was positional-safe.
 - Row tools take table names as arguments and default to their own list. None of
   them use `input.json`/`output.json` any more — that dance is gone.
