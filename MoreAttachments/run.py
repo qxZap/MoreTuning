@@ -99,6 +99,36 @@ def get_x_bounding(mesh_data):
 
     return "+0"
 
+# A mesh section painted with one of these is a lamp rather than trim. It is what
+# separates a headlight from a wheel arch cover that merely has "Light" in its
+# name, so the decision comes off the mesh instead of a hand kept list.
+LIGHT_MATERIALS = ("M_HeadLight",)
+
+
+def get_lens_bounding(mesh_data):
+    """Where a lamp's beam should start, or None if this mesh is not a lamp.
+
+    The light sits on the attachment point and is pushed forward by the mesh's
+    half depth, so it emits from the face of the lens rather than from inside the
+    housing. Deliberately not the mesh offset -- see make_new_actor.
+    """
+    materials = [entry.get("ObjectName") for entry in mesh_data.get("Imports", [])]
+    if not any(m in materials for m in LIGHT_MATERIALS):
+        return None
+
+    for export in mesh_data["Exports"]:
+        for row in export["Data"]:
+            if row.get("Name") != "ExtendedBounds":
+                continue
+            for subrow in row["Value"]:
+                for subsubrow in subrow["Value"]:
+                    if subsubrow["Name"] == "BoxExtent":
+                        extent = subsubrow["Value"]
+                        depth = extent["X"]
+                        return (0.0 if isinstance(depth, str) else float(depth), 0.0, 0.0)
+    return (0.0, 0.0, 0.0)
+
+
 def quick_copy(src, dst):
     shutil.copy(src, dst)
 
@@ -343,6 +373,9 @@ new_actor_template = load_file_from_path(NEW_ACTOR_PATH, required=True)
 NEW_ACTOR_PATH_NOCOLOR = "ACTOR_TEMPLATE_NOCOLOR.json"
 new_actor_template_nocolor = load_file_from_path(NEW_ACTOR_PATH_NOCOLOR, required=True)
 
+NEW_ACTOR_PATH_LIGHT = "ACTOR_TEMPLATE_LIGHT.json"
+new_actor_template_light = load_file_from_path(NEW_ACTOR_PATH_LIGHT, required=True)
+
 NEW_ACTOR_PATH_SINGLECOLOR = "ACTOR_TEMPLATE_SINGLE_COLOR.json"
 new_actor_template_singlecolor = load_file_from_path(NEW_ACTOR_PATH_SINGLECOLOR, required=True)
 
@@ -350,8 +383,8 @@ DOUBLE_COLOR_VEHICLES = "DoubleColorVehicles.json"
 double_color_vehicles_raw = load_json_from_path(DOUBLE_COLOR_VEHICLES, required=True)
 deouble_color_vehicles = double_color_vehicles_raw.get('vehicles')
 
-def make_new_actor(path_base, actor_name, mesh_name, mesh_path, mesh_bounding, colorable_actor=True):
-    
+def make_new_actor(path_base, actor_name, mesh_name, mesh_path, mesh_bounding, colorable_actor=True, lens_bounding=None):
+
     new_actor = copy.deepcopy(new_actor_template_nocolor)
     if colorable_actor:
         new_actor = copy.deepcopy(new_actor_template)
@@ -365,6 +398,11 @@ def make_new_actor(path_base, actor_name, mesh_name, mesh_path, mesh_bounding, c
         if from_vehicle:
             if from_vehicle in deouble_color_vehicles:
                 new_actor = copy.deepcopy(new_actor_template_singlecolor)
+
+    # A mesh with a lamp material gets the template whose spot light is set up
+    # and switchable. Everything else keeps a dark light, or it just sits lit.
+    if lens_bounding is not None:
+        new_actor = copy.deepcopy(new_actor_template_light)
 
     new_actor = new_actor.replace("Attachment_Neo_RearSpoiler_01", actor_name)
     new_actor = new_actor.replace("/Game/Cars/Models/Neo/RearSpoiler_01", mesh_path)
@@ -399,6 +437,16 @@ def make_new_actor(path_base, actor_name, mesh_name, mesh_path, mesh_bounding, c
     new_actor = new_actor.replace("-0.96961", str(x))
     new_actor = new_actor.replace("-0.96962", str(y))
     new_actor = new_actor.replace("-0.96963", str(z))
+
+    # The lamp gets its own offset. It must NOT reuse the mesh's: that one exists
+    # to cancel the part's authored position so the geometry lands on the
+    # attachment point, and a light has no geometry to cancel -- reusing it puts
+    # the lamp behind and under the vehicle. The light belongs on the attachment
+    # point, pushed forward to the face of the lens.
+    lens = lens_bounding or (0.0, 0.0, 0.0)
+    new_actor = new_actor.replace("-0.96971", str(float(lens[0])))
+    new_actor = new_actor.replace("-0.96972", str(float(lens[1])))
+    new_actor = new_actor.replace("-0.96973", str(float(lens[2])))
 
     data = json.loads(new_actor)
     data["FolderName"] = path_base+"/"+actor_name
@@ -768,7 +816,12 @@ for aero_attachment in aero_attachments:
         # the reference every other tool reads from.
         remove_file_if_exists(mesh_json_path)
 
-        new_actor = make_new_actor('/Game/Objects/MoreAttachments', name_part_id, mesh_id, mesh_path, mesh_bounding, colorable_actor=colorable_actor)
+        # Is this part a lamp? The mesh says so, by carrying a light material.
+        # If it is, it gets the light template and a lens offset; if not, nothing
+        # changes for it.
+        lens_bounding = get_lens_bounding(mesh_data)
+
+        new_actor = make_new_actor('/Game/Objects/MoreAttachments', name_part_id, mesh_id, mesh_path, mesh_bounding, colorable_actor=colorable_actor, lens_bounding=lens_bounding)
         
         save_at_path_and_convert_clean(new_actor, new_actor_path_json)
         # write_json_at_path(new_actor, f"../qxZap_satigt3_MoreAttachments_P/MotorTown/Content/Objects/MoreAttachments/{name_part_id}.json")

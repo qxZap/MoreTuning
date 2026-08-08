@@ -1514,7 +1514,7 @@
      "PropertyTagFlags": "None",
      "PropertyTypeName": null,
      "PropertyTagExtensions": "NoExtension",
-     "Value": 0.0
+     "Value": "+0"
     },
     {
      "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
@@ -1553,9 +1553,9 @@
        "PropertyTagExtensions": "NoExtension",
        "Value": {
         "$type": "UAssetAPI.UnrealTypes.FVector, UAssetAPI",
-        "X": 131.33297729492188,
-        "Y": 1.9073486328125e-06,
-        "Z": -126.6209716796875
+        "X": -0.96971,
+        "Y": -0.96972,
+        "Z": -0.96973
        }
       }
      ]
@@ -2164,9 +2164,9 @@
        "PropertyTagExtensions": "NoExtension",
        "Value": {
         "$type": "UAssetAPI.UnrealTypes.FVector, UAssetAPI",
-        "X": 131.33297729492188,
-        "Y": 1.9073486328125e-06,
-        "Z": -126.6209716796875
+        "X": -0.96961,
+        "Y": -0.96962,
+        "Z": -0.96963
        }
       }
      ]
