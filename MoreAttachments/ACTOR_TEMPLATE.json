@@ -1514,7 +1514,7 @@
      "PropertyTagFlags": "None",
      "PropertyTypeName": null,
      "PropertyTagExtensions": "NoExtension",
-     "Value": 50.0
+     "Value": 0.0
     },
     {
      "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
