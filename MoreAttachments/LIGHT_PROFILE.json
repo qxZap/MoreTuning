@@ -341,6 +341,51 @@
  ],
  "MTLightControl": [
   {
+   "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
+   "StructType": "LinearColor",
+   "SerializeNone": true,
+   "StructGUID": "{00000000-0000-0000-0000-000000000000}",
+   "SerializationControl": "NoExtension",
+   "Operation": "None",
+   "Name": "Net_LightColor",
+   "ArrayIndex": 0,
+   "PropertyGuid": null,
+   "IsZero": false,
+   "PropertyTagFlags": "None",
+   "PropertyTypeName": null,
+   "PropertyTagExtensions": "NoExtension",
+   "Value": [
+    {
+     "$type": "UAssetAPI.PropertyTypes.Structs.LinearColorPropertyData, UAssetAPI",
+     "Name": "Net_LightColor",
+     "ArrayIndex": 0,
+     "PropertyGuid": null,
+     "IsZero": false,
+     "PropertyTagFlags": "None",
+     "PropertyTypeName": null,
+     "PropertyTagExtensions": "NoExtension",
+     "Value": {
+      "$type": "UAssetAPI.UnrealTypes.FLinearColor, UAssetAPI",
+      "R": "+0",
+      "G": "+0",
+      "B": 1.0,
+      "A": 1.0
+     }
+    }
+   ]
+  },
+  {
+   "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
+   "Name": "LightIntensity",
+   "ArrayIndex": 0,
+   "PropertyGuid": null,
+   "IsZero": false,
+   "PropertyTagFlags": "None",
+   "PropertyTypeName": null,
+   "PropertyTagExtensions": "NoExtension",
+   "Value": 2000.0
+  },
+  {
    "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
    "Name": "FadingSpeed",
    "ArrayIndex": 0,
@@ -349,7 +394,42 @@
    "PropertyTagFlags": "None",
    "PropertyTypeName": null,
    "PropertyTagExtensions": "NoExtension",
-   "Value": 30.0
+   "Value": 100.0
+  },
+  {
+   "$type": "UAssetAPI.PropertyTypes.Objects.ArrayPropertyData, UAssetAPI",
+   "ArrayType": "NameProperty",
+   "Name": "TargetMaterialSlotNames",
+   "ArrayIndex": 0,
+   "PropertyGuid": null,
+   "IsZero": false,
+   "PropertyTagFlags": "None",
+   "PropertyTypeName": null,
+   "PropertyTagExtensions": "NoExtension",
+   "Value": [
+    {
+     "$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI",
+     "Name": "0",
+     "ArrayIndex": 0,
+     "PropertyGuid": null,
+     "IsZero": false,
+     "PropertyTagFlags": "None",
+     "PropertyTypeName": null,
+     "PropertyTagExtensions": "NoExtension",
+     "Value": "Light_01"
+    },
+    {
+     "$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI",
+     "Name": "1",
+     "ArrayIndex": 0,
+     "PropertyGuid": null,
+     "IsZero": false,
+     "PropertyTagFlags": "None",
+     "PropertyTypeName": null,
+     "PropertyTagExtensions": "NoExtension",
+     "Value": "LightCover"
+    }
+   ]
   }
  ]
 }

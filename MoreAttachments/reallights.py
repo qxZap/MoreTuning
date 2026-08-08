@@ -63,6 +63,18 @@ VANILLA = os.path.join(HERE, "..", "..", "Output", "Exports", "MotorTown", "Cont
 # beam -- which is how Micky_Light_L, a wheel arch trim piece, gets left alone.
 LIGHT_MATERIALS = ("M_HeadLight",)
 
+# A beam alone leaves the lamp itself dark. MTLightControlComponent drives the
+# glow, and the two fields that matter are TargetMaterialSlotNames -- which mesh
+# material slots light up -- and LightIntensity, which is the *emissive*
+# brightness, nothing to do with the spot light's lumens. Vanilla Light_05 sets
+# neither, which is why it throws a beam out of an unlit housing;
+# Light_09_Blinker sets both, and is where the wiring here is harvested from.
+#
+# ponytail: 2000 is the blinker's own figure and reads as a lens at night. The
+# knob to turn if a headlight glows like a torch pointed at you.
+EMISSIVE_INTENSITY = 2000.0
+EMISSIVE_WHITE = {"R": 1.0, "G": 1.0, "B": 1.0, "A": 1.0}
+
 # Colour is left alone: the profile carries a colour temperature rather than an
 # RGB, and ChangeLightColor lets the player pick anyway.
 
@@ -126,15 +138,42 @@ def extended_bounds(mesh):
     return found
 
 
+def lamp_slots(mesh):
+    """Names of the mesh's material slots that are lamps rather than bodywork.
+
+    A headlight mesh names its slots -- Palette, HeadLight, HeadLight_HighBeam --
+    and only the ones wearing a light material should glow. Reading them off the
+    mesh means a lamp with four bulbs lights four, and one with a single bulb
+    lights one, without anybody maintaining a list.
+    """
+    def label(index):
+        if isinstance(index, int) and index < 0:
+            return mesh["Imports"][-index - 1]["ObjectName"]
+        return index
+
+    slots = []
+    for export in mesh["Exports"]:
+        for prop in export.get("Data") or []:
+            if not isinstance(prop, dict) or prop["Name"] != "StaticMaterials":
+                continue
+            for entry in prop["Value"]:
+                fields = {f["Name"]: f.get("Value") for f in entry["Value"]
+                          if isinstance(f, dict)}
+                if label(fields.get("MaterialInterface")) in LIGHT_MATERIALS:
+                    slots.append(fields.get("MaterialSlotName"))
+    return [s for s in slots if s]
+
+
 def mesh_facts(package, work):
-    """Bounds and materials of the part mesh behind an attachment."""
+    """Bounds, materials and lamp slots of the part mesh behind an attachment."""
     path = os.path.join(VANILLA, *package.replace("/Game/", "").split("/")) + ".uasset"
     if not os.path.isfile(path):
         return None
     mesh = json.load(open(to_json(path, os.path.join(work, "mesh.json")), encoding="utf-8"))
     return {"bounds": extended_bounds(mesh),
             "materials": [i["ObjectName"] for i in mesh["Imports"]
-                          if i.get("ClassName") in ("MaterialInstanceConstant", "Material")]}
+                          if i.get("ClassName") in ("MaterialInstanceConstant", "Material")],
+            "lamp_slots": lamp_slots(mesh)}
 
 
 def beam_origin(facts):
@@ -143,7 +182,26 @@ def beam_origin(facts):
     return {"X": float(extent["X"]) if extent else 0.0, "Y": 0.0, "Z": 0.0}
 
 
-def light_up(asset, profile, aim=AIM, place=None):
+def set_emissive(control, slots):
+    """Point the light control at the mesh slots that should glow."""
+    for prop in control:
+        if prop["Name"] == "TargetMaterialSlotNames":
+            template = copy.deepcopy(prop["Value"][0])
+            fresh = []
+            for index, slot in enumerate(slots):
+                entry = copy.deepcopy(template)
+                entry["Name"] = str(index)
+                entry["Value"] = slot
+                fresh.append(entry)
+            prop["Value"] = fresh
+        elif prop["Name"] == "LightIntensity":
+            prop["Value"] = EMISSIVE_INTENSITY
+        elif prop["Name"] == "Net_LightColor":
+            prop["Value"][0]["Value"].update(EMISSIVE_WHITE)
+    return control
+
+
+def light_up(asset, profile, aim=AIM, place=None, slots=None):
     """Give this actor the working light setup. True if anything changed."""
     changed = False
     for export in asset["Exports"]:
@@ -161,7 +219,14 @@ def light_up(asset, profile, aim=AIM, place=None):
             export["Data"] = keep + fresh
             changed = True
         elif "MTLightControl" in obj:
-            export["Data"] = copy.deepcopy(profile["MTLightControl"])
+            control = copy.deepcopy(profile["MTLightControl"])
+            if slots:
+                set_emissive(control, slots)
+            else:
+                # Nothing to glow, so do not claim a slot that is not there.
+                control = [p for p in control
+                           if p["Name"] != "TargetMaterialSlotNames"]
+            export["Data"] = control
             changed = True
         elif "MTInteractable" in obj:
             # Without this the lamp is wired but unreachable: there is no
@@ -173,7 +238,9 @@ def light_up(asset, profile, aim=AIM, place=None):
             export["Data"] = keep + copy.deepcopy(profile["MTInteractable"])
             changed = True
     if changed:
-        register_names(asset, names_in(profile))
+        # The slot names come off the mesh, not out of the profile, so they need
+        # registering too or the write silently produces nothing.
+        register_names(asset, names_in(profile) + list(slots or []))
     return changed
 
 
@@ -197,7 +264,8 @@ def main(wanted):
             continue
         place = beam_origin(facts)
 
-        if not light_up(asset, profile, place=place):
+        slots = (facts or {}).get("lamp_slots") or []
+        if not light_up(asset, profile, place=place, slots=slots):
             print(f"  {name}: no light components")
             continue
         with open(js, "w", encoding="utf-8") as f:
@@ -205,7 +273,7 @@ def main(wanted):
         built = from_json(js, os.path.join(work, name + ".uasset"))
         for ext in (".uasset", ".uexp"):
             shutil.copy2(built[: -len(".uasset")] + ext, os.path.join(ACTORS, name + ext))
-        print(f"  {name}: lit, beam at X={place['X']:.0f}")
+        print(f"  {name}: lit, beam at X={place['X']:.0f}, glows {slots or '(no slot)'}")
         done += 1
     print(f"\n{done} attachments now cast light")
     print("Pack with: modp.bat qxZap_satigt3_MoreAttachments_P")
@@ -238,6 +306,26 @@ def demo():
     spot = {p["Name"]: p.get("Value") for p in asset["Exports"][0]["Data"]}
     assert spot["Intensity"] == 200.0, "vanilla's own setting, not a guess"
     assert spot["RelativeRotation"][0]["Value"] == AIM, "the donor's aim is not ours"
+
+    mesh = {"Imports": [{"ObjectName": "M_Palette"}, {"ObjectName": "M_HeadLight"}],
+            "Exports": [{"Data": [{"Name": "StaticMaterials", "Value": [
+                {"Value": [{"Name": "MaterialInterface", "Value": -1},
+                           {"Name": "MaterialSlotName", "Value": "Palette"}]},
+                {"Value": [{"Name": "MaterialInterface", "Value": -2},
+                           {"Name": "MaterialSlotName", "Value": "HeadLight"}]},
+                {"Value": [{"Name": "MaterialInterface", "Value": -2},
+                           {"Name": "MaterialSlotName", "Value": "HeadLight_HighBeam"}]}]}]}]}
+    assert lamp_slots(mesh) == ["HeadLight", "HeadLight_HighBeam"],         "only slots wearing a lamp material glow, and every one of them does"
+
+    control = [{"Name": "TargetMaterialSlotNames", "Value": [{"Name": "0", "Value": "Light_01"}]},
+               {"Name": "LightIntensity", "Value": 1.0},
+               {"Name": "Net_LightColor", "Value": [{"Value": {"R": 0.0}}]}]
+    set_emissive(control, ["A", "B", "C"])
+    got = {p["Name"]: p["Value"] for p in control}
+    assert [e["Value"] for e in got["TargetMaterialSlotNames"]] == ["A", "B", "C"]
+    assert [e["Name"] for e in got["TargetMaterialSlotNames"]] == ["0", "1", "2"]
+    assert got["LightIntensity"] == EMISSIVE_INTENSITY
+    assert got["Net_LightColor"][0]["Value"] == EMISSIVE_WHITE
 
     facts = {"bounds": {"BoxExtent": {"X": 8.8, "Y": 69.9, "Z": 9.6}}}
     assert beam_origin(facts) == {"X": 8.8, "Y": 0.0, "Z": 0.0}
