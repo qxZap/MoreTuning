@@ -34,3 +34,19 @@ TODO:
 new attachments into the items path
 
 actor sets! in place?? whjere???
+Never reorder Items_AttachmentPart
+----------------------------------
+A saved vehicle refers to its parts by position in that table, not by row name.
+Move a row and every row below it shifts, and existing builds silently come back
+wearing whatever slid into the slot -- a truck that had a sunvisor turns up with
+something else on it.
+
+Learned the hard way: six headlights were lifted to index 35 to make them easier
+to find in the menu, which pushed 587 rows down by six. Moving them to the *end*
+is not a fix either -- they were originally interleaved alphabetically, so
+pulling them out of the middle shifts 134 rows just the same. The only safe
+order is the one already there.
+
+New rows are fine. run.py appends, and appending changes nobody's index. If a
+part needs to be easier to find, that is a vendor or UI problem, not a table
+order problem.
