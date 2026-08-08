@@ -5,22 +5,21 @@
     python reallights.py demo
 
 Our attachments all carry a SpotLightComponent and an MTLightControlComponent,
-but only the light was ever configured, and badly -- 50 lumens with no
-AttenuationRadius, so it fell back to the 1000 unit default and washed a great
-unaimed pool of light over everything. lightsout.py turned all of that off.
+but the light was the only part ever configured, and it was never switchable, so
+it just sat on. lightsout.py turned all of that off. This turns it back on for
+the few that are meant to be lamps.
 
-This turns it back on for the few that are meant to be lamps, using the game's
-own light attachment as the donor -- `Objects/VehicleAttachment/Light_01`, which
-is first-party and already 0.7.19, so there is nothing to guess and nothing to
-migrate.
+The donor is the game's own, `Objects/VehicleAttachment/Light_05` -- first party
+and already 0.7.19, so there is nothing to guess and nothing to migrate. Of the
+vanilla light attachments it is the bright one: 200 lumens over a 1500 unit
+attenuation radius at 5000K, where Light_01 is 50 lumens with no radius set at
+all and reads as a glow rather than a beam.
 
-The interesting part is what the difference actually was. Vanilla's spot light
-is set exactly the way ours already were: 50 lumens, 50 degree cone, 4000K, no
-attenuation radius. Its MTLightControlComponent has no properties at all. The
-one thing it has that ours did not is `InteractionParams` -- ToggleLight,
-ChangeLightMode, ChangeLightColor. Without those the lamp is not switchable, so
-it can only sit there lit, which is exactly what was wrong with the painted
-parts before lightsout.py turned them off.
+What was actually missing all along was `InteractionParams` -- ToggleLight,
+ChangeLightMode, ChangeLightColor. A light without those cannot be switched, so
+it can only sit there lit, which is also the whole story behind the painted
+parts: they were built from a template carrying a lamp's settings and no way to
+turn it off.
 
 `LIGHT_PROFILE.json` holds the harvested settings, so retuning is a data edit.
 """
@@ -43,9 +42,15 @@ HEADLIGHTS = ["Attachment_CoraHeadlight_01", "Attachment_CoraHeadlight_02",
               "Attachment_ZinoHeadlight_01", "Attachment_ZinoHeadlight_02",
               "Attachment_ZinoHeadlight_03", "Attachment_Micky_Light"]
 
-# No aim and no colour override: vanilla sets neither. The light points down its
-# component's own forward axis and takes its colour from a 4000K temperature,
-# and ChangeLightColor lets the player pick anyway.
+# Our attachment template faces its meshes the opposite way to the vanilla light
+# attachments, so an unrotated beam shines back into the cab instead of down the
+# road. Half a turn puts it out the front. Vanilla aims its own lights the same
+# way -- Light_07 carries a 10 degree pitch -- so this is the intended knob, and
+# it is the one to touch if a beam still points somewhere silly.
+AIM = {"Pitch": 0.0, "Yaw": 180.0, "Roll": 0.0}
+
+# Colour is left alone: the profile carries a colour temperature rather than an
+# RGB, and ChangeLightColor lets the player pick anyway.
 
 
 # An enum entry and an FName are stored as names, not as text, so "ToggleLight"
@@ -74,7 +79,7 @@ def names_in(value):
     return out
 
 
-def light_up(asset, profile):
+def light_up(asset, profile, aim=AIM):
     """Give this actor the working light setup. True if anything changed."""
     changed = False
     for export in asset["Exports"]:
@@ -83,7 +88,11 @@ def light_up(asset, profile):
             # Placement is per attachment; the beam itself comes from vanilla.
             keep = [p for p in export.get("Data") or []
                     if isinstance(p, dict) and p["Name"] == "RelativeLocation"]
-            export["Data"] = keep + copy.deepcopy(profile["SpotLight"])
+            fresh = copy.deepcopy(profile["SpotLight"])
+            for prop in fresh:
+                if prop["Name"] == "RelativeRotation":
+                    prop["Value"][0]["Value"].update(aim)
+            export["Data"] = keep + fresh
             changed = True
         elif "MTLightControl" in obj:
             export["Data"] = copy.deepcopy(profile["MTLightControl"])
@@ -131,8 +140,10 @@ def main(wanted):
 def demo():
     profile = {
         "SpotLight": [
-            {"Name": "Intensity", "Value": 50.0},
-            {"Name": "Temperature", "Value": 4000.0}],
+            {"Name": "Intensity", "Value": 200.0},
+            {"Name": "Temperature", "Value": 5000.0},
+            {"Name": "RelativeRotation", "Value": [
+                {"Value": {"Pitch": 10.0, "Yaw": 0.0, "Roll": 0.0}}]}],
         "MTInteractable": [{"Name": "InteractionParams", "Value": [
             {"StructType": "MTInteractionParams", "Name": "0", "Value": [
                 {"$type": "...EnumPropertyData, UAssetAPI", "Name": "InteractionType",
@@ -151,9 +162,10 @@ def demo():
 
     assert light_up(asset, profile) is True
     spot = {p["Name"]: p.get("Value") for p in asset["Exports"][0]["Data"]}
-    assert spot["Intensity"] == 50.0, "vanilla's own setting, not a guess"
+    assert spot["Intensity"] == 200.0, "vanilla's own setting, not a guess"
+    assert spot["RelativeRotation"][0]["Value"] == AIM,         "the donor's aim must be replaced by ours, or the beam faces the cab"
     assert spot["RelativeLocation"][0]["Value"]["X"] == 7.0, "placement must survive"
-    assert asset["Exports"][1]["Data"] == [], "vanilla sets nothing on the light control"
+    assert asset["Exports"][1]["Data"] == profile["MTLightControl"]
     inter = asset["Exports"][2]["Data"]
     kinds = [f["Value"] for p in inter if p["Name"] == "InteractionParams"
              for st in p["Value"] for f in st["Value"] if f["Name"] == "InteractionType"]
