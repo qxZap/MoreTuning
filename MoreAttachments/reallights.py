@@ -42,12 +42,26 @@ HEADLIGHTS = ["Attachment_CoraHeadlight_01", "Attachment_CoraHeadlight_02",
               "Attachment_ZinoHeadlight_01", "Attachment_ZinoHeadlight_02",
               "Attachment_ZinoHeadlight_03", "Attachment_Micky_Light"]
 
-# Our attachment template faces its meshes the opposite way to the vanilla light
-# attachments, so an unrotated beam shines back into the cab instead of down the
-# road. Half a turn puts it out the front. Vanilla aims its own lights the same
-# way -- Light_07 carries a 10 degree pitch -- so this is the intended knob, and
-# it is the one to touch if a beam still points somewhere silly.
-AIM = {"Pitch": 0.0, "Yaw": 180.0, "Roll": 0.0}
+# Square to the attachment, which points down the road once the beam is actually
+# where the lamp is. The half turn tried before was compensating for the light
+# being in the wrong place, not for it facing the wrong way.
+AIM = {"Pitch": 0.0, "Yaw": 0.0, "Roll": 0.0}
+
+# A part mesh is authored in vehicle space -- a Zino headlight's geometry sits at
+# X=199 because that is where it lives on the car -- so the actor shifts the mesh
+# component back by that origin to land it on the attachment point. run.py works
+# this out with get_x_bounding and it is right for a mesh.
+#
+# It is wrong for a light. A spot light is a point with no geometry to drag back,
+# so the same offset does not correct anything, it just moves the lamp two metres
+# behind the car and half a metre down -- under the middle of the vehicle, which
+# is exactly where it was showing up. The light belongs at the actor origin,
+# pushed forward to the face of the lamp so the beam starts at the lens.
+VANILLA = os.path.join(HERE, "..", "..", "Output", "Exports", "MotorTown", "Content")
+
+# The material that says "this part of the mesh is a lamp". No M_HeadLight, no
+# beam -- which is how Micky_Light_L, a wheel arch trim piece, gets left alone.
+LIGHT_MATERIALS = ("M_HeadLight",)
 
 # Colour is left alone: the profile carries a colour temperature rather than an
 # RGB, and ChangeLightColor lets the player pick anyway.
@@ -79,15 +93,67 @@ def names_in(value):
     return out
 
 
-def light_up(asset, profile, aim=AIM):
+def mesh_package(asset):
+    """The car part this attachment is built from."""
+    for entry in asset["Imports"]:
+        name = str(entry.get("ObjectName"))
+        if name.startswith("/Game/Cars/"):
+            return name
+    return None
+
+
+def extended_bounds(mesh):
+    """The mesh's own origin and half-size, the same field run.py reads."""
+    found = {}
+
+    def walk(node):
+        if isinstance(node, dict):
+            value = node.get("Value")
+            if node.get("Name") in ("Origin", "BoxExtent") and isinstance(value, dict) \
+                    and "X" in value:
+                found[node["Name"]] = {k: 0.0 if isinstance(value[k], str) else float(value[k])
+                                       for k in "XYZ"}
+            else:
+                walk(value)
+        elif isinstance(node, list):
+            for item in node:
+                walk(item)
+
+    for export in mesh["Exports"]:
+        for row in export.get("Data") or []:
+            if isinstance(row, dict) and row.get("Name") == "ExtendedBounds":
+                walk(row["Value"])
+    return found
+
+
+def mesh_facts(package, work):
+    """Bounds and materials of the part mesh behind an attachment."""
+    path = os.path.join(VANILLA, *package.replace("/Game/", "").split("/")) + ".uasset"
+    if not os.path.isfile(path):
+        return None
+    mesh = json.load(open(to_json(path, os.path.join(work, "mesh.json")), encoding="utf-8"))
+    return {"bounds": extended_bounds(mesh),
+            "materials": [i["ObjectName"] for i in mesh["Imports"]
+                          if i.get("ClassName") in ("MaterialInstanceConstant", "Material")]}
+
+
+def beam_origin(facts):
+    """Where the light itself goes: on the attachment point, forward to the lens."""
+    extent = (facts or {}).get("bounds", {}).get("BoxExtent")
+    return {"X": float(extent["X"]) if extent else 0.0, "Y": 0.0, "Z": 0.0}
+
+
+def light_up(asset, profile, aim=AIM, place=None):
     """Give this actor the working light setup. True if anything changed."""
     changed = False
     for export in asset["Exports"]:
         obj = str(export.get("ObjectName"))
         if "SpotLight" in obj:
-            # Placement is per attachment; the beam itself comes from vanilla.
             keep = [p for p in export.get("Data") or []
                     if isinstance(p, dict) and p["Name"] == "RelativeLocation"]
+            if place is not None:
+                for prop in keep:
+                    prop["Value"][0]["Value"].update(place)
             fresh = copy.deepcopy(profile["SpotLight"])
             for prop in fresh:
                 if prop["Name"] == "RelativeRotation":
@@ -123,7 +189,15 @@ def main(wanted):
             continue
         js = to_json(src, os.path.join(work, name + ".json"))
         asset = json.load(open(js, encoding="utf-8"))
-        if not light_up(asset, profile):
+
+        package = mesh_package(asset)
+        facts = mesh_facts(package, work) if package else None
+        if facts and not any(m in facts["materials"] for m in LIGHT_MATERIALS):
+            print(f"  {name}: no lamp material on {package.rsplit('/', 1)[-1]}, left dark")
+            continue
+        place = beam_origin(facts)
+
+        if not light_up(asset, profile, place=place):
             print(f"  {name}: no light components")
             continue
         with open(js, "w", encoding="utf-8") as f:
@@ -131,7 +205,7 @@ def main(wanted):
         built = from_json(js, os.path.join(work, name + ".uasset"))
         for ext in (".uasset", ".uexp"):
             shutil.copy2(built[: -len(".uasset")] + ext, os.path.join(ACTORS, name + ext))
-        print(f"  {name}: lit")
+        print(f"  {name}: lit, beam at X={place['X']:.0f}")
         done += 1
     print(f"\n{done} attachments now cast light")
     print("Pack with: modp.bat qxZap_satigt3_MoreAttachments_P")
@@ -160,11 +234,15 @@ def demo():
             {"Name": "InteractionParams", "Value": []}]},
         {"ObjectName": "StaticMesh_GEN_VARIABLE", "Data": [{"Name": "Intensity", "Value": 1.0}]}]}
 
-    assert light_up(asset, profile) is True
+    assert light_up(asset, profile, place={"X": 12.0, "Y": 0.0, "Z": 0.0}) is True
     spot = {p["Name"]: p.get("Value") for p in asset["Exports"][0]["Data"]}
     assert spot["Intensity"] == 200.0, "vanilla's own setting, not a guess"
-    assert spot["RelativeRotation"][0]["Value"] == AIM,         "the donor's aim must be replaced by ours, or the beam faces the cab"
-    assert spot["RelativeLocation"][0]["Value"]["X"] == 7.0, "placement must survive"
+    assert spot["RelativeRotation"][0]["Value"] == AIM, "the donor's aim is not ours"
+
+    facts = {"bounds": {"BoxExtent": {"X": 8.8, "Y": 69.9, "Z": 9.6}}}
+    assert beam_origin(facts) == {"X": 8.8, "Y": 0.0, "Z": 0.0}
+    assert beam_origin(None) == {"X": 0.0, "Y": 0.0, "Z": 0.0}, "no mesh, no guess"
+    assert spot["RelativeLocation"][0]["Value"]["X"] == 12.0,         "the light goes to the lens, not to the mesh's pivot correction"
     assert asset["Exports"][1]["Data"] == profile["MTLightControl"]
     inter = asset["Exports"][2]["Data"]
     kinds = [f["Value"] for p in inter if p["Name"] == "InteractionParams"
