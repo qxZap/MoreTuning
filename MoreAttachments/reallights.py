@@ -75,6 +75,15 @@ LIGHT_MATERIALS = ("M_HeadLight",)
 EMISSIVE_INTENSITY = 2000.0
 EMISSIVE_WHITE = {"R": 1.0, "G": 1.0, "B": 1.0, "A": 1.0}
 
+# And none of that does anything on a car headlight mesh, because M_HeadLight is
+# the *vehicle's* headlight material -- the car's own light system drives it, and
+# MTLightControlComponent has no handle on it. Vanilla lamp attachments use a
+# different material for exactly this reason. M_AttachmentLight exposes
+# "Light Color", "LightIntensity" and "MI Light Intensity", which is precisely
+# what the light control writes, so the lamp slots are overridden with it.
+ATTACHMENT_LIGHT_PACKAGE = "/Game/Cars/Materials/M_AttachmentLight"
+ATTACHMENT_LIGHT = "M_AttachmentLight"
+
 # Colour is left alone: the profile carries a colour temperature rather than an
 # RGB, and ChangeLightColor lets the player pick anyway.
 
@@ -156,12 +165,66 @@ def lamp_slots(mesh):
         for prop in export.get("Data") or []:
             if not isinstance(prop, dict) or prop["Name"] != "StaticMaterials":
                 continue
-            for entry in prop["Value"]:
+            for index, entry in enumerate(prop["Value"]):
                 fields = {f["Name"]: f.get("Value") for f in entry["Value"]
                           if isinstance(f, dict)}
-                if label(fields.get("MaterialInterface")) in LIGHT_MATERIALS:
-                    slots.append(fields.get("MaterialSlotName"))
-    return [s for s in slots if s]
+                name = fields.get("MaterialSlotName")
+                if name and label(fields.get("MaterialInterface")) in LIGHT_MATERIALS:
+                    slots.append((index, name))
+    return slots
+
+
+def import_material(asset):
+    """Add M_AttachmentLight to the imports, returning its link. Idempotent."""
+    for index, entry in enumerate(asset["Imports"], 1):
+        if entry.get("ObjectName") == ATTACHMENT_LIGHT:
+            return -index
+    package = None
+    for index, entry in enumerate(asset["Imports"], 1):
+        if entry.get("ObjectName") == ATTACHMENT_LIGHT_PACKAGE:
+            package = -index
+    if package is None:
+        asset["Imports"].append({
+            "$type": "UAssetAPI.Import, UAssetAPI", "ObjectName": ATTACHMENT_LIGHT_PACKAGE,
+            "OuterIndex": 0, "ClassPackage": "/Script/CoreUObject", "ClassName": "Package",
+            "PackageName": None, "bImportOptional": False})
+        package = -len(asset["Imports"])
+    asset["Imports"].append({
+        "$type": "UAssetAPI.Import, UAssetAPI", "ObjectName": ATTACHMENT_LIGHT,
+        "OuterIndex": package, "ClassPackage": "/Script/Engine", "ClassName": "Material",
+        "PackageName": None, "bImportOptional": False})
+    return -len(asset["Imports"])
+
+
+def override_lamp_materials(asset, slots, total):
+    """Swap the lamp slots to M_AttachmentLight, leaving the bodywork alone.
+
+    OverrideMaterials is positional: entry i replaces slot i, and a null entry
+    means "keep whatever the mesh has". So the palette and the glass are left
+    null and only the slots that are lamps get repointed.
+    """
+    mesh = next((e for e in asset["Exports"]
+                 if "Mesh_GEN" in str(e.get("ObjectName"))), None)
+    if mesh is None or not slots:
+        return None
+    link = import_material(asset)
+    entry = lambda name, value: {
+        "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+        "Name": name, "ArrayIndex": 0, "PropertyGuid": None, "IsZero": value == 0,
+        "PropertyTagFlags": "None", "PropertyTypeName": None,
+        "PropertyTagExtensions": "NoExtension", "Value": value}
+    lamp = {index for index, _ in slots}
+    values = [entry(str(i), link if i in lamp else 0) for i in range(total)]
+
+    mesh["Data"] = [p for p in mesh.get("Data") or []
+                    if not (isinstance(p, dict) and p["Name"] == "OverrideMaterials")]
+    mesh["Data"].append({
+        "$type": "UAssetAPI.PropertyTypes.Objects.ArrayPropertyData, UAssetAPI",
+        "ArrayType": "ObjectProperty", "Name": "OverrideMaterials", "ArrayIndex": 0,
+        "PropertyGuid": None, "IsZero": False, "PropertyTagFlags": "None",
+        "PropertyTypeName": None, "PropertyTagExtensions": "NoExtension",
+        "Value": values})
+    return link
 
 
 def mesh_facts(package, work):
@@ -170,10 +233,15 @@ def mesh_facts(package, work):
     if not os.path.isfile(path):
         return None
     mesh = json.load(open(to_json(path, os.path.join(work, "mesh.json")), encoding="utf-8"))
+    total = 0
+    for export in mesh["Exports"]:
+        for prop in export.get("Data") or []:
+            if isinstance(prop, dict) and prop["Name"] == "StaticMaterials":
+                total = len(prop["Value"])
     return {"bounds": extended_bounds(mesh),
             "materials": [i["ObjectName"] for i in mesh["Imports"]
                           if i.get("ClassName") in ("MaterialInstanceConstant", "Material")],
-            "lamp_slots": lamp_slots(mesh)}
+            "lamp_slots": lamp_slots(mesh), "slot_count": total}
 
 
 def beam_origin(facts):
@@ -221,7 +289,7 @@ def light_up(asset, profile, aim=AIM, place=None, slots=None):
         elif "MTLightControl" in obj:
             control = copy.deepcopy(profile["MTLightControl"])
             if slots:
-                set_emissive(control, slots)
+                set_emissive(control, [name for _, name in slots])
             else:
                 # Nothing to glow, so do not claim a slot that is not there.
                 control = [p for p in control
@@ -240,7 +308,9 @@ def light_up(asset, profile, aim=AIM, place=None, slots=None):
     if changed:
         # The slot names come off the mesh, not out of the profile, so they need
         # registering too or the write silently produces nothing.
-        register_names(asset, names_in(profile) + list(slots or []))
+        register_names(asset, names_in(profile) + [name for _, name in slots or []]
+                       + [ATTACHMENT_LIGHT, ATTACHMENT_LIGHT_PACKAGE, "Material",
+                          "OverrideMaterials"])
     return changed
 
 
@@ -268,12 +338,14 @@ def main(wanted):
         if not light_up(asset, profile, place=place, slots=slots):
             print(f"  {name}: no light components")
             continue
+        override_lamp_materials(asset, slots, (facts or {}).get("slot_count") or 0)
         with open(js, "w", encoding="utf-8") as f:
             json.dump(asset, f, indent=1)
         built = from_json(js, os.path.join(work, name + ".uasset"))
         for ext in (".uasset", ".uexp"):
             shutil.copy2(built[: -len(".uasset")] + ext, os.path.join(ACTORS, name + ext))
-        print(f"  {name}: lit, beam at X={place['X']:.0f}, glows {slots or '(no slot)'}")
+        print(f"  {name}: beam at X={place['X']:.0f}, "
+              f"glows {[n for _, n in slots] or '(no slot)'}")
         done += 1
     print(f"\n{done} attachments now cast light")
     print("Pack with: modp.bat qxZap_satigt3_MoreAttachments_P")
@@ -315,7 +387,15 @@ def demo():
                            {"Name": "MaterialSlotName", "Value": "HeadLight"}]},
                 {"Value": [{"Name": "MaterialInterface", "Value": -2},
                            {"Name": "MaterialSlotName", "Value": "HeadLight_HighBeam"}]}]}]}]}
-    assert lamp_slots(mesh) == ["HeadLight", "HeadLight_HighBeam"],         "only slots wearing a lamp material glow, and every one of them does"
+    assert lamp_slots(mesh) == [(1, "HeadLight"), (2, "HeadLight_HighBeam")],         "only slots wearing a lamp material glow, and every one of them does"
+
+    actor = {"Imports": [], "Exports": [{"ObjectName": "Mesh_GEN_VARIABLE", "Data": []}]}
+    link = override_lamp_materials(actor, [(1, "HeadLight"), (2, "HighBeam")], 4)
+    got = next(p for p in actor["Exports"][0]["Data"] if p["Name"] == "OverrideMaterials")
+    assert [e["Value"] for e in got["Value"]] == [0, link, link, 0],         "lamp slots get the attachment material, bodywork stays null"
+    assert actor["Imports"][-1]["ObjectName"] == ATTACHMENT_LIGHT
+    assert override_lamp_materials(actor, [(1, "HeadLight")], 4) == link,         "re-running must reuse the import, not stack up duplicates"
+    assert sum(1 for i in actor["Imports"] if i["ObjectName"] == ATTACHMENT_LIGHT) == 1
 
     control = [{"Name": "TargetMaterialSlotNames", "Value": [{"Name": "0", "Value": "Light_01"}]},
                {"Name": "LightIntensity", "Value": 1.0},
