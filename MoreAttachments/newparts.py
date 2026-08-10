@@ -194,6 +194,32 @@ def soft(package, asset):
             "SubPathString": None}
 
 
+def set_label(prop, label):
+    """Write the shop name where the game actually looks for it.
+
+    ItemNameTexts.Texts is the list the UI builds a name out of; ItemName is a
+    string table lookup the vanilla rows use and ours cannot. Cloning a donor row
+    and setting only ItemName leaves the donor's table entry in Texts, so every
+    part inherits the donor's name -- 138 of them called Round Light 01.
+    """
+    for field in prop["Value"]:
+        if not isinstance(field, dict) or field.get("Name") != "Texts":
+            continue
+        first = copy.deepcopy(field["Value"][0]) if field["Value"] else {
+            "$type": "UAssetAPI.PropertyTypes.Objects.TextPropertyData, UAssetAPI",
+            "Name": "0", "ArrayIndex": 0, "PropertyGuid": None, "IsZero": False,
+            "PropertyTagFlags": "None", "PropertyTypeName": None,
+            "PropertyTagExtensions": "NoExtension", "TransformType": "ToLower"}
+        first.update({"Flags": 0, "HistoryType": "None", "Namespace": None,
+                      "TableId": None, "CultureInvariantString": label,
+                      "SourceFmt": None, "Arguments": None, "ArgumentsData": None,
+                      "SourceValue": None, "FormatOptions": None,
+                      "TargetCulture": None, "Name": "0", "Value": None})
+        field["Value"] = [first]
+        return True
+    return False
+
+
 def make_row(donor, key, label, package, mesh, actor, cost, mass):
     """Fill a row in. Pass a donor to clone for a new part, or an existing row to
     correct it in place -- which is how a renamed label reaches a shipped row."""
@@ -205,9 +231,13 @@ def make_row(donor, key, label, package, mesh, actor, cost, mass):
         elif prop["Name"] == "StaticMesh":
             prop["Value"] = soft(f"{package}/{mesh}", mesh)
         elif prop["Name"] == "ItemName":
-            prop.update({"CultureInvariantString": label, "Namespace": None,
-                         "Value": None, "HistoryType": "None",
-                         "Flags": "CultureInvariant"})
+            # Not what the shop reads. Cleared, or the donor's string table entry
+            # rides along and every part comes out called Round Light 01.
+            prop.update({"CultureInvariantString": None, "Namespace": None,
+                         "Value": None, "HistoryType": "None", "Flags": 0,
+                         "TableId": None})
+        elif prop["Name"] == "ItemNameTexts":
+            set_label(prop, label)
         elif prop["Name"] == "Cost":
             prop["Value"] = cost
         elif prop["Name"] == "MassKg":
@@ -340,6 +370,16 @@ def main(dry=False, rows_only=False):
 
         actor = part_id(mesh)
         asset = build_actor(templates[kind], actor, package, mesh, offset, lens)
+        if kind == "NONC":
+            # Every template carries a ChangeLightColor interaction. On a part
+            # with no paint and no lamp that is a menu entry that does nothing,
+            # so it comes off -- an exhaust tip should not offer to be recoloured.
+            for export in asset["Exports"]:
+                if "MTInteractable" not in str(export.get("ObjectName")):
+                    continue
+                for prop in export.get("Data") or []:
+                    if isinstance(prop, dict) and prop["Name"] == "InteractionParams":
+                        prop["Value"] = []
         # A trailing _<digits> is an FName number, not part of the name: UAssetGUI
         # stores SM_Veh_Attach_Exhaust_Tip_10 as base + 10 and then needs that
         # base in the map. _01 keeps its leading zero and stays literal, which is
@@ -392,14 +432,31 @@ def demo():
     assert display("SM_Veh_Attach_E_Brake_01") == "E-Brake 01"
     assert display("SM_Veh_Attach_Nudge_Bar_Side_02") == "Side Nudge Bar 02"
 
-    donor = {"Name": "Donor", "Value": [{"Name": "ItemName"}, {"Name": "Cost"},
-                                        {"Name": "MassKg"}]}
+    texts = {"Name": "ItemNameTexts", "Value": [
+        {"Name": "Texts", "Value": [
+            {"HistoryType": "StringTableEntry", "TableId": "/Game/T.T",
+             "CultureInvariantString": None, "Value": "RoundLight"}]}]}
+    assert set_label(texts, "Fog Light 02") is True
+    got = texts["Value"][0]["Value"]
+    assert len(got) == 1 and got[0]["CultureInvariantString"] == "Fog Light 02"
+    assert got[0]["HistoryType"] == "None" and got[0]["TableId"] is None,         "the donor's string table entry has to go, or its name wins"
+    assert got[0]["Value"] is None
+
+    donor = {"Name": "Donor", "Value": [
+        {"Name": "ItemName", "CultureInvariantString": None, "Value": "Light"},
+        {"Name": "ItemNameTexts", "Value": [
+            {"Name": "Texts", "Value": [
+                {"HistoryType": "StringTableEntry", "CultureInvariantString": None,
+                 "Value": "RoundLight"}]}]},
+        {"Name": "Cost"}, {"Name": "MassKg"}]}
     made = make_row(donor, "K", "Label", "/Game/P", "M", "A", 5, 6.0)
     assert made is not donor and donor["Name"] == "Donor", "a donor must be cloned"
     again = make_row(made, "K", "Renamed", "/Game/P", "M", "A", 5, 6.0)
     assert again is made, "an existing row is corrected in place, not duplicated"
-    assert next(p for p in made["Value"]
-                if p["Name"] == "ItemName")["CultureInvariantString"] == "Renamed"
+    shown = next(p for p in made["Value"] if p["Name"] == "ItemNameTexts")
+    assert shown["Value"][0]["Value"][0]["CultureInvariantString"] == "Renamed"
+    name = next(p for p in made["Value"] if p["Name"] == "ItemName")
+    assert name["Value"] is None and name["CultureInvariantString"] is None,         "the donor's string table lookup must not survive"
     assert ALL_LAMP.search("SM_Veh_Attach_Light_Fog_02")
     assert ALL_LAMP.search("SM_Veh_Attach_Light_Police_Roof_01")
     assert not ALL_LAMP.search("SM_Veh_Attach_Bumper_01_Front_01"), \
