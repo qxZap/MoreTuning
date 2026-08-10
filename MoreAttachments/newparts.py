@@ -52,9 +52,50 @@ TEMPLATE_MESH = "/Game/Cars/Models/Neo/RearSpoiler_01"
 MESH_SENTINELS = ("-0.96961", "-0.96962", "-0.96963")
 LENS_SENTINELS = ("-0.96971", "-0.96972", "-0.96973")
 
-# Lamps whose whole body is the lamp: lighting every slot is what they want.
-# Anything else in the LIGHT class is mostly frame, and gets the beam only.
-ALL_LAMP = re.compile(r"Light_(Fog|Spot|LightBar|Police_Roof)", re.I)
+# Every one of these meshes has a single material slot -- checked all twenty, and
+# there are no _Light or _Lens variants the way vanilla splits its lamps. So a
+# lamp glows entirely or not at all; there is no lens to pick out.
+#
+# That is fine on a fog light or a spot, which are almost all lens with a token
+# housing. It is wrong on a light bar or a police roof bar, where a long metal
+# frame lights up with the lenses and looks daft. Those keep the beam and the
+# switch and stay unlit. The fix is two material slots in the UE project.
+ALL_LAMP = re.compile(r"Light_(Fog|Spot)", re.I)
+
+# What you hold and drop, as opposed to what bolts to the car. 588 of the 622
+# existing rows use this one, and it is not decoration: the part meshes have no
+# collision baked in, so holding one and dropping it sends it through the floor.
+HELD_MESH = "/Game/Objects/VehicleAttachment/Meshes/EmergencyLightBar_01_Light"
+
+# Shop icons, first match wins. The mod's own set is drawn for vehicle parts; a
+# few vanilla ones fit better than anything in it.
+MOD_ICON = "/Game/UI/MoreAttachments/"
+ITEM_ICON = "/Game/UI/Icons/Item/"
+ICONS = [
+    (r"Light_", ITEM_ICON + "LightBulb"),
+    (r"Bumper_\d+_Front|Nudge_Bar_Front", MOD_ICON + "FrontBumper"),
+    (r"Bumper_\d+_Rear|Nudge_Bar_Rear", MOD_ICON + "RearBumper"),
+    (r"Nudge_Bar_Side|Running_Board", MOD_ICON + "SideSkirt"),
+    (r"Scifi_Wing", MOD_ICON + "RearWing"),
+    (r"Spoiler", MOD_ICON + "RearSpoiler"),
+    (r"Rollcage|Roof_", MOD_ICON + "Roof"),
+    (r"Bonnet_Clip", MOD_ICON + "Bonnet"),
+    (r"Gear_Stick|Handbrake|E_Brake", MOD_ICON + "ControlPanel"),
+    (r"Seat", ITEM_ICON + "Stool"),
+    (r"Fire_Extinguisher", ITEM_ICON + "FireExtinguisher"),
+    (r"Cooler_Radiator", ITEM_ICON + "Radiator"),
+    (r"Number_Plate", ITEM_ICON + "Plate"),
+    (r"Badge", ITEM_ICON + "Ornament"),
+    (r"Wheelie_Bar|Sway_Bar|Tow_Hook", MOD_ICON + "Wheels"),
+]
+DEFAULT_ICON = MOD_ICON + "Utility"
+
+
+def icon_for(mesh):
+    for pattern, icon in ICONS:
+        if re.search(pattern, mesh, re.I):
+            return icon
+    return DEFAULT_ICON
 
 COST = {"NONC": 400, "COL": 800, "LIGHT": 1500}
 MASS = {"NONC": 8.0, "COL": 12.0, "LIGHT": 10.0}
@@ -229,7 +270,12 @@ def make_row(donor, key, label, package, mesh, actor, cost, mass):
         if prop["Name"] == "AttachmentPartActorClass":
             prop["Value"] = soft(f"{ACTOR_PACKAGE}/{actor}", actor + "_C")
         elif prop["Name"] == "StaticMesh":
-            prop["Value"] = soft(f"{package}/{mesh}", mesh)
+            # The standard held prop, not the part's own mesh: these have no
+            # collision, so holding one and dropping it drops it through the map.
+            prop["Value"] = soft(HELD_MESH, HELD_MESH.rsplit("/", 1)[-1])
+        elif prop["Name"] == "IconTexture":
+            icon = icon_for(mesh)
+            prop["Value"] = soft(icon, icon.rsplit("/", 1)[-1])
         elif prop["Name"] == "ItemName":
             # Not what the shop reads. Cleared, or the donor's string table entry
             # rides along and every part comes out called Round Light 01.
@@ -299,6 +345,10 @@ def add_rows(new_rows, keys, dry):
                 fresh.append(make_row(donor, *args))
         rows.extend(fresh)
         register_names(table, [a[0] for a in new_rows] + [a[3] for a in new_rows]
+                       + [HELD_MESH, HELD_MESH.rsplit("/", 1)[-1]]
+                       + [i for _, i in ICONS] + [DEFAULT_ICON]
+                       + [i.rsplit("/", 1)[-1] for _, i in ICONS]
+                       + [DEFAULT_ICON.rsplit("/", 1)[-1]]
                        + [f"{a[2]}/{a[3]}" for a in new_rows]
                        + [f"{ACTOR_PACKAGE}/{a[4]}" for a in new_rows]
                        + [a[4] + "_C" for a in new_rows])
@@ -432,6 +482,18 @@ def demo():
     assert display("SM_Veh_Attach_E_Brake_01") == "E-Brake 01"
     assert display("SM_Veh_Attach_Nudge_Bar_Side_02") == "Side Nudge Bar 02"
 
+    assert icon_for("SM_Veh_Attach_Light_Fog_02").endswith("LightBulb")
+    assert icon_for("SM_Veh_Attach_Bumper_01_Front_01").endswith("FrontBumper")
+    assert icon_for("SM_Veh_Attach_Bumper_01_Rear_01").endswith("RearBumper")
+    assert icon_for("SM_Veh_Exotic_01_Spoiler_02").endswith("RearSpoiler")
+    assert icon_for("SM_Veh_Ute_01_Rollcage_01").endswith("Roof")
+    assert icon_for("SM_Veh_Attach_Seat_02").endswith("Stool")
+    assert icon_for("SM_Veh_Attach_Number_Plate_01").endswith("Plate")
+    assert icon_for("SM_Veh_Attach_Turbo_01") == DEFAULT_ICON, "no icon fits, fall back"
+    assert ALL_LAMP.search("SM_Veh_Attach_Light_Spot_04")
+    assert not ALL_LAMP.search("SM_Veh_Attach_Light_LightBar_03"),         "a light bar has a metal frame that must not glow with the lenses"
+    assert not ALL_LAMP.search("SM_Veh_Attach_Light_Police_Roof_01")
+
     texts = {"Name": "ItemNameTexts", "Value": [
         {"Name": "Texts", "Value": [
             {"HistoryType": "StringTableEntry", "TableId": "/Game/T.T",
@@ -457,8 +519,6 @@ def demo():
     assert shown["Value"][0]["Value"][0]["CultureInvariantString"] == "Renamed"
     name = next(p for p in made["Value"] if p["Name"] == "ItemName")
     assert name["Value"] is None and name["CultureInvariantString"] is None,         "the donor's string table lookup must not survive"
-    assert ALL_LAMP.search("SM_Veh_Attach_Light_Fog_02")
-    assert ALL_LAMP.search("SM_Veh_Attach_Light_Police_Roof_01")
     assert not ALL_LAMP.search("SM_Veh_Attach_Bumper_01_Front_01"), \
         "a bumper is mostly frame and must not glow all over"
     assert not ALL_LAMP.search("SM_Veh_Attach_Roof_Basket_01")
