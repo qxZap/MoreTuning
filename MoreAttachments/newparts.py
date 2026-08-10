@@ -9,7 +9,7 @@ Reads NEW_PARTS.json for what to add and how each should be built:
 
     NONC   plain            ACTOR_TEMPLATE_NOCOLOR
     COL    paintable        ACTOR_TEMPLATE
-    LIGHT  lamp             ACTOR_TEMPLATE_LIGHT -- beam, switchable, glowing lens
+    LIGHT  lamp             ACTOR_TEMPLATE_LIGHT -- casts a beam, switchable
 
 The meshes come cooked out of the UE project. Nothing else has to ship with
 them: every one uses the same material, Mat_PolygonStreetRacer_01_A, and the game
@@ -18,11 +18,11 @@ matters -- shipping our own copy at a package path the game already uses would
 override the game's for no gain.
 
 One thing the meshes cannot do. Each has a single material slot, so a lamp's lens
-and its frame are the same material and there is no way to light only the lens.
-For something that is all lamp -- a fog light, a spot, a light bar -- lighting
-the whole mesh is right. For a bumper or a roof basket it would mean a glowing
-bumper, so those get the beam and the switch without the glow. Splitting the
-slot properly is an edit in the UE project, not something to fake here.
+and its frame are the same material and lighting the lens means lighting the
+housing, the metal frame and all. None of them glow because of it -- they cast a
+beam and switch on and off, and that is all. Give a mesh a second material slot
+for its lens in the UE project and the glow starts working with no change here,
+the way the Cora and Zino headlights already do off M_HeadLight.
 """
 import copy
 import json
@@ -52,15 +52,16 @@ TEMPLATE_MESH = "/Game/Cars/Models/Neo/RearSpoiler_01"
 MESH_SENTINELS = ("-0.96961", "-0.96962", "-0.96963")
 LENS_SENTINELS = ("-0.96971", "-0.96972", "-0.96973")
 
-# Every one of these meshes has a single material slot -- checked all twenty, and
-# there are no _Light or _Lens variants the way vanilla splits its lamps. So a
-# lamp glows entirely or not at all; there is no lens to pick out.
+# No emissive on any of these. Every one of the twenty light meshes has a single
+# material slot and there is no _Light or _Lens variant the way vanilla splits its
+# lamps, so lighting the lens means lighting the whole part -- housing, metal
+# frame and all. Doing that for some shapes and not others just makes the odd
+# ones look like mistakes, so none of them glow.
 #
-# That is fine on a fog light or a spot, which are almost all lens with a token
-# housing. It is wrong on a light bar or a police roof bar, where a long metal
-# frame lights up with the lenses and looks daft. Those keep the beam and the
-# switch and stay unlit. The fix is two material slots in the UE project.
-ALL_LAMP = re.compile(r"Light_(Fog|Spot)", re.I)
+# They still cast a beam and still switch on and off. The glow comes back on its
+# own, with no change here, the moment a mesh gets a second material slot for its
+# lens: the Cora and Zino headlights already work that way off M_HeadLight.
+ALL_LAMP = re.compile(r"(?!)")          # matches nothing, deliberately
 
 # What you hold and drop, as opposed to what bolts to the car. 588 of the 622
 # existing rows use this one, and it is not decoration: the part meshes have no
@@ -490,9 +491,9 @@ def demo():
     assert icon_for("SM_Veh_Attach_Seat_02").endswith("Stool")
     assert icon_for("SM_Veh_Attach_Number_Plate_01").endswith("Plate")
     assert icon_for("SM_Veh_Attach_Turbo_01") == DEFAULT_ICON, "no icon fits, fall back"
-    assert ALL_LAMP.search("SM_Veh_Attach_Light_Spot_04")
     assert not ALL_LAMP.search("SM_Veh_Attach_Light_LightBar_03"),         "a light bar has a metal frame that must not glow with the lenses"
     assert not ALL_LAMP.search("SM_Veh_Attach_Light_Police_Roof_01")
+    assert not ALL_LAMP.search("SM_Veh_Attach_Light_Fog_02"),         "one slot means glowing the whole lamp, so none of them glow for now"
 
     texts = {"Name": "ItemNameTexts", "Value": [
         {"Name": "Texts", "Value": [
