@@ -1,6 +1,7 @@
 """Add the MTMapAddon meshes to MoreAttachments as buyable attachments.
 
     python newparts.py            # copy meshes, build actors, add rows
+    python newparts.py --rows     # only refresh the rows (names, price, mass)
     python newparts.py --dry      # say what it would do
     python newparts.py demo       # self-check
 
@@ -100,9 +101,38 @@ def part_id(mesh):
     return PREFIX + short
 
 
+# The mesh names are an artist's filing system, not a shop label. Left alone they
+# read as "Light Fog 02" and "Exotic 01 Spoiler 02", so the noise comes out and
+# the words go in the order a person would say them. Order matters: the specific
+# rewrites run before the generic tidy-up.
+RENAMES = [
+    (r"^Light_Police_Roof_(\d+)$", r"Police Light Bar \1"),
+    (r"^Light_LightBar_(\d+)$", r"Light Bar \1"),
+    (r"^Light_Fog_(\d+)$", r"Fog Light \1"),
+    (r"^Light_Spot_(\d+)$", r"Spot Light \1"),
+    (r"^Bumper_\d+_Front_(\d+)$", r"Front Bumper \1"),
+    (r"^Bumper_\d+_Rear_(\d+)$", r"Rear Bumper \1"),
+    (r"^Nudge_Bar_(Front|Rear|Side)_(\d+)$", r"\1 Nudge Bar \2"),
+    (r"^Child_Seat_(\d+)_Handle$", r"Child Seat Handle \1"),
+    (r"^Intake_(\d+)_(Valve|Shroud)$", r"Intake \2 \1"),
+    (r"^E_Brake_(\d+)$", r"E-Brake \1"),
+    (r"^Scifi_Wing_(\d+)$", r"Sci-Fi Wing \1"),
+    (r"^Motorbike_Exhaust_(\d+)$", r"Motorbike Exhaust \1"),
+    # Body-style parts: "Exotic_01_Spoiler_02" -- the 01 is which car model the
+    # artist drew it on and means nothing in a shop.
+    (r"^([A-Za-z]+)_\d+_(Spoiler|Rollcage|Exhaust)_(\d+)(_Boot)?$",
+     r"\1 \2 \3\4"),
+]
+
+
 def display(mesh):
     short = re.sub(r"^SM_Veh_(Attach_|)", "", mesh, flags=re.I)
-    return short.replace("_", " ").strip()
+    for pattern, into in RENAMES:
+        new = re.sub(pattern, into, short)
+        if new != short:
+            short = new
+            break
+    return re.sub(r"\s+", " ", short.replace("_", " ")).strip()
 
 
 def all_slots(mesh_json):
@@ -165,7 +195,9 @@ def soft(package, asset):
 
 
 def make_row(donor, key, label, package, mesh, actor, cost, mass):
-    row = copy.deepcopy(donor)
+    """Fill a row in. Pass a donor to clone for a new part, or an existing row to
+    correct it in place -- which is how a renamed label reaches a shipped row."""
+    row = copy.deepcopy(donor) if donor.get("Name") != key else donor
     row["Name"] = key
     for prop in row["Value"]:
         if prop["Name"] == "AttachmentPartActorClass":
@@ -224,17 +256,23 @@ def add_rows(new_rows, keys, dry):
         if stale:
             print(f"\n  dropped {len(stale)} of ours no longer in the spec: "
                   f"{[r['Name'] for r in stale]}")
-        have = {r["Name"] for r in rows}
-        clash = [a[0] for a in new_rows if a[0] in have]
-        if clash:
-            print(f"\n  name already taken, skipped: {clash}")
-        fresh = [make_row(donor, *args) for args in new_rows if args[0] not in have]
+        # Correct rows that are already there rather than skipping them: that is
+        # how a renamed label, or a reprice, reaches a row from an earlier run.
+        by_key = {r["Name"]: r for r in rows}
+        fresh, updated = [], 0
+        for args in new_rows:
+            existing = by_key.get(args[0])
+            if existing is not None:
+                make_row(existing, *args)
+                updated += 1
+            else:
+                fresh.append(make_row(donor, *args))
         rows.extend(fresh)
         register_names(table, [a[0] for a in new_rows] + [a[3] for a in new_rows]
                        + [f"{a[2]}/{a[3]}" for a in new_rows]
                        + [f"{ACTOR_PACKAGE}/{a[4]}" for a in new_rows]
                        + [a[4] + "_C" for a in new_rows])
-        print(f"  {tag}: +{len(fresh)} rows -> {len(rows)}", end="")
+        print(f"  {tag}: +{len(fresh)} new, {updated} updated -> {len(rows)}", end="")
         if not dry:
             js = os.path.join(work, tag + ".items.edited.json")
             json.dump(table, open(js, "w", encoding="utf-8"), indent=1)
@@ -274,7 +312,7 @@ def add_rows(new_rows, keys, dry):
                 shutil.copy2(built[: -len(".uasset")] + ext, vendor.replace(".uasset", ext))
 
 
-def main(dry=False):
+def main(dry=False, rows_only=False):
     work = os.path.join(WORK, "newparts")
     os.makedirs(work, exist_ok=True)
     templates = {k: open(os.path.join(HERE, v), encoding="utf-8").read()
@@ -284,8 +322,8 @@ def main(dry=False):
 
     new_rows, keys, built, skipped = [], [], 0, 0
     for package, mesh, kind in wanted():
-        copied = copy_mesh(package, mesh, dry)
-        if copied is None:
+        copied = None if rows_only else copy_mesh(package, mesh, dry)
+        if not rows_only and copied is None:
             print(f"  skip {mesh}: the game already ships it")
             skipped += 1
             continue
@@ -324,7 +362,7 @@ def main(dry=False):
                            + [reallights.ATTACHMENT_LIGHT,
                               reallights.ATTACHMENT_LIGHT_PACKAGE,
                               "Material", "OverrideMaterials"])
-        if not dry:
+        if not dry and not rows_only:
             js = os.path.join(work, actor + ".json")
             json.dump(asset, open(js, "w", encoding="utf-8"), indent=1)
             out = from_json(js, os.path.join(work, actor + ".uasset"))
@@ -347,6 +385,21 @@ def demo():
     assert part_id("SM_Veh_Exotic_01_Spoiler_02") == "Attachment_SR_Exotic_01_Spoiler_02"
     assert not part_id("SM_Veh_Attach_Turbo_01").startswith("Attachment_Turbo"),         "Attachment_Turbo_01 already exists; the namespace is what keeps it safe"
     assert display("SM_Veh_Attach_Roof_Scoop_01") == "Roof Scoop 01"
+    assert display("SM_Veh_Attach_Light_Fog_02") == "Fog Light 02"
+    assert display("SM_Veh_Attach_Light_Police_Roof_01") == "Police Light Bar 01"
+    assert display("SM_Veh_Attach_Bumper_01_Front_01") == "Front Bumper 01"
+    assert display("SM_Veh_Exotic_01_Spoiler_02") == "Exotic Spoiler 02",         "the model number the artist drew it on means nothing in a shop"
+    assert display("SM_Veh_Attach_E_Brake_01") == "E-Brake 01"
+    assert display("SM_Veh_Attach_Nudge_Bar_Side_02") == "Side Nudge Bar 02"
+
+    donor = {"Name": "Donor", "Value": [{"Name": "ItemName"}, {"Name": "Cost"},
+                                        {"Name": "MassKg"}]}
+    made = make_row(donor, "K", "Label", "/Game/P", "M", "A", 5, 6.0)
+    assert made is not donor and donor["Name"] == "Donor", "a donor must be cloned"
+    again = make_row(made, "K", "Renamed", "/Game/P", "M", "A", 5, 6.0)
+    assert again is made, "an existing row is corrected in place, not duplicated"
+    assert next(p for p in made["Value"]
+                if p["Name"] == "ItemName")["CultureInvariantString"] == "Renamed"
     assert ALL_LAMP.search("SM_Veh_Attach_Light_Fog_02")
     assert ALL_LAMP.search("SM_Veh_Attach_Light_Police_Roof_01")
     assert not ALL_LAMP.search("SM_Veh_Attach_Bumper_01_Front_01"), \
@@ -369,4 +422,4 @@ if __name__ == "__main__":
     if len(sys.argv) == 2 and sys.argv[1] == "demo":
         demo()
     else:
-        main(dry="--dry" in sys.argv)
+        main(dry="--dry" in sys.argv, rows_only="--rows" in sys.argv)
