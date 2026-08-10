@@ -74,8 +74,9 @@ MOD_ICON = "/Game/UI/MoreAttachments/"
 ITEM_ICON = "/Game/UI/Icons/Item/"
 ICONS = [
     (r"Light_", ITEM_ICON + "LightBulb"),
-    (r"Bumper_\d+_Front|Nudge_Bar_Front", MOD_ICON + "FrontBumper"),
-    (r"Bumper_\d+_Rear|Nudge_Bar_Rear", MOD_ICON + "RearBumper"),
+    # Both bumper meshes are bullbars and go on the front, rear name or not.
+    (r"Bumper_\d+_(Front|Rear)|Nudge_Bar_Front", MOD_ICON + "FrontBumper"),
+    (r"Nudge_Bar_Rear", MOD_ICON + "RearBumper"),
     (r"Nudge_Bar_Side|Running_Board", MOD_ICON + "SideSkirt"),
     (r"Scifi_Wing", MOD_ICON + "RearWing"),
     (r"Spoiler", MOD_ICON + "RearSpoiler"),
@@ -153,7 +154,8 @@ RENAMES = [
     (r"^Light_Fog_(\d+)$", r"Fog Light \1"),
     (r"^Light_Spot_(\d+)$", r"Spot Light \1"),
     (r"^Bumper_\d+_Front_(\d+)$", r"Front Bumper \1"),
-    (r"^Bumper_\d+_Rear_(\d+)$", r"Rear Bumper \1"),
+    # Bumper_01_Rear_01/02 are bullbars, whatever the mesh happens to be called.
+    (r"^Bumper_\d+_Rear_(\d+)$", r"Bullbar \1"),
     (r"^Nudge_Bar_(Front|Rear|Side)_(\d+)$", r"\1 Nudge Bar \2"),
     (r"^Child_Seat_(\d+)_Handle$", r"Child Seat Handle \1"),
     (r"^Intake_(\d+)_(Valve|Shroud)$", r"Intake \2 \1"),
@@ -369,7 +371,15 @@ def add_rows(new_rows, keys, dry):
                 if not isinstance(entry, dict) or entry["Name"] != "SellItems":
                     continue
                 sold = entry["Value"]
-                known = {i.get("Value") if isinstance(i, dict) else i for i in sold}
+                key_of = lambda i: i.get("Value") if isinstance(i, dict) else i
+                known = {key_of(i) for i in sold}
+                gone = [i for i in sold
+                        if str(key_of(i)).startswith(PREFIX) and key_of(i) not in set(keys)]
+                for item in gone:
+                    sold.remove(item)
+                if gone:
+                    print(f"\n  no longer sold: {len(gone)}", end="")
+                known = {key_of(i) for i in sold}
                 for key in keys:
                     if key in known:
                         continue
@@ -466,7 +476,24 @@ def main(dry=False, rows_only=False):
         keys.append(key)
         built += 1
 
-    print(f"\n{built} actors built, {skipped} skipped")
+    # Take away what the spec no longer asks for. Dropping a part from the list
+    # is not enough on its own -- its actor and its mesh would sit in the pak
+    # forever, paid for in download size by everyone, referenced by nobody.
+    keep_actors = {a[4] for a in new_rows}
+    keep_meshes = {(a[2], a[3]) for a in new_rows}
+    removed = 0
+    if not dry and not rows_only:
+        for name in sorted(os.listdir(ACTORS_DIR)) if os.path.isdir(ACTORS_DIR) else []:
+            stem = name.split(".")[0]
+            if stem.startswith(PREFIX) and stem not in keep_actors:
+                os.remove(os.path.join(ACTORS_DIR, name))
+                removed += name.endswith(".uasset")
+        for package in {a[2] for a in new_rows}:
+            folder = local(PAK, package)
+            for name in sorted(os.listdir(folder)) if os.path.isdir(folder) else []:
+                if (package, name.split(".")[0]) not in keep_meshes:
+                    os.remove(os.path.join(folder, name))
+    print(f"\n{built} actors built, {skipped} skipped, {removed} removed")
     add_rows(new_rows, keys, dry)
     print("\nPack both MoreAttachments paks.")
 
@@ -485,7 +512,8 @@ def demo():
 
     assert icon_for("SM_Veh_Attach_Light_Fog_02").endswith("LightBulb")
     assert icon_for("SM_Veh_Attach_Bumper_01_Front_01").endswith("FrontBumper")
-    assert icon_for("SM_Veh_Attach_Bumper_01_Rear_01").endswith("RearBumper")
+    assert icon_for("SM_Veh_Attach_Bumper_01_Rear_01").endswith("FrontBumper"),         "the rear bumper meshes are bullbars and go on the front"
+    assert icon_for("SM_Veh_Attach_Nudge_Bar_Rear_02").endswith("RearBumper")
     assert icon_for("SM_Veh_Exotic_01_Spoiler_02").endswith("RearSpoiler")
     assert icon_for("SM_Veh_Ute_01_Rollcage_01").endswith("Roof")
     assert icon_for("SM_Veh_Attach_Seat_02").endswith("Stool")
