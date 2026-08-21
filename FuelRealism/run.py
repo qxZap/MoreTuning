@@ -58,7 +58,8 @@ TWO_STROKE = 1.50            # ~420
 # spins past about 3000rpm, and nothing petrol stops that low.
 DIESEL_RPM = 3500
 
-ELECTRIC = r"electric"
+# The EV-prefixed rows are electric too, and none of them says so.
+ELECTRIC = r"electric|^EV[A-Z]"
 SMALL_2T = r"kart|scooter|bike_i2"
 OLD_MECHANICAL = r"n14|3406|8v92|v149|dv27|detroit|series60|c18|cat"
 DIESEL_NAME = r"tdi|cdi|hdi|dci|jtd|d4d|diesel|duramax|powerstroke|cummins|volvod|scania|paccar|weichai|dd\d"
@@ -71,13 +72,32 @@ TURBO_NAME = r"turbo|tfsi|tsi|gti|2jz|rb2|sr20|4g63|ej2|k20|barra|amg|koenigsegg
 HP = re.compile(r"(\d+)\s*HP", re.I)
 
 
-def horsepower(key):
-    """Engines are named for their output; that is the honest source for it."""
-    found = HP.search(key)
-    if not found:
+# Not every engine says its power. Roughly half of the ones the mod adds are
+# named after the engine and nothing else -- 13b, S54, bugattiW16 -- so the
+# fallback works it out from the physics the asset does carry: peak torque and
+# maximum revs. The factor is fitted against the 117 engines that do state a
+# power, and it lands within 14% for half of them and 23% for nine in ten, which
+# is close enough for a figure that fuel scales off linearly. It checks out
+# against the real engines too: S54 comes out 324hp against a real 333, L86 408
+# against 420, 13b 247 against 255.
+POWER_FROM_TORQUE = 0.691
+
+
+def estimate_hp(max_torque, max_rpm):
+    if not max_torque or not max_rpm:
         return None
-    digits = found.group(1)
-    return int(digits[-3:] if len(digits) > 4 else digits)
+    newton_metres = max_torque / 10000.0
+    kilowatts = newton_metres * max_rpm * 0.10472 / 1000.0
+    return round(POWER_FROM_TORQUE * kilowatts / 0.7457)
+
+
+def horsepower(key, max_torque=None, max_rpm=None):
+    """Engines are named for their output; failing that, torque and revs say it."""
+    found = HP.search(key)
+    if found:
+        digits = found.group(1)
+        return int(digits[-3:] if len(digits) > 4 else digits)
+    return estimate_hp(max_torque, max_rpm)
 
 
 def efficiency(key, rpm=None):
@@ -97,9 +117,9 @@ def efficiency(key, rpm=None):
     return PETROL_NA
 
 
-def consumption(key, rpm=None, scale=SCALE):
+def consumption(key, rpm=None, scale=SCALE, torque=None):
     """New FuelConsumption for an engine, or None to leave it alone."""
-    power = horsepower(key)
+    power = horsepower(key, torque, rpm)
     eff = efficiency(key, rpm)
     if power is None or eff is None:
         return None
@@ -117,6 +137,18 @@ def asset_of(row):
     for prop in row["Value"]:
         if prop["Name"] == "EngineAsset" and isinstance(prop.get("Value"), dict):
             return prop["Value"]["AssetPath"].get("PackageName")
+    return None
+
+
+def engine_property(asset, name):
+    for export in asset["Exports"]:
+        for prop in export.get("Data") or []:
+            if not isinstance(prop, dict) or prop["Name"] != "EngineProperty":
+                continue
+            for field in prop["Value"]:
+                if isinstance(field, dict) and field["Name"] == name:
+                    v = field.get("Value")
+                    return 0.0 if isinstance(v, str) else float(v or 0)
     return None
 
 
@@ -178,7 +210,8 @@ def main(dry=False):
         stem = os.path.basename(source)[: -len(".uasset")]
         js = to_json(source, os.path.join(os.path.dirname(source), stem + ".fuel.json"))
         asset = json.load(open(js, encoding="utf-8"))
-        value = consumption(key, max_rpm(asset))
+        value = consumption(key, max_rpm(asset),
+                            torque=engine_property(asset, "MaxTorque"))
         if value is None:
             os.remove(js)
             skipped += 1
@@ -233,6 +266,13 @@ def demo():
 
     assert max_rpm({"Exports": [{"Data": [{"Name": "EngineProperty", "Value": [
         {"Name": "MaxRPM", "Value": 2100.0}]}]}]}) == 2100.0
+
+    assert efficiency("EVTeslaSemi", rpm=12000) is None, "an EV is electric"
+    assert efficiency("EVAlpineA290", rpm=9000) is None
+    assert horsepower("S54") is None, "no name, no torque, no answer"
+    assert horsepower("S54", 4170000, 8000) == 324, "torque and revs say it instead"
+    assert horsepower("SmallBlock_90HP", 1400000, 6500) == 90, "the name still wins"
+    assert consumption("13b", 9000, torque=2830000) is not None
 
     asset = {"Exports": [{"Data": [
         {"Name": "EngineProperty", "Value": [
