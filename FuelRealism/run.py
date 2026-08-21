@@ -41,17 +41,32 @@ sys.path.insert(0, os.path.join(HERE, "..", "Rebase"))
 from pipeline import MOD, VANILLA, WORK, from_json, to_json  # noqa: E402
 
 TABLE = os.path.join("DataAsset", "VehicleParts", "Engines.uasset")
-SCALE = 1.0 / 3.0
+# Litres per hour at rated power, worked out rather than dialled in. Fuel flow
+# is power times brake specific fuel consumption divided by fuel density:
+#
+#     L/h = kW * BSFC(g/kWh) / (1000 * density kg/L)
+#
+# so every figure below traces to a published engineering number and there is no
+# free parameter left to fiddle. BSFC is the honest measure of an engine's
+# thirst -- how much fuel it burns per unit of work -- and the spread between a
+# Euro VI truck diesel and a carburettored V8 is about 40%, which vanilla had at
+# zero.
+#
+# Sanity, since the numbers should be checkable: a 110hp TDI cruising at about a
+# fifth of rated power comes out at 4.4 L/h, which at 100km/h is 4.4 L/100km. A
+# real 1.9 TDI does about five.
+PETROL_DENSITY = 0.745        # kg/L
+DIESEL_DENSITY = 0.832
+KW_PER_HP = 0.7457
 
-# Brake specific fuel consumption relative to a modern petrol NA at ~280 g/kWh.
-# Lower burns less per horsepower.
-TRUCK_DIESEL = 0.75          # Euro VI and similar, ~210 g/kWh
-OLD_DIESEL = 0.86            # mechanical injection, ~240
-CAR_DIESEL = 0.82            # common rail passenger, ~230
-PETROL_NA = 1.00             # the reference
-PETROL_TURBO = 1.04          # ~290
-PETROL_OLD_V8 = 1.18         # carburettor era, ~330
-TWO_STROKE = 1.50            # ~420
+# Brake specific fuel consumption in g/kWh, with the fuel it burns.
+TRUCK_DIESEL = (205.0, DIESEL_DENSITY)   # Euro VI and similar
+OLD_DIESEL = (240.0, DIESEL_DENSITY)     # mechanical injection
+CAR_DIESEL = (230.0, DIESEL_DENSITY)     # common rail passenger
+PETROL_NA = (280.0, PETROL_DENSITY)
+PETROL_TURBO = (290.0, PETROL_DENSITY)
+PETROL_OLD_V8 = (330.0, PETROL_DENSITY)  # carburettor era
+TWO_STROKE = (420.0, PETROL_DENSITY)
 
 # Names are unreliable for this -- half the truck engines here are called after
 # their maker and nothing else -- but revs are not. Nothing that pulls a lorry
@@ -117,13 +132,19 @@ def efficiency(key, rpm=None):
     return PETROL_NA
 
 
-def consumption(key, rpm=None, scale=SCALE, torque=None):
+def litres_per_hour(hp, fuel):
+    """What this engine burns flat out, from its power and how thirsty it is."""
+    bsfc, density = fuel
+    return hp * KW_PER_HP * bsfc / (1000.0 * density)
+
+
+def consumption(key, rpm=None, torque=None):
     """New FuelConsumption for an engine, or None to leave it alone."""
     power = horsepower(key, torque, rpm)
-    eff = efficiency(key, rpm)
-    if power is None or eff is None:
+    fuel = efficiency(key, rpm)
+    if power is None or fuel is None:
         return None
-    return round(power * eff * scale, 1)
+    return round(litres_per_hour(power, fuel), 1)
 
 
 def engine_rows(table):
@@ -252,17 +273,18 @@ def demo():
     assert horsepower("CATC12490HP") == 490, "a C12 making 490, not a 12490"
     assert horsepower("KoenigseggHV8tt2300HP") == 2300, "four digits is a real number"
 
-    assert efficiency("VolvoD17_600HP", rpm=2100) == 0.75, "revs say diesel, name need not"
-    assert efficiency("N14_370HP", rpm=2100) == 0.86, "an old mechanical diesel is thirstier"
-    assert efficiency("SmallBlock_320HP", rpm=6500) == 1.18
-    assert efficiency("I4_50HP", rpm=6500) == 1.00, "nothing matched, plain petrol"
-    assert efficiency("19tdi_110HP", rpm=4500) == 0.82
+    assert efficiency("VolvoD17_600HP", rpm=2100) == TRUCK_DIESEL, "revs say diesel"
+    assert efficiency("N14_370HP", rpm=2100) == OLD_DIESEL, "mechanical injection is thirstier"
+    assert efficiency("SmallBlock_320HP", rpm=6500) == PETROL_OLD_V8
+    assert efficiency("I4_50HP", rpm=6500) == PETROL_NA, "nothing matched, plain petrol"
+    assert efficiency("19tdi_110HP", rpm=4500) == CAR_DIESEL
     assert efficiency("Electric_670HP", rpm=21000) is None
 
-    assert consumption("SmallBlock_90HP", 6500) == 35.4
+    # 110hp * 0.7457 kW/hp * 230 g/kWh / (1000 * 0.832 kg/L) = 22.7 L/h flat out
+    assert abs(litres_per_hour(110, CAR_DIESEL) - 22.7) < 0.1
+    assert litres_per_hour(100, TRUCK_DIESEL) < litres_per_hour(100, PETROL_OLD_V8),         "a modern truck diesel must beat a carburettored V8 on the same power"
     assert consumption("Electric_300HP", 19000) is None, "electricity is not fuel"
-    assert consumption("KartEngine_10HP", 9000) == 5.0
-    assert consumption("HeavyDuty_440HP", 2900, scale=1.0) == 330.0, "scale is the only knob"
+    assert consumption("SmallBlock_90HP", 6500) == 29.7
 
     assert max_rpm({"Exports": [{"Data": [{"Name": "EngineProperty", "Value": [
         {"Name": "MaxRPM", "Value": 2100.0}]}]}]}) == 2100.0
