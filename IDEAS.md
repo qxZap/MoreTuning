@@ -3,6 +3,42 @@
 Parked for later. Each one has what was already checked, so the next go does not
 start from scratch.
 
+## Wheels with a configurable size — investigated, needs the editor
+
+There is no way to scale a wheel from data. Not a missing feature to find: the
+game has no concept of wheel size at all.
+
+**A wheel part is meshes and nothing else.** The `Wheels` table has 93 rows, and
+the `Wheel` struct on each is `LeftWheelMesh`, `RightWheelMesh`, the two DRW
+variants, the two rear variants and `QuadWheelMesh`. No scale, no radius, no
+width. `WheelSpacer` sits next to it and only pushes the wheel outward.
+
+**Nothing else in the path carries a size either.** `MTTirePhysicsParams` is
+friction, springs, damping, wear, load and rolling resistance — no radius. And
+the names `WheelRadius`, `TireRadius` and `WheelWidth` do not exist anywhere in
+the 0.7.19 mappings, so the game never names one.
+
+**The tire profile numbers are naming only.** KM1-65, KM4-30, KM2-15 read like
+sidewall profiles but nothing geometric changes between them — 65 to 15 moves
+StaticMu 1.1 to 1.5 and stiffens the springs, and that is the whole difference.
+
+**There is no actor to hang a scale on.** This is the difference from
+attachments: an attachment row points at `AttachmentPartActorClass`, so it has a
+blueprint, which is why `AttachmentScaleMin`/`Max` and in-game scaling work. A
+wheel row points straight at meshes, so there is no component whose
+`RelativeScale3D` could be set and no blueprint to add one to.
+
+So the only route is a scaled mesh: duplicate the wheel mesh in the UE project
+at 1.1 or 1.2, cook it, and add `Wheels` rows pointing at the scaled copies —
+the same path the MTMapAddon attachments took, and the mod does not ship
+`Wheels.uasset` yet so it would be taking that table.
+
+**Test one before doing ninety.** Since no radius exists in the data, the game
+must work it out from the mesh at runtime. If it does, a scaled mesh scales the
+physics with it. If instead the radius is fixed per vehicle, the wheel will grow
+visually and sit wrong against the ground. One wheel at 1.1 answers that, and it
+decides whether the whole idea is worth it.
+
 ## Winches as attachments — tried hard, does not work
 
 The goal was winches you bolt on like any other attachment, so you could hang
