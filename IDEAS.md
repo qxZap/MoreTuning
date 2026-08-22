@@ -33,6 +33,26 @@ at 1.1 or 1.2, cook it, and add `Wheels` rows pointing at the scaled copies —
 the same path the MTMapAddon attachments took, and the mod does not ship
 `Wheels.uasset` yet so it would be taking that table.
 
+**Every wheel mesh in the game is a 1 metre circle.** Measured all 91: the
+smallest is 98.8cm across and the largest 100.3cm, a spread of 1.5cm on wheels
+that in game are visibly anything from a kart to a mining truck. They are
+normalised on purpose, and that is the whole explanation for everything above --
+the *vehicle* scales the wheel to its own size, which is why any rim fits any car
+and looks right on it, and why no part, tire or table needs a size field.
+
+So a scaled mesh probably does nothing useful: either the vehicle rescales it
+back, or it renders oversized against a physics radius that did not move. That is
+the failure mode to expect, not the exception.
+
+`TireCollisionCylinderMesh` looked like a way in and is not: zero content assets
+reference it, the same shape as `MTWinchComponent`.
+
+**The cheap confirmation needs no build at all.** With xNoLimits installed any rim
+already fits any vehicle. Put a kart or small-car rim on a truck. If it comes out
+truck-sized, the vehicle is doing the scaling and wheel size cannot be a part
+property -- idea closed. If it comes out a metre across on a truck, the mesh
+drives it and scaled meshes would work.
+
 **Test one before doing ninety.** Since no radius exists in the data, the game
 must work it out from the mesh at runtime. If it does, a scaled mesh scales the
 physics with it. If instead the radius is fixed per vehicle, the wheel will grow
