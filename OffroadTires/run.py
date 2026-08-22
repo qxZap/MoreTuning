@@ -56,6 +56,26 @@ def source_of(name):
     return ours if os.path.isfile(ours) else os.path.join(VANILLA, TIRE_DIR, name + ".uasset")
 
 
+def rename_asset(asset, new_name):
+    """Point the package's own object at its new name.
+
+    A data asset is referenced as package.object, and cloning one leaves the
+    export still carrying the donor's name -- so the row asks for
+    HeavyDutyBaja60FrontTire.HeavyDutyBaja60FrontTire, the package holds
+    HeavyDutyBaja60FrontTire.HeavyDutyBajaFrontTire, and nothing resolves. The
+    tire then has no physics at all, which shows up as a part with no stats.
+    """
+    renamed = None
+    for export in asset["Exports"]:
+        for prop in export.get("Data") or []:
+            if isinstance(prop, dict) and prop["Name"] == "TirePhysicsParams":
+                renamed = export["ObjectName"]
+                export["ObjectName"] = new_name
+    if renamed is not None:
+        register_names(asset, [new_name])
+    return renamed
+
+
 def set_offroad(asset, value):
     """Raise OffroadFriction and leave every other property alone."""
     for export in asset["Exports"]:
@@ -109,6 +129,7 @@ def main(dry=False):
         # Stage beside the source; UAssetGUI resolves siblings from that folder.
         staged = os.path.join(os.path.dirname(source), new_asset + ".tmp.json")
         asset = json.load(open(to_json(source, staged), encoding="utf-8"))
+        rename_asset(asset, new_asset)
         was = set_offroad(asset, OFFROAD_60)
         if was is None:
             sys.exit(f"{base_asset} has no OffroadFriction to raise")
@@ -143,11 +164,16 @@ def main(dry=False):
             sys.exit(f"no row to clone: {donor_key}")
         row = make_row(donor, key, label, asset_name, cost)
         if key in by_key:
-            by_key[key].clear()
-            by_key[key].update(row)
+            # Refresh in place, and move it if an earlier run left it at the end.
+            rows.remove(by_key[key])
+            rows.insert(rows.index(donor) + 1, row)
+            by_key[key] = row
             updated += 1
         else:
-            rows.append(row)
+            # Next to its own class, not at the end. Vehicles store their parts
+            # by row name, so where a row sits is presentation only.
+            rows.insert(rows.index(donor) + 1, row)
+            by_key[key] = row
             added += 1
         names += [key, label, asset_name, f"/Game/Cars/Parts/Tire/{asset_name}"]
     register_names(table, names)
@@ -174,6 +200,13 @@ def demo():
     assert got["StaticMu"] == 1.4 and got["WearRate"] == 2.0, \
         "a wider ladder, not a better tire in every direction"
     assert set_offroad({"Exports": []}, 1.6) is None
+
+    clone = {"NameMap": [], "NamesReferencedFromExportDataCount": 0, "Exports": [
+        {"ObjectName": "HeavyDutyBajaFrontTire",
+         "Data": [{"Name": "TirePhysicsParams", "Value": []}]}]}
+    assert rename_asset(clone, "HeavyDutyBaja60FrontTire") == "HeavyDutyBajaFrontTire"
+    assert clone["Exports"][0]["ObjectName"] == "HeavyDutyBaja60FrontTire",         "package.object has to agree or the row resolves to nothing"
+    assert "HeavyDutyBaja60FrontTire" in clone["NameMap"]
 
     donor = {"Name": "HeavyDutyBajaFrontTire", "Value": [
         {"Name": "Name", "CultureInvariantString": "KMHQB1"},
