@@ -80,21 +80,23 @@ WHEEL_PACKAGE = "/Game/Cars/Parts/Wheels"
 # a name has to sort after whatever it overrides -- but only after that, not after
 # everything. Piling on z's until it sorts last works and reads like a mistake.
 #
-#   qxZap_WheelSizes_*            beats qxZap_MoreTuning_yCarbon_P on 'W' > 'M',
-#                                 and every uppercase-led wheel mod on top of that
-#   zzzProxyTechWheels_WheelSizes beats zzzProxyTechWheels_V2 on 'W' > 'V', and
-#                                 needs to, because both ship Wheels_PT
+#   qxZap_Wheels_P         beats qxZap_MoreTuning_yCarbon_P on 'W' > 'M', and
+#                          every uppercase-led wheel mod on top of that
+#   qxZap_Wheels_yCarbon_P beats the plain one on 'y' > '_', so installing both
+#                          leaves Carbon winning, which is the way round that helps
+#   zzzProxyWheels_P       beats zzzProxyTechWheels_V2_P on 'W' > 'T', and needs
+#                          to, because both ship Wheels_PT
 #
 # Vanilla and Carbon both ship Wheels and are alternatives -- install one.
 OUT_NAMES = {
-    "Vanilla": "qxZap_WheelSizes_Vanilla_P",
-    "ZZb_qxZap_MoreTuning_yWheelWorksCarbon_P": "qxZap_WheelSizes_Carbon_P",
-    "zzzProxyTechWheels_V2_P_Wheels_PT": "zzzProxyTechWheels_WheelSizes_P",
+    "Vanilla": "qxZap_Wheels_P",
+    "ZZb_qxZap_MoreTuning_yWheelWorksCarbon_P": "qxZap_Wheels_yCarbon_P",
+    "zzzProxyTechWheels_V2_P_Wheels_PT": "zzzProxyWheels_P",
 }
-OUT_PREFIX = "qxZap_WheelSizes_"
+OUT_PREFIX = "qxZap_Wheels_"
 
 # Anything of ours, whatever it was called, must never be treated as a source.
-OURS = re.compile(r"WheelSizes|WheelWorkshop", re.I)   # never a source
+OURS = re.compile(r"WheelSizes|WheelWorkshop|qxZap_Wheels|ProxyWheels", re.I)   # never a source
 
 # Sources not worth a build. MotorWorks ships a wheel table but is not a wheel
 # mod, so a compat pak for it is a build nobody installs.
