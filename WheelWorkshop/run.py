@@ -630,8 +630,10 @@ def build(source, out_root, dry=True):
     table_rel = source.rel
     made = 0
     for row, usable in plan:
-        # Keep them ascending under the rim they came from: -50% first, +100%
-        # last. Inserting each one straight after the donor reverses them.
+        # The stock wheel sits in the middle of its own family: everything
+        # smaller above it, biggest at the top, everything larger below. Reading
+        # a list that runs -50 up to +100 through the original is far easier
+        # than hunting for stock at the top of sixteen entries.
         step = 0
         for scale in sizes:
             tag = suffix_for(scale)
@@ -657,8 +659,12 @@ def build(source, out_root, dry=True):
             existing = next((r for r in rows if r["Name"] == key), None)
             if existing is not None:
                 rows.remove(existing)
-            step += 1
-            rows.insert(rows.index(row) + step, fresh)
+            if scale < 1.0:
+                # Above the donor, in order, so -50% ends up furthest from it.
+                rows.insert(rows.index(row), fresh)
+            else:
+                step += 1
+                rows.insert(rows.index(row) + step, fresh)
             register_names(table, [key] + list(
                 {n for f, n in [(f, table["Imports"][-l - 1]["ObjectName"])
                                 for f, l in links.items()]}))
