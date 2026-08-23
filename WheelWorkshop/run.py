@@ -21,6 +21,7 @@ in it alongside the sized ones.
 Everything this needs is configured at the top of this file rather than in the
 environment, so a game update is one edit here.
 """
+import array
 import base64
 import copy
 import json
@@ -65,6 +66,10 @@ _CURATED = [
     "Vista",         # classic
 ]
 
+# Not every wheel mod calls its table Wheels. ProxyTech ships Wheels_PT and
+# registers it through VehicleParts, which is tidier than overriding the shared
+# one -- and invisible to anything looking only for "Wheels.uasset".
+TABLE_PATTERN = r"DataAsset/VehicleParts/Wheels[A-Za-z0-9_]*\.uasset$"
 TABLE_IN_PAK = "MotorTown/Content/DataAsset/VehicleParts/Wheels.uasset"
 TABLE_REL = os.path.join("DataAsset", "VehicleParts", "Wheels.uasset")
 WHEEL_DIR = os.path.join("Cars", "Parts", "Wheels")
@@ -165,30 +170,47 @@ def find_sources():
     on the wrong one silently drops another mod's wheels. One build per source
     is the only way to be compatible with all of them at once.
     """
-    found = [("Vanilla", os.path.join(GAME_EXPORT, TABLE_REL), None)]
+    found = [Source("Vanilla", os.path.join(GAME_EXPORT, TABLE_REL), None, TABLE_REL)]
     if not os.path.isdir(GAME_PAKS):
         return found
     for name in sorted(os.listdir(GAME_PAKS)):
-        if not name.endswith(".pak") or OURS.search(name):
+        if not name.endswith(".pak") or OURS.search(name) or SKIP_SOURCES.search(name):
             continue
         pak = os.path.join(GAME_PAKS, name)
-        if SKIP_SOURCES.search(name) or not pak_has(pak, r"VehicleParts/Wheels\.uasset$"):
-            continue
-        found.append((name[: -len(".pak")], None, pak))
+        for entry in pak_has(pak, TABLE_PATTERN):
+            rel = os.path.join(*entry.split("MotorTown/Content/")[-1].split("/"))
+            label = name[: -len(".pak")]
+            if not entry.endswith("/Wheels.uasset"):
+                label += "_" + os.path.basename(entry)[: -len(".uasset")]
+            found.append(Source(label, None, pak, rel, entry))
     return found
+
+
+class Source:
+    """One wheel table somewhere, and where to get it from."""
+
+    def __init__(self, name, path, pak, rel, entry=None):
+        self.name = name
+        self.path = path                 # already on disk, if it is
+        self.pak = pak                   # otherwise the pak holding it
+        self.rel = rel                   # where it lives inside a mod tree
+        self.entry = entry or ("MotorTown/Content/" + rel.replace(os.sep, "/"))
+
+    def __getitem__(self, i):            # a few call sites still index it
+        return (self.name, self.path, self.pak)[i]
 
 
 def fetch_table(source):
     """Get a source's wheel table (and its .uexp) somewhere we can read it."""
-    name, path, pak = source
-    if path:
-        return path
-    out_dir = os.path.join(WORK, "sources", name)
-    got = pak_get(pak, TABLE_IN_PAK, os.path.join(out_dir, "Wheels.uasset"))
+    if source.path:
+        return source.path
+    stem = os.path.basename(source.rel)[: -len(".uasset")]
+    out_dir = os.path.join(WORK, "sources", source.name)
+    got = pak_get(source.pak, source.entry, os.path.join(out_dir, stem + ".uasset"))
     if not got:
         return None
-    pak_get(pak, TABLE_IN_PAK.replace(".uasset", ".uexp"),
-            os.path.join(out_dir, "Wheels.uexp"))
+    pak_get(source.pak, source.entry.replace(".uasset", ".uexp"),
+            os.path.join(out_dir, stem + ".uexp"))
     return got
 
 
@@ -227,6 +249,9 @@ def find_positions(blob, box_lo, box_hi, tolerance=0.5):
     and a wrong guess silently corrupts a mesh, so a candidate is only accepted
     if the coordinates it yields reproduce the mesh's own stated bounds.
     """
+    # Every byte, not every fourth. The blob starts mid-stream so a buffer is
+    # not aligned to anything -- the game's own wheels have theirs at offset 110
+    # -- and stepping 4 to save time simply walks past them.
     for off in range(0, max(0, len(blob) - 8)):
         stride, count = struct.unpack_from("<ii", blob, off)
         if stride != POSITION_STRIDE or not 16 <= count <= 200000:
@@ -247,11 +272,16 @@ def find_positions(blob, box_lo, box_hi, tolerance=0.5):
 
 
 def scale_positions(blob, off, count, factor):
+    """Multiply every coordinate. Done through array rather than float by float:
+    a high poly rim runs to a hundred thousand vertices and struct per value is
+    minutes where this is a moment."""
+    start, size = off + 8, count * 3 * 4
+    values = array.array("f")
+    values.frombytes(bytes(blob[start:start + size]))
+    for i in range(len(values)):
+        values[i] *= factor
     out = bytearray(blob)
-    for i in range(count * 3):
-        at = off + 8 + i * 4
-        value, = struct.unpack_from("<f", out, at)
-        struct.pack_into("<f", out, at, value * factor)
+    out[start:start + size] = values.tobytes()
     return bytes(out)
 
 
@@ -289,15 +319,15 @@ def register_names(asset, names):
     return fresh
 
 
-def cached_mesh(mesh, new_name, factor):
+def cached_mesh(mesh, new_name, factor, source=None):
     """Resize a rim once and keep it. The same rim at the same size is the same
     mesh in every source, and the resize is the slow part -- four sources means
     four copies of a file, not four rounds through UAssetGUI."""
-    cache = os.path.join(WORK, "meshes")
+    cache = os.path.join(WORK, "meshes", source.name if source and source.pak else "game")
     made = os.path.join(cache, new_name + ".uasset")
     if os.path.isfile(made):
         return cache
-    if resize_mesh(find_mesh(mesh), new_name, factor, cache) is None:
+    if resize_mesh(find_mesh(mesh, source), new_name, factor, cache) is None:
         return None
     return cache
 
@@ -453,11 +483,55 @@ def base_label(row):
     return row["Name"]
 
 
-def find_mesh(name):
-    """Where a wheel mesh lives. Only the game's own copy is resized -- a mod's
-    rim is that mod's to ship, and resizing it here would override it."""
+def find_mesh(name, source=None):
+    """Where a wheel mesh lives: the game's copy, or the source mod's own.
+
+    A resized copy is a new asset under a new name, so taking a mod's rim does
+    not override anything of theirs -- and a wheel mod whose rims cannot be
+    resized is a wheel mod this is no use to.
+    """
     path = os.path.join(GAME_EXPORT, WHEEL_DIR, name + ".uasset")
-    return path if os.path.isfile(path) else None
+    if os.path.isfile(path):
+        return path
+    if source is None or not source.pak:
+        return None
+    out_dir = os.path.join(WORK, "modmeshes", source.name)
+    got = os.path.join(out_dir, name + ".uasset")
+    if os.path.isfile(got):
+        return got
+    entry = f"MotorTown/Content/Cars/Parts/Wheels/{name}"
+    if not pak_get(source.pak, entry + ".uasset", got):
+        return None
+    for ext in (".uexp", ".ubulk"):
+        pak_get(source.pak, entry + ext, got[: -len(".uasset")] + ext)
+    return got
+
+
+def resizable(mesh, source):
+    """Can this mesh's vertices actually be found? Checked once per source.
+
+    Not every mesh stores positions the way the game's own do -- ProxyTech's
+    rims have no stride-12 float buffer anywhere in them -- and a source whose
+    meshes cannot be read would otherwise build an empty pak and look like it
+    worked.
+    """
+    path = find_mesh(mesh, source)
+    if not path:
+        return False
+    staged = os.path.join(WORK, "probe.json")
+    try:
+        asset = json.load(open(to_json(path, staged), encoding="utf-8"))
+    except SystemExit:
+        return False
+    name = os.path.basename(path)[: -len(".uasset")]
+    lo, hi = box_range(asset, name)
+    if lo is None:
+        return False
+    for export in asset["Exports"]:
+        if export.get("ObjectName") == name and export.get("Extras"):
+            blob = base64.b64decode(export["Extras"])
+            return find_positions(blob, lo, hi) is not None
+    return False
 
 
 def build(source, out_root, dry=True):
@@ -477,16 +551,23 @@ def build(source, out_root, dry=True):
         if RIMS is not None and row["Name"] not in RIMS:
             continue
         meshes = row_meshes(row, table)
-        usable = {f: m for f, m in meshes.items() if m and find_mesh(m)}
+        usable = {f: m for f, m in meshes.items() if m and find_mesh(m, source)}
         if not usable:
             skipped += 1
             continue
         plan.append((row, usable))
 
+    if plan and not resizable(list(plan[0][1].values())[0], source):
+        print(f"  {name:44} skipped -- its meshes do not keep their vertices "
+              f"where the game's do, so they cannot be resized safely")
+        return 0
+
     bytes_each = 0
     for _, usable in plan[:1]:
         for m in usable.values():
-            p = find_mesh(m)
+            p = find_mesh(m, source)
+            if not p:
+                continue
             for ext in (".uasset", ".uexp", ".ubulk"):
                 f = p[: -len(".uasset")] + ext
                 bytes_each += os.path.getsize(f) if os.path.isfile(f) else 0
@@ -496,8 +577,11 @@ def build(source, out_root, dry=True):
     if dry:
         return projected
 
-    out = os.path.join(out_root, OUT_PREFIX + name.replace("_P", "") + "_P",
+    # Only the trailing _P. A blanket replace eats the one inside Wheels_PT and
+    # names the folder after a table that does not exist.
+    out = os.path.join(out_root, OUT_PREFIX + re.sub(r"_P$", "", name) + "_P",
                        "MotorTown", "Content")
+    table_rel = source.rel
     made = 0
     for row, usable in plan:
         # Keep them ascending under the rim they came from: -50% first, +100%
@@ -510,7 +594,7 @@ def build(source, out_root, dry=True):
                 new_name = f"{mesh}_{tag}"
                 target = os.path.join(out, WHEEL_DIR, new_name + ".uasset")
                 if not os.path.isfile(target):
-                    cache = cached_mesh(mesh, new_name, scale)
+                    cache = cached_mesh(mesh, new_name, scale, source)
                     if cache is None:
                         links = {}
                         break
@@ -536,7 +620,7 @@ def build(source, out_root, dry=True):
     js = os.path.join(work, "wheels.edited.json")
     json.dump(table, open(js, "w", encoding="utf-8"), indent=1)
     built = from_json(js, os.path.join(work, "Wheels.uasset"))
-    target = os.path.join(out, TABLE_REL)
+    target = os.path.join(out, table_rel)
     os.makedirs(os.path.dirname(target), exist_ok=True)
     for ext in (".uasset", ".uexp"):
         shutil.copy2(built[: -len(".uasset")] + ext, target.replace(".uasset", ext))
