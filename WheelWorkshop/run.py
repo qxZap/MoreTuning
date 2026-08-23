@@ -52,8 +52,9 @@ SCALE_MIN, SCALE_MAX, SCALE_STEP = 0.5, 2.0, 0.1
 # of a 60KB mesh, which is 136MB per source and about a gigabyte across all of
 # them -- and pointless, because any rim already fits any vehicle. A spread of
 # designs in every size is the same product for a fiftieth of the download.
-# Set to None to do the lot, if you ever want to.
-RIMS = [
+# Set to None to do the lot.
+RIMS = None
+_CURATED = [
     "Cervos",        # plain road wheel
     "Voltex",        # sports
     "Trophy",        # offroad
@@ -288,6 +289,19 @@ def register_names(asset, names):
     return fresh
 
 
+def cached_mesh(mesh, new_name, factor):
+    """Resize a rim once and keep it. The same rim at the same size is the same
+    mesh in every source, and the resize is the slow part -- four sources means
+    four copies of a file, not four rounds through UAssetGUI."""
+    cache = os.path.join(WORK, "meshes")
+    made = os.path.join(cache, new_name + ".uasset")
+    if os.path.isfile(made):
+        return cache
+    if resize_mesh(find_mesh(mesh), new_name, factor, cache) is None:
+        return None
+    return cache
+
+
 def resize_mesh(source, new_name, factor, out_dir):
     """Write a resized copy of a wheel mesh. Returns its vertex count."""
     name = os.path.basename(source)[: -len(".uasset")]
@@ -464,10 +478,15 @@ def build(source, out_root, dry=True):
                 new_name = f"{mesh}_{tag}"
                 target = os.path.join(out, WHEEL_DIR, new_name + ".uasset")
                 if not os.path.isfile(target):
-                    if resize_mesh(find_mesh(mesh), new_name, scale,
-                                   os.path.join(out, WHEEL_DIR)) is None:
+                    cache = cached_mesh(mesh, new_name, scale)
+                    if cache is None:
                         links = {}
                         break
+                    os.makedirs(os.path.join(out, WHEEL_DIR), exist_ok=True)
+                    for ext in (".uasset", ".uexp", ".ubulk"):
+                        src = os.path.join(cache, new_name + ext)
+                        if os.path.isfile(src):
+                            shutil.copy2(src, os.path.join(out, WHEEL_DIR, new_name + ext))
                 links[field] = mesh_link(table, new_name)
             if not links:
                 continue
