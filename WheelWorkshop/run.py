@@ -464,6 +464,49 @@ def set_label(row, label):
                 field["Value"] = [first]
 
 
+# Which slot stands in for which, when a row does not fill one. A wheel is a
+# wheel: the only reason a rim is not offered for a truck is that the row has no
+# dual-rear mesh, not that anything about it is unsuitable.
+STAND_IN = {
+    "LeftWheelMesh": ("DRWLeftWheelMesh", "RearLeftWheelMesh", "QuadWheelMesh"),
+    "RightWheelMesh": ("DRWRightWheelMesh", "RearRightWheelMesh", "QuadWheelMesh"),
+    "DRWLeftWheelMesh": ("LeftWheelMesh", "RearLeftWheelMesh", "QuadWheelMesh"),
+    "DRWRightWheelMesh": ("RightWheelMesh", "RearRightWheelMesh", "QuadWheelMesh"),
+    "QuadWheelMesh": ("LeftWheelMesh", "DRWLeftWheelMesh", "RearLeftWheelMesh"),
+}
+
+
+def make_universal(row):
+    """Fill every empty wheel slot from one the row does have.
+
+    Of 186 rows, 148 fill only Left and Right, so a truck -- whose dual rear axle
+    wants DRW meshes -- is offered a fraction of what a car is. Nothing about a
+    car rim makes it unfit for a lorry; the row simply never named a mesh for
+    that position. Naming one opens every wheel to every vehicle.
+
+    Rear stays alone: it is a genuinely different position on the six rows that
+    use it, not a missing entry.
+    """
+    for prop in row["Value"]:
+        if prop["Name"] != "Wheel":
+            continue
+        have = {f["Name"]: f for f in prop["Value"]
+                if isinstance(f, dict) and f["Name"] in MESH_FIELDS}
+        filled = 0
+        for field, sources in STAND_IN.items():
+            target = have.get(field)
+            if target is None or target.get("Value"):
+                continue
+            for other in sources:
+                donor = have.get(other)
+                if donor is not None and donor.get("Value"):
+                    target["Value"] = donor["Value"]
+                    filled += 1
+                    break
+        return filled
+    return 0
+
+
 def make_row(donor, key, label, links):
     row = copy.deepcopy(donor)
     row["Name"] = key
@@ -546,6 +589,9 @@ def build(source, out_root, dry=True):
     rows = wheel_rows(table)
 
     sizes = scales()
+    opened = sum(make_universal(row) for row in rows)
+    print(f"  {name:44} {opened} empty wheel slots filled in")
+
     plan, skipped = [], 0
     for row in list(rows):
         if RIMS is not None and row["Name"] not in RIMS:
@@ -564,7 +610,7 @@ def build(source, out_root, dry=True):
 
     bytes_each = 0
     for _, usable in plan[:1]:
-        for m in usable.values():
+        for m in set(usable.values()):      # one mesh can fill several slots
             p = find_mesh(m, source)
             if not p:
                 continue
@@ -706,6 +752,31 @@ def demo():
     assert len(two) == 1 and two[0]["CultureInvariantString"] == "Tavan_01 +50%"
     assert two[0]["TableId"] is None and two[0]["HistoryType"] == "None",         "Name2 is the one the shop reads; a table entry there wins over the string"
     assert RIMS is None or len(RIMS) == len(set(RIMS)), "no rim listed twice"
+
+    car = {"Value": [{"Name": "Wheel", "Value": [
+        {"Name": "LeftWheelMesh", "Value": -5},
+        {"Name": "RightWheelMesh", "Value": -6},
+        {"Name": "DRWLeftWheelMesh", "Value": 0},
+        {"Name": "DRWRightWheelMesh", "Value": 0},
+        {"Name": "RearLeftWheelMesh", "Value": 0},
+        {"Name": "RearRightWheelMesh", "Value": 0},
+        {"Name": "QuadWheelMesh", "Value": 0}]}]}
+    assert make_universal(car) == 3, "both DRW slots and the quad one"
+    got = {f["Name"]: f["Value"] for f in car["Value"][0]["Value"]}
+    assert got["DRWLeftWheelMesh"] == -5 and got["DRWRightWheelMesh"] == -6,         "a car rim on a truck axle is the whole point"
+    assert got["QuadWheelMesh"] == -5
+    assert got["RearLeftWheelMesh"] == 0, "rear is a real position, not a gap"
+    assert make_universal(car) == 0, "second pass should be a no-op"
+
+    truck = {"Value": [{"Name": "Wheel", "Value": [
+        {"Name": "LeftWheelMesh", "Value": 0},
+        {"Name": "RightWheelMesh", "Value": 0},
+        {"Name": "DRWLeftWheelMesh", "Value": -7},
+        {"Name": "DRWRightWheelMesh", "Value": -8},
+        {"Name": "QuadWheelMesh", "Value": 0}]}]}
+    make_universal(truck)
+    got = {f["Name"]: f["Value"] for f in truck["Value"][0]["Value"]}
+    assert got["LeftWheelMesh"] == -7 and got["RightWheelMesh"] == -8,         "and a truck rear wheel on a car, which is the other half of the ask"
     print("ok")
 
 
