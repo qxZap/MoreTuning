@@ -27,10 +27,12 @@ around it.
 This ships as its own ZZZ pak: several mods touch wheels, Maja's among them, and
 ZZZ sorts last so it wins. Her table is the base, so her wheels survive.
 """
+import base64
 import copy
 import json
 import os
 import shutil
+import struct
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -46,10 +48,10 @@ WHEEL_DIR = os.path.join("Cars", "Parts", "Wheels")
 DONOR_ROW = "Cervos"
 DONOR_MESHES = ("Classic_01_L", "Classic_01_R")
 
-# (suffix, bounds multiplier, label). If the game measures the mesh, a bigger
-# box means a smaller wheel -- it is being scaled down to fit the same radius.
-VERSIONS = [("Big", 0.75, "Classic 01 (Big test)"),
-            ("Small", 1.25, "Classic 01 (Small test)")]
+# (suffix, multiplier, label). Geometry and bounds move together now, so the
+# names mean what they say: Big is bigger.
+VERSIONS = [("Big", 1.25, "Classic 01 +25%"),
+            ("Small", 0.80, "Classic 01 -20%")]
 
 
 def scale_bounds(asset, factor):
@@ -76,6 +78,48 @@ def scale_bounds(asset, factor):
                 if name == "BoxExtent":
                     after = before * factor
     return before, after
+
+
+# The vertex positions live in the render data, which UAssetGUI hands over as an
+# opaque blob. Inside it a position buffer is a stride of 12, a vertex count, and
+# then that many packed float triples -- so it can be found by looking for that
+# shape and checking the coordinates it yields actually reproduce the mesh's own
+# stated bounds. On a wheel that is one buffer of a few hundred vertices, and
+# scaling every one of them is the whole job.
+POSITION_STRIDE = 12
+
+
+def find_positions(blob, box_lo, box_hi, tolerance=0.5):
+    """Offset and count of the position buffer, or None. Verified against bounds,
+    because a stride of 12 turns up by chance and a wrong guess corrupts a mesh."""
+    for off in range(0, len(blob) - 8):
+        stride, count = struct.unpack_from("<ii", blob, off)
+        if stride != POSITION_STRIDE or not 16 <= count <= 200000:
+            continue
+        end = off + 8 + count * POSITION_STRIDE
+        if end > len(blob):
+            continue
+        try:
+            coords = struct.unpack_from(f"<{count * 3}f", blob, off + 8)
+        except struct.error:
+            continue
+        if not all(-1e4 < v < 1e4 for v in coords):
+            continue
+        axes = [coords[i::3] for i in range(3)]
+        if all(abs(min(axes[i]) - box_lo[i]) < tolerance
+               and abs(max(axes[i]) - box_hi[i]) < tolerance for i in range(3)):
+            return off, count
+    return None
+
+
+def scale_positions(blob, off, count, factor):
+    """Multiply every vertex position. Returns the new blob."""
+    out = bytearray(blob)
+    for i in range(count * 3):
+        at = off + 8 + i * 4
+        value, = struct.unpack_from("<f", out, at)
+        struct.pack_into("<f", out, at, value * factor)
+    return bytes(out)
 
 
 def rename_export(asset, old, new):
@@ -134,11 +178,57 @@ def make_row(donor, key, label, left, right):
     return row
 
 
+def box_range(asset, name):
+    """The corners the mesh says it occupies, for checking a buffer against."""
+    for export in asset["Exports"]:
+        if export.get("ObjectName") != name:
+            continue
+        for prop in export.get("Data") or []:
+            if not isinstance(prop, dict) or prop["Name"] != "ExtendedBounds":
+                continue
+            got = {}
+            for part in prop["Value"]:
+                if part.get("Name") in ("Origin", "BoxExtent"):
+                    v = part["Value"][0]["Value"]
+                    got[part["Name"]] = [0.0 if isinstance(v[k], str) else float(v[k])
+                                         for k in "XYZ"]
+            o, e = got["Origin"], got["BoxExtent"]
+            return [o[i] - e[i] for i in range(3)], [o[i] + e[i] for i in range(3)]
+    return None, None
+
+
+def scale_geometry(asset, name, factor):
+    """Scale the actual vertices. Returns how many moved, or None if not found."""
+    lo, hi = box_range(asset, name)
+    if lo is None:
+        return None
+    for export in asset["Exports"]:
+        if export.get("ObjectName") != name or not export.get("Extras"):
+            continue
+        blob = base64.b64decode(export["Extras"])
+        found = find_positions(blob, lo, hi)
+        if found is None:
+            return None
+        off, count = found
+        export["Extras"] = base64.b64encode(
+            scale_positions(blob, off, count, factor)).decode("ascii")
+        return count
+    return None
+
+
 def build_mesh(name, new_name, factor, work):
-    """Copy a wheel mesh with its bounds scaled, keeping its bulk data."""
+    """Copy a wheel mesh with its geometry and its bounds scaled together.
+
+    Bounds alone only moved the collision -- the wheel still drew at its old
+    size -- so the vertices have to move with them.
+    """
     source = os.path.join(VANILLA, WHEEL_DIR, name + ".uasset")
     staged = os.path.join(os.path.dirname(source), new_name + ".tmp.json")
     asset = json.load(open(to_json(source, staged), encoding="utf-8"))
+    moved = scale_geometry(asset, name, factor)
+    if moved is None:
+        sys.exit(f"could not find the vertices of {name}; refusing to ship a "
+                 f"mesh with bounds that disagree with its geometry")
     rename_export(asset, name, new_name)
     before, after = scale_bounds(asset, factor)
     json.dump(asset, open(staged, "w", encoding="utf-8"), indent=1)
