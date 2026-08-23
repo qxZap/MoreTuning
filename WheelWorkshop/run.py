@@ -399,15 +399,47 @@ def row_meshes(row, table):
     return out
 
 
+def plain_text(prop, label):
+    """Make a text property say the label itself, rather than look it up.
+
+    Wheel names come through Name2, whose entry is a StringTableEntry into
+    VehicleName -- so a cloned row inherits the donor's key and every size of a
+    rim resolves to the same word. Clearing the lookup and putting the string in
+    directly is what the engine rows already do.
+    """
+    prop.update({"Flags": "CultureInvariant", "HistoryType": "None",
+                 "TableId": None, "Namespace": None,
+                 "CultureInvariantString": label, "SourceFmt": None,
+                 "Arguments": None, "ArgumentsData": None, "SourceValue": None,
+                 "FormatOptions": None, "TargetCulture": None, "Value": None})
+
+
+def set_label(row, label):
+    """Name it in both places the game might read, with no table lookup left."""
+    for prop in row["Value"]:
+        if prop["Name"] == "Name":
+            plain_text(prop, label)
+        elif prop["Name"] == "Name2":
+            for field in prop["Value"]:
+                if not isinstance(field, dict) or field.get("Name") != "Texts":
+                    continue
+                first = copy.deepcopy(field["Value"][0]) if field["Value"] else {
+                    "$type": "UAssetAPI.PropertyTypes.Objects.TextPropertyData, UAssetAPI",
+                    "ArrayIndex": 0, "PropertyGuid": None, "IsZero": False,
+                    "PropertyTagFlags": "None", "PropertyTypeName": None,
+                    "PropertyTagExtensions": "NoExtension",
+                    "TransformType": "ToLower"}
+                plain_text(first, label)
+                first["Name"] = "0"
+                field["Value"] = [first]
+
+
 def make_row(donor, key, label, links):
     row = copy.deepcopy(donor)
     row["Name"] = key
+    set_label(row, label)
     for prop in row["Value"]:
-        if prop["Name"] == "Name":
-            prop.update({"CultureInvariantString": label, "Namespace": None,
-                         "Value": None, "HistoryType": "None",
-                         "Flags": "CultureInvariant"})
-        elif prop["Name"] == "Wheel":
+        if prop["Name"] == "Wheel":
             for field in prop["Value"]:
                 if isinstance(field, dict) and field["Name"] in links:
                     field["Value"] = links[field["Name"]]
@@ -575,6 +607,20 @@ def demo():
     wheel = {f["Name"]: f["Value"] for f in row["Value"][1]["Value"]}
     assert wheel["LeftWheelMesh"] == -9 and wheel["RightWheelMesh"] == -2
     assert base_label(donor) == "Cervos"
+
+    named = {"Name": "X", "Value": [
+        {"Name": "Name", "HistoryType": "StringTableEntry", "TableId": "/T.T",
+         "CultureInvariantString": None, "Value": "Tavan_Name"},
+        {"Name": "Name2", "Value": [{"Name": "Texts", "Value": [
+            {"HistoryType": "StringTableEntry", "TableId": "/Game/T.T",
+             "CultureInvariantString": None, "Value": "Tavan_Name"}]}]}]}
+    set_label(named, "Tavan_01 +50%")
+    one = named["Value"][0]
+    assert one["CultureInvariantString"] == "Tavan_01 +50%"
+    assert one["TableId"] is None and one["Value"] is None, "no lookup may survive"
+    two = named["Value"][1]["Value"][0]["Value"]
+    assert len(two) == 1 and two[0]["CultureInvariantString"] == "Tavan_01 +50%"
+    assert two[0]["TableId"] is None and two[0]["HistoryType"] == "None",         "Name2 is the one the shop reads; a table entry there wins over the string"
     assert RIMS is None or len(RIMS) == len(set(RIMS)), "no rim listed twice"
     print("ok")
 

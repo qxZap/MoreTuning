@@ -289,6 +289,32 @@ the `Attachment_qxWinch` test row, which shipped briefly and was then deleted.
 Reordering was still reverted, because a diff nobody can justify is not worth
 carrying, and menu position is a vendor concern.
 
+### Cloning a row drags the donor's name with it
+
+Three times now, in three tables. A row's display name is a string table lookup,
+not a string: clone the row and every copy resolves to the donor's entry, so
+fifteen sizes of a rim all read "Tavan" and 138 attachments all read "Round
+Light 01". Setting the obvious field does not help either, because the field the
+UI reads is usually not the one called `Name`.
+
+    Items_AttachmentPart   the shop reads ItemNameTexts.Texts, not ItemName
+    Wheels                 the shop reads Name2.Texts, and Name is empty
+    engines                Name, and NewEngines already does it correctly
+
+The fix is the same everywhere and it is what the engine rows already do: clear
+the lookup and put the string in directly.
+
+    HistoryType  StringTableEntry -> None
+    TableId      /Game/.../SomeTable -> None
+    Value        the key -> None
+    Flags        -> CultureInvariant
+    CultureInvariantString -> the text you want
+
+Set it in every name field the row has rather than guessing which one is read.
+And a cloned *asset* has the same problem in a different shape: its export keeps
+the donor's object name, so package.object disagrees and the row resolves to
+nothing at all -- that one shows up as a part with no stats.
+
 ### An attachment actor, and what makes a lamp work
 
 An attachment is a `BlueprintGeneratedClass` actor with an SCS carrying
