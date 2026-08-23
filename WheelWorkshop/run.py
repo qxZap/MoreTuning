@@ -76,14 +76,25 @@ WHEEL_DIR = os.path.join("Cars", "Parts", "Wheels")
 WHEEL_PACKAGE = "/Game/Cars/Parts/Wheels"
 
 # Our own output must not be mistaken for a source to build from.
-# Lowercase, and four z's. Pak load order is by filename and last one wins, and
-# ASCII puts every lowercase letter after every uppercase one -- so a ZZZ_ prefix
-# loses to qxZap_MoreTuning_yCarbon_P and to zzzProxyTechWheels, which is exactly
-# the pair this has to beat. zzzz_ sorts after both.
-OUT_PREFIX = "zzzz_qxZap_WheelSizes_"
+# What each build is called. Load order is by filename and the last one wins, so
+# a name has to sort after whatever it overrides -- but only after that, not after
+# everything. Piling on z's until it sorts last works and reads like a mistake.
+#
+#   qxZap_WheelSizes_*            beats qxZap_MoreTuning_yCarbon_P on 'W' > 'M',
+#                                 and every uppercase-led wheel mod on top of that
+#   zzzProxyTechWheels_WheelSizes beats zzzProxyTechWheels_V2 on 'W' > 'V', and
+#                                 needs to, because both ship Wheels_PT
+#
+# Vanilla and Carbon both ship Wheels and are alternatives -- install one.
+OUT_NAMES = {
+    "Vanilla": "qxZap_WheelSizes_Vanilla_P",
+    "ZZb_qxZap_MoreTuning_yWheelWorksCarbon_P": "qxZap_WheelSizes_Carbon_P",
+    "zzzProxyTechWheels_V2_P_Wheels_PT": "zzzProxyTechWheels_WheelSizes_P",
+}
+OUT_PREFIX = "qxZap_WheelSizes_"
 
 # Anything of ours, whatever it was called, must never be treated as a source.
-OURS = re.compile(r"WheelSizes|WheelWorkshop", re.I)
+OURS = re.compile(r"WheelSizes|WheelWorkshop", re.I)   # never a source
 
 # Sources not worth a build. MotorWorks ships a wheel table but is not a wheel
 # mod, so a compat pak for it is a build nobody installs.
@@ -625,8 +636,8 @@ def build(source, out_root, dry=True):
 
     # Only the trailing _P. A blanket replace eats the one inside Wheels_PT and
     # names the folder after a table that does not exist.
-    out = os.path.join(out_root, OUT_PREFIX + re.sub(r"_P$", "", name) + "_P",
-                       "MotorTown", "Content")
+    folder = OUT_NAMES.get(name, OUT_PREFIX + re.sub(r"_P$", "", name) + "_P")
+    out = os.path.join(out_root, folder, "MotorTown", "Content")
     table_rel = source.rel
     made = 0
     for row, usable in plan:
