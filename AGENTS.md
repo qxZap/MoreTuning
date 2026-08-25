@@ -110,6 +110,17 @@ Pak names decide load order (alphabetical, last wins), which is what the `x` and
 `y` prefixes are for: `_P` < `x`NoLimits < `y`Carbon. Each later pak's AeroParts
 is built from the one before it, so overriding never loses rows.
 
+**The sort is case-insensitive.** UE compares pak names with `FString::operator<`,
+which is `Stricmp`, so lowercase does *not* beat uppercase. `qxZap_Wheels_P`
+looks like it wins over `ZZb_qxZap_MoreTuning_yWheelWorksCarbon_P` under ASCII
+and loses under the rule the game uses — that shipped, and a 152 KB carbon table
+silently overrode 373 MB of resized wheels. Only the tell was odd: one of three
+paks worked, and it was the one whose name won either way.
+
+Check a name against the paks that ship the *same table*, comparing
+case-insensitively, not against a list written from memory — the list is what
+was wrong. `WheelWorkshop/run.py:check_order()` does it by reading the folder.
+
 `rebuild.py` keeps *vanilla's* version of any row both sides have, which is what
 picks up balance changes — and also what puts back every restriction RemoveReq
 took out. So RemoveReq always runs after it, and CarbonParts after that, since

@@ -77,26 +77,35 @@ WHEEL_PACKAGE = "/Game/Cars/Parts/Wheels"
 
 # Our own output must not be mistaken for a source to build from.
 # What each build is called. Load order is by filename and the last one wins, so
-# a name has to sort after whatever it overrides -- but only after that, not after
-# everything. Piling on z's until it sorts last works and reads like a mistake.
+# a name has to sort after every pak shipping the same table -- but only after
+# those, not after everything. Piling on z's until it sorts last works and reads
+# like a mistake.
 #
-#   qxZap_Wheels_P         beats qxZap_MoreTuning_yCarbon_P on 'W' > 'M', and
-#                          every uppercase-led wheel mod on top of that
-#   qxZap_Wheels_yCarbon_P beats the plain one on 'y' > '_', so installing both
-#                          leaves Carbon winning, which is the way round that helps
-#   zzzProxyWheels_P       beats zzzProxyTechWheels_V2_P on 'W' > 'T', and needs
-#                          to, because both ship Wheels_PT
+# UE compares pak names CASE-INSENSITIVELY (FString::operator< is Stricmp), so
+# lowercase does NOT beat uppercase. 'qxZap_Wheels_P' looks like it beats
+# 'ZZb_qxZap_MoreTuning_yWheelWorksCarbon_P' and does not -- that build shipped
+# and the 152 KB carbon table won over 373 MB of resized meshes.
+#
+#   zzqxZap_Wheels_P         beats ZZb_qxZap_MoreTuning_... on 'q' > 'b', and
+#                            both Majas wheel tables on 'z' > 'm'
+#   zzqxZap_Wheels_yCarbon_P beats the plain one on 'y' > '_', so installing both
+#                            leaves Carbon winning, which is the way round that helps
+#   zzzProxyWheelSizeUnlimited_P beats zzzProxyTechWheels_V2_P on 'w' > 't', and
+#                            needs to, because both ship Wheels_PT
+#
+# check_order() verifies all of this against the real Paks folder. Trust it over
+# any of the above -- the comment is what was true when it was written.
 #
 # Vanilla and Carbon both ship Wheels and are alternatives -- install one.
 OUT_NAMES = {
-    "Vanilla": "qxZap_Wheels_P",
-    "ZZb_qxZap_MoreTuning_yWheelWorksCarbon_P": "qxZap_Wheels_yCarbon_P",
-    "zzzProxyTechWheels_V2_P_Wheels_PT": "zzzProxyWheels_P",
+    "Vanilla": "zzqxZap_Wheels_P",
+    "ZZb_qxZap_MoreTuning_yWheelWorksCarbon_P": "zzqxZap_Wheels_yCarbon_P",
+    "zzzProxyTechWheels_V2_P_Wheels_PT": "zzzProxyWheelSizeUnlimited_P",
 }
-OUT_PREFIX = "qxZap_Wheels_"
+OUT_PREFIX = "zzqxZap_Wheels_"
 
 # Anything of ours, whatever it was called, must never be treated as a source.
-OURS = re.compile(r"WheelSizes|WheelWorkshop|qxZap_Wheels|ProxyWheels", re.I)   # never a source
+OURS = re.compile(r"WheelSizes|WheelWorkshop|qxZap_Wheels|ProxyWheelSize", re.I)   # never a source
 
 # Sources not worth a build. MotorWorks ships a wheel table but is not a wheel
 # mod, so a compat pak for it is a build nobody installs.
@@ -211,6 +220,30 @@ class Source:
 
     def __getitem__(self, i):            # a few call sites still index it
         return (self.name, self.path, self.pak)[i]
+
+
+def out_name(source_label):
+    return OUT_NAMES.get(source_label, OUT_PREFIX + re.sub(r"_P$", "", source_label) + "_P")
+
+
+def check_order(sources, extra=()):
+    """Our pak must load after every pak shipping the table it overrides.
+
+    UE sorts pak names case-insensitively, so this compares that way. Anything
+    else -- ASCII, intuition about lowercase -- gets this wrong, and did.
+    """
+    bad = []
+    for s in sources:
+        if s.pak is None:                      # vanilla ships in the game pak
+            continue
+        ours = out_name(s.name)
+        theirs = os.path.basename(s.pak)[: -len(".pak")]
+        if ours.lower() <= theirs.lower():
+            bad.append((ours, theirs, "loses to the mod it overrides"))
+    for ours, theirs in extra:
+        if ours.lower() <= theirs.lower():
+            bad.append((ours, theirs, "loses"))
+    return bad
 
 
 def fetch_table(source):
@@ -638,7 +671,7 @@ def build(source, out_root, dry=True):
 
     # Only the trailing _P. A blanket replace eats the one inside Wheels_PT and
     # names the folder after a table that does not exist.
-    folder = OUT_NAMES.get(name, OUT_PREFIX + re.sub(r"_P$", "", name) + "_P")
+    folder = out_name(name)
     out = os.path.join(out_root, folder, "MotorTown", "Content")
     table_rel = source.rel
     made = 0
@@ -796,6 +829,14 @@ def demo():
     make_universal(truck)
     got = {f["Name"]: f["Value"] for f in truck["Value"][0]["Value"]}
     assert got["LeftWheelMesh"] == -7 and got["RightWheelMesh"] == -8,         "and a truck rear wheel on a car, which is the other half of the ask"
+    # The one that shipped broken: ASCII says qxZap_Wheels_P wins, UE says the
+    # ZZb_ carbon table does, and UE is the one running the game.
+    assert check_order([], [("qxZap_Wheels_P", "ZZb_qxZap_MoreTuning_yWheelWorksCarbon_P")]),         "case-insensitive order check must reject the name that shipped broken"
+    assert not check_order([], [("zzqxZap_Wheels_P", "ZZb_qxZap_MoreTuning_yWheelWorksCarbon_P"),
+                                ("zzqxZap_Wheels_yCarbon_P", "zzqxZap_Wheels_P"),
+                                ("zzqxZap_Wheels_P", "MajasMoWheelWorksV5.1-7.19_P"),
+                                ("zzzProxyWheelSizeUnlimited_P", "zzzProxyTechWheels_V2_P")]),         "and accept the names that replaced it"
+
     print("ok")
 
 
