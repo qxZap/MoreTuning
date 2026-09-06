@@ -1,0 +1,142 @@
+  ...100/713  wrong so far 7
+  ...200/713  wrong so far 34
+
+713 actors, 46 repaired, 0 unreadable
+  Attachment_Civo                                        off by    131.3
+       mesh /Game/Cars/Parts/Wheels/Civo_L
+       had  (   131.33,     0.00,  -126.62)   now (    -0.00,   -10.52,    -0.00)
+  Attachment_Civo_DRW                                    off by    131.3
+       mesh /Game/Cars/Parts/Wheels/Civo_DRW_L
+       had  (   131.33,     0.00,  -126.62)   now (     0.00,   -26.05,    -0.00)
+  Attachment_Elisa2_01                                   off by    131.3
+       mesh /Game/Cars/Parts/Wheels/Elisa2_01_L
+       had  (   131.33,     0.00,  -126.62)   now (     0.00,   -13.29,     0.00)
+  Attachment_Elisa2_02                                   off by    131.3
+       mesh /Game/Cars/Parts/Wheels/Elisa2_02_L
+       had  (   131.33,     0.00,  -126.62)   now (     0.00,   -13.28,    -0.00)
+  Attachment_Elisa2_03                                   off by    131.3
+       mesh /Game/Cars/Parts/Wheels/Elisa2_03_L
+       had  (   131.33,     0.00,  -126.62)   now (    -0.00,   -15.16,    -0.00)
+  Attachment_Elisa2_Bonnet_01                            off by    301.1
+       mesh /Game/Cars/Models/Elisa2/Bonnet_01
+       had  (   131.33,     0.00,  -126.62)   now (  -169.81,     0.00,   -86.65)
+  Attachment_Elisa2_Bonnet_02                            off by    301.1
+       mesh /Game/Cars/Models/Elisa2/Bonnet_02
+       had  (   131.33,     0.00,  -126.62)   now (  -169.81,     0.00,   -90.11)
+  Attachment_Elisa2_FrontBumper_01                       off by    363.3
+       mesh /Game/Cars/Models/Elisa2/FrontBumper_01
+       had  (   131.33,     0.00,  -126.62)   now (  -232.02,    -0.00,   -40.35)
+  Attachment_Elisa2_FrontBumper_02                       off by    363.3
+       mesh /Game/Cars/Models/Elisa2/FrontBumper_02
+       had  (   131.33,     0.00,  -126.62)   now (  -232.02,    -0.00,   -38.03)
+  Attachment_Elisa2_FrontBumper_03                       off by    363.3
+       mesh /Game/Cars/Models/Elisa2/FrontBumper_03
+       had  (   131.33,     0.00,  -126.62)   now (  -232.02,    -0.00,   -38.03)
+  Attachment_Elisa2_FrontBumper_04                       off by    363.3
+       mesh /Game/Cars/Models/Elisa2/FrontBumper_04
+       had  (   131.33,     0.00,  -126.62)   now (  -232.02,    -0.00,   -38.03)
+  Attachment_Elisa2_FrontBumper_05                       off by    363.3
+       mesh /Game/Cars/Models/Elisa2/FrontBumper_05
+       had  (   131.33,     0.00,  -126.62)   now (  -232.02,    -0.00,   -40.35)
+  Attachment_Elisa2_FrontBumper_06                       off by    363.3
+       mesh /Game/Cars/Models/Elisa2/FrontBumper_06
+       had  (   131.33,     0.00,  -126.62)   now (  -232.02,    -0.00,   -35.63)
+  Attachment_Elisa2_RearBumper_01                        off by     79.8
+       mesh /Game/Cars/Models/Elisa2/RearBumper_01
+       had  (   131.33,     0.00,  -126.62)   now (   211.16,    -0.00,   -49.20)
+  Attachment_Elisa2_RearBumper_02                        off by     79.8
+       mesh /Game/Cars/Models/Elisa2/RearBumper_02
+       had  (   131.33,     0.00,  -126.62)   now (   211.16,    -0.00,   -49.20)
+  Attachment_Elisa2_RearBumper_03                        off by     79.8
+       mesh /Game/Cars/Models/Elisa2/RearBumper_03
+       had  (   131.33,     0.00,  -126.62)   now (   211.16,    -0.00,   -49.20)
+  Attachment_Elisa2_RearSpoiler_01                       off by    115.3
+       mesh /Game/Cars/Models/Elisa2/RearSpoiler_01
+       had  (   131.33,     0.00,  -126.62)   now (   246.63,    -0.00,   -98.37)
+  Attachment_Elisa2_RearSpoiler_02                       off by    115.2
+       mesh /Game/Cars/Models/Elisa2/RearSpoiler_02
+       had  (   131.33,     0.00,  -126.62)   now (   246.54,    -0.00,   -98.37)
+  Attachment_Elisa2_RearSpoiler_03                       off by    102.5
+       mesh /Game/Cars/Models/Elisa2/RearSpoiler_03
+       had  (   131.33,     0.00,  -126.62)   now (   233.86,     0.00,  -104.07)
+  Attachment_Elisa2_RearWing_01                          off by    134.3
+       mesh /Game/Cars/Models/Elisa2/RearWing_01
+       had  (   131.33,     0.00,  -126.62)   now (    -2.92,     0.00,    -4.39)
+  Attachment_Elisa2_SideSkirt_01                         off by    146.5
+       mesh /Game/Cars/Models/Elisa2/SideSkirt_01
+       had  (   131.33,     0.00,  -126.62)   now (   -15.15,     0.00,   -32.09)
+  Attachment_Elisa2_SideSkirt_02                         off by    146.5
+       mesh /Game/Cars/Models/Elisa2/SideSkirt_02
+       had  (   131.33,     0.00,  -126.62)   now (   -15.15,     0.00,   -32.09)
+  Attachment_Elisa2_SideSkirt_03                         off by    146.5
+       mesh /Game/Cars/Models/Elisa2/SideSkirt_03
+       had  (   131.33,     0.00,  -126.62)   now (   -15.15,     0.00,   -32.09)
+  Attachment_Elisa2_SideSkirt_04                         off by    146.5
+       mesh /Game/Cars/Models/Elisa2/SideSkirt_04
+       had  (   131.33,     0.00,  -126.62)   now (   -15.15,     0.00,   -32.09)
+  Attachment_Elisa2_SideSkirt_05                         off by    101.1
+       mesh /Game/Cars/Models/Elisa2/SideSkirt_05
+       had  (   131.33,     0.00,  -126.62)   now (    30.27,     0.00,   -28.41)
+  Attachment_Longhorn_Semi_4x2_Bonnet_01                 off by    353.6
+       mesh /Game/Cars/Models/Longhorn_Semi_4x2/Bonnet_01
+       had  (   131.33,     0.00,  -126.62)   now (  -222.29,     0.00,  -141.71)
+  Attachment_Longhorn_Semi_4x2_Bonnet_02                 off by    353.6
+       mesh /Game/Cars/Models/Longhorn_Semi_4x2/Bonnet_02
+       had  (   131.33,     0.00,  -126.62)   now (  -222.29,     0.00,  -141.71)
+  Attachment_Longhorn_Semi_4x2_Bonnet_03                 off by    353.6
+       mesh /Game/Cars/Models/Longhorn_Semi_4x2/Bonnet_03
+       had  (   131.33,     0.00,  -126.62)   now (  -222.29,     0.00,  -141.71)
+  Attachment_Longhorn_Semi_4x2_FrontBumper_01            off by    395.4
+       mesh /Game/Cars/Models/Longhorn_Semi_4x2/FrontBumper_01
+       had  (   131.33,     0.00,  -126.62)   now (  -264.12,     0.00,   -56.07)
+  Attachment_Longhorn_Semi_4x2_FrontBumper_02            off by    395.4
+       mesh /Game/Cars/Models/Longhorn_Semi_4x2/FrontBumper_02
+       had  (   131.33,     0.00,  -126.62)   now (  -264.12,     0.00,   -56.07)
+  Attachment_Longhorn_Semi_4x2_FrontBumper_03            off by    395.7
+       mesh /Game/Cars/Models/Longhorn_Semi_4x2/FrontBumper_03
+       had  (   131.33,     0.00,  -126.62)   now (  -264.41,     0.00,   -57.30)
+  Attachment_Longhorn_Semi_4x2_FrontBumper_04            off by    395.7
+       mesh /Game/Cars/Models/Longhorn_Semi_4x2/FrontBumper_04
+       had  (   131.33,     0.00,  -126.62)   now (  -264.41,     0.00,   -57.30)
+  Attachment_Longhorn_Semi_4x2_FrontBumper_05            off by    395.7
+       mesh /Game/Cars/Models/Longhorn_Semi_4x2/FrontBumper_05
+       had  (   131.33,     0.00,  -126.62)   now (  -264.41,     0.00,   -57.30)
+  Attachment_Longhorn_Semi_4x2_FrontBumper_06            off by    395.7
+       mesh /Game/Cars/Models/Longhorn_Semi_4x2/FrontBumper_06
+       had  (   131.33,     0.00,  -126.62)   now (  -264.41,     0.00,   -57.30)
+  Attachment_Longhorn_Semi_4x2_FrontBumper_07            off by    395.7
+       mesh /Game/Cars/Models/Longhorn_Semi_4x2/FrontBumper_07
+       had  (   131.33,     0.00,  -126.62)   now (  -264.41,     0.00,   -57.30)
+  Attachment_Longhorn_Semi_4x2_FrontBumper_08            off by    395.7
+       mesh /Game/Cars/Models/Longhorn_Semi_4x2/FrontBumper_08
+       had  (   131.33,     0.00,  -126.62)   now (  -264.41,     0.00,   -57.30)
+  Attachment_Longhorn_Semi_4x2_FrontWindowSunVisor_01    off by    245.2
+       mesh /Game/Cars/Models/Longhorn_Semi_4x2/FrontSunvisor_01
+       had  (   131.33,     0.00,  -126.62)   now (  -113.91,     0.00,  -273.87)
+  Attachment_Longhorn_Semi_4x2_RearBumper_01             off by    151.9
+       mesh /Game/Cars/Models/Longhorn_Semi_4x2/RearBumper_01
+       had  (   131.33,     0.00,  -126.62)   now (   283.22,     0.00,   -59.93)
+  Attachment_Longhorn_Semi_4x2_RearBumper_02             off by    151.9
+       mesh /Game/Cars/Models/Longhorn_Semi_4x2/RearBumper_02
+       had  (   131.33,     0.00,  -126.62)   now (   283.22,     0.00,   -59.93)
+  Attachment_Longhorn_Semi_4x2_RearBumper_03             off by    151.9
+       mesh /Game/Cars/Models/Longhorn_Semi_4x2/RearBumper_03
+       had  (   131.33,     0.00,  -126.62)   now (   283.22,     0.00,   -59.93)
+  Attachment_Longhorn_Semi_4x2_RearBumper_04             off by    151.9
+       mesh /Game/Cars/Models/Longhorn_Semi_4x2/RearBumper_04
+       had  (   131.33,     0.00,  -126.62)   now (   283.22,     0.00,   -59.93)
+  Attachment_Longhorn_Semi_4x2_RearSpoiler_01            off by    132.2
+       mesh /Game/Cars/Models/Longhorn_Semi_4x2/RearSpoiler_01
+       had  (   131.33,     0.00,  -126.62)   now (    17.44,     0.00,  -258.80)
+  Attachment_Longhorn_Semi_4x2_RearSpoiler_02            off by    111.1
+       mesh /Game/Cars/Models/Longhorn_Semi_4x2/RearSpoiler_02
+       had  (   131.33,     0.00,  -126.62)   now (    20.18,     0.00,  -199.09)
+  Attachment_Longhorn_Semi_4x2_Roof_01                   off by    206.4
+       mesh /Game/Cars/Models/Longhorn_Semi_4x2/Roof_01
+       had  (   131.33,     0.00,  -126.62)   now (   -62.12,     0.00,  -332.97)
+  Attachment_Longhorn_Semi_4x2_SideSkirt_01              off by    217.3
+       mesh /Game/Cars/Models/Longhorn_Semi_4x2/SideSkirt_01
+       had  (   131.33,     0.00,  -126.62)   now (   -85.93,     0.00,   -85.17)
+  Attachment_Longhorn_Semi_4x2_SideSkirt_02              off by    217.3
+       mesh /Game/Cars/Models/Longhorn_Semi_4x2/SideSkirt_02
+       had  (   131.33,     0.00,  -126.62)   now (   -85.93,     0.00,   -85.17)

@@ -1,0 +1,930 @@
+{
+  "$type": "UAssetAPI.UAsset, UAssetAPI",
+  "Info": "Serialized with UAssetAPI v1.1.1x (e3eb798)",
+  "NameMap": [
+    "BlockAll",
+    "Body_01",
+    "Chaos",
+    "NavCollision_Chaos",
+    "Palette",
+    "/Game/Cars/Materials/Body/M_Body",
+    "/Game/Cars/Materials/Palette/M_Palette",
+    "/Game/Cars/Models/Zydro/SideSkirts_03",
+    "/Script/CoreUObject",
+    "/Script/Engine",
+    "/Script/NavigationSystem",
+    "BodySetup",
+    "Class",
+    "Default__BodySetup",
+    "Default__NavCollision",
+    "Default__StaticMesh",
+    "M_Body",
+    "M_Palette",
+    "Material",
+    "NavCollision",
+    "Package",
+    "SideSkirts_03",
+    "StaticMesh"
+  ],
+  "CustomSerializationFlags": "None",
+  "UseSeparateBulkDataFiles": true,
+  "IsUnversioned": true,
+  "FileVersionLicenseeUE": 0,
+  "ObjectVersion": "VER_UE4_CORRECT_LICENSEE_FLAG",
+  "ObjectVersionUE5": "PROPERTY_TAG_COMPLETE_TYPE_NAME",
+  "CustomVersionContainer": [
+    {
+      "$type": "UAssetAPI.CustomVersion, UAssetAPI",
+      "Name": null,
+      "Key": "{375EC13C-06E4-48FB-B500-84F0262A717E}",
+      "FriendlyName": "FCoreObjectVersion",
+      "Version": 4,
+      "IsSerialized": false
+    },
+    {
+      "$type": "UAssetAPI.CustomVersion, UAssetAPI",
+      "Name": null,
+      "Key": "{E4B068ED-F494-42E9-A231-DA0B2E46BB41}",
+      "FriendlyName": "FEditorObjectVersion",
+      "Version": 40,
+      "IsSerialized": false
+    },
+    {
+      "$type": "UAssetAPI.CustomVersion, UAssetAPI",
+      "Name": null,
+      "Key": "{CFFC743F-43B0-4480-9391-14DF171D2073}",
+      "FriendlyName": "FFrameworkObjectVersion",
+      "Version": 37,
+      "IsSerialized": false
+    },
+    {
+      "$type": "UAssetAPI.CustomVersion, UAssetAPI",
+      "Name": null,
+      "Key": "{7B5AE74C-D270-4C10-A958-57980B212A5A}",
+      "FriendlyName": "FSequencerObjectVersion",
+      "Version": 13,
+      "IsSerialized": false
+    },
+    {
+      "$type": "UAssetAPI.CustomVersion, UAssetAPI",
+      "Name": null,
+      "Key": "{29E575DD-E0A3-4627-9D10-D276232CDCEA}",
+      "FriendlyName": "FAnimPhysObjectVersion",
+      "Version": 17,
+      "IsSerialized": false
+    },
+    {
+      "$type": "UAssetAPI.CustomVersion, UAssetAPI",
+      "Name": null,
+      "Key": "{601D1886-AC64-4F84-AA16-D3DE0DEAC7D6}",
+      "FriendlyName": "FFortniteMainBranchObjectVersion",
+      "Version": 134,
+      "IsSerialized": false
+    },
+    {
+      "$type": "UAssetAPI.CustomVersion, UAssetAPI",
+      "Name": null,
+      "Key": "{F2AED0AC-9AFE-416F-8664-AA7FFA26D6FC}",
+      "FriendlyName": "FNiagaraObjectVersion",
+      "Version": 1,
+      "IsSerialized": false
+    },
+    {
+      "$type": "UAssetAPI.CustomVersion, UAssetAPI",
+      "Name": null,
+      "Key": "{717F9EE7-E9B0-493A-88B3-91321B388107}",
+      "FriendlyName": "FAssetRegistryVersion",
+      "Version": 17,
+      "IsSerialized": false
+    },
+    {
+      "$type": "UAssetAPI.CustomVersion, UAssetAPI",
+      "Name": null,
+      "Key": "{9C54D522-A826-4FBE-9421-074661B482D0}",
+      "FriendlyName": "FReleaseObjectVersion",
+      "Version": 44,
+      "IsSerialized": false
+    },
+    {
+      "$type": "UAssetAPI.CustomVersion, UAssetAPI",
+      "Name": null,
+      "Key": "{E7086368-6B23-4C58-8439-1B7016265E91}",
+      "FriendlyName": "FFortniteReleaseBranchCustomObjectVersion",
+      "Version": 15,
+      "IsSerialized": false
+    },
+    {
+      "$type": "UAssetAPI.CustomVersion, UAssetAPI",
+      "Name": null,
+      "Key": "{D89B5E42-24BD-4D46-8412-ACA8DF641779}",
+      "FriendlyName": "FUE5ReleaseStreamObjectVersion",
+      "Version": 51,
+      "IsSerialized": false
+    },
+    {
+      "$type": "UAssetAPI.CustomVersion, UAssetAPI",
+      "Name": null,
+      "Key": "{FCF57AFA-5076-4283-B9A9-E658FFA02D32}",
+      "FriendlyName": "FNiagaraCustomVersion",
+      "Version": 86,
+      "IsSerialized": false
+    }
+  ],
+  "SoftObjectPathList": [],
+  "GatherableTextData": null,
+  "Exports": [
+    {
+      "$type": "UAssetAPI.ExportTypes.NormalExport, UAssetAPI",
+      "Data": [
+        {
+          "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
+          "StructType": "BodyInstance",
+          "SerializeNone": true,
+          "StructGUID": "{00000000-0000-0000-0000-000000000000}",
+          "SerializationControl": "NoExtension",
+          "Operation": "None",
+          "Name": "DefaultInstance",
+          "ArrayIndex": 0,
+          "PropertyGuid": null,
+          "IsZero": false,
+          "PropertyTagFlags": "None",
+          "PropertyTypeName": null,
+          "PropertyTagExtensions": "NoExtension",
+          "Value": [
+            {
+              "$type": "UAssetAPI.PropertyTypes.Objects.EnumPropertyData, UAssetAPI",
+              "EnumType": "ECollisionChannel",
+              "InnerType": "ByteProperty",
+              "Name": "ObjectType",
+              "ArrayIndex": 0,
+              "PropertyGuid": null,
+              "IsZero": true,
+              "PropertyTagFlags": "None",
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": "ECC_WorldStatic"
+            },
+            {
+              "$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI",
+              "Name": "CollisionProfileName",
+              "ArrayIndex": 0,
+              "PropertyGuid": null,
+              "IsZero": false,
+              "PropertyTagFlags": "None",
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": "BlockAll"
+            }
+          ]
+        }
+      ],
+      "ObjectGuid": null,
+      "SerializationControl": "NoExtension",
+      "Operation": "None",
+      "HasLeadingFourNullBytes": false,
+      "ObjectName": "BodySetup_0",
+      "OuterIndex": 3,
+      "ClassIndex": -2,
+      "SuperIndex": 0,
+      "TemplateIndex": -1,
+      "ObjectFlags": "RF_Transactional",
+      "SerialSize": 8517,
+      "SerialOffset": 1731,
+      "ScriptSerializationStartOffset": 0,
+      "ScriptSerializationEndOffset": 0,
+      "bForcedExport": false,
+      "bNotForClient": false,
+      "bNotForServer": false,
+      "PackageGuid": "{00000000-0000-0000-0000-000000000000}",
+      "IsInheritedInstance": false,
+      "PackageFlags": "PKG_None",
+      "bNotAlwaysLoadedForEditorGame": true,
+      "bIsAsset": false,
+      "GeneratePublicHash": false,
+      "SerializationBeforeSerializationDependencies": [],
+      "CreateBeforeSerializationDependencies": [],
+      "SerializationBeforeCreateDependencies": [
+        -2,
+        -1
+      ],
+      "CreateBeforeCreateDependencies": [
+        3
+      ],
+      "Extras": "dmglUhG3QkmpCCyfWSWpaAEAAAABAAAAAQAAAAIAAAAAAAAAAAAAAAQAAAAAAAAAAQAAAAEAAAAAAAAACwAAAAAAAAAACwEAAABcAAAAiuzawWTRvsJzw+dBiuzawbE5wMJCFqZBy0q8wr03v8KPJOhBnDDlQsN7xcLokZxB9gGqQmwhwMLqkZxBnTDlQkvSvsKyod5B9QGqQuZwvsIWQd5By0q8wlGUxcL7cahBhuzawWPRvkKEw+dByUq8wr03v0KfJOhBhuzawbA5wEJSFqZBnDDlQsB7xUL5kZxBnTDlQkjSvkLCod5B9wGqQmkhwEL6kZxB9wGqQuNwvkInQd5ByUq8wlGUxUIMcqhB3yzlQqNQu8LpkZxBvjDlQqNQu8JbPoVBnDDlQsN7xcJaPoVBPPq5QFguwMIq84tBiuzawVguwMKVwo5BP/q5QLE5wMLXRqNBR5qpQmvmvMJe9uNB9xnlQrbLtMIh4udBTS3lQlLovMI1a+RBe2iiQoESpMIAZ+ZBkw/mwdAzosIAZ+ZBG8G/QIBMvcLDU+pBYHjbwfxMvcK0AO1B0/kWQcGZosIAZ+ZBxIhhQvMuwMJ8qodBxIhhQtI6wMIt/p5B9gGqQmwhwMJePoVB9QGqQqNQu8JbPoVBw4hhQuLVvsJLq+BBRPq5QGXRvsIG9ORBzEq8wqJQu8KOh5FBwlO8wuflusL8cahBy0q8whSJxcIah5FBqNZfQkeYosIAZ+ZBJXNhQgZRvcLCQeZBiuzawaNQu8IBw45Bw4hhQqNQu8L0qodBKIW8wqbqs8IS9vJBT1K8wlNPvcITEe5BvjDlQqFQu0JrPoVB3yzlQqFQu0L5kZxBnDDlQsB7xUJrPoVBUPq5QLA5wELnRqNBhuzawVcuwEKlwo5BTfq5QFcuwEI684tBSJqpQmnmvEJu9uNB9xnlQrPLtEIw4udBfGiiQn4SpEIOZ+ZBTS3lQk/ovEJFa+RBkA/mwc8zokIOZ+ZBLMG/QH9MvULTU+pB2/kWQcCZokIOZ+ZBXXjbwfpMvULEAO1ByIhhQtE6wEI9/p5ByIhhQvIuwEKNqodB9wGqQmkhwEJuPoVB9wGqQqFQu0JrPoVBxohhQuDVvkJcq+BBVfq5QGTRvkIW9ORBykq8wqNQu0Keh5FByUq8whWJxUIqh5FBwVO8wujlukIMcqhBq9ZfQkaYokIOZ+ZBKHNhQgVRvULSQeZBhuzawaJQu0IRw45BxohhQqJQu0IEq4dBJ4W8wqbqs0Ii9vJBTlK8wlNPvUIjEe5BP/q5QKNQu8KW84tBUPq5QKJQu0Km84tBrDTlQtCPVMKHDaNBy0q8woanW8K6Vq9BrDTlQsuPVEKQDaNBy0q8woenW0LEVq9ByIC8woanW8JD5e1Biuzawc6PVMItkqxB9xnlQtCPVMIk4udB9gGqQtCPVMKHDaNByIC8woenW0JN5e1BhuzawcyPVEI3kqxB9xnlQsuPVEIt4udB9gGqQsuPVEKQDaNBRvq5QMyPVELLwqlBxIhhQsyPVEIpeqVBxIhhQs6PVMIgeqVBPPq5QM6PVMLCwqlBAAAAAJgAAAAUABMAFQAVAAEAFAAbABoAHAAaABsAHQABABUAIwAjAAAAAQAAACMAHAAcACMAGwApABMAFAATACkASgApAFsASgApAFEAWwABAAAAAgAHAAEAAgAkAAcAJQAHACQAJgAUACQAKQAkABQAJgAmAAEABwABACYAFAAcACsALAArABwAGgAcAAIAAAACABwALAAlACwAKwAlAAIALAACACUABwBNACQAJQBNACsAUAArAE0AJQBNAFEAKQAkAE0AKQAEAAMABQAGAAQABQAQAAMAEQARAAMAEgAXABYAGAAWABcAGQAhABEAIAAgABEAEgAgAAMABAADACAAEgAYAAYABQAGABgAFgAYABAAFwAQABgABQAQAAUAAwAQABEATAAXAEwAUgBMABcAEAARAFMATABTABEAIQAeAAQAHwAEAB4AIAAZACcAKAAoABYAGQAgACoAIQAqACAAHgAWACIABgAiABYAKAAfAAYAIgAGAB8ABAAqAFMAIQAqAFoAUwATAB4AHwAfABUAEwAVAB8AIgAiACMAFQAoAB0AGwAdACgAJwAjACIAGwAbACIAKABKACoAEwATACoAHgAqAFsAWgBbACoASgAKADAAMQAxADAAMgA4ADcAOQA3ADgAOgAIAEAACgAKAEAAMABAAAgAOgA6ADgAQAAyAEYAMQBGADIASwBGAFgAVQBYAEYASwAJAAgACgAJAAoADwBBAA8AQgAPAEEAQwAxAEEAQgBBADEARgBCAAoAMQAKAEIADwA6AEgANwBIADoASQA6AAkASQAJADoACABJAEMASABDAEkA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"
+    },
+    {
+      "$type": "UAssetAPI.ExportTypes.NormalExport, UAssetAPI",
+      "Data": [],
+      "ObjectGuid": null,
+      "SerializationControl": "NoExtension",
+      "Operation": "None",
+      "HasLeadingFourNullBytes": false,
+      "ObjectName": "NavCollision_0",
+      "OuterIndex": 3,
+      "ClassIndex": -4,
+      "SuperIndex": 0,
+      "TemplateIndex": -7,
+      "ObjectFlags": "RF_NoFlags",
+      "SerialSize": 124,
+      "SerialOffset": 10248,
+      "ScriptSerializationStartOffset": 0,
+      "ScriptSerializationEndOffset": 0,
+      "bForcedExport": false,
+      "bNotForClient": false,
+      "bNotForServer": false,
+      "PackageGuid": "{00000000-0000-0000-0000-000000000000}",
+      "IsInheritedInstance": false,
+      "PackageFlags": "PKG_None",
+      "bNotAlwaysLoadedForEditorGame": true,
+      "bIsAsset": false,
+      "GeneratePublicHash": false,
+      "SerializationBeforeSerializationDependencies": [],
+      "CreateBeforeSerializationDependencies": [],
+      "SerializationBeforeCreateDependencies": [
+        -4,
+        -7
+      ],
+      "CreateBeforeCreateDependencies": [
+        3
+      ],
+      "Extras": "N/I3ogQAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAADAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
+    },
+    {
+      "$type": "UAssetAPI.ExportTypes.NormalExport, UAssetAPI",
+      "Data": [
+        {
+          "$type": "UAssetAPI.PropertyTypes.Objects.ArrayPropertyData, UAssetAPI",
+          "ArrayType": "StructProperty",
+          "Name": "StaticMaterials",
+          "ArrayIndex": 0,
+          "PropertyGuid": null,
+          "IsZero": false,
+          "PropertyTagFlags": "None",
+          "PropertyTypeName": null,
+          "PropertyTagExtensions": "NoExtension",
+          "Value": [
+            {
+              "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
+              "StructType": "StaticMaterial",
+              "SerializeNone": true,
+              "StructGUID": "{00000000-0000-0000-0000-000000000000}",
+              "SerializationControl": "NoExtension",
+              "Operation": "None",
+              "Name": "0",
+              "ArrayIndex": 0,
+              "PropertyGuid": null,
+              "IsZero": false,
+              "PropertyTagFlags": "None",
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": [
+                {
+                  "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+                  "Name": "MaterialInterface",
+                  "ArrayIndex": 0,
+                  "PropertyGuid": null,
+                  "IsZero": false,
+                  "PropertyTagFlags": "None",
+                  "PropertyTypeName": null,
+                  "PropertyTagExtensions": "NoExtension",
+                  "Value": -5
+                },
+                {
+                  "$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI",
+                  "Name": "MaterialSlotName",
+                  "ArrayIndex": 0,
+                  "PropertyGuid": null,
+                  "IsZero": false,
+                  "PropertyTagFlags": "None",
+                  "PropertyTypeName": null,
+                  "PropertyTagExtensions": "NoExtension",
+                  "Value": "Body_01"
+                },
+                {
+                  "$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI",
+                  "Name": "ImportedMaterialSlotName",
+                  "ArrayIndex": 0,
+                  "PropertyGuid": null,
+                  "IsZero": false,
+                  "PropertyTagFlags": "None",
+                  "PropertyTypeName": null,
+                  "PropertyTagExtensions": "NoExtension",
+                  "Value": "Body_01"
+                },
+                {
+                  "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
+                  "StructType": "MeshUVChannelInfo",
+                  "SerializeNone": true,
+                  "StructGUID": "{00000000-0000-0000-0000-000000000000}",
+                  "SerializationControl": "NoExtension",
+                  "Operation": "None",
+                  "Name": "UVChannelData",
+                  "ArrayIndex": 0,
+                  "PropertyGuid": null,
+                  "IsZero": false,
+                  "PropertyTagFlags": "None",
+                  "PropertyTypeName": null,
+                  "PropertyTagExtensions": "NoExtension",
+                  "Value": [
+                    {
+                      "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
+                      "Name": "bInitialized",
+                      "ArrayIndex": 0,
+                      "PropertyGuid": null,
+                      "IsZero": false,
+                      "PropertyTagFlags": "None",
+                      "PropertyTypeName": null,
+                      "PropertyTagExtensions": "NoExtension",
+                      "Value": true
+                    },
+                    {
+                      "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
+                      "Name": "bOverrideDensities",
+                      "ArrayIndex": 0,
+                      "PropertyGuid": null,
+                      "IsZero": true,
+                      "PropertyTagFlags": "None",
+                      "PropertyTypeName": null,
+                      "PropertyTagExtensions": "NoExtension",
+                      "Value": false
+                    },
+                    {
+                      "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
+                      "Name": "LocalUVDensities",
+                      "ArrayIndex": 0,
+                      "PropertyGuid": null,
+                      "IsZero": false,
+                      "PropertyTagFlags": "None",
+                      "PropertyTypeName": null,
+                      "PropertyTagExtensions": "NoExtension",
+                      "Value": 460.8952331542969
+                    },
+                    {
+                      "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
+                      "Name": "LocalUVDensities",
+                      "ArrayIndex": 1,
+                      "PropertyGuid": null,
+                      "IsZero": false,
+                      "PropertyTagFlags": "None",
+                      "PropertyTypeName": null,
+                      "PropertyTagExtensions": "NoExtension",
+                      "Value": 204.65557861328125
+                    },
+                    {
+                      "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
+                      "Name": "LocalUVDensities",
+                      "ArrayIndex": 2,
+                      "PropertyGuid": null,
+                      "IsZero": true,
+                      "PropertyTagFlags": "None",
+                      "PropertyTypeName": null,
+                      "PropertyTagExtensions": "NoExtension",
+                      "Value": "+0"
+                    },
+                    {
+                      "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
+                      "Name": "LocalUVDensities",
+                      "ArrayIndex": 3,
+                      "PropertyGuid": null,
+                      "IsZero": true,
+                      "PropertyTagFlags": "None",
+                      "PropertyTypeName": null,
+                      "PropertyTagExtensions": "NoExtension",
+                      "Value": "+0"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
+              "StructType": "StaticMaterial",
+              "SerializeNone": true,
+              "StructGUID": "{00000000-0000-0000-0000-000000000000}",
+              "SerializationControl": "NoExtension",
+              "Operation": "None",
+              "Name": "1",
+              "ArrayIndex": 0,
+              "PropertyGuid": null,
+              "IsZero": false,
+              "PropertyTagFlags": "None",
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": [
+                {
+                  "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+                  "Name": "MaterialInterface",
+                  "ArrayIndex": 0,
+                  "PropertyGuid": null,
+                  "IsZero": false,
+                  "PropertyTagFlags": "None",
+                  "PropertyTypeName": null,
+                  "PropertyTagExtensions": "NoExtension",
+                  "Value": -6
+                },
+                {
+                  "$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI",
+                  "Name": "MaterialSlotName",
+                  "ArrayIndex": 0,
+                  "PropertyGuid": null,
+                  "IsZero": false,
+                  "PropertyTagFlags": "None",
+                  "PropertyTypeName": null,
+                  "PropertyTagExtensions": "NoExtension",
+                  "Value": "Palette"
+                },
+                {
+                  "$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI",
+                  "Name": "ImportedMaterialSlotName",
+                  "ArrayIndex": 0,
+                  "PropertyGuid": null,
+                  "IsZero": false,
+                  "PropertyTagFlags": "None",
+                  "PropertyTypeName": null,
+                  "PropertyTagExtensions": "NoExtension",
+                  "Value": "Palette"
+                },
+                {
+                  "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
+                  "StructType": "MeshUVChannelInfo",
+                  "SerializeNone": true,
+                  "StructGUID": "{00000000-0000-0000-0000-000000000000}",
+                  "SerializationControl": "NoExtension",
+                  "Operation": "None",
+                  "Name": "UVChannelData",
+                  "ArrayIndex": 0,
+                  "PropertyGuid": null,
+                  "IsZero": false,
+                  "PropertyTagFlags": "None",
+                  "PropertyTypeName": null,
+                  "PropertyTagExtensions": "NoExtension",
+                  "Value": [
+                    {
+                      "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
+                      "Name": "bInitialized",
+                      "ArrayIndex": 0,
+                      "PropertyGuid": null,
+                      "IsZero": false,
+                      "PropertyTagFlags": "None",
+                      "PropertyTypeName": null,
+                      "PropertyTagExtensions": "NoExtension",
+                      "Value": true
+                    },
+                    {
+                      "$type": "UAssetAPI.PropertyTypes.Objects.BoolPropertyData, UAssetAPI",
+                      "Name": "bOverrideDensities",
+                      "ArrayIndex": 0,
+                      "PropertyGuid": null,
+                      "IsZero": true,
+                      "PropertyTagFlags": "None",
+                      "PropertyTypeName": null,
+                      "PropertyTagExtensions": "NoExtension",
+                      "Value": false
+                    },
+                    {
+                      "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
+                      "Name": "LocalUVDensities",
+                      "ArrayIndex": 0,
+                      "PropertyGuid": null,
+                      "IsZero": false,
+                      "PropertyTagFlags": "None",
+                      "PropertyTypeName": null,
+                      "PropertyTagExtensions": "NoExtension",
+                      "Value": 208828.203125
+                    },
+                    {
+                      "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
+                      "Name": "LocalUVDensities",
+                      "ArrayIndex": 1,
+                      "PropertyGuid": null,
+                      "IsZero": false,
+                      "PropertyTagFlags": "None",
+                      "PropertyTypeName": null,
+                      "PropertyTagExtensions": "NoExtension",
+                      "Value": 21738.099609375
+                    },
+                    {
+                      "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
+                      "Name": "LocalUVDensities",
+                      "ArrayIndex": 2,
+                      "PropertyGuid": null,
+                      "IsZero": true,
+                      "PropertyTagFlags": "None",
+                      "PropertyTypeName": null,
+                      "PropertyTagExtensions": "NoExtension",
+                      "Value": "+0"
+                    },
+                    {
+                      "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
+                      "Name": "LocalUVDensities",
+                      "ArrayIndex": 3,
+                      "PropertyGuid": null,
+                      "IsZero": true,
+                      "PropertyTagFlags": "None",
+                      "PropertyTypeName": null,
+                      "PropertyTagExtensions": "NoExtension",
+                      "Value": "+0"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$type": "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI",
+          "Name": "LightmapUVDensity",
+          "ArrayIndex": 0,
+          "PropertyGuid": null,
+          "IsZero": false,
+          "PropertyTagFlags": "None",
+          "PropertyTypeName": null,
+          "PropertyTagExtensions": "NoExtension",
+          "Value": 2654.31982421875
+        },
+        {
+          "$type": "UAssetAPI.PropertyTypes.Objects.IntPropertyData, UAssetAPI",
+          "Name": "LightMapResolution",
+          "ArrayIndex": 0,
+          "PropertyGuid": null,
+          "IsZero": false,
+          "PropertyTagFlags": "None",
+          "PropertyTypeName": null,
+          "PropertyTagExtensions": "NoExtension",
+          "Value": 64
+        },
+        {
+          "$type": "UAssetAPI.PropertyTypes.Objects.IntPropertyData, UAssetAPI",
+          "Name": "LightMapCoordinateIndex",
+          "ArrayIndex": 0,
+          "PropertyGuid": null,
+          "IsZero": false,
+          "PropertyTagFlags": "None",
+          "PropertyTypeName": null,
+          "PropertyTagExtensions": "NoExtension",
+          "Value": 1
+        },
+        {
+          "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
+          "StructType": "BoxSphereBounds",
+          "SerializeNone": true,
+          "StructGUID": "{00000000-0000-0000-0000-000000000000}",
+          "SerializationControl": "NoExtension",
+          "Operation": "None",
+          "Name": "ExtendedBounds",
+          "ArrayIndex": 0,
+          "PropertyGuid": null,
+          "IsZero": false,
+          "PropertyTagFlags": "None",
+          "PropertyTypeName": null,
+          "PropertyTagExtensions": "NoExtension",
+          "Value": [
+            {
+              "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
+              "StructType": "Vector",
+              "SerializeNone": true,
+              "StructGUID": "{00000000-0000-0000-0000-000000000000}",
+              "SerializationControl": "NoExtension",
+              "Operation": "None",
+              "Name": "Origin",
+              "ArrayIndex": 0,
+              "PropertyGuid": null,
+              "IsZero": false,
+              "PropertyTagFlags": "None",
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": [
+                {
+                  "$type": "UAssetAPI.PropertyTypes.Structs.VectorPropertyData, UAssetAPI",
+                  "Name": "Origin",
+                  "ArrayIndex": 0,
+                  "PropertyGuid": null,
+                  "IsZero": false,
+                  "PropertyTagFlags": "None",
+                  "PropertyTypeName": null,
+                  "PropertyTagExtensions": "NoExtension",
+                  "Value": {
+                    "$type": "UAssetAPI.UnrealTypes.FVector, UAssetAPI",
+                    "X": 10.171401977539062,
+                    "Y": "+0",
+                    "Z": 23.512813568115234
+                  }
+                }
+              ]
+            },
+            {
+              "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
+              "StructType": "Vector",
+              "SerializeNone": true,
+              "StructGUID": "{00000000-0000-0000-0000-000000000000}",
+              "SerializationControl": "NoExtension",
+              "Operation": "None",
+              "Name": "BoxExtent",
+              "ArrayIndex": 0,
+              "PropertyGuid": null,
+              "IsZero": false,
+              "PropertyTagFlags": "None",
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": [
+                {
+                  "$type": "UAssetAPI.PropertyTypes.Structs.VectorPropertyData, UAssetAPI",
+                  "Name": "BoxExtent",
+                  "ArrayIndex": 0,
+                  "PropertyGuid": null,
+                  "IsZero": false,
+                  "PropertyTagFlags": "None",
+                  "PropertyTypeName": null,
+                  "PropertyTagExtensions": "NoExtension",
+                  "Value": {
+                    "$type": "UAssetAPI.UnrealTypes.FVector, UAssetAPI",
+                    "X": 104.43147277832031,
+                    "Y": 98.78968048095703,
+                    "Z": 6.857368469238281
+                  }
+                }
+              ]
+            },
+            {
+              "$type": "UAssetAPI.PropertyTypes.Objects.DoublePropertyData, UAssetAPI",
+              "Name": "SphereRadius",
+              "ArrayIndex": 0,
+              "PropertyGuid": null,
+              "IsZero": false,
+              "PropertyTagFlags": "None",
+              "PropertyTypeName": null,
+              "PropertyTagExtensions": "NoExtension",
+              "Value": 143.87921142578125
+            }
+          ]
+        }
+      ],
+      "ObjectGuid": null,
+      "SerializationControl": "NoExtension",
+      "Operation": "None",
+      "HasLeadingFourNullBytes": false,
+      "ObjectName": "SideSkirts_03",
+      "OuterIndex": 0,
+      "ClassIndex": -3,
+      "SuperIndex": 0,
+      "TemplateIndex": -12,
+      "ObjectFlags": "RF_Public, RF_Standalone, RF_Transactional",
+      "SerialSize": 13665,
+      "SerialOffset": 10372,
+      "ScriptSerializationStartOffset": 0,
+      "ScriptSerializationEndOffset": 0,
+      "bForcedExport": false,
+      "bNotForClient": false,
+      "bNotForServer": false,
+      "PackageGuid": "{00000000-0000-0000-0000-000000000000}",
+      "IsInheritedInstance": false,
+      "PackageFlags": "PKG_None",
+      "bNotAlwaysLoadedForEditorGame": true,
+      "bIsAsset": true,
+      "GeneratePublicHash": false,
+      "SerializationBeforeSerializationDependencies": [],
+      "CreateBeforeSerializationDependencies": [
+        -5,
+        -6,
+        1,
+        2
+      ],
+      "SerializationBeforeCreateDependencies": [
+        -3,
+        -12
+      ],
+      "CreateBeforeCreateDependencies": [],
+      "Extras": "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AgJ/f38AAH8CAn9/fwAAfwICf3+BAAF/Aatef4EAAX8Bq15/gQABfwGrXn+BAAF/Aatef4H/AX8Cql1/gf8BfwKqXX+B/wF/Aqpdf4H/AX8Cql1/gQAAfwCwYn+BAAB/ALBif4EAAH8AsGJ/gQAAfwCwYn+BAAF/Aaxgf4EAAX8BrGB/gQABfwGsYH+BAAF/Aaxgf4EAAH8Ar2J/gQEAfwCvYn+BAQB/AK9if4EAAH8Ar2J/gf8BfwGCDH+B/wF/AYIMf4H/AX8Bggx/gf8BfwGCDH8Acsl/fwAAfwB31H9/AAB/AHvgf38AAH8AbL5/fwAAf4EAAX8Af/9/gQABfwB//3+BAAF/AH//f4EAAX8Af/9/heEAf/8Gf4GF4QB//wZ/gYXhAH//Bn+BfwAAf/8Gf39/AAB/Afp/f38AAH8B+n9/fwAAfwH6f39/AAB/Afp/f4EAAX8Af/9/gQABfwB//3+BAAF/AH//f4EAAX8Af/9/gQABfwB//3+BAAF/AH//f4EAAX8Af/9/gQABfwB//3+B/wB/AACBf4H1AH8AAIF/gvUAfwAAgX+BAAB/AACBf4EAAX8Afwt/gQABfwB/C3+BAAF/AH8Lf4EAAX8Afwt/AIsxf4EAAH8AhB1/gQAAfwCTQX+BAAB/AIIMf4EAAH+BAAF/AH8Lf4EAAX8Afwt/gQABfwB/C3+BAAF/AH8Lf486AH8BAX+BfwAAfwEBf3+POgB/AQF/gY86AH8BAX+BfwAAfwH+f39/AAB/Af5/f38AAH8B/n9/fwAAfwH+f3+BBQF//wCBf4EAAX//AIF/gQUBf/8AgX+BAAF//wCBf4L1AH/1fgB/gvUAf/V+AH+C9QB/9X4Af4L1AH/1fgB/gQABf/8AgX+BAAF//wCBf4EAAX//AIF/gQABf/8AgX+BBQF/BX//f4EFAX8Ff/9/gQUBfwV//3+BBQF/BX//f38AAH8C/n9/fwAAfwL+f39/AAB/Av5/f38AAH8C/n9/gQABfwFVXn+BAAF/AVVef4EAAX8BVV5/gQABfwFVXn+BAQF/AlZdf4EBAX8CVl1/gQEBfwJWXX+BAQF/AlZdf4EAAH8AUGJ/gQAAfwBQYn+BAAB/AFBif4EAAH8AUGJ/gQABfwFUYH+BAAF/AVRgf4EAAX8BVGB/gQABfwFUYH+B/wB/AFFif4EAAH8AUWJ/gf8AfwBRYn+BAAB/AFFif4EBAX8Bfgx/gQEBfwF+DH+BAQF/AX4Mf4EBAX8Bfgx//n4Of4H+AH/+fwt/gf4Af38AAH+B/gB//n4Nf4H+AH/+fwt/gf4AfwGD6X9/AQB/AYLvf38BAH9/AAB/fwEAfwGC7n9/AQB/AYPpf38BAH/+gQt/gQIAf/6CDn+BAgB/fwAAf4ECAH/+gg1/gQIAf/6BC3+BAgB/AX7vf3//AH8Bfel/f/8Af38AAH9//wB/AX7uf3//AH8Bfel/f/8Af4EAAX//AIF/gQABf/8AgX+BAAF//wCBf4EAAX//AIF/gQABf/8AgX+BAAF//wCBf4EAAX//AIF/gQABf/8AgX+BAAF//wCBf4EAAX//AIF/gQABf/8AgX+BAAF//wCBf38AAH9/AAB/fwAAf38AAH9/AAB/fwAAf38AAH+BAP9/fwAAf4EA/39/AAB/gQD/f38AAH9/AAB/fwAAf38AAH9/AAB/fwAAf38AAH+BAP9/fwAAf4EA/39/AAB/gQD/f38AAH+BAP5/fwAAf4EA/n9/AAB/gQD+f38AAH+BAP5/fwAAf/8Mgn9/BAB//wyCgX8EAH//DIKBfwQAf/8MgoF/AAB/fwABf38AAH9/AAF/fwAAf38AAX9/AAB/fwABf38AAH8ADIJ/fwAAfwAMgn9/AAB/AAyCf38AAH8ADIJ/fwAAf4EA/n9/AAB/gQD+f38AAH+BAP5/fwAAf4EA/n9//AB///SCf3/8AH//9IJ/f/wAf//0gn9/AAB///SCf38AAH9/AAF/fwAAf38AAX9/AAB/fwABf38AAH9/AAF/fwAAfwD0gn9/AAB/APSCf38AAH8A9IJ/fwAAfwD0gn9/AAB///SCf38AAH//9IJ/fwAAf//0gn9/AAB///SCf38AAH//9IJ/fwAAf//0gn9/AAB///SCf38AAH//9IJ/fwAAf/8Mgn9/AAB//wyCf38AAH//DIJ/fwAAf/8Mgn9/AAB//wyCf38AAH//DIJ/fwAAf/8Mgn9/AAB//wyCfwQAAABYAgAAdTiPO/QtWzV0ONM75zFdNVk5jzv0LfMmEDXTO+cx/Tu6NdM75zETOxE1jzvrLfw7ujXTO+cxEzu7NY879C0SOx41jzv0Leo7dDjTO+cxXTVsOdM75zEtFlk5jzv0LfMmdTgCK6M1WzVZOQIrozXzJnQ4iSUtNF01EDWIJS00/TsRNQgrpjX8O7o1iCUtNBM7ujWIJS00EzseNQIrozXqO7s1AiujNRI7dDiJJS00XTVZOQIrozXzJmw5iSUtNC0WEDXTO+cx/TsQNdw7RTL9OxA17jsSM/07EDXgO3gy/Tv6N+A7eDLwN3Q44Dt4Ml01+jfTO+cx8Dd0ONM75zFdNbs1ijt1LRI7ETWKO3Ut/DsRNYo7dS38O7s1ijt1LRI7dTiKO3UtWjX7N4o7dS3uN3U4ijt1LVo1+zeKO3Ut7jeONuA7eDLuOfo34Dt4MvA3jjbTO+cx7jn6N9M75zHwN7o10zvnMRM7jjbgO3gy7jmONtM75zHuObo14Dt4MhM7EDXuOxIz/Tu6Ne47EjMTO7o14Dt4MhM7EDXgO3gy/TuONtM75zHuOfo30zvnMfA3jzaPO/Qt7Tn7N4879C3uN2w50zvnMS0WbDnuOxIz8xZsOdc7EzJGFmw54Dt4MpQW+jfTO+cx8Dd0ONM75zFdNfs3jzv0Le43dTiPO/QtWzWPNoo7dS3tObs1ijt1LRI7jzaKO3Ut7Tm7NYo7dS0SO/s3ijt1Le43jzaKO3Ut7Tn7N4o7dS3uN482ijt1Le05bDnuOxIz8xZ0OOA7eDJdNXQ47jsSM101bDngO3gylBYQNdM75zH9O7o14Dt4MhM7ujXTO+cxEzsQNeA7eDL9O4427jsSM+85ujXgO3gyEzu6Ne47EjMTO4424Dt4Mu45dDjTO+cxXTVsOeA7eDKUFmw50zvnMS0WdDjgO3gyXTVsOYo7dS0DFHU4ijt1LVo1bDmKO3UtAxR1OIo7dS1aNY82jzv0Le05+zePO/Qt7jf7N4o7dS3uN482ijt1Le05jzaPO/Qt7Tm7NYo7dS0SO7s1jzv0LRI7jzaKO3Ut7TlZOY879C3zJnU4ijt1LVo1dTiPO/QtWzVsOYo7dS0DFPs3jzv0Le43dTiPO/QtWzV1OIo7dS1aNfs3ijt1Le43uzWPO/QtEjsRNYo7dS38Ox41jzv0Leo7uzWKO3UtEju7NY879C0SO4420zvnMe45jzaPO/Qt7Tm6NdM75zETOxA1iCUtNP07EDVKIC8z/TsQNXgk/DP9OxA1ySPJM/07+jeJJS008Dd0OIklLTRdNXQ4ySPJM101+jfJI8kz8De7NV4rwzUSOxE1XivDNfw7uzVeK8M1EjsRNV4rwzX8O3U4XivDNVo1+zdeK8M17jf7N14rwzXuN3U4XivDNVo1jjaJJS007jn6N4klLTTwN/o3ySPJM/A3jjbJI8kz7jmONskjyTPuObo1iCUtNBM7jjaJJS007jm6NckjyTMTO7o1ySPJMxM7EDVKIC8z/TsQNckjyTP9O7o1SiAvMxM7jzYCK6M17Tn7NwIrozXuN/o3iSUtNPA3jjaJJS007jlsOYklLTQtFmw5SiAvM/MWbDnJI8kzlBZsOQklFzRGFvs3AiujNe43dTgCK6M1WzV0OIklLTRdNfo3iSUtNPA3uzVeK8M1EjuPNl4rwzXtOY82XivDNe05uzVeK8M1Ejv7N14rwzXuN482XivDNe05jzZeK8M17Tn7N14rwzXuN2w5SiAvM/MWdDjJI8kzXTVsOckjyTOUFnQ4SiAvM101ujXJI8kzEzsQNYglLTT9O7o1iCUtNBM7EDXJI8kz/Tu6NckjyTMTO442SiAvM+85ujVKIC8zEzuONskjyTPuOXQ4iSUtNF01bDnJI8kzlBZ0OMkjyTNdNWw5iSUtNC0WbDleK8M1AxR1OF4rwzVaNXU4XivDNVo1bDleK8M1AxT7NwIrozXuN482AiujNe05+zdeK8M17jePNl4rwzXtOY82AiujNe05uzVeK8M1EjuPNl4rwzXtObs1AiujNRI7WTkCK6M18yZ1OF4rwzVaNWw5XivDNQMUdTgCK6M1WzV1OAIrozVbNfs3AiujNe43dTheK8M1WjX7N14rwzXuNxE1XivDNfw7uzUCK6M1EjseNQIrozXqO7s1XivDNRI7jjaJJS007jm7NQIrozUSO482AiujNe05ujWIJS00EztsOYo7dS0DFGw51zsTMkYWbDmKO3UtAxRsOY878C0tFGw50zvnMS0WEDXcO0Uy/TsRNYo7dS38OxE1ijt1Lfw7ETWPO+st/DsQNdM75zH9O2w5CSUXNEYWbDleK8M1AxRsOV4rwzUDFGw5BSulNS0UbDmJJS00LRYRNV4rwzX8OxA1eCT8M/07ETVeK8M1/DsRNQgrpjX8OxA1iCUtNP07+jfgO3gy8Dd0OO47EjNdNXQ44Dt4Ml01+jfuOxIz8TeONu47EjPvOY424Dt4Mu45dDhKIC8zXTX6N8kjyTPwN3Q4ySPJM101+jdKIC8z8TeONkogLzPvOY42ySPJM+45MC32Of/7//swLfY5//v/+zAt9jn/+//7My36Of/7//szLfo5//v/+zMt+jn/+//7MC32Of/7//swLfY5//v/+zAt9jn/+//7My36Of/7//szLfo5//v/+zMt+jn/+//7My36Of/7//szLfo5//v/+zMt+jn/+//7My36Of/7//suLfc5BBQAFDEt+TlVLQA4Li33OQQUABQvLfc5zh2IJzAt9jn/+//7MC32Of/7//swLfY5//v/+zAt9jn/+//7Li33OQQUABQzLfo5TTH+OzMt+jlNMf47Li33OQQUABQzLfo5//v/+zMt+jn/+//7My36Of/7//szLfo5//v/+y4t9zn+OwQULy33OcM7zh0xLfk5ADhVLS4t9zn+OwQUMC32Of/7//swLfY5//v/+zAt9jn/+//7MC32Of/7//szLfo5ABRNMS4t9zn+OwQUMy36OQAUTTEuLfc5/jsEFC4t9zn+OwgULi33Of47BBQuLfc5/jsEFC4t9zn+OwwULi33Of47BBQuLfc5/jsEFC4t9zn+OwQULi33Of47BBQuLfc5BBQAFC4t9zkEFAAULi33OQQUABQuLfc5BBQAFC4t9zkIFAAULi33OQwUABQuLfc5BBQAFC4t9zkEFAAUBQAAAAAAAAAAAAAAAAABAAAAkAMAAAAAAQACAAMABAAFAAYABwAIAAkACgALAAwADQAOAA8AEAARABIAEwAUABUAFgAXABgAGQAaABgAGgAbABwAHQAeAB8AHgAdACAAIQAiACEAIAAjACQAJQAmACUAJAAnACgAKQAqACsAKgApACwALQAuAC0ALAAvADAAMQAyADAAMgAzADQANQA2ADcANgA1ADgAOQA6ADkAOAA7ADwAPQA+AD8APgA9AEAAQQBCAEMAQgBBAEQARQBGAEUARABHAEgASQBKAEkASABLAEwATQBOAE0ATABPAFAAUQBSAFEAUABTAFQAVQBWAFUAVABXAFgAWQBaAFkAWABbAFwAXQBeAFwAXgBfAGAAYQBiAGEAYABjAGQAZQBmAGUAZABnAGgAaQBqAGgAagBrAGwAbQBuAG0AbABvAHAAcQByAHEAcABzAHQAdQB2AHUAdAB3AHgAeQB6AHgAegB7AHwAfQB+AH0AfAB/AIAAgQCCAIEAgACDAIQAhQCGAIQAhgCHAIgAiQCKAIkAiACLAIwAjQCOAI0AjACPAJAAkQCSAJAAkgCTAJQAlQCWAJUAlACXAJgAmQCaAJgAmgCbAJwAnQCeAJ4AnwCcAKAAoQCiAKEAoACjAKQApQCmAKUApACnAKgAqQCqAKkAqACrAKwArQCuAK0ArACvALAAsQCyALEAsACzALQAtQC2ALUAtAC3ALgAuQC6ALsAugC5ALwAvQC+AL0AvAC/AMAAwQDCAMEAwADDAMQAxQDGAMcAxgDFAMgAyQDKAMkAyADLAMwAzQDOAM0AzADPANAA0QDSANMA0QDQANEA0wDUANUA1gDXANYA1QDYANgA1QDZANoA2wDcANsA2gDdAN0A2gDeAN8A4ADhAOIA4ADfAOAA4gDjAOQA5QDmAOUA5ADnAOgA5wDkAOgA5ADpAOoA6wDsAOsA6gDtAO0A7gDrAO8A6wDuAPAA8QDyAPMA9AD1APYA9wD4APkA+gD7APwA/QD+AP0A/AD/AAABAQECAQEBAwECAQQBBQEGAQUBBAEHAQgBCQEKAQkBCAELAQwBDQEOAQ0BDAEPARABEQESARABEgETARQBFQEWARUBFAEXARgBGQEaARkBGAEbARwBHQEeAR0BHAEfASABHwEcAR8BIAEhASABIgEhASIBIAEjASQBJQEmAScBJQEkASgBJQEnASUBKAEpASgBKgEpASsBKgEoAQAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAEAAACQAwAA8gAhAAYBIQDyABkAGgAZAPIACAEaAPIAGQAiACEAGgAIATEAIAAhACIAIQAgACMACAFQADEAJwFQAAgBKAFQACcBIABCACMAQAAjAEIAQgAnAEAAJwBCACUAJQAkACcAIAA2AEIANgAlAEIAJAAlACYAJgBYACQANgA3ACUANwAmACUANgAgAAcAIgAHACAANwA2AB4ABwAiAAUAIgAZAAUABwAqADYAKgAeADYABAAHAAUAKgAHAAQABQAZAAMAAwAEAAUAAwAZABoABAAoACoAAwAaABsAAwAvAAQALwADABsAGgAvABsAKAAEAC8AGgAxAC8AUAAvADEALwBQACgAKAAcACoAUAAcACgAHgAqABwAUADnABwAUAAoAecAKAFKAOcASgAcAOcAAAFKACgBAAH0AEoAHAAdAB4AHABKAB0AWAD0AP4A9AA5AEoAOQAdAEoA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yMfHx8eimpqampqampiGhoaHh4eHl4N3eYWFhYWXhG9vb29ubpiIkJCQkJCQpZ2gn5+enp+3s7Szs7KysszIycjIx8fHmZmZmZmYlp+FhYWFhYSDl4aFhYWFhISXiIeHh4eGhpiKioqKiYmJmZycnJycnJyksbGxsbGxsbbGxsbGxsbGypmZmZmZl5Wfg4ODg4OCgJeCgoGBgYGBl4SEg4ODg4OXh4eHh4eGhpibm5ubm5ubo7CwsLCwsLC1xsbGxsbGxsqZmZmZmZeVn4ODg4ODgoCXfn5+fn19gJeAgICAf39/l4WFhYWFhYWXmpqampqamqOwsLCwsLCwtcbGxsbGxsbJmZmZmZmYlp+Dg4ODg4OBl3t6enp6eoCXfXx8fHx8gJeFhYWFhYWEl5qampqampqjsLCwsLCwsLXGxsbGxsbGyZmZmZmZmJaghISEhISEgpd6enp6eniAl3l5eXh4eICXhoeHh4eHhJebm5ubm5uao7CwsLCwsLC1xsbGxsbGxsmampqampqYoYSEhISEhISXfn5+fn56gJd1dXV1dHSAl4mKioqKioSXnJycnJycmqOxsbGxsbGwtcbGxsbGxsbJmpqampqamaKFhYWFhYWFl4KCgoKCeoGXcnJxcXFxgZeNjY2Njo6Fl52dnZ2dnZqjsbKysrKysLXHx8fHx8fGyZqam5ubm5qjh4eHiIiIiJiFhYWFhXiFl25ubm5tbYWXkJCRkZGRh5ifn5+fn5+bo7Kzs7Ozs7C1x8jIyMjIxsrMycjIx8bGxrizs7KysbGxpp6enZ2cnJyajIyLi4uLipiJiYiIiIiImIeGhoaGhoaXhYWFhYaGhaCWl5iZmZmZzMjIx8fGxsa4s7KysbCwsKWdnZycm5ubmYqJiYiIh4eXhYWFhYSEhJeDg4ODgoKCl4KCgoODg4OflZaXmJmZmczIyMfGxsbGt7KysbGwsLClnZycm5qampiIh4aGhYWFl4GBgYGBgYCXgH9/f39/fpeAgIGCg4ODn5WWl5iZmZnMyMfHxsbGxreysrGwsLCwpZ2cm5uampqYh4aGhYWFhZeAfn59fX19l4B8fHt7e3uXgIGCg4ODg5+VlpeYmZmZzMjIx8bGxsa3srKxsbCwsKWdnJybm5ubmIeHh4aGhoaXgHp6enp5eZeAeHh6enp6l4GCg4ODhISglpeYmZmZmczIyMfHxsbGt7KysrGxsbGlnZ2cnJubnJiHiomJiYmJl4B2dnZ2dnWXgHh7fX5+fpeDhISEhISEoJeYmZmZmprMyMjIx8fHx7eys7KysbGxpZ2enp2dnZ2Yh42MjIyMjZeAc3NzcnJyl4B5fH6CgoKXhISEhISEhaGYmZqampqazMjJyMjHx8e3s7Szs7KysqWdoJ+fnp6fmIiQkJCQkJCXhG9vb29ubpeDd3mFhYWFmIaGhoeHh4eimpqampqamsbGxsbGxsbKsbGxsbGxsbacnJycnJycpIqKioqJiYmZiIeHh4eGhpiGhYWFhYSEl4WFhYWFhIOXmZmZmZmYlp/GxsbGxsbGyrCwsLCwsLC1m5ubm5ubm6OHh4eHh4aGmISEg4ODg4OXgoKBgYGBgZeDg4ODg4KAl5mZmZmZl5WfxsbGxsbGxsmwsLCwsLCwtZqampqampqjhYWFhYWFhZeAgICAf39/l35+fn59fYCXg4ODg4OCgJeZmZmZmZeVn8bGxsbGxsbJsLCwsLCwsLWampqampqao4WFhYWFhYSXfXx8fHx8gJd7enp6enqAl4ODg4ODg4GXmZmZmZmYlp/GxsbGxsbGybCwsLCwsLC1m5ubm5ubmqOGh4eHh4eEl3l5eXh4eICXenp6enp4gJeEhISEhISCl5mZmZmZmJagxsbGxsbGxsmxsbGxsbGwtZycnJycnJqjiYqKioqKhJd1dXV1dHSAl35+fn5+eoCXhISEhISEhJeampqampqYocfHx8fHx8bJsbKysrKysLWdnZ2dnZ2ao42NjY2OjoWXcnJxcXFxgZeCgoKCgnqBl4WFhYWFhYWXmpqampqamaLHyMjIyMjGyrKzs7Ozs7C1n5+fn5+fm6OQkJGRkZGHmG5ubm5tbYWXhYWFhYV4hZeHh4eIiIiImJqam5ubm5qjAwAAAAAAAADCVyRAAAAAAAAAAAAAAADAR4M3QAAAAECdG1pAAAAAIIqyWEAAAAAA8m0bQAAAAIAi/GFAAQAAAAEAAAAAAABAAQAAAAAAAAABAAAAAAAAAAEAAAAAAAAAAQAAAAAAAAABAAAAAAAAAAEAAAAAAAAAAQAAAAAAAAAFAAAAAAACAAAA+////wEAAAAAAAAAAQAAAAAAAACXcuZD1KdMQwAAAAAAAAAA+v///wQAAAAAAAAAAQAAAAAAAAAN70tIM9SpRgAAAAAAAAAA"
+    }
+  ],
+  "SearchableNames": null,
+  "ImportTypeHierarchies": null,
+  "MetaData": null,
+  "Thumbnails": null,
+  "WorldTileInfo": null,
+  "AppendedNullBytes": 0,
+  "OtherAssetsFailedToAccess": [],
+  "LegacyFileVersion": -8,
+  "DataResourceVersion": "AddedCookedIndex",
+  "DataResources": [
+    {
+      "$type": "UAssetAPI.UnrealTypes.FObjectDataResource, UAssetAPI",
+      "Flags": "None",
+      "CookedIndex": 0,
+      "SerialOffset": 59,
+      "DuplicateSerialOffset": -1,
+      "SerialSize": 8458,
+      "RawSize": 8458,
+      "OuterIndex": 1,
+      "LegacyBulkDataFlags": 72
+    },
+    {
+      "$type": "UAssetAPI.UnrealTypes.FObjectDataResource, UAssetAPI",
+      "Flags": "None",
+      "CookedIndex": 0,
+      "SerialOffset": 50,
+      "DuplicateSerialOffset": -1,
+      "SerialSize": 70,
+      "RawSize": 70,
+      "OuterIndex": 2,
+      "LegacyBulkDataFlags": 72
+    },
+    {
+      "$type": "UAssetAPI.UnrealTypes.FObjectDataResource, UAssetAPI",
+      "Flags": "None",
+      "CookedIndex": 0,
+      "SerialOffset": 10699,
+      "DuplicateSerialOffset": -1,
+      "SerialSize": 0,
+      "RawSize": 0,
+      "OuterIndex": 3,
+      "LegacyBulkDataFlags": 0
+    },
+    {
+      "$type": "UAssetAPI.UnrealTypes.FObjectDataResource, UAssetAPI",
+      "Flags": "None",
+      "CookedIndex": 0,
+      "SerialOffset": 0,
+      "DuplicateSerialOffset": -1,
+      "SerialSize": 23220,
+      "RawSize": 23220,
+      "OuterIndex": 3,
+      "LegacyBulkDataFlags": 66817
+    }
+  ],
+  "UsesEventDrivenLoader": true,
+  "WillSerializeNameHashes": true,
+  "Imports": [
+    {
+      "$type": "UAssetAPI.Import, UAssetAPI",
+      "ObjectName": "Default__BodySetup",
+      "OuterIndex": -10,
+      "ClassPackage": "/Script/Engine",
+      "ClassName": "BodySetup",
+      "PackageName": null,
+      "bImportOptional": false
+    },
+    {
+      "$type": "UAssetAPI.Import, UAssetAPI",
+      "ObjectName": "BodySetup",
+      "OuterIndex": -10,
+      "ClassPackage": "/Script/CoreUObject",
+      "ClassName": "Class",
+      "PackageName": null,
+      "bImportOptional": false
+    },
+    {
+      "$type": "UAssetAPI.Import, UAssetAPI",
+      "ObjectName": "StaticMesh",
+      "OuterIndex": -10,
+      "ClassPackage": "/Script/CoreUObject",
+      "ClassName": "Class",
+      "PackageName": null,
+      "bImportOptional": false
+    },
+    {
+      "$type": "UAssetAPI.Import, UAssetAPI",
+      "ObjectName": "NavCollision",
+      "OuterIndex": -11,
+      "ClassPackage": "/Script/CoreUObject",
+      "ClassName": "Class",
+      "PackageName": null,
+      "bImportOptional": false
+    },
+    {
+      "$type": "UAssetAPI.Import, UAssetAPI",
+      "ObjectName": "M_Body",
+      "OuterIndex": -8,
+      "ClassPackage": "/Script/Engine",
+      "ClassName": "Material",
+      "PackageName": null,
+      "bImportOptional": false
+    },
+    {
+      "$type": "UAssetAPI.Import, UAssetAPI",
+      "ObjectName": "M_Palette",
+      "OuterIndex": -9,
+      "ClassPackage": "/Script/Engine",
+      "ClassName": "Material",
+      "PackageName": null,
+      "bImportOptional": false
+    },
+    {
+      "$type": "UAssetAPI.Import, UAssetAPI",
+      "ObjectName": "Default__NavCollision",
+      "OuterIndex": -11,
+      "ClassPackage": "/Script/NavigationSystem",
+      "ClassName": "NavCollision",
+      "PackageName": null,
+      "bImportOptional": false
+    },
+    {
+      "$type": "UAssetAPI.Import, UAssetAPI",
+      "ObjectName": "/Game/Cars/Materials/Body/M_Body",
+      "OuterIndex": 0,
+      "ClassPackage": "/Script/CoreUObject",
+      "ClassName": "Package",
+      "PackageName": null,
+      "bImportOptional": false
+    },
+    {
+      "$type": "UAssetAPI.Import, UAssetAPI",
+      "ObjectName": "/Game/Cars/Materials/Palette/M_Palette",
+      "OuterIndex": 0,
+      "ClassPackage": "/Script/CoreUObject",
+      "ClassName": "Package",
+      "PackageName": null,
+      "bImportOptional": false
+    },
+    {
+      "$type": "UAssetAPI.Import, UAssetAPI",
+      "ObjectName": "/Script/Engine",
+      "OuterIndex": 0,
+      "ClassPackage": "/Script/CoreUObject",
+      "ClassName": "Package",
+      "PackageName": null,
+      "bImportOptional": false
+    },
+    {
+      "$type": "UAssetAPI.Import, UAssetAPI",
+      "ObjectName": "/Script/NavigationSystem",
+      "OuterIndex": 0,
+      "ClassPackage": "/Script/CoreUObject",
+      "ClassName": "Package",
+      "PackageName": null,
+      "bImportOptional": false
+    },
+    {
+      "$type": "UAssetAPI.Import, UAssetAPI",
+      "ObjectName": "Default__StaticMesh",
+      "OuterIndex": -10,
+      "ClassPackage": "/Script/Engine",
+      "ClassName": "StaticMesh",
+      "PackageName": null,
+      "bImportOptional": false
+    }
+  ],
+  "DependsMap": [
+    [],
+    [],
+    []
+  ],
+  "SoftPackageReferenceList": null,
+  "AssetRegistryDependencyDataOffset": -1,
+  "AssetRegistryRecords": [],
+  "ImportBits": null,
+  "SoftPackageBits": null,
+  "ExtraPackageDependencies": null,
+  "BulkData": null,
+  "AdditionalFiles": "wYMqng==",
+  "Trailer": null,
+  "ValorantGarbageData": null,
+  "SeaOfThievesGarbageData": null,
+  "Generations": [
+    {
+      "$type": "UAssetAPI.FGenerationInfo, UAssetAPI",
+      "ExportCount": 3,
+      "NameCount": 23
+    }
+  ],
+  "PackageGuid": "{5936E657-409E-B1D4-DA17-6BBDD33EDC5B}",
+  "PersistentGuid": "{00000000-0000-0000-0000-000000000000}",
+  "RecordedEngineVersion": {
+    "$type": "UAssetAPI.FEngineVersion, UAssetAPI",
+    "Major": 0,
+    "Minor": 0,
+    "Patch": 0,
+    "Changelist": 0,
+    "Branch": null
+  },
+  "RecordedCompatibleWithEngineVersion": {
+    "$type": "UAssetAPI.FEngineVersion, UAssetAPI",
+    "Major": 0,
+    "Minor": 0,
+    "Patch": 0,
+    "Changelist": 0,
+    "Branch": null
+  },
+  "ChunkIDs": [],
+  "PackageSource": 2621638262,
+  "FolderName": "/Game/Cars/Models/Zydro/SideSkirts_03",
+  "LocalizationId": null,
+  "SoftObjectPathsCount": 0,
+  "SoftObjectPathsOffset": 807,
+  "SearchableNamesOffset": 0,
+  "ThumbnailTableOffset": 0,
+  "ImportTypeHierarchiesCount": 0,
+  "ImportTypeHierarchiesOffset": 0,
+  "SavedHash": null,
+  "CompressionFlags": 0,
+  "AdditionalPackagesToCook": [],
+  "NamesReferencedFromExportDataCount": 5,
+  "PayloadTocOffset": -1,
+  "DataResourceOffset": 1543,
+  "doWeHaveAssetRegistryData": true,
+  "doWeHaveWorldTileInfo": false,
+  "PackageFlags": "PKG_Cooked, PKG_UnversionedProperties, PKG_FilterEditorOnly",
+  "HasUnversionedProperties": true,
+  "IsFilterEditorOnly": true,
+  "IsPreDependencyFormat": true
+}
