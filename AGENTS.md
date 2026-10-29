@@ -9,7 +9,7 @@ Everything else here is tooling that generates the `.uasset` files inside them.
 | | |
 |---|---|
 | **UAssetGUI** | `D:\MT\UAssetGUI.exe` (**v1.1.1**). **Not** `.\UAssetGUI.exe` in this repo — that is v1.0.4 and writes an older JSON schema; anything it exports fails to build again under the current game. |
-| **Mappings** | `MotorTown719` for game 0.7.19. UAssetGUI resolves the name against `%LOCALAPPDATA%\UAssetGUI\Mappings\*.usmap`. Dump a fresh one after every game update. |
+| **Mappings** | `MotorTown720T1` for game 0.7.20 (`MotorTown719` for 0.7.19, `MotorTown718P1` for 0.7.18 tables). UAssetGUI resolves the name against `%LOCALAPPDATA%\UAssetGUI\Mappings\*.usmap`. Dump a fresh one after every game update. |
 | **Engine version** | `VER_UE5_4`. |
 | **Packing** | `modp.bat <ModFolder>` — repak, then copy the pak into the game. |
 
@@ -86,7 +86,83 @@ Consequences:
 - Genuinely hard references still exist (aero/tire meshes, `QuadWheelMesh`), so
   a rebase still has to graft those imports across.
 
-## Build order
+## 0.7.20: everything ships as DataTableFramework channels
+
+Since 0.7.20 no pak in this repo ships a part table. `DataTableFramework/run.py`
+ships every composite the game has (14: VehicleParts, Vehicles, Items, Cargos,
+CharacterBodyParts, Buildings, Buffs, Emotes, four `DT_Voice_*`, HelpText,
+RichImageAll2 -- discovered by scanning, not listed) with its vanilla parents,
+then the tables other mods already add (`registry.json` "adopted"), then
+`Ch0001..Ch1000`. A mod ships only `/Game/DataTableFramework/<Composite>/ChNNNN`.
+Later parents win a same-named row, so channel number is priority.
+
+```
+python Rebase/motorworks.py        # only when Maja releases: her edits -> old/0.7.19/motorworks_deltas.json
+python DataTableFramework/run.py   # AAAA_DataTableFramework_P: composites + 14,000 stubs
+python Rebase/channels.py          # VehicleParts Ch0001 MoreTuning, Ch0002 No Limits, Ch0003 Carbon
+python TehEngines/run.py           # Teh's 16 engines -> Z_TehsEngineSoundPack_P, Ch0004
+python SuspensionExpansion/run.py  # 57 suspension parts + its cost/mass edits -> Z_SuspensionExpansion_P, Ch0005
+python MoreAttachments/channel.py  # Items Ch0001 + both Vendor_Garage copies
+```
+
+- **One framework pak, mounting first** (`AAAA_`), so any mod's channel file
+  beats its stub. The price: a mod that still ships its own composite copy
+  beats the framework and switches every channel off. Overlord, Proxy's wheels
+  and cargo, VehicleLabs and Detail Works all did in 0.7.19; their tables are
+  adopted (`registry.json`), so dropping the copy is all they need -- and their
+  0.7.19 copies lack 0.7.20's Horns/RoofRacks/CargoBedAttachments anyway.
+- **Channels are `Ch0001`, never `Ch_0001`**: `Ch_1000` is FName (`Ch`, 1000).
+  Equal length is also what lets one built stub be cloned by byte swap.
+- **One mod, one channel file.** Rows from different source tables share one
+  import table (`channels.combine` grafts each source's hard refs across), and
+  the build fails on a row name defined twice. An own row whose name vanilla now
+  has in *any* parent is dropped: 0.7.20 moved the taxi/bus/limo licences from
+  VehicleParts0 into License, and our 0.7.19 copies would have shadowed them.
+- **Old row names stay.** Saves key parts by row name; the `C<NNNN>_` prefix is
+  for rows added from now on.
+- The mod's 0.7.19 tables live in `Rebase/old/0.7.19/` as migration input only.
+  `rebuild.py`, `compat.py` and the `main()`s of RemoveReq/CarbonParts still write
+  whole tables -- the pre-0.7.20 route below; don't ship their output.
+- **Motor Works ships inside MoreTuning.** Her 7 rows are in its own tables, the
+  hitch mesh is in `qxZap_MoreTuning_P/Cars/Parts/TrailerHitch`, and her edits to
+  vanilla rows are kept as a per-property diff against 0.7.19 vanilla
+  (`motorworks.py`) and applied onto 0.7.20 vanilla -- never her frozen tables,
+  which would undo 0.7.20's balance. Her mesh refs are stored by asset path, not
+  import index, and re-resolved against the target table.
+- **No override channel on `Wheels`.** It would sit above Maja's Mo Wheel Works
+  and put vanilla meshes back on her 93 rows. With channels the old ZZb wheel
+  compat pak is unnecessary: carbon wheel twins are new rows.
+- **Paint on foreign cars** (`paint.py`): a part paints where its mesh slot uses
+  `M_Body`, but 388/413 AeroParts rows have no `ColorSlots` and rely on the
+  slot name matching the car's. No Limits and Carbon give such parts one
+  `ColorSlot` per `M_Body` slot. MoreAttachments turns the same into
+  `AttachmentPaintSlots` (the 0.7.20 metallic/roughness sliders) and goes
+  further: with no `M_Body` slot, every non-light slot is painted, because
+  vanilla's antenna paints a plain `M_Gray` slot -- the attachment paint system
+  supplies its own material, so palette-only meshes (Duro bumpers) paint too.
+- **Generated attachment actors never use the lamp template.** A bumper with
+  built-in lights (Duro 02/03, Duro bull bars) is still a bumper; the mesh test
+  for `M_HeadLight` made them lamps with a dead ToggleLight/ChangeLightMode.
+- **0.7.20 changed the part assets too.** `MHTransmissionProperty` split
+  `AutoShiftComportRPM` into `_Gasoline`/`_Diesel` (vanilla's rule: old <= 2500
+  went to diesel with gasoline 3500, else to gasoline with diesel 2300), which
+  made all 99 mod transmissions "Corrupt data found" in game. `reserialize.py`
+  migrates them (`FIELD_MIGRATIONS`). `TransmissionGenerator`'s template still
+  has the old field -- regenerate it from a 0.7.20 box before generating again.
+- **Class layout shifts** (`reserialize.py`): unversioned properties are stored
+  by index, so a property removed mid-class shifts everything after it. 0.7.20
+  removed `MTInteractableComponent.bUseServerOnPreInteraction`, which made all
+  713 attachment actors read raw. The tool diffs the usmaps and round-trips
+  only assets exporting a shifted class -- including a class whose own list is
+  unchanged but which holds a shifted struct (that is how the transmissions
+  hid: `MTTransmissionDataAsset` itself did not change).
+- 0.7.20 moved the turbo's seven flat fields into `Gasoline`/`Diesel`
+  sub-structs. `rebase.reshape` copies a moved field into every sub-struct that
+  has it (what vanilla did to its stock turbos) and fails on one with no home.
+- Wheel radius tuning (0.8-1.2) is native: `GarageTuningWidget` builds the
+  sliders in code and no asset carries the range. Not a pak change.
+
+## Build order (pre-0.7.20)
 
 The three row tools run in sequence, and the order matters:
 
@@ -373,6 +449,30 @@ how `Micky_Light_L` — a wheel arch cover with nothing but `M_Palette` — stay
 dark without being on a hand-kept list. `ACTOR_TEMPLATE_LIGHT.json` is picked on
 that basis at generation time, and `reallights.py` uses the same test when
 repairing built actors, so the two cannot drift.
+
+### 0.7.20 native paint and light sections (proven in `MoreAttachments/lab/`)
+
+- **The paint system paints the mesh's own material** in the slot an
+  `AttachmentPaintSlots` entry names, and only one with a `Color` parameter
+  (`M_Body`, `M_Gray`). An actor `OverrideMaterials` is invisible to it, and
+  `M_PaintableMetal` has no `Color` at all -- it was only ever tinted through
+  `ChangeLightColor`. So: slot already `M_Body` → drop the actor override on it;
+  slot `M_Palette` (most car parts, and a *shared vanilla mesh*) → give the part
+  its own mesh copy under `MA_Parts/` with that slot swapped to `M_Gray` and
+  repoint the actor. Never edit the shared mesh: it repaints the car.
+- **Lamp sections** (`M_HeadLight`, `M_TailLight`, `M_TurnSignalLight`,
+  `M_ReverseLight`) are the *car's* materials, driven by the car's own light
+  system; on an attachment they go `M_AttachmentLight` (positional
+  `OverrideMaterials`, null for body slots) with Toggle / Mode / Color.
+- **One mode per attachment.** Interaction entries carry no target, so the game
+  applies Toggle / Mode / Color to every `MTLightControlComponent` on the actor
+  (vanilla `Light_09_Blinker` has two controls, one control set). Mode is stored
+  natively -- not on the controls, not in `Net_Parts`. Per-section control is
+  the `AttachmentLights` loader plugin: one control per section, labelled lines
+  (`Toggle <S>`, `<S> Mode`, `<S> Color`; a colour line may name a group,
+  `Signal Color` → every section ending in "Signal").
+- A light control is a **root** SCS node (`RootNodes` + `AllNodes`), not a
+  child of the scene root -- cloning one means registering it there.
 
 ## Conventions
 

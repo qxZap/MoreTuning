@@ -19,7 +19,7 @@ REPO = os.path.join(HERE, "..")
 # NOT the UAssetGUI.exe in the repo root -- that one is v1.0.4 and writes an
 # older JSON schema, so anything it exports fails to build again on 0.7.19.
 UASSETGUI = r"D:\MT\UAssetGUI.exe"
-CURRENT_MAPPINGS = "MotorTown719"
+CURRENT_MAPPINGS = "MotorTown720T1"
 ENGINE_VERSION = "VER_UE5_4"
 
 VANILLA = r"D:\MT\Output\Exports\MotorTown\Content"
@@ -47,12 +47,23 @@ def to_json(uasset, out, mappings=CURRENT_MAPPINGS):
     # vanilla table between game exports, and a failed read must not destroy the
     # previous one.
     tmp = out + ".tmp"
-    if os.path.exists(tmp):
-        os.remove(tmp)
-    uassetgui("tojson", uasset, tmp, ENGINE_VERSION, mappings)
-    if not os.path.exists(tmp):
-        sys.exit(f"FAIL: could not read {uasset} with mappings {mappings}")
-    os.replace(tmp, out)
+    # A read that comes back with a RawExport is retried: with two UAssetGUI
+    # processes running at once, a table that parsed a minute earlier has come
+    # back raw. A genuinely unparseable asset stays raw and only costs the retries.
+    best = None
+    for _ in range(3):
+        if os.path.exists(tmp):
+            os.remove(tmp)
+        uassetgui("tojson", uasset, tmp, ENGINE_VERSION, mappings)
+        if not os.path.exists(tmp):
+            sys.exit(f"FAIL: could not read {uasset} with mappings {mappings}")
+        with open(tmp, encoding="utf-8") as f:
+            raw = f.read().count('"UAssetAPI.ExportTypes.RawExport')
+        if best is None or raw < best:
+            best = raw
+            os.replace(tmp, out)
+        if not raw:
+            break
     return out
 
 

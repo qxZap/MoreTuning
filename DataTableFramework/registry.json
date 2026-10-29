@@ -1,0 +1,47 @@
+{
+  "_about": [
+    "DataTableFramework channel registry. One entry per claimed channel range or adopted table.",
+    "Channels: ship /Game/DataTableFramework/<Composite>/ChNNNN.uasset in your own pak; nothing else.",
+    "Later parents win a same-named row: vanilla < adopted tables < Ch0001 < ... < Ch1000.",
+    "New rows should be prefixed C<NNNN>_ with your channel number. Rows that already shipped keep their names -- saves store parts by row name.",
+    "adopted: tables existing mods already add to a composite. The framework lists them as parents and ships an empty stub at each path, so those mods work unchanged.",
+    "One mod, one channel file. Claim a channel by adding it here before you release."
+  ],
+  "channels": {
+    "VehicleParts": {
+      "1": "qxZap - MoreTuning (own rows, Motor Works, vehicle gates stripped)",
+      "2": "qxZap - MoreTuning No Limits",
+      "3": "qxZap - MoreTuning Carbon",
+      "4": "Teh - Engine Sound Pack (0.7.20 port)",
+      "5": "Suspension Expansion (0.7.20 port)"
+    },
+    "Items": {
+      "1": "qxZap & satigt3 - MoreAttachments (free and premium share it)"
+    },
+    "Vehicles": {
+      "1-20": "qxZap - Arini island (unlocked rows, Crany from Vehicles_Deprecated, custom vehicles; one channel per source table)"
+    },
+    "Cargos": {
+      "1": "qxZap - Arini island (new_cargos rows)"
+    }
+  },
+  "adopted": {
+    "VehicleParts": {
+      "/Game/DataAsset/VehicleParts/Wheels_PT": "Proxy - TechWheels / WheelSizeUnlimited",
+      "/Game/HX8/OverlordParts/DT_HX8_LegacyParts": "Austin - Overlord HX8",
+      "/Game/HX8/OverlordParts/DT_Overlord_GarageParts": "Austin - Overlord HX8",
+      "/Game/HX8/ExhaustTipsR135/DT_HX8_ExhaustTips": "Austin - Overlord HX8",
+      "/Game/HX8/WinchR137/DT_HX8_Winch100T": "Austin - Overlord HX8",
+      "/Game/HX8/AeroR164/DT_HX8_RearAero": "Austin - Overlord HX8",
+      "/Game/HX8/FifthWheelsR186/DT_HX8_FifthWheels": "Austin - Overlord HX8",
+      "/Game/HX8/EngineAestheticR200/DT_HX8_EngineAesthetic": "Austin - Overlord HX8",
+      "/Game/HX8/TowUpgradeR253/DT_HX8_TowUpgrade": "Austin - Overlord HX8"
+    },
+    "Cargos": {
+      "/Game/DataAsset/Cargos_Proxy": "Proxy - Oversize Cargo"
+    },
+    "Items": {
+      "/Game/DataAsset/Items/Items_MajasDetailWorks": "Maja - Detail Works"
+    }
+  }
+}

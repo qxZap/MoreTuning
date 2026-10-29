@@ -109,6 +109,44 @@ def soften(node, imports, soft_names):
     return node
 
 
+def is_struct(prop):
+    return isinstance(prop, dict) and prop.get("$type", "").startswith(
+        "UAssetAPI.PropertyTypes.Structs.StructPropertyData") and isinstance(prop.get("Value"), list)
+
+
+def reshape(props, template, where):
+    """Fit a struct's fields to the template's: fill new ones, relocate moved ones.
+
+    0.7.20 moved the turbo's seven flat fields into new Gasoline and Diesel
+    sub-structs; vanilla's own stock turbos carry the old values into both, so a
+    field that went one level down is copied into every new sub-struct that has
+    it. A field with no home left fails loudly -- writing it kills the table.
+    """
+    mine = {p["Name"]: p for p in props}
+    known = {p["Name"] for p in template}
+    orphans = {n: p for n, p in mine.items() if n not in known}
+    out = []
+    for tp in template:
+        if tp["Name"] in mine:
+            p = mine[tp["Name"]]
+            if is_struct(p) and is_struct(tp):
+                p["Value"] = reshape(p["Value"], tp["Value"], f"{where}.{p['Name']}")
+            out.append(p)
+            continue
+        p = json.loads(json.dumps(tp))
+        if is_struct(p):
+            for i, sub in enumerate(p["Value"]):
+                if sub["Name"] in orphans:
+                    p["Value"][i] = json.loads(json.dumps(orphans[sub["Name"]]))
+        out.append(p)
+    moved = {s["Name"] for p in out if is_struct(p) and p["Name"] not in mine for s in p["Value"]}
+    lost = set(orphans) - moved
+    if lost:
+        raise SystemExit(f"{where}: {sorted(lost)} no longer exist in the struct and "
+                         f"did not move into a sub-struct -- decide where they go")
+    return out
+
+
 def convert_row(row, imports, defaults, soft_names):
     """Old-format row -> new format. `defaults` fills properties added by the update."""
     out = soften(row, imports, soft_names)["Value"]
@@ -119,6 +157,13 @@ def convert_row(row, imports, defaults, soft_names):
     for index, prop in enumerate(defaults):
         if prop["Name"] not in seen:
             out.insert(min(index, len(out)), json.loads(json.dumps(prop)))
+
+    # Then the same one level down, for structs whose fields changed shape.
+    by_name = {p["Name"]: p for p in defaults}
+    for prop in out:
+        tp = by_name.get(prop["Name"])
+        if is_struct(prop) and is_struct(tp):
+            prop["Value"] = reshape(prop["Value"], tp["Value"], f"{row['Name']}.{prop['Name']}")
 
     row = dict(row)
     row["Value"] = out
@@ -201,7 +246,9 @@ def fname_base(value):
 # are not among them -- unversioned assets get those from the usmap, which is
 # why vanilla's NameMap has no "AirDragMultiplier" in it.
 FNAME_KEYS = ("ArrayType", "InnerType", "ValueType", "EnumType", "StructType",
-              "PackageName", "AssetName")
+              "PackageName", "AssetName",
+              # a string-table text's table: the paint slots' "Body" label is one
+              "TableId")
 FNAME_VALUED = ("NamePropertyData", "EnumPropertyData", "GameplayTagContainerPropertyData",
                 "GameplayTagPropertyData")
 
@@ -384,6 +431,26 @@ def demo():
     assert merged["Imports"][1]["ObjectName"] == "/Game/Cars/Parts/Tire/BigTire"  # outer first
     assert merged["Imports"][2]["ObjectName"] == "BigTire"
     assert merged["Imports"][2]["OuterIndex"] == -2
+
+    # 0.7.20: flat turbo fields move into both new fuel sub-structs.
+    S = "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI"
+    F = "UAssetAPI.PropertyTypes.Objects.FloatPropertyData, UAssetAPI"
+    old_turbo = {"$type": S, "Name": "Turbocharger", "Value": [
+        {"$type": F, "Name": "bIsValid", "Value": True},
+        {"$type": F, "Name": "TorqueMultiplier", "Value": 1.5}]}
+    new_turbo = {"$type": S, "Name": "Turbocharger", "Value": [
+        {"$type": F, "Name": "bIsValid", "Value": False},
+        *({"$type": S, "Name": fuel, "Value": [{"$type": F, "Name": "TorqueMultiplier", "Value": 1.0}]}
+          for fuel in ("Gasoline", "Diesel"))]}
+    turbo = convert_row({"Name": "T", "Value": [old_turbo]}, [], [new_turbo], set())["Value"][0]
+    assert turbo["Value"][0]["Value"] is True
+    assert [s["Value"][0]["Value"] for s in turbo["Value"][1:]] == [1.5, 1.5]
+    try:
+        convert_row({"Name": "T", "Value": [{"$type": S, "Name": "Turbocharger", "Value": [
+            {"$type": F, "Name": "Gone", "Value": 1}]}]}, [], [new_turbo], set())
+        raise AssertionError("a field with nowhere to go must fail")
+    except SystemExit:
+        pass
     assert merged["Exports"][0]["CreateBeforeSerializationDependencies"] == [-3]
     assert "/Game/Cars/Parts/Tire/BigTire" in merged["NameMap"]
     print("ok")

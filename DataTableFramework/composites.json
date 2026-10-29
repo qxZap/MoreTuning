@@ -1,0 +1,212 @@
+[
+  {
+    "composite": "Buffs",
+    "path": "/Game/DataAsset/Buffs/Buffs",
+    "row_struct": "MTBuffRow",
+    "vanilla_parents": [
+      "/Game/DataAsset/Buffs/Buffs_0",
+      "/Game/DataAsset/Buffs/Buffs_Food"
+    ],
+    "adopted": [],
+    "channels": 1000
+  },
+  {
+    "composite": "Buildings",
+    "path": "/Game/DataAsset/Buildings/Buildings",
+    "row_struct": "MTBuildingRow",
+    "vanilla_parents": [
+      "/Game/DataAsset/Buildings/Buildings_Houses",
+      "/Game/DataAsset/Buildings/Buildings_Furnitures",
+      "/Game/DataAsset/Buildings/Buildings_Object",
+      "/Game/DataAsset/Buildings/Buildings_Module"
+    ],
+    "adopted": [],
+    "channels": 1000
+  },
+  {
+    "composite": "Cargos",
+    "path": "/Game/DataAsset/Cargos",
+    "row_struct": "CargoRow",
+    "vanilla_parents": [
+      "/Game/DataAsset/Cargos_01",
+      "/Game/DataAsset/Cargos_Deprecated"
+    ],
+    "adopted": [
+      "/Game/DataAsset/Cargos_Proxy"
+    ],
+    "channels": 1000
+  },
+  {
+    "composite": "CharacterBodyParts",
+    "path": "/Game/DataAsset/CharacterBody/CharacterBodyParts",
+    "row_struct": "MTCharacterBodyPartRow",
+    "vanilla_parents": [
+      "/Game/DataAsset/CharacterBody/CharacterBodyParts_FullBody",
+      "/Game/DataAsset/CharacterBody/CharacterBodyParts_Costume",
+      "/Game/DataAsset/CharacterBody/CharacterBodyParts_BodyPart",
+      "/Game/DataAsset/CharacterBody/CharacterBodyParts_HairPart",
+      "/Game/DataAsset/CharacterBody/CharacterBodyParts_Beard",
+      "/Game/DataAsset/CharacterBody/CharacterBodyParts_Hat",
+      "/Game/DataAsset/CharacterBody/CharacterBodyParts_Helmet",
+      "/Game/DataAsset/CharacterBody/CharacterBodyParts_Glasses"
+    ],
+    "adopted": [],
+    "channels": 1000
+  },
+  {
+    "composite": "DT_Voice_Deckard",
+    "path": "/Game/Characters/Voice/DT_Voice_Deckard",
+    "row_struct": "MTVoiceLineRow",
+    "vanilla_parents": [
+      "/Game/Characters/Voice/Common_Male",
+      "/Game/Characters/Voice/DT_Voice_Deckard0"
+    ],
+    "adopted": [],
+    "channels": 1000
+  },
+  {
+    "composite": "DT_Voice_Freya",
+    "path": "/Game/Characters/Voice/DT_Voice_Freya",
+    "row_struct": "MTVoiceLineRow",
+    "vanilla_parents": [
+      "/Game/Characters/Voice/Common_Female",
+      "/Game/Characters/Voice/DT_Voice_Freya0"
+    ],
+    "adopted": [],
+    "channels": 1000
+  },
+  {
+    "composite": "DT_Voice_Gray",
+    "path": "/Game/Characters/Voice/DT_Voice_Gray",
+    "row_struct": "MTVoiceLineRow",
+    "vanilla_parents": [
+      "/Game/Characters/Voice/Common_Male",
+      "/Game/Characters/Voice/DT_Voice_Gray0"
+    ],
+    "adopted": [],
+    "channels": 1000
+  },
+  {
+    "composite": "DT_Voice_Sorine",
+    "path": "/Game/Characters/Voice/DT_Voice_Sorine",
+    "row_struct": "MTVoiceLineRow",
+    "vanilla_parents": [
+      "/Game/Characters/Voice/Common_Female",
+      "/Game/Characters/Voice/DT_Voice_Sorine0"
+    ],
+    "adopted": [],
+    "channels": 1000
+  },
+  {
+    "composite": "Emotes",
+    "path": "/Game/DataAsset/Emotes",
+    "row_struct": "MTEmoteRow",
+    "vanilla_parents": [
+      "/Game/DataAsset/Emote"
+    ],
+    "adopted": [],
+    "channels": 1000
+  },
+  {
+    "composite": "HelpText",
+    "path": "/Game/UI/RichText/HelpText",
+    "row_struct": "RichTextStyleRow",
+    "vanilla_parents": [
+      "/Game/UI/RichText/RichTextStyleSetTable",
+      "/Game/UI/RichText/HelTextOverride"
+    ],
+    "adopted": [],
+    "channels": 1000
+  },
+  {
+    "composite": "Items",
+    "path": "/Game/DataAsset/Items/Items",
+    "row_struct": "MTItemRow",
+    "vanilla_parents": [
+      "/Game/DataAsset/Items/Items_Etc",
+      "/Game/DataAsset/Items/Items_Buildings",
+      "/Game/DataAsset/Items/Items_Drones",
+      "/Game/DataAsset/Items/Items_AttachmentPart",
+      "/Game/DataAsset/Items/Items_Coupon",
+      "/Game/DataAsset/Items/Items_Furnitures",
+      "/Game/DataAsset/Items/Items_CharacterPart",
+      "/Game/DataAsset/Items/Items_Foods",
+      "/Game/DataAsset/Items/Items_Module"
+    ],
+    "adopted": [
+      "/Game/DataAsset/Items/Items_MajasDetailWorks"
+    ],
+    "channels": 1000
+  },
+  {
+    "composite": "RichImageAll2",
+    "path": "/Game/UI/RichText/RichImageAll2",
+    "row_struct": "RichImageRow",
+    "vanilla_parents": [
+      "/Game/UI/RichText/RichImageTable1",
+      "/Game/UI/RichText/RichImage_Keys",
+      "/Game/UI/RichText/RichImage_Buffs",
+      "/Game/UI/RichText/RichImage_Help"
+    ],
+    "adopted": [],
+    "channels": 1000
+  },
+  {
+    "composite": "VehicleParts",
+    "path": "/Game/DataAsset/VehicleParts/VehicleParts",
+    "row_struct": "VehiclePartRow",
+    "vanilla_parents": [
+      "/Game/DataAsset/VehicleParts/VehicleParts0",
+      "/Game/DataAsset/VehicleParts/Suspensions",
+      "/Game/DataAsset/VehicleParts/AeroParts",
+      "/Game/DataAsset/VehicleParts/Engines",
+      "/Game/DataAsset/VehicleParts/Wheels",
+      "/Game/DataAsset/VehicleParts/BrakePower",
+      "/Game/DataAsset/VehicleParts/Headlights",
+      "/Game/DataAsset/RoofRacks",
+      "/Game/DataAsset/VehicleParts/CargoBed",
+      "/Game/DataAsset/VehicleParts/UtilityParts",
+      "/Game/DataAsset/CargoBedAttachments",
+      "/Game/DataAsset/VehicleParts/BrakePads",
+      "/Game/DataAsset/VehicleParts/BrakeBalance",
+      "/Game/DataAsset/VehicleParts/FinalDriveRatio",
+      "/Game/DataAsset/VehicleParts/Transmissions",
+      "/Game/DataAsset/VehicleParts/LSD",
+      "/Game/DataAsset/VehicleParts/License",
+      "/Game/DataAsset/VehicleParts/License_OversizeEscort",
+      "/Game/DataAsset/VehicleParts/Horns"
+    ],
+    "adopted": [
+      "/Game/DataAsset/VehicleParts/Wheels_PT",
+      "/Game/HX8/OverlordParts/DT_HX8_LegacyParts",
+      "/Game/HX8/OverlordParts/DT_Overlord_GarageParts",
+      "/Game/HX8/ExhaustTipsR135/DT_HX8_ExhaustTips",
+      "/Game/HX8/WinchR137/DT_HX8_Winch100T",
+      "/Game/HX8/AeroR164/DT_HX8_RearAero",
+      "/Game/HX8/FifthWheelsR186/DT_HX8_FifthWheels",
+      "/Game/HX8/EngineAestheticR200/DT_HX8_EngineAesthetic",
+      "/Game/HX8/TowUpgradeR253/DT_HX8_TowUpgrade"
+    ],
+    "channels": 1000
+  },
+  {
+    "composite": "Vehicles",
+    "path": "/Game/DataAsset/Vehicles/Vehicles",
+    "row_struct": "VehicleRow",
+    "vanilla_parents": [
+      "/Game/DataAsset/Vehicles/Vehicles_1",
+      "/Game/DataAsset/Vehicles/Vehicles_Jeep",
+      "/Game/DataAsset/Vehicles/Vehicles_Truck",
+      "/Game/DataAsset/Vehicles/Vehicles_Bus",
+      "/Game/DataAsset/Vehicles/Vehicles_Trailers",
+      "/Game/DataAsset/Vehicles/Vehicles_Small",
+      "/Game/DataAsset/Vehicles/Vehicles_Van",
+      "/Game/DataAsset/Vehicles/Vehicles_Bike",
+      "/Game/DataAsset/Vehicles/Vehicles_Wrecker",
+      "/Game/DataAsset/Vehicles/Vehicles_Special",
+      "/Game/DataAsset/Vehicles/Vehicles_Ambulance"
+    ],
+    "adopted": [],
+    "channels": 1000
+  }
+]
