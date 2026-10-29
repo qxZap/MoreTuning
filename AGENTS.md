@@ -474,6 +474,40 @@ repairing built actors, so the two cannot drift.
 - A light control is a **root** SCS node (`RootNodes` + `AllNodes`), not a
   child of the scene root -- cloning one means registering it there.
 
+## Hosting this mod on a dedicated server
+
+A modded client cannot join a vanilla server, and it cannot join a modded one
+either unless the server carries the same data. Full recipe in
+[docs/SERVER_DEPLOY.md](docs/SERVER_DEPLOY.md). The parts that are easy to get
+wrong:
+
+- **The client paks cannot be copied over as they are.** Motor Town cooks its
+  content twice; a client pak on a server gives exit code 3, before any log
+  output. Strip the art and it loads: keep `DataTableFramework`, `DataAsset`
+  and `Cars/Parts`, drop **`Sound`**. A client-cooked `SoundWave` is fatal on
+  the server — `Serial size mismatch: Got 62, Expected 134` — and this mod
+  carries 985 sound files, so the sounds are the whole problem.
+- **`Z_TehsEngineSoundPack_P.pak` is not just sounds**: it carries Teh's 16
+  engines in the `VehicleParts` channel. Strip its sounds, keep its channel.
+- **The framework pak goes on whole.** Its `DataTableFramework/**` holds all
+  14000 channel files *and* the 14 composites; the stripped version was
+  missing six of them and the client's `Items` hash differed because of it.
+- **The balance change is one number** in `MotorTown/Config/`:
+  `LargeEngineFuelConsumption` 0.04 vs vanilla 0.08. Copy the mod's
+  `DefaultMotorTownBalance.ini` to the server's `MotorTown\Config\`.
+- **`bAllowBalanceTableMismatch: false` makes a server unjoinable for
+  anyone.** Client-vanilla and server-vanilla balance tables differ in the
+  payment rows, so the balance hash differs even for a vanilla client.
+- **Proof it worked:** the server's log prints the row id it resolved the
+  vehicle from — `Fortem(1068262)` on a vanilla server, `Fortem(1103752)` on
+  ours. The id changed, so the server used *our* table.
+
+A client whose data differs from the server's in a category the server
+disallows is refused **by the client, before it connects** — the server's log
+shows `players=0 conns=0`, no connection at all. That check is the game's own
+and lives in native code; the plugin project that studies it is separate:
+`D:\MTLiveMap\mt_plugins\MT_plugin_HashProbe` (its own repository).
+
 ## Conventions
 
 - Windows paths are absolute and machine-specific throughout. That is deliberate;
