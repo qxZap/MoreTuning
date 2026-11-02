@@ -542,6 +542,14 @@ wrong:
   - **`bAllowBalanceTableMismatch: false` makes a server unjoinable for
     anyone.** Client-vanilla and server-vanilla balance tables differ in the
     payment rows, so a vanilla client is refused too.
+- **Plugins on the server (tested 2026-11-03, build B1147):** loader and every plugin start
+  fine; the server's log is `Saved\ServerLog\motortown.log`, `-abslog` writes nothing. MTNet
+  stays off there (`[General] Disabled=1` in `mt_net.ini`): it points the game at localhost in
+  `MotorTown\Config\UserEngine.ini`, the leaderboard keep-alive then fails, and the file
+  outlives the plugin. Delete it if a server stops registering.
+- **Shipping builds resist cvars.** `ExecuteConsoleCommand` does nothing, and from
+  `UserEngine.ini` only some `mh.*` take: `companyTruckProfitShare`, the depot and patrol
+  values do not. `capitalist_economy` logs which took.
 - **Proof it worked:** the server's log prints the row id it resolved the
   vehicle from — `Fortem(1068262)` on a vanilla server, `Fortem(1103752)` on
   ours. The id changed, so the server used *our* table.
