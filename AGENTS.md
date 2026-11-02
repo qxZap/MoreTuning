@@ -544,12 +544,14 @@ wrong:
     payment rows, so a vanilla client is refused too.
 - **Plugins on the server (tested 2026-11-03, build B1147):** loader and every plugin start
   fine; the server's log is `Saved\ServerLog\motortown.log`, `-abslog` writes nothing. MTNet
-  stays off there (`[General] Disabled=1` in `mt_net.ini`): it points the game at localhost in
-  `MotorTown\Config\UserEngine.ini`, the leaderboard keep-alive then fails, and the file
-  outlives the plugin. Delete it if a server stops registering.
+  stays off there (`[General] Disabled=1` in `mt_net.ini`): it does nothing useful on a server,
+  and it leaves `MotorTown\Config\UserEngine.ini` pointing at localhost, which outlives the plugin
+  and stops the server registering. The periodic leaderboard keep-alive failure is not MTNet: it
+  happens with no plugin at all, with successes in between.
 - **Shipping builds resist cvars.** `ExecuteConsoleCommand` does nothing, and from
   `UserEngine.ini` only some `mh.*` take: `companyTruckProfitShare`, the depot and patrol
-  values do not. `capitalist_economy` logs which took.
+  values do not, on a console command, from the ini or through MTNet's config. `capitalist_economy`
+  logs which took, and the ini only counts from the server's second start.
 - **Proof it worked:** the server's log prints the row id it resolved the
   vehicle from — `Fortem(1068262)` on a vanilla server, `Fortem(1103752)` on
   ours. The id changed, so the server used *our* table.
