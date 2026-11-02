@@ -86,6 +86,34 @@ Consequences:
 - Genuinely hard references still exist (aero/tire meshes, `QuadWheelMesh`), so
   a rebase still has to graft those imports across.
 
+## Since 2 Nov 2026: own tables, not channels
+
+This supersedes the channel files in the section below. MoreTuning, No Limits, Carbon, Teh's
+Engines, Suspension Expansion and MoreAttachments ship their own tables as **adopted** tables
+(`/Game/DataAsset/VehicleParts/VehicleParts_MoreTuning` and friends, listed in
+`DataTableFramework/registry.json`), not `Ch0001..`. The framework still stubs the channels for
+other mods. `DataTableFramework/convert_mod.py` converts a mod to this layout.
+
+- **MoreTuning carries two extra assets:** `Sounds/Vehicle/Intake/QX_Flutter_Shot` (the flutter
+  used by the ECU Tuning plugin, a friend's sound, used with their OK) and
+  `Sounds/CabinMasterSoundMix`, vanilla's cabin mix with its 5 kHz band raised from 0.5 to 0.85
+  and its top band from 0.1 to 0.6. Both sit under `Sounds/`, which server paks drop.
+- **Plugins read MoreTuning, they do not need it.** Row names are the metadata: ECU Tuning takes
+  the supercharger stage from an intake row called `Supercharger*`. Without the plugin those are
+  plain intakes, and without the sounds the plugin plays nothing and carries on.
+- **Plugin settings** live in `Binaries\Win64\plugins\<plugin>.ini` and are created on first
+  launch, so no ini ships. `[General] Disabled=1` stops a plugin starting. `mt_loader.ini` stays
+  in `Win64`: `[General] Logging=1` turns logs on (off, no log file is created) and
+  `[Mappings] Export=1` writes a usmap, needed again after every game update.
+- **`[General] Disabled=1` does not make a client vanilla.** Capitalist's cargo table is listed
+  by the framework pak, so `Cargos` still differs from a vanilla server's. On your own server
+  use `bAllowCargoMismatch`, or give it the same data. Never fake the check.
+- **Cooking sounds:** only UE 5.5 is installed and the game is 5.4, so a new SoundWave is blocked
+  on that. Reuse what is already cooked: the supercharger whine is Teh's `hellcathigh` with a
+  1400 Hz high-pass taking the V8 off.
+- Vanilla's real numbers are worth reading: `TurboWhistle_01_High` is 96 kHz, so it survives
+  being pitched down; mod sounds top out at 48 kHz.
+
 ## 0.7.20: everything ships as DataTableFramework channels
 
 Since 0.7.20 no pak in this repo ships a part table. `DataTableFramework/run.py`
