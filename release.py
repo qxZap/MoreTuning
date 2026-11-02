@@ -6,9 +6,11 @@ Steam's Manage > Browse local files opens the game root (...\\common\\Motor Town
 Each zip holds MotorTown\\Content\\Paks\\<paks> from that root, so installing is:
 open that folder, drag the zip's MotorTown folder in, choose Replace.
 
-Every zip carries the DataTableFramework pak too: a channel without it does
-nothing, and asking players to install two things is one thing too many.
-Copies of it are identical, so overwriting one with another is harmless.
+Every zip carries the DataTableFramework pak too. Each mod works alone (it ships
+its own composite copy), but two mods on the same table knock each other's copies
+out without it -- and asking players to install a compat pack themselves is one
+thing too many. Copies of it are identical, so overwriting one with another is
+harmless.
 """
 import os
 import sys
@@ -16,7 +18,7 @@ import zipfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DIST = os.path.join(HERE, "dist")
-FRAMEWORK = "AAAA_DataTableFramework_P.pak"
+FRAMEWORK = "AAAA_DataTableFramework_99_P.pak"
 PAKS = "MotorTown/Content/Paks/"
 
 RELEASES = {

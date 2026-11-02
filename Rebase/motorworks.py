@@ -23,7 +23,11 @@ from pipeline import REPO, WORK, table_path, to_json  # noqa: E402
 from rebase import is_struct, reshape  # noqa: E402
 
 THEIRS = os.path.join(REPO, "MajasMotorWorksV7.1-7.19_P", "MotorTown", "Content")
-BASELINE = r"D:\MTLiveMap\vanilla_extract\MotorTown\Content"  # 0.7.19 vanilla, Sep 2026
+# 0.7.19 vanilla's VehicleParts tables, frozen in the repo: the MTLiveMap extract this
+# used to read is refreshed to the current game by its own tool (it was, to 0.7.20).
+BASELINE = os.path.join(HERE, "old", "0.7.19", "vanilla")
+if os.path.isfile(table_path(BASELINE, "Horns")):  # a 0.7.20 table: this is not 0.7.19 any more
+    sys.exit(f"FAIL: {BASELINE} holds 0.7.20 tables -- restore the 0.7.19 copy")
 MAPPINGS = "MotorTown719"
 DELTAS = os.path.join(HERE, "old", "0.7.19", "motorworks_deltas.json")
 TABLES = ["AeroParts", "Engines", "Transmissions", "VehicleParts0", "Wheels"]

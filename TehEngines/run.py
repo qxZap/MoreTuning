@@ -1,4 +1,4 @@
-"""Teh's Engine Sound Pack on 0.7.20, as DataTableFramework channel Ch0004.
+"""Teh's Engine Sound Pack on 0.7.20, as its own VehicleParts table VehicleParts_TehEngines.
 
     python TehEngines/run.py [path\\to\\Z_TehsEngineSoundPack_P.pak]
 
@@ -7,7 +7,9 @@ Engines table -- a frozen 0.7.18 copy of vanilla's 36 rows with his 16 on top.
 That copy is what broke: 0.7.19 changed the row format, and it would also hide
 every engine vanilla has added since. So the assets are carried over untouched
 (re-serialized where a class layout moved -- Rebase/reserialize.py) and only his 16 rows ship, rebased
-onto 0.7.20, in his own channel.
+onto 0.7.20, in a table of his own plus his own copy of the VehicleParts
+composite listing it -- so it works alone; the DataTableFramework lists the table
+by name (registry.json "adopted") alongside everyone else's.
 
 The table was built with a 0.7.18 usmap; MotorTown718P1 is the newest that
 parses it (0.7.19's reads it as a RawExport).
@@ -28,7 +30,7 @@ SOURCE_PAK = r"E:\MT\0.7.18NOW\Z_TehsEngineSoundPack_P.pak"
 SOURCE_MAPPINGS = "MotorTown718P1"
 REPAK = r"D:\MT\PakMerge\repak.exe"  # his pak is Oodle-compressed
 DEST = os.path.join(REPO, "Z_TehsEngineSoundPack_P", "MotorTown", "Content")
-CHANNEL = 4
+TABLE = "/Game/DataAsset/VehicleParts/VehicleParts_TehEngines"
 
 
 def main(argv):
@@ -49,8 +51,8 @@ def main(argv):
     # His assets were cooked against 0.7.18; re-cook any whose class layout moved.
     subprocess.run([sys.executable, os.path.join(REPO, "Rebase", "reserialize.py"),
                     SOURCE_MAPPINGS, DEST], check=True)
-    channels.ship(channels.framework.make_channel(merged, channels.COMP, CHANNEL, rows),
-                  CHANNEL, DEST, "Teh's engines")
+    channels.ship(channels.framework.make_table(merged, TABLE, rows), TABLE, DEST, "Teh's engines")
+    channels.framework.mod_composite(channels.COMP, [TABLE], DEST)  # works without the framework
     dropped = len(channels.rows_of(theirs)) - added
     print(f"  {added} engines; his {dropped} copies of vanilla rows dropped -- vanilla's own load")
 

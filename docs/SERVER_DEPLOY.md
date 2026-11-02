@@ -67,16 +67,10 @@ Two of these are easy to get wrong:
 
 ## 2. The balance ini
 
-MoreTuning's balance change is one number in `MotorTown/Config/`:
-
-```
-LargeEngineFuelConsumption=0.040000     (MoreTuning)
-LargeEngineFuelConsumption=0.080000     (vanilla)
-```
-
-Copy the mod's `DefaultMotorTownBalance.ini` to the server's
-`MotorTown\Config\` -- the server's economy is authoritative, and this is the
-mod's economy.
+None. MoreTuning no longer ships `DefaultMotorTownBalance.ini`; the lower fuel
+burn of its large engines is in the engine assets themselves (`FuelRealism/run.py`
+halves `FuelConsumption` on Large engines instead of setting
+`LargeEngineFuelConsumption` to 0.04). The server runs its vanilla ini.
 
 ## 3. The server's config
 
@@ -98,7 +92,7 @@ check (the vehicle the player spawns). Both are needed for a modded client.
 **`bAllowBalanceTableMismatch: false` makes a server unjoinable for anyone.**
 Client-vanilla and server-vanilla balance tables differ in the payment rows
 (`NavigatedTowRequestPaymentPer1Km` 500 vs 1000, `VehicleDeliveryPaymentPer1Km`
-500 vs 1000), so the balance hash differs even for a vanilla client. Measured:
+500 vs 1000), so a vanilla client is refused too. Measured:
 with the client's balance patched back to vanilla, the balance category still
 differed. Leave it `true`.
 
@@ -136,6 +130,4 @@ mod author is the only one who can cook them for the server target.
 That also means: a client whose data differs from the server's in any category
 the server disallows is refused **by the client, before it connects** (the
 server log shows `players=0 conns=0`, no connection at all). That check is the
-game's own, and it lives in native code -- the plugin project that studies it
-is separate: `D:\MTLiveMap\mt_plugins\MT_plugin_HashProbe` (its own
-repository, private).
+game's own, and it lives in native code.

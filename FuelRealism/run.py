@@ -9,6 +9,10 @@ scaled by a global per-class figure in DefaultMotorTownBalance.ini
 (Small/Medium 0.04, Large 0.08). Vanilla sets FuelConsumption to the engine's
 horsepower, near enough exactly, for all 36 of them.
 
+The mod does not ship that ini: a Large engine's figure is halved here instead,
+which is the same burn as Large at 0.04 and leaves the game's balance alone.
+Only engine assets the mod already ships are touched; none is copied in.
+
 That has two problems.
 
 The first is that it makes every engine equally efficient per horsepower. A
@@ -40,7 +44,12 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "Rebase"))
 from pipeline import MOD, VANILLA, WORK, from_json, to_json  # noqa: E402
 
-TABLE = os.path.join("DataAsset", "VehicleParts", "Engines.uasset")
+# Where the engine rows are: ours for the mod's engines, vanilla's for the stock
+# engine assets the mod overrides.
+TABLES = [os.path.join(MOD, "DataAsset", "VehicleParts", "VehicleParts_MoreTuning.uasset"),
+          os.path.join(VANILLA, "DataAsset", "VehicleParts", "Engines.uasset")]
+# Balance ini class factor over Small/Medium's 0.04: Large is 0.08.
+CLASS_FACTOR = {"Large": 2.0}
 # Litres per hour at rated power, worked out rather than dialled in. Fuel flow
 # is power times brake specific fuel consumption divided by fuel density:
 #
@@ -138,13 +147,13 @@ def litres_per_hour(hp, fuel):
     return hp * KW_PER_HP * bsfc / (1000.0 * density)
 
 
-def consumption(key, rpm=None, torque=None):
+def consumption(key, rpm=None, torque=None, engine_type=None):
     """New FuelConsumption for an engine, or None to leave it alone."""
     power = horsepower(key, torque, rpm)
     fuel = efficiency(key, rpm)
     if power is None or fuel is None:
         return None
-    return round(litres_per_hour(power, fuel), 1)
+    return round(litres_per_hour(power, fuel) / CLASS_FACTOR.get(engine_type, 1.0), 1)
 
 
 def engine_rows(table):
@@ -157,7 +166,8 @@ def engine_rows(table):
 def asset_of(row):
     for prop in row["Value"]:
         if prop["Name"] == "EngineAsset" and isinstance(prop.get("Value"), dict):
-            return prop["Value"]["AssetPath"].get("PackageName")
+            package = prop["Value"]["AssetPath"].get("PackageName")
+            return None if package == "None" else package  # an empty soft path, not an engine
     return None
 
 
@@ -170,6 +180,18 @@ def engine_property(asset, name):
                 if isinstance(field, dict) and field["Name"] == name:
                     v = field.get("Value")
                     return 0.0 if isinstance(v, str) else float(v or 0)
+    return None
+
+
+def engine_type(asset):
+    """Small / Medium / Large; unset is the enum default, Small."""
+    for export in asset["Exports"]:
+        for prop in export.get("Data") or []:
+            if not isinstance(prop, dict) or prop["Name"] != "EngineProperty":
+                continue
+            for field in prop["Value"]:
+                if isinstance(field, dict) and field["Name"] == "EngineType":
+                    return str(field.get("Value")).split("::")[-1]
     return None
 
 
@@ -205,26 +227,30 @@ def set_fuel(asset, value):
 def main(dry=False):
     work = os.path.join(WORK, "fuel")
     os.makedirs(work, exist_ok=True)
-    table_path = os.path.join(MOD, TABLE)
-    if not os.path.isfile(table_path):
-        sys.exit(f"no engine table at {table_path} -- run the Rebase build first")
-    table = json.load(open(to_json(table_path, os.path.join(work, "engines.json")),
-                           encoding="utf-8"))
+    rows = []
+    for i, table_path in enumerate(TABLES):
+        if not os.path.isfile(table_path):
+            sys.exit(f"no engine table at {table_path}")
+        table = json.load(open(to_json(table_path, os.path.join(work, f"engines{i}.json")),
+                               encoding="utf-8"))
+        rows += engine_rows(table)
 
     changed = skipped = missing = 0
     report = []
-    for row in engine_rows(table):
+    done = set()
+    for row in rows:
         key = str(row["Name"])
         package = asset_of(row)
-        if not package:
+        if not package or package in done:
             continue
+        done.add(package)
         rel = package.replace("/Game/", "").split("/")
-        ours = os.path.join(MOD, *rel) + ".uasset"
-        source = ours if os.path.isfile(ours) else os.path.join(VANILLA, *rel) + ".uasset"
+        source = os.path.join(MOD, *rel) + ".uasset"
         if not os.path.isfile(source):
-            print(f"  {key}: no asset at {package}")
-            missing += 1
-            continue
+            if not os.path.isfile(os.path.join(VANILLA, *rel) + ".uasset"):
+                print(f"  {key}: no asset at {package}")
+                missing += 1
+            continue  # vanilla's own engine, not shipped: left to the game
 
         # Stage next to the source: UAssetGUI resolves siblings out of the folder
         # it reads from, so an asset moved somewhere lonely will not rebuild.
@@ -232,13 +258,14 @@ def main(dry=False):
         js = to_json(source, os.path.join(os.path.dirname(source), stem + ".fuel.json"))
         asset = json.load(open(js, encoding="utf-8"))
         value = consumption(key, max_rpm(asset),
-                            torque=engine_property(asset, "MaxTorque"))
+                            torque=engine_property(asset, "MaxTorque"),
+                            engine_type=engine_type(asset))
         if value is None:
             os.remove(js)
             skipped += 1
             continue
         moved, old = set_fuel(asset, value)
-        report.append((key, old, value, "ours" if source == ours else "vanilla"))
+        report.append((key, old, value, engine_type(asset) or "Small"))
         if not moved:
             os.remove(js)
             continue
@@ -257,7 +284,7 @@ def main(dry=False):
         os.remove(js)
         changed += 1
 
-    print(f"{'engine':30}{'was':>9}{'now':>9}   source")
+    print(f"{'engine':30}{'was':>9}{'now':>9}   class")
     for key, old, new, where in report:
         print(f"{key:30}{old:9.1f}{new:9.1f}   {where}")
     print(f"\n{changed} engines retuned, {skipped} left alone (electric or unnamed), "
@@ -285,6 +312,9 @@ def demo():
     assert litres_per_hour(100, TRUCK_DIESEL) < litres_per_hour(100, PETROL_OLD_V8),         "a modern truck diesel must beat a carburettored V8 on the same power"
     assert consumption("Electric_300HP", 19000) is None, "electricity is not fuel"
     assert consumption("SmallBlock_90HP", 6500) == 29.7
+    assert consumption("SmallBlock_90HP", 6500, engine_type="Large") == 14.9,         "Large burns at 0.08, not the ini's old 0.04: half the figure, same fuel"
+    assert engine_type({"Exports": [{"Data": [{"Name": "EngineProperty", "Value": [
+        {"Name": "EngineType", "Value": "EMTEngineType::Large"}]}]}]}) == "Large"
 
     assert max_rpm({"Exports": [{"Data": [{"Name": "EngineProperty", "Value": [
         {"Name": "MaxRPM", "Value": 2100.0}]}]}]}) == 2100.0

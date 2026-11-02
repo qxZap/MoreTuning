@@ -147,6 +147,7 @@ def run(old_mappings, folders):
         _, old = compare_usmap.parse(os.path.join(MAPPINGS_DIR, m + ".usmap"))
         layouts.append((m, shifted(old, new)))
         print(f"{len(layouts[-1][1])} classes changed layout {m} -> {CURRENT_MAPPINGS}")
+    names = set().union(*(moved for _, moved in layouts))
     work = os.path.join(WORK, "reserialize")
     os.makedirs(work, exist_ok=True)
     done = skipped = 0
@@ -157,6 +158,11 @@ def run(old_mappings, folders):
                 if not f.endswith(".uasset"):
                     continue
                 path = os.path.join(dirpath, f)
+                with open(path, "rb") as fh:
+                    header = fh.read()
+                if not any(c.encode() in header for c in names):  # a class it exports is in its name map
+                    skipped += 1
+                    continue
                 for m, moved in layouts:
                     before = load(to_json(path, os.path.join(work, "old.json"), m))
                     if not raw_count(before):

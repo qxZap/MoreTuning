@@ -7,8 +7,7 @@
       "/Game/DataAsset/Buffs/Buffs_0",
       "/Game/DataAsset/Buffs/Buffs_Food"
     ],
-    "adopted": [],
-    "channels": 1000
+    "mod_tables": []
   },
   {
     "composite": "Buildings",
@@ -20,8 +19,7 @@
       "/Game/DataAsset/Buildings/Buildings_Object",
       "/Game/DataAsset/Buildings/Buildings_Module"
     ],
-    "adopted": [],
-    "channels": 1000
+    "mod_tables": []
   },
   {
     "composite": "Cargos",
@@ -31,10 +29,10 @@
       "/Game/DataAsset/Cargos_01",
       "/Game/DataAsset/Cargos_Deprecated"
     ],
-    "adopted": [
-      "/Game/DataAsset/Cargos_Proxy"
-    ],
-    "channels": 1000
+    "mod_tables": [
+      "/Game/DataAsset/Cargos_Proxy",
+      "/Game/DataAsset/Cargos_Arini"
+    ]
   },
   {
     "composite": "CharacterBodyParts",
@@ -50,8 +48,9 @@
       "/Game/DataAsset/CharacterBody/CharacterBodyParts_Helmet",
       "/Game/DataAsset/CharacterBody/CharacterBodyParts_Glasses"
     ],
-    "adopted": [],
-    "channels": 1000
+    "mod_tables": [
+      "/Game/DataAsset/CharacterBody/CharacterBodyParts_Slides"
+    ]
   },
   {
     "composite": "DT_Voice_Deckard",
@@ -61,8 +60,7 @@
       "/Game/Characters/Voice/Common_Male",
       "/Game/Characters/Voice/DT_Voice_Deckard0"
     ],
-    "adopted": [],
-    "channels": 1000
+    "mod_tables": []
   },
   {
     "composite": "DT_Voice_Freya",
@@ -72,8 +70,7 @@
       "/Game/Characters/Voice/Common_Female",
       "/Game/Characters/Voice/DT_Voice_Freya0"
     ],
-    "adopted": [],
-    "channels": 1000
+    "mod_tables": []
   },
   {
     "composite": "DT_Voice_Gray",
@@ -83,8 +80,7 @@
       "/Game/Characters/Voice/Common_Male",
       "/Game/Characters/Voice/DT_Voice_Gray0"
     ],
-    "adopted": [],
-    "channels": 1000
+    "mod_tables": []
   },
   {
     "composite": "DT_Voice_Sorine",
@@ -94,8 +90,7 @@
       "/Game/Characters/Voice/Common_Female",
       "/Game/Characters/Voice/DT_Voice_Sorine0"
     ],
-    "adopted": [],
-    "channels": 1000
+    "mod_tables": []
   },
   {
     "composite": "Emotes",
@@ -104,8 +99,7 @@
     "vanilla_parents": [
       "/Game/DataAsset/Emote"
     ],
-    "adopted": [],
-    "channels": 1000
+    "mod_tables": []
   },
   {
     "composite": "HelpText",
@@ -115,8 +109,7 @@
       "/Game/UI/RichText/RichTextStyleSetTable",
       "/Game/UI/RichText/HelTextOverride"
     ],
-    "adopted": [],
-    "channels": 1000
+    "mod_tables": []
   },
   {
     "composite": "Items",
@@ -133,10 +126,12 @@
       "/Game/DataAsset/Items/Items_Foods",
       "/Game/DataAsset/Items/Items_Module"
     ],
-    "adopted": [
-      "/Game/DataAsset/Items/Items_MajasDetailWorks"
-    ],
-    "channels": 1000
+    "mod_tables": [
+      "/Game/DataAsset/Items/Items_MajasDetailWorks",
+      "/Game/DataAsset/Items/Items_SlidesAttachments",
+      "/Game/DataAsset/Items/Items_SlidesDashboards",
+      "/Game/DataAsset/Items/Items_MoreAttachments"
+    ]
   },
   {
     "composite": "RichImageAll2",
@@ -148,8 +143,7 @@
       "/Game/UI/RichText/RichImage_Buffs",
       "/Game/UI/RichText/RichImage_Help"
     ],
-    "adopted": [],
-    "channels": 1000
+    "mod_tables": []
   },
   {
     "composite": "VehicleParts",
@@ -176,7 +170,7 @@
       "/Game/DataAsset/VehicleParts/License_OversizeEscort",
       "/Game/DataAsset/VehicleParts/Horns"
     ],
-    "adopted": [
+    "mod_tables": [
       "/Game/DataAsset/VehicleParts/Wheels_PT",
       "/Game/HX8/OverlordParts/DT_HX8_LegacyParts",
       "/Game/HX8/OverlordParts/DT_Overlord_GarageParts",
@@ -185,9 +179,18 @@
       "/Game/HX8/AeroR164/DT_HX8_RearAero",
       "/Game/HX8/FifthWheelsR186/DT_HX8_FifthWheels",
       "/Game/HX8/EngineAestheticR200/DT_HX8_EngineAesthetic",
-      "/Game/HX8/TowUpgradeR253/DT_HX8_TowUpgrade"
-    ],
-    "channels": 1000
+      "/Game/HX8/TowUpgradeR253/DT_HX8_TowUpgrade",
+      "/Game/DataAsset/VehicleParts/VehicleParts_MoreTuning",
+      "/Game/DataAsset/VehicleParts/VehicleParts_MoreTuningNoLimits",
+      "/Game/DataAsset/VehicleParts/VehicleParts_MoreTuningCarbon",
+      "/Game/DataAsset/VehicleParts/VehicleParts_TehEngines",
+      "/Game/DataAsset/VehicleParts/VehicleParts_SuspensionExpansion",
+      "/Game/RakMods/HeavyHaulPack/Parts/Engine/RHHP_Engines",
+      "/Game/RakMods/HeavyHaulPack/Parts/Tires/RHHP_Tires",
+      "/Game/RakMods/HeavyHaulPack/Parts/Transmissions/RHHP_Transmissions",
+      "/Game/RakMods/HeavyHaulPack/Parts/RHHP_Parts",
+      "/Game/RakMods/HeavyHaulPack/Parts/RHHP_Misc"
+    ]
   },
   {
     "composite": "Vehicles",
@@ -206,7 +209,10 @@
       "/Game/DataAsset/Vehicles/Vehicles_Special",
       "/Game/DataAsset/Vehicles/Vehicles_Ambulance"
     ],
-    "adopted": [],
-    "channels": 1000
+    "mod_tables": [
+      "/Game/DataAsset/Vehicles/Vehicles_VehicleLabs",
+      "/Game/DataAsset/Vehicles/Vehicles_Arini",
+      "/Game/RPMTech/DataAsset/RPMTech_Vehicle"
+    ]
   }
 ]

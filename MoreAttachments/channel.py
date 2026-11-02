@@ -1,10 +1,12 @@
-"""MoreAttachments on 0.7.20, as DataTableFramework channels of the Items composite.
+"""MoreAttachments on 0.7.20, as its own Items table, listed by the DataTableFramework.
 
     python MoreAttachments/channel.py
 
-    Items Ch0001  one file: every MoreAttachments row (the free and premium paks
-                  share it), plus vanilla's attachments with the scale range
-                  opened like ours
+    Items_MoreAttachments  one file: every MoreAttachments row (the free and premium
+                           paks share it), plus vanilla's attachments with the scale
+                           range opened like ours -- plus the mod's own copy of
+                           the Items composite listing it, so it works alone. The
+                           framework lists it by name (registry.json "adopted").
 
 No pak ships Items_AttachmentPart any more. What still ships whole is the vendor
 -- Vendor_Garage is an NPC blueprint, not a composite -- rebuilt from 0.7.20's
@@ -13,12 +15,12 @@ copy: vanilla's items, then ours in the order they always had.
 Rows come from the tables as last shipped (old/0.7.19/), rebased like the part
 tables. On top of them:
 
-- Paint. 0.7.20 lets an attachment declare AttachmentPaintSlots (the metallic
-  and roughness sliders). An attachment made from a body part takes its slots
-  from that part's ColorSlots -- same struct, same material slot names, same
-  defaults -- or, where the part has none, its mesh's M_Body slots, or failing
-  those every slot that is not a light (vanilla's antenna paints plain M_Gray,
-  so the attachment paint system brings its own material).
+- Paint and lights (native.py). 0.7.20's AttachmentPaintSlots (colour, metallic,
+  roughness) paint the mesh's own material, so a part with car-paint slots gets
+  one slot each and its actor stops overriding them; a palette-only car part gets
+  its own mesh copy on M_Gray; lamp sections become switchable lights, one control
+  per section with labelled lines for the MoreAttachments plugin. Textured props
+  stay as they are.
 - Templates. Generated actors never get the lamp template: a bumper with
   lights built in is still a bumper, and ToggleLight on it does nothing.
 - New parts. Body parts, bull bars and wheels that 0.7.20 added get an actor and
@@ -40,7 +42,7 @@ sys.path.insert(0, os.path.join(REPO, "Rebase"))
 from pipeline import (CURRENT_MAPPINGS, VANILLA, WORK, from_json, register_names,  # noqa: E402
                       to_json)
 from rebase import fnames_in, rebase  # noqa: E402
-from paint import attachment_slots, mesh_of  # noqa: E402
+from paint import mesh_of  # noqa: E402
 import importlib.util  # noqa: E402
 
 spec = importlib.util.spec_from_file_location(
@@ -68,8 +70,7 @@ NEW_PARTS = os.path.join(HERE, "new_in_0.7.20.json")
 BASELINE = r"D:\MTLiveMap\vanilla_extract_server\MotorTown\Content"  # 0.7.19, Sep 2026
 WORK_MA = os.path.join(WORK, "ma")
 COMP = "Items"
-CHANNEL = 1
-NATIVE_PAINT = False  # see the paint loop in main(): off until proven in a lab pak
+OWN_TABLE = "/Game/DataAsset/Items/Items_MoreAttachments"  # what we ship
 TABLE = os.path.join("DataAsset", "Items", "Items_AttachmentPart.uasset")
 VENDOR = os.path.join("Characters", "NPC", "Vendor_Garage.uasset")
 TEXT = "UAssetAPI.PropertyTypes.Objects.TextPropertyData"
@@ -164,6 +165,20 @@ def paint_slots(color_slots, template):
     return out
 
 
+def whitened(slot_value):
+    """A colour slot that starts white -- what vanilla's own paintable body parts default
+    to (AeroParts: 255,255,255, metallic 0.3, roughness 0.5) -- not the antenna's gray."""
+    out = copy.deepcopy(slot_value)
+    for p in out:
+        if p["Name"] == "DefaultColor":
+            p["Value"][0]["Value"] = "255, 255, 255"
+        elif p["Name"] == "DefaultMetallic":
+            p["Value"] = 0.30000001192092896
+        elif p["Name"] == "DefaultRoughness":
+            p["Value"] = 0.5
+    return out
+
+
 def labelled(slot_value, label):
     """An MTVehicleColorSlot body whose shown name is `label` (literal text)."""
     out = copy.deepcopy(slot_value)
@@ -179,45 +194,17 @@ def labelled(slot_value, label):
     return out
 
 
-def channel_label(slot):
-    name = helpers["clean_part_name"](slot)
-    return name[:-2] if name.endswith(" 1") else name
-
-
-def nativize(path):
-    """Let the 0.7.20 paint reach this actor's mesh; returns True if it changed.
-
-    The colourable templates replace the mesh's materials with M_PaintableMetal
-    and tint that through ChangeLightColor -- one colour for the whole part, and
-    nothing left for AttachmentPaintSlots to paint. A part with paintable
-    channels keeps its own materials instead and drops that interaction.
-    """
-    actor = read(path, "nativize")
-    changed = False
-    for e in actor["Exports"]:
-        data = e.get("Data")
-        if not isinstance(data, list):
-            continue
-        if e["ObjectName"] == "Mesh_GEN_VARIABLE":
-            keep = [p for p in data if p.get("Name") != "OverrideMaterials"]
-            changed |= len(keep) != len(data)
-            e["Data"] = keep
-        for p in data:
-            if isinstance(p, dict) and p.get("Name") == "InteractionParams":
-                keep = [ip for ip in p["Value"]
-                        if not any(x.get("Name") == "InteractionType" and x.get("Value") == "ChangeLightColor"
-                                   for x in ip["Value"])]
-                changed |= len(keep) != len(p["Value"])
-                p["Value"] = keep
-    if changed:
-        src = os.path.join(WORK_MA, "nativize.json")
-        with open(src, "w", encoding="utf-8") as f:
-            json.dump(actor, f)
-        from_json(src, path)
-        if any(e["$type"].startswith("UAssetAPI.ExportTypes.RawExport")
-               for e in read(path, "nativize.check")["Exports"]):
-            sys.exit(f"FAIL: {path} reads back raw after nativize")
-    return changed
+def with_extra(slot_value, sections):
+    """An MTVehicleColorSlot body that also paints `sections` (ExtraMaterialSlotNames)."""
+    out = copy.deepcopy(slot_value)
+    for p in out:
+        if p["Name"] == "ExtraMaterialSlotNames":
+            p["Value"] = [{"$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI",
+                           "Name": str(i), "ArrayIndex": 0, "PropertyGuid": None, "IsZero": False,
+                           "PropertyTagFlags": "None", "PropertyTypeName": None,
+                           "PropertyTagExtensions": "NoExtension", "Value": s}
+                          for i, s in enumerate(sections)]
+    return out
 
 
 def set_name(row, text):
@@ -378,38 +365,28 @@ def main():
     own = [by_id[n] for n in order]
     print(f"  {len(fresh)} new attachments: {sorted(p['part_id'] for p in fresh)}")
 
-    # Native per-channel paint (NATIVE_PAINT) means one AttachmentPaintSlot per
-    # paintable mesh channel AND surgery on the actor (strip its M_PaintableMetal
-    # override + Change Color). Hand-editing those Blueprint actors corrupted
-    # them and crashed on world join, so it is OFF: our rows carry no paint slot
-    # and keep the colourable actor's own working "Change Color" (single tint).
-    # Redo native paint from a clean minimal actor in a lab pak, not here.
-    body = next(p["Value"] for p in template["Value"] if p["Name"] == "Slot")
-    painted = natives = 0
+    # 0.7.20 native paint + per-section lights (native.py): every actor rebuilt from
+    # its pristine snapshot; the rows get one paint slot per mesh slot it paints.
+    import native
+    painted = native.convert_all(regenerated={"Attachment_" + p["part_id"] for p in fresh})
+    body = whitened(next(p["Value"] for p in template["Value"] if p["Name"] == "Slot"))
     for row in own:
         slots = prop(row, "AttachmentPaintSlots")
         if slots is None:
             continue
-        if not NATIVE_PAINT:
-            slots["Value"] = []
-            continue
-        part = parts.get(row["Name"][len("Attachment_"):])
-        actor = prop(row, "AttachmentPartActorClass")["Value"]["AssetPath"]["PackageName"]
-        actor_file = os.path.join(MAIN, *actor[len("/Game/"):].split("/")) + ".uasset" \
-            if actor.startswith("/Game/") else ""
-        lamp = os.path.isfile(actor_file) and b"ToggleLight\x00" in open(actor_file, "rb").read()
-        channels = attachment_slots(part["mesh_path"]) if part and not lamp else []
-        if not channels or not os.path.isfile(actor_file):
-            slots["Value"] = []
-            continue
-        own_slots = {k["Value"]: v for k, v in part["color_slots"]}
-        pairs = [({"Value": c}, own_slots.get(c) or {"Value": labelled(body, channel_label(c))})
-                 for c in channels]
-        slots["Value"] = paint_slots(pairs, template)
-        painted += 1
-        natives += nativize(actor_file)
-    print(f"  attachment paint slots cleared (NATIVE_PAINT={NATIVE_PAINT}); "
-          f"{painted} native, {natives} actors converted")
+        actor = prop(row, "AttachmentPartActorClass")["Value"]["AssetPath"]["PackageName"] or ""
+        names = painted.get(actor.rsplit("/", 1)[-1], [])
+        # a car wheel's paint sections are its rim (Wheel_01/02, as vanilla's own wheels);
+        # the tyre is the palette section and keeps its rubber
+        if names and all(n.startswith("Wheel_") for n in names):
+            # a car wheel's paint sections are its rim (Wheel_01/02, as vanilla's and
+            # Wheel Works' own wheels); the tyre is the palette section and keeps its rubber
+            pairs = [({"Value": n}, {"Value": labelled(body, "Rim" if len(names) == 1 else f"Rim {k + 1}")})
+                     for k, n in enumerate(names)]
+        else:
+            pairs = [({"Value": n}, {"Value": body if len(names) == 1 else labelled(body, f"Body {k + 1}")})
+                     for k, n in enumerate(names)]
+        slots["Value"] = paint_slots(pairs, template) if names else []
 
     scale = {n: prop(by_id["Attachment_Vista_Bonnet_01"], n)["Value"]
              for n in ("AttachmentScaleMin", "AttachmentScaleMax")}
@@ -424,12 +401,13 @@ def main():
     # merged is vanilla's table with our imports appended, so vanilla's rows'
     # references stay valid in it and both kinds share the one file.
     import shutil
-    shutil.rmtree(os.path.join(MAIN, "DataTableFramework"), ignore_errors=True)
+    shutil.rmtree(os.path.join(MAIN, "DataTableFramework"), ignore_errors=True)  # the old Items Ch0001
     rows = own + opened
-    table = framework.make_channel(merged, COMP, CHANNEL, rows)
+    table = framework.make_table(merged, OWN_TABLE, rows)
     register_names(table, [x for r in rows for x in fnames_in(r)])
-    framework.write_channel(table, COMP, CHANNEL, MAIN)
-    print(f"  Items {framework.channel(CHANNEL)}: {len(own)} attachments + {len(opened)} vanilla scale rows")
+    framework.write_table(table, OWN_TABLE, MAIN)
+    framework.mod_composite(COMP, [OWN_TABLE], MAIN)  # works without the framework
+    print(f"  {OWN_TABLE.rsplit('/', 1)[1]}: {len(own)} attachments + {len(opened)} vanilla scale rows")
 
     new_ids = ["Attachment_" + p["part_id"] for p in fresh]
     build_vendor(os.path.join(OLD, "main", VENDOR), new_ids, MAIN, group_of)
@@ -437,6 +415,8 @@ def main():
 
 
 def demo():
+    extra = with_extra([{"Name": "ExtraMaterialSlotNames", "Value": []}], ["Wheel_02"])
+    assert [e["Value"] for e in extra[0]["Value"]] == ["Wheel_02"], extra
     key = {"Value": "RearWing"}
     value = {"Value": [{"Name": "DefaultMetallic", "Value": 0.3}]}
     template = {"Name": "0", "Value": [{"Name": "MaterialSlotName", "Value": "Body_01"},
@@ -447,6 +427,10 @@ def demo():
     assert [s["Value"][1]["Value"] for s in out] == [0, 1]
     assert out[0]["Value"][2]["Value"] == [{"Name": "DefaultMetallic", "Value": 0.3}]
     assert template["Value"][0]["Value"] == "Body_01", "template must stay untouched"
+    gray = [{"Name": "DefaultColor", "Value": [{"Value": "98, 98, 98"}]}, {"Name": "DefaultRoughness", "Value": 0.375}]
+    white = whitened(gray)
+    assert white[0]["Value"][0]["Value"] == "255, 255, 255" and white[1]["Value"] == 0.5
+    assert gray[0]["Value"][0]["Value"] == "98, 98, 98", "the source slot stays as it was"
     kind = {"A_Atlas_FB": "FB", "A_Zydro_FB": "FB", "A_Cora_Bonnet": "Bonnet", "A_Prop": None,
             "A_Duro_FB": "FB", "A_New_Thing": "Hitch", "A_Lamp_W": "W", "A_W1": "W", "A_W3": "W",
             "A_W2": "W"}.get

@@ -1,20 +1,25 @@
-"""MoreTuning, No Limits and Carbon as DataTableFramework channels.
+"""MoreTuning, No Limits and Carbon as their own VehicleParts tables, listed by the DataTableFramework.
 
     python Rebase/channels.py          # all three
     python Rebase/channels.py demo
 
-None of the three ships a table any more. Each ships exactly one file -- its
-channel of the VehicleParts composite (DataTableFramework/registry.json) -- so
-nothing here overrides a vanilla table, and Maja's paks no longer fight ours:
+None of the three overrides a vanilla table. Each ships its own table and its own
+copy of the VehicleParts composite, so it works without the DataTableFramework;
+with it, the framework lists every mod's table by name (registry.json "adopted")
+and overrides all the copies. No Limits builds on MoreTuning and Carbon on both,
+so their copies list those tables too -- and since the paks load in that order
+(_P < xNoLimits < yCarbon), the last copy standing lists all three:
 
-    Ch0001  MoreTuning: its own rows from every table, plus the vanilla rows it
-            changes (Motor Works' edits, then the vehicle gates stripped)
-    Ch0002  No Limits: every body part and headlight with VehicleKeys gone
-    Ch0003  Carbon: the _Carbon twins only
+    VehicleParts_MoreTuning          its own rows from every table, plus the vanilla
+                                     rows it changes (Motor Works' edits, then the
+                                     vehicle gates stripped)
+    VehicleParts_MoreTuningNoLimits  every body part and headlight, VehicleKeys gone
+    VehicleParts_MoreTuningCarbon    the _Carbon twins only
 
 Rows from different tables share one import table: each source's hard
 references are grafted across (rebase.graft_imports). Later parents win a
-same-named row, so the order above is also the priority: No Limits overrides
+same-named row, and the registry lists them in that order, so it is also the
+priority: No Limits overrides
 MoreTuning's own aero rows as well as vanilla's.
 
 The mod's own rows are read from Rebase/old/<version>/ -- the tables as last
@@ -60,10 +65,16 @@ PREVIOUS_MAPPINGS = "MotorTown719"
 OLD = os.path.join(HERE, "old", "0.7.19")
 COMP = "VehicleParts"
 
-MORETUNING, NOLIMITS_CH, CARBON_CH = 1, 2, 3
+TABLES = "/Game/DataAsset/VehicleParts/"
+MORETUNING, NOLIMITS_T, CARBON_T = (TABLES + "VehicleParts_MoreTuning", TABLES + "VehicleParts_MoreTuningNoLimits",
+                                    TABLES + "VehicleParts_MoreTuningCarbon")
 OWN = ["Engines", "Transmissions", "LSD", "AeroParts", "VehicleParts0"]
 OVERRIDES = ["Engines", "License", "License_OversizeEscort", "VehicleParts0", "AeroParts",
              "Transmissions"]
+# "No X" mesh-less parts, retired: VehicleLabs makes these types uninstallable instead
+# (vehicle_mod/tables.py OPTIONAL). A car wearing one loses it, leaving the slot empty.
+RETIRED = {"No_Bonnet", "No_Roof", "No_Front_Bumper", "No_Rear_Bumper", "No_Fender",
+           "No_SideSkirt", "No_Headlight"}
 # Not Wheels: an override there sits above Maja's Mo Wheel Works and puts vanilla
 # meshes back on all 93 of her rows. Motor Works only unlocks wheels, and Wheel
 # Works does that itself.
@@ -88,12 +99,13 @@ def base(name):
     return table, set(deltas.get(name, {})) & {r["Name"] for r in rows_of(table)}
 
 
-def ship(table, n, dest, label):
+def ship(table, package, dest, label):
+    """Build `table` at `package` (a mod's own table) into dest."""
     register_names(table, [x for r in rows_of(table) for x in fnames_in(r)])
-    check = framework.write_channel(table, COMP, n, dest)
+    check = framework.write_table(table, package, dest)
     subprocess.run([sys.executable, os.path.join(HERE, "verify.py"), check, dest, MOD, VANILLA],
                    check=True)
-    print(f"  {framework.channel(n)} {label}: {len(rows_of(table))} rows")
+    print(f"  {package.rsplit('/', 1)[1]} {label}: {len(rows_of(table))} rows")
 
 
 def changed_only(rows, edit):
@@ -163,6 +175,12 @@ def own_rows(name):
     # A row vanilla now has in ANY parent is vanilla's: 0.7.20 moved the taxi
     # licences from VehicleParts0 into License, and our 0.7.19 copies would win.
     moved = vanilla_composite_names() - vanilla_now
+    # out of the merged table itself: No Limits and Carbon are built from it
+    retired = [r["Name"] for r in rows_of(merged)[kept:] if r["Name"] in RETIRED]
+    if retired:
+        rows_of(merged)[kept:] = [r for r in rows_of(merged)[kept:] if r["Name"] not in RETIRED]
+        added -= len(retired)
+        print(f"  {name}: retired {sorted(retired)}")
     rows = [r for r in rows_of(merged)[kept:] if r["Name"] not in moved]
     if added != len(rows):
         print(f"  {name}: dropped {added - len(rows)} rows vanilla now has in another table: "
@@ -212,11 +230,15 @@ def combine(parts):
     return out, rows
 
 
-def ship_one(parts, n, dest, label):
+def ship_one(parts, package, dest, label, needs=()):
+    """One table from several sources, plus the mod's own copy of the composite listing
+    vanilla, the tables of mods it builds on (`needs`) and its own -- so it works without
+    the framework. Clears dest's DataTableFramework/ -- channel files from before."""
     import shutil
     shutil.rmtree(os.path.join(dest, "DataTableFramework"), ignore_errors=True)
     table, rows = combine([p for p in parts if p[1]])
-    ship(framework.make_channel(table, COMP, n, rows), n, dest, label)
+    ship(framework.make_table(table, package, rows), package, dest, label)
+    framework.mod_composite(COMP, [*needs, package], dest)
 
 
 def main():
@@ -242,7 +264,7 @@ def main():
         source = merged.get(name) or base(name)[0]
         add_paint = painter(source, templates)
         parts.append((source, changed_only(rows_of(source), lambda r: nolimits(r) | add_paint(r))))
-    ship_one(parts, NOLIMITS_CH, NOLIMITS, "No Limits")
+    ship_one(parts, NOLIMITS_T, NOLIMITS, "No Limits", needs=[MORETUNING])
 
     print("=== Carbon (qxZap_MoreTuning_yCarbon_P)")
     parts = []
@@ -254,7 +276,7 @@ def main():
         for t in twins:
             add_paint(t)
         parts.append((source, twins))
-    ship_one(parts, CARBON_CH, CARBON, "Carbon twins")
+    ship_one(parts, CARBON_T, CARBON, "Carbon twins", needs=[MORETUNING, NOLIMITS_T])
     print("\nPack: qxZap_MoreTuning_P, qxZap_MoreTuning_xNoLimits_P, qxZap_MoreTuning_yCarbon_P"
           " (AAAA_DataTableFramework_P must be installed)")
 
@@ -268,7 +290,10 @@ def demo():
     assert [r["Name"] for r in out] == ["Bumper"] and out[0]["Value"][0]["Value"] == []
     assert row["Value"][0]["Value"] == ["Vista"], "source rows must stay untouched"
     assert changed_only([row], strip_gates) == [], "base strip leaves VehicleKeys alone"
-    assert MORETUNING < NOLIMITS_CH < CARBON_CH, "No Limits must override MoreTuning's rows"
+    listed = list(framework.adopted(COMP))  # the composite lists them in registry order: later wins
+    assert all(t in listed for t in (MORETUNING, NOLIMITS_T, CARBON_T)), "register the tables in registry.json"
+    assert listed.index(MORETUNING) < listed.index(NOLIMITS_T) < listed.index(CARBON_T), \
+        "No Limits must override MoreTuning's rows, Carbon both"
     # Two tables, one channel: the second's hard ref is re-pointed into the first.
     a = {"Imports": [{"ObjectName": "/Game/A", "ClassPackage": "/Script/CoreUObject",
                       "ClassName": "Package", "OuterIndex": 0}],

@@ -94,6 +94,41 @@ def parker(d, accent):
            anchor="mm")
 
 
+def smoke(d, accent):
+    cx, cy, r = 860, 470, 118
+    # the cloud first, behind the tyre: puffs rolling back along the road, swelling,
+    # rising and thinning; drawn on their own layer and blurred so they read as smoke
+    from PIL import ImageFilter
+    img = d._image
+    layer = Image.new("RGBA", img.size, (0, 0, 0, 0))
+    ld = ImageDraw.Draw(layer)
+    for i in range(22):
+        t = i / 21
+        x = cx + 50 + 400 * t + 30 * math.sin(i * 2.3)
+        y = cy + r - 45 - 230 * t ** 1.25 + 22 * math.cos(i * 1.7)
+        pr = 48 + 120 * t
+        a = int(200 * (1 - t) ** 1.1 + 70)
+        ld.ellipse([x - pr, y - pr, x + pr, y + pr], fill=(228, 231, 238, a))
+    layer = layer.filter(ImageFilter.GaussianBlur(11))
+    img.paste(layer, (0, 0), layer)
+    # tyre: tread ring with lugs, sidewall, rim
+    d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=(26, 26, 30))
+    for k in range(24):
+        a = k * math.pi / 12
+        x1, y1 = cx + (r - 2) * math.cos(a), cy + (r - 2) * math.sin(a)
+        x2, y2 = cx + (r - 20) * math.cos(a), cy + (r - 20) * math.sin(a)
+        d.line([x1, y1, x2, y2], fill=(52, 52, 58), width=9)
+    d.ellipse([cx - r + 32, cy - r + 32, cx + r - 32, cy + r - 32], fill=(40, 40, 46))
+    d.ellipse([cx - 52, cy - 52, cx + 52, cy + 52], fill=(170, 176, 188))
+    for k in range(5):
+        a = -math.pi / 2 + k * 2 * math.pi / 5
+        d.line([cx, cy, cx + 48 * math.cos(a), cy + 48 * math.sin(a)], fill=(110, 116, 128), width=10)
+    d.ellipse([cx - 14, cy - 14, cx + 14, cy + 14], fill=(90, 94, 104))
+    # heat where rubber meets road, and the road
+    d.rectangle([700, cy + r, 1240, cy + r + 6], fill=(70, 74, 84))
+    d.ellipse([cx - 90, cy + r - 12, cx + 90, cy + r + 12], fill=accent + (150,))
+
+
 COVERS = {
     "DataTableFramework": ((14, 22, 40), (10, 40, 52), (64, 196, 255), framework,
                            "One table, a thousand channels",
@@ -111,6 +146,10 @@ COVERS = {
                       "Park the fleet in one keypress",
                       ["Ctrl+F10 sends your vehicles home", "Uses the game's own Despawn",
                        "Campers stay put", "Nothing is ever deleted"]),
+    "Smoke": ((22, 22, 26), (40, 24, 20), (255, 112, 52), smoke,
+              "Burnouts that leave a cloud",
+              ["Tire smoke lasts 4x longer", "Every puff 1.5x bigger",
+               "Drifts and burnouts hang in the air", "Tune both in smoke.ini"]),
 }
 
 
@@ -120,7 +159,8 @@ def main(out_dir):
         img, d = base(top, bottom)
         motif(d, accent)
         title = {"DataTableFramework": "DataTable Framework", "PluginLoader": "Plugin Loader",
-                 "CapitalistEconomy": "Capitalist Economy", "VehicleParker": "Vehicle Parker"}[name]
+                 "CapitalistEconomy": "Capitalist Economy", "VehicleParker": "Vehicle Parker",
+                 "Smoke": "Smoke"}[name]
         text(d, title, tagline, lines, accent)
         path = os.path.join(out_dir, name, name + ".png")
         os.makedirs(os.path.dirname(path), exist_ok=True)

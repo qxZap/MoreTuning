@@ -9,7 +9,7 @@ Everything else here is tooling that generates the `.uasset` files inside them.
 | | |
 |---|---|
 | **UAssetGUI** | `D:\MT\UAssetGUI.exe` (**v1.1.1**). **Not** `.\UAssetGUI.exe` in this repo — that is v1.0.4 and writes an older JSON schema; anything it exports fails to build again under the current game. |
-| **Mappings** | `MotorTown720T1` for game 0.7.20 (`MotorTown719` for 0.7.19, `MotorTown718P1` for 0.7.18 tables). UAssetGUI resolves the name against `%LOCALAPPDATA%\UAssetGUI\Mappings\*.usmap`. Dump a fresh one after every game update. |
+| **Mappings** | `MotorTown721T1` for the 2026-11-02 update, `MotorTown720T1` for game 0.7.20 (`MotorTown719` for 0.7.19, `MotorTown718P1` for 0.7.18 tables). UAssetGUI resolves the name against `%LOCALAPPDATA%\UAssetGUI\Mappings\*.usmap`. Dump a fresh one after every game update. |
 | **Engine version** | `VER_UE5_4`. |
 | **Packing** | `modp.bat <ModFolder>` — repak, then copy the pak into the game. |
 
@@ -120,6 +120,8 @@ python MoreAttachments/channel.py  # Items Ch0001 + both Vendor_Garage copies
   VehicleParts0 into License, and our 0.7.19 copies would have shadowed them.
 - **Old row names stay.** Saves key parts by row name; the `C<NNNN>_` prefix is
   for rows added from now on.
+- **The `No_*` mesh-less parts are retired** (`channels.RETIRED`, 2026-10-30): VehicleLabs
+  makes those seven body types uninstallable instead (`vehicle_mod/tables.py` `OPTIONAL`).
 - The mod's 0.7.19 tables live in `Rebase/old/0.7.19/` as migration input only.
   `rebuild.py`, `compat.py` and the `main()`s of RemoveReq/CarbonParts still write
   whole tables -- the pre-0.7.20 route below; don't ship their output.
@@ -468,9 +470,15 @@ repairing built actors, so the two cannot drift.
   applies Toggle / Mode / Color to every `MTLightControlComponent` on the actor
   (vanilla `Light_09_Blinker` has two controls, one control set). Mode is stored
   natively -- not on the controls, not in `Net_Parts`. Per-section control is
-  the `AttachmentLights` loader plugin: one control per section, labelled lines
+  the `MoreAttachments` loader plugin: one control per section, labelled lines
   (`Toggle <S>`, `<S> Mode`, `<S> Color`; a colour line may name a group,
   `Signal Color` → every section ending in "Signal").
+- **A wheel never paints whole.** `M_Palette` on a wheel is the tyre too, so wheels
+  never get the `M_Gray` copy. Paint comes from the rim sections (`Wheel_01/02`,
+  lines `Rim` or `Rim 1`/`Rim 2`): in the game's own mesh (all 0.7.20 wheels), else
+  named from Maja's Wheel Works table (`native.wheelworks_sections`), which paint once
+  her meshes are installed at the vanilla paths and do nothing until then. A wheel in
+  neither gets no paint. Refresh her table and rebuild when she releases.
 - A light control is a **root** SCS node (`RootNodes` + `AllNodes`), not a
   child of the scene root -- cloning one means registering it there.
 
@@ -491,13 +499,21 @@ wrong:
   engines in the `VehicleParts` channel. Strip its sounds, keep its channel.
 - **The framework pak goes on whole.** Its `DataTableFramework/**` holds all
   14000 channel files *and* the 14 composites; the stripped version was
-  missing six of them and the client's `Items` hash differed because of it.
-- **The balance change is one number** in `MotorTown/Config/`:
-  `LargeEngineFuelConsumption` 0.04 vs vanilla 0.08. Copy the mod's
-  `DefaultMotorTownBalance.ini` to the server's `MotorTown\Config\`.
-- **`bAllowBalanceTableMismatch: false` makes a server unjoinable for
-  anyone.** Client-vanilla and server-vanilla balance tables differ in the
-  payment rows, so the balance hash differs even for a vanilla client.
+  missing six of them and the client's `Items` set differed because of it.
+  - **The mod ships no balance ini.** `LargeEngineFuelConsumption` used to be
+    0.04 in the mod's `MotorTown/Config/DefaultMotorTownBalance.ini` against
+      vanilla's 0.08, and that one number was what made a modded client refuse
+      to join a vanilla server. The ini was removed from the pak (and from the
+      repo) on 2026-10-29: the mod now ships vanilla balance data, so the
+      balance data matches any vanilla server's. The server deploy no longer
+      copies a balance ini either - it runs the vanilla one.
+    The fuel it gave is kept on the engines instead: `FuelRealism/run.py`
+    halves `FuelConsumption` on every shipped `EngineType` Large engine (48,
+    including the 9 vanilla Large ones the mod already overrides), which is
+    the same burn at vanilla's 0.08. Rerunnable: it computes from scratch.
+  - **`bAllowBalanceTableMismatch: false` makes a server unjoinable for
+    anyone.** Client-vanilla and server-vanilla balance tables differ in the
+    payment rows, so a vanilla client is refused too.
 - **Proof it worked:** the server's log prints the row id it resolved the
   vehicle from — `Fortem(1068262)` on a vanilla server, `Fortem(1103752)` on
   ours. The id changed, so the server used *our* table.
@@ -505,8 +521,7 @@ wrong:
 A client whose data differs from the server's in a category the server
 disallows is refused **by the client, before it connects** — the server's log
 shows `players=0 conns=0`, no connection at all. That check is the game's own
-and lives in native code; the plugin project that studies it is separate:
-`D:\MTLiveMap\mt_plugins\MT_plugin_HashProbe` (its own repository).
+and lives in native code.
 
 ## Conventions
 

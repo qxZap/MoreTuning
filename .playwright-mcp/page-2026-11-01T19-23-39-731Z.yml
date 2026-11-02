@@ -1,0 +1,58 @@
+- generic [ref=f1e4]:
+  - complementary [ref=f1e5]:
+    - generic [ref=f1e13]:
+      - paragraph [ref=f1e14]: MTNet
+      - paragraph [ref=f1e15]: console panel
+    - navigation "Sections" [ref=f1e16]:
+      - button "Dashboard" [ref=f1e17] [cursor=pointer]
+      - button "Console variables 0" [ref=f1e24] [cursor=pointer]:
+        - generic [ref=f1e30]: Console variables
+        - generic [ref=f1e31]: "0"
+      - button "Catalogue" [ref=f1e32] [cursor=pointer]
+      - button "Templates" [ref=f1e37] [cursor=pointer]
+      - button "Server data 0" [ref=f1e43] [cursor=pointer]:
+        - generic [ref=f1e46]: Server data
+        - generic [ref=f1e47]: "0"
+      - button "Settings" [ref=f1e48] [cursor=pointer]
+    - generic [ref=f1e53]:
+      - generic [ref=f1e54]: mt_net.cpp · v1.0.0
+      - text: MTNet plugin · same origin as this page
+  - main [ref=f1e55]:
+    - generic [ref=f1e56]:
+      - generic [ref=f1e57]:
+        - heading "Dashboard" [level=1] [ref=f1e58]
+        - paragraph [ref=f1e59]: What the proxy is doing right now
+      - generic [ref=f1e60]: plugin connected
+    - region "Dashboard" [ref=f1e64]:
+      - generic [ref=f1e66]:
+        - generic [ref=f1e67]:
+          - article [ref=f1e68]:
+            - paragraph [ref=f1e69]: Console variables
+            - paragraph [ref=f1e70]: "56"
+            - paragraph [ref=f1e71]: live values plus every variable in the templates
+          - article [ref=f1e72]:
+            - paragraph [ref=f1e73]: Changed locally
+            - paragraph [ref=f1e74]: "0"
+            - paragraph [ref=f1e75]: nothing edited yet
+          - article [ref=f1e76]:
+            - paragraph [ref=f1e77]: Upstream endpoints
+            - paragraph [ref=f1e78]: "2"
+            - paragraph [ref=f1e79]: mt.racers.co.kr · www.racers.co.kr
+          - article [ref=f1e80]:
+            - paragraph [ref=f1e81]: Server events
+            - paragraph [ref=f1e82]: "0"
+            - paragraph [ref=f1e83]: captured from the /event/* pushes
+        - generic [ref=f1e84]:
+          - heading "How to use" [level=2] [ref=f1e85]
+          - paragraph [ref=f1e86]:
+            - text: Press
+            - generic [ref=f1e87]: CTRL
+            - text: +
+            - generic [ref=f1e88]: F9
+            - text: in game to toggle this panel. Values you edit here are written into the config the game reads from the server and apply on the next game start.
+        - generic [ref=f1e89]:
+          - generic [ref=f1e90]:
+            - heading "Recent activity" [level=2] [ref=f1e91]
+            - generic [ref=f1e92]: 0 events
+          - list [ref=f1e93]:
+            - listitem [ref=f1e94]: Nothing captured yet. The server pushes show up here as they arrive.

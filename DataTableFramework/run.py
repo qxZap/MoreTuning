@@ -1,31 +1,30 @@
-"""DataTableFramework: every composite DataTable, shipped once, with N empty channels.
+"""DataTableFramework: an optional compat layer that merges every mod's own tables.
 
-A composite is a list of parent tables. Mods that add rows used to ship their own
-copy of the composite to append one parent, and only one copy can win. This
-ships each composite once with its vanilla parents plus channel tables
-/Game/DataTableFramework/<Composite>/Ch0001..ChNNNN, all empty. A mod overrides
-the one channel file it claims; the pak is AAAA_ so it mounts first and every
-channel a mod ships beats the stub.
+A composite is a list of parent tables, and only one copy of it can win. So each
+mod is standalone: it ships its OWN table (<Composite>_<Mod>, e.g.
+/Game/DataAsset/VehicleParts/VehicleParts_MoreTuning) and its OWN copy of the
+composite -- vanilla's parents plus its table, plus the tables of mods it depends
+on (write_composite). Alone, it works. Several mods together knock each other's
+copies out -- that is what this fixes.
 
-The cost of one pak mounting first: a mod that still ships its own composite
-copy beats ours and switches every channel off. Such a mod has to drop the copy
--- its 0.7.19 copies lack 0.7.20's new parents anyway (Horns, RoofRacks,
-CargoBedAttachments). Tables those mods add (registry.json "adopted") are
-listed as parents already, with an empty stub at each path, so dropping the
-copy is the only change they need.
+The framework ships each of the 14 composites once: vanilla's parents, then every
+registered mod table (registry.json "adopted"), in registry order -- later wins a
+same-named row. Nothing else: no stubs, no channels. Its pak must beat every mod's
+copy: it is AAAA_DataTableFramework_99_P, and the chunk number 99 is what does it --
+UE ranks a _N_P pak by N before its name, so it outranks every mod pak (plain _P is
+chunk 1, and some mods already use _1_P / _2_P) although it sorts first.
 
-Parents later in the list override earlier ones row-for-row, so channels come
-after vanilla and a higher channel beats a lower one.
+A registered table whose mod is not installed is simply absent; the composite
+then has a parent that does not exist, and the game has to skip it.
+shortcut: that is unverified until the lab test (lab_missing_parent.py) has run
+in game -- if it fails, absent mods need stubs in a separate first-loading pak.
+A mod that ships no table of its own -- one frozen copy of a vanilla
+table (Teh's 0.7.18 Engines, Suspension Expansion's Suspensions) -- needs nothing
+here: the framework lists the vanilla table, the copy replaces it.
 
-    python DataTableFramework/run.py                 # all composites, 1000 channels
-    python DataTableFramework/run.py --channels 10 VehicleParts
+    python DataTableFramework/run.py                 # every composite
+    python DataTableFramework/run.py VehicleParts    # just these
     python DataTableFramework/run.py demo
-
-Channels are ChNNNN, not Ch_NNNN: Ch_1000 is stored as FName (Ch, 1000) and the
-NameMap lookup for the whole string misses. Ch0001.. keep the same length, which
-is what lets one built stub be cloned by swapping the name in place -- UE throws
-the serialized name hashes away on load, and the read-back below proves the
-clone parses.
 """
 import copy
 import json
@@ -39,19 +38,12 @@ sys.path.insert(0, os.path.join(HERE, "..", "Rebase"))
 from pipeline import VANILLA, from_json, register_names, to_json  # noqa: E402
 from rebase import fname_base  # noqa: E402
 
-MOD = os.path.join(HERE, "..", "AAAA_DataTableFramework_P", "MotorTown", "Content")
+PAK = "AAAA_DataTableFramework_99_P"
+MOD = os.path.join(HERE, "..", PAK, "MotorTown", "Content")
 REGISTRY = os.path.join(HERE, "registry.json")
+MANIFEST = os.path.join(HERE, "composites.json")
 WORK = os.path.join(HERE, "..", "Rebase", "work", "fw")
-ROOT = "/Game/DataTableFramework"
 MARKER = b"Default__CompositeDataTable"
-
-
-def channel(n):
-    return f"Ch{n:04d}"
-
-
-def channel_package(comp, n):
-    return f"{ROOT}/{comp}/{channel(n)}"
 
 
 def game_path_to_file(package):
@@ -112,77 +104,41 @@ def add_import(table, obj, outer, cls_pkg, cls):
     return -len(table["Imports"])
 
 
-def make_stub(parent, package):
-    """An empty DataTable with the parent's RowStruct, importing nothing else."""
-    e = parent["Exports"][0]
-    struct = imp(parent, props(e)["RowStruct"]["Value"])
-    struct_pkg = imp(parent, struct["OuterIndex"])["ObjectName"]
-    name = package.rsplit("/", 1)[1]
-
-    stub = copy.deepcopy(parent)
-    stub["Imports"] = []
-    engine = add_import(stub, "/Script/Engine", 0, "/Script/CoreUObject", "Package")
-    cls = add_import(stub, "DataTable", engine, "/Script/CoreUObject", "Class")
-    default = add_import(stub, "Default__DataTable", engine, "/Script/Engine", "DataTable")
-    spkg = engine if struct_pkg == "/Script/Engine" else \
-        add_import(stub, struct_pkg, 0, "/Script/CoreUObject", "Package")
-    row_struct = add_import(stub, struct["ObjectName"], spkg, "/Script/CoreUObject",
-                            "ScriptStruct")
-
-    stub["NameMap"] = sorted({fname_base(package), "/Script/CoreUObject", "/Script/Engine",
-                              struct_pkg, "Class", "DataTable", "Default__DataTable", "Package",
-                              "ScriptStruct", fname_base(name), struct["ObjectName"]})
-    stub["NamesReferencedFromExportDataCount"] = 0
-    stub["Generations"] = [{"$type": "UAssetAPI.FGenerationInfo, UAssetAPI",
-                            "ExportCount": 1, "NameCount": len(stub["NameMap"])}]
-    stub["FolderName"] = package
-    stub["PackageGuid"] = "{" + str(uuid.uuid4()).upper() + "}"
-    stub["SoftObjectPathList"] = []
-    stub["DependsMap"] = [[]]
-    se = stub["Exports"][0]
-    se.update(ObjectName=name, ClassIndex=cls, TemplateIndex=default,
-              SerializationBeforeSerializationDependencies=[row_struct],
-              CreateBeforeSerializationDependencies=[],
-              SerializationBeforeCreateDependencies=[cls, default],
-              CreateBeforeCreateDependencies=[])
-    for p in se["Data"]:
-        if p["Name"] == "RowStruct":
-            p["Value"] = row_struct
-    se["Table"]["Data"] = []
-    return stub
-
-
-def make_channel(source, comp, n, rows):
-    """A channel table holding `rows`, built on the vanilla table they came from.
+def make_table(source, package, rows):
+    """A table at `package` holding `rows`, built on the table they came from.
 
     Keeping the source's imports is what keeps any hard references in the rows
-    valid; the names the rows use are already in its NameMap.
+    valid; the names the rows use are already in its NameMap. This is how a mod's
+    own table is built.
     """
+    name = package.rsplit("/", 1)[1]
     table = copy.deepcopy(source)
-    package = channel_package(comp, n)
     table["FolderName"] = package
     table["PackageGuid"] = "{" + str(uuid.uuid4()).upper() + "}"
     e = table["Exports"][0]
-    e["ObjectName"] = channel(n)
+    e["ObjectName"] = name
     e["Table"]["Data"] = rows
-    register_names(table, [r["Name"] for r in rows] + [package, channel(n)])
+    register_names(table, [r["Name"] for r in rows] + [package, name])
     table["Generations"][0]["NameCount"] = len(table["NameMap"])
     return table
 
 
-def write_channel(table, comp, n, mod_content):
-    """Build a channel table into <mod_content>/DataTableFramework/<comp>/ and check it.
+def write_table(table, package, mod_content):
+    """Build a table into <mod_content>/<package path> and check it reads back.
 
     Returns the read-back JSON's path, for verify.py.
     """
-    os.makedirs(os.path.join(WORK, comp), exist_ok=True)
-    src = os.path.join(WORK, comp, f"{channel(n)}.mod.json")
+    assert package.startswith("/Game/"), package
+    name = package[len("/Game/"):].replace("/", "_")  # unique per path
+    work = os.path.join(WORK, "tables")
+    os.makedirs(work, exist_ok=True)
+    src = os.path.join(work, f"{name}.mod.json")
     save(table, src)
-    out_dir = os.path.join(mod_content, "DataTableFramework", comp)
-    os.makedirs(out_dir, exist_ok=True)
-    built = from_json(src, os.path.join(out_dir, channel(n) + ".uasset"))
+    out = os.path.join(mod_content, *package[len("/Game/"):].split("/")) + ".uasset"
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    built = from_json(src, out)
     struct = imp(table, props(table["Exports"][0])["RowStruct"]["Value"])["ObjectName"]
-    check = os.path.join(WORK, comp, f"{channel(n)}.mod.check.json")
+    check = os.path.join(work, f"{name}.mod.check.json")
     check_table(built, struct, len(table["Exports"][0]["Table"]["Data"]), check)
     return check
 
@@ -218,17 +174,6 @@ def adopted(comp):
         return list(json.load(f)["adopted"].get(comp, {}))
 
 
-def clone(src_base, dst_base, old, new):
-    assert len(old) == len(new)
-    for ext in (".uasset", ".uexp"):
-        with open(src_base + ext, "rb") as f:
-            data = f.read()
-        if ext == ".uasset":
-            data = data.replace(old.encode(), new.encode())
-        with open(dst_base + ext, "wb") as f:
-            f.write(data)
-
-
 def check_table(path, expect_struct, expect_rows=0, out=None):
     t = load(to_json(path, out or path[: -len(".uasset")] + ".check.json"))
     e = t["Exports"][0]
@@ -240,82 +185,80 @@ def check_table(path, expect_struct, expect_rows=0, out=None):
     return t
 
 
-def build(comp, comp_file, count):
-    os.makedirs(os.path.join(WORK, comp), exist_ok=True)
+
+
+def write_composite(comp_table, src_file, packages, mod_content, tag):
+    """comp_table (vanilla's composite) + packages after its parents, written at the
+    composite's own path under mod_content and read back. Returns the parent list."""
+    table = copy.deepcopy(comp_table)
+    add_parents(table, packages)
+    tmp = os.path.join(WORK, f"{os.path.basename(src_file)[:-7]}.{tag}.json")
+    os.makedirs(WORK, exist_ok=True)
+    save(table, tmp)
+    dest = os.path.join(mod_content, os.path.relpath(src_file, VANILLA))
+    os.makedirs(os.path.dirname(dest), exist_ok=True)
+    from_json(tmp, dest)
+    back = load(to_json(dest, tmp[:-5] + ".check.json"))
+    if not is_composite(back) or parents(back) != parents(table):
+        sys.exit(f"FAIL: {dest} did not read back as the composite with its parents")
+    return parents(table)
+
+
+def composite(comp):
+    """Vanilla's copy of a composite -> (table, file), via the manifest run.py writes."""
+    entry = next((m for m in json.load(open(MANIFEST, encoding="utf-8")) if m["composite"] == comp), None) \
+        if os.path.isfile(MANIFEST) else None
+    path = game_path_to_file(entry["path"]) if entry else dict(discover()).get(comp)
+    if not path:
+        sys.exit(f"FAIL: no composite called {comp}")
+    return load(to_json(path, os.path.join(WORK, comp + ".vanilla.json"))), path
+
+
+def mod_composite(comp, packages, mod_content):
+    """A mod's own copy of `comp`: vanilla's parents, then its own table(s) -- and the
+    tables of mods it builds on, first. What makes a mod work without the framework."""
+    table, path = composite(comp)
+    got = write_composite(table, path, packages, mod_content, "own")
+    print(f"  own {comp} composite: {len(got) - len(packages)} vanilla parents + "
+          + ", ".join(p.rsplit("/", 1)[1] for p in packages))
+
+
+def build(comp, comp_file):
+    """The framework's copy: vanilla's parents + every registered table of this composite."""
+    os.makedirs(WORK, exist_ok=True)
     table = load(to_json(comp_file, os.path.join(WORK, comp + ".vanilla.json")))
     if not is_composite(table):
         print(f"  skip {comp}: not a CompositeDataTable export")
         return None
     vanilla_parents = parents(table)
     struct = imp(table, props(table["Exports"][0])["RowStruct"]["Value"])["ObjectName"]
-
-    parent = load(to_json(game_path_to_file(vanilla_parents[0]),
-                          os.path.join(WORK, comp, "parent.json")))
-    stub_json = os.path.join(WORK, comp, channel(1) + ".json")
-    save(make_stub(parent, channel_package(comp, 1)), stub_json)
-    built = from_json(stub_json, os.path.join(WORK, comp, channel(1) + ".uasset"))
-    check_table(built, struct)
-
-    out_dir = os.path.join(MOD, "DataTableFramework", comp)
-    shutil.rmtree(out_dir, ignore_errors=True)
-    os.makedirs(out_dir)
-    for n in range(1, count + 1):
-        clone(built[: -len(".uasset")], os.path.join(out_dir, channel(n)),
-              channel(1), channel(n))
-    # A clone is only as good as its read-back: check the last one, the
-    # furthest from the stub UAssetGUI actually wrote.
-    check_table(os.path.join(out_dir, channel(count) + ".uasset"), struct)
-    os.remove(os.path.join(out_dir, channel(count) + ".check.json"))
-
-    # Adopted tables: a stub at each path, built from the channel stub's JSON.
     theirs = adopted(comp)
-    for pkg in theirs:
-        stub = os.path.join(WORK, comp, pkg.rsplit("/", 1)[1] + ".json")
-        save(make_stub(parent, pkg), stub)
-        dest = os.path.join(MOD, *pkg[len("/Game/"):].split("/")) + ".uasset"
-        os.makedirs(os.path.dirname(dest), exist_ok=True)
-        check_table(from_json(stub, dest), struct, 0, stub[:-5] + ".check.json")
-
-    add_parents(table, theirs + [channel_package(comp, n) for n in range(1, count + 1)])
-    comp_json = os.path.join(WORK, comp + ".json")
-    save(table, comp_json)
+    write_composite(table, comp_file, theirs, MOD, "framework")
+    print(f"  {comp}: {struct}, {len(vanilla_parents)} vanilla parents + {len(theirs)} mod tables")
     rel = os.path.relpath(comp_file, VANILLA)
-    dest = os.path.join(MOD, rel)
-    os.makedirs(os.path.dirname(dest), exist_ok=True)
-    from_json(comp_json, dest)
-    back = load(to_json(dest, os.path.join(WORK, comp + ".check.json")))
-    if not is_composite(back) or parents(back) != parents(table):
-        sys.exit(f"FAIL: {comp} composite did not read back with its channels")
-    print(f"  {comp}: {struct}, {len(vanilla_parents)} vanilla parents + {len(theirs)} adopted"
-          f" + {count} channels")
     return {"composite": comp, "path": "/Game/" + rel[: -len(".uasset")].replace(os.sep, "/"),
-            "row_struct": struct, "vanilla_parents": vanilla_parents, "adopted": theirs,
-            "channels": count}
+            "row_struct": struct, "vanilla_parents": vanilla_parents, "mod_tables": theirs}
 
 
 def demo():
-    parent = {"Imports": [], "NameMap": [], "Exports": [{"ClassIndex": 0, "Data": [], "Table": {"Data": [1]}}]}
-    add_import(parent, "/Script/MotorTown", 0, "/Script/CoreUObject", "Package")
-    rs = add_import(parent, "VehiclePartRow", -1, "/Script/CoreUObject", "ScriptStruct")
-    parent["Exports"][0]["Data"] = [{"Name": "RowStruct", "Value": rs}]
-    stub = make_stub(parent, channel_package("VehicleParts", 7))
-    e = stub["Exports"][0]
-    assert e["ObjectName"] == "Ch0007" and e["Table"]["Data"] == []
-    assert imp(stub, e["Data"][0]["Value"])["ObjectName"] == "VehiclePartRow"
-    assert imp(stub, e["ClassIndex"])["ObjectName"] == "DataTable"
-    assert "/Game/DataTableFramework/VehicleParts/Ch0007" in stub["NameMap"]
-    assert channel(1000) == "Ch1000" and len(channel(1)) == len(channel(1000))
+    t = {"Imports": [], "NameMap": [], "Generations": [{"NameCount": 0}],
+         "Exports": [{"SerializationBeforeSerializationDependencies": [], "Data": []}]}
+    pkg = add_import(t, "/Game/DataAsset/VehicleParts/Engines", 0, "/Script/CoreUObject", "Package")
+    obj = add_import(t, "Engines", pkg, "/Script/Engine", "DataTable")
+    t["Exports"][0]["Data"] = [{"Name": "ParentTables", "Value": [{"Name": "0", "Value": obj}]}]
+    add_parents(t, ["/Game/DataAsset/VehicleParts/VehicleParts_MoreTuning",
+                    "/Game/DataAsset/VehicleParts/VehicleParts_MoreTuningNoLimits"])
+    assert parents(t) == ["/Game/DataAsset/VehicleParts/Engines",
+                          "/Game/DataAsset/VehicleParts/VehicleParts_MoreTuning",
+                          "/Game/DataAsset/VehicleParts/VehicleParts_MoreTuningNoLimits"], parents(t)
+    assert "VehicleParts_MoreTuning" in t["NameMap"] and t["Generations"][0]["NameCount"] == len(t["NameMap"])
+    assert PAK.endswith("_99_P"), "the framework must outrank every mod pak's composite copy"
     print("demo ok")
 
 
 def main(argv):
     if argv[:1] == ["demo"]:
         return demo()
-    count = 1000
-    if "--channels" in argv:
-        i = argv.index("--channels")
-        count = int(argv[i + 1])
-        argv = argv[:i] + argv[i + 2:]
     wanted = set(argv)
     os.makedirs(WORK, exist_ok=True)
     if not wanted:
@@ -325,11 +268,12 @@ def main(argv):
         if wanted and comp not in wanted:
             continue
         print(f"=== {comp}")
-        info = build(comp, path, count)
+        info = build(comp, path)
         if info:
             manifest.append(info)
-    with open(os.path.join(HERE, "composites.json"), "w", encoding="utf-8") as f:
-        json.dump(manifest, f, indent=2)
+    if not wanted:
+        with open(MANIFEST, "w", encoding="utf-8") as f:
+            json.dump(manifest, f, indent=2)
 
 
 if __name__ == "__main__":
