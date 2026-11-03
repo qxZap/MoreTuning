@@ -548,10 +548,14 @@ wrong:
   and it leaves `MotorTown\Config\UserEngine.ini` pointing at localhost, which outlives the plugin
   and stops the server registering. The periodic leaderboard keep-alive failure is not MTNet: it
   happens with no plugin at all, with successes in between.
-- **Shipping builds resist cvars.** `ExecuteConsoleCommand` does nothing, and from
-  `UserEngine.ini` only some `mh.*` take: `companyTruckProfitShare`, the depot and patrol
-  values do not, on a console command, from the ini or through MTNet's config. `capitalist_economy`
-  logs which took, and the ini only counts from the server's second start.
+- **Shipping builds refuse cheat cvars.** Most `mh.*` economy variables are registered
+  `ECVF_Cheat` (flag 1 in the `RegisterConsoleVariable` call), and a shipping build will not
+  set those from a console command, `UserEngine.ini` or MTNet's config; only the flag-0 ones
+  (`aISpeederSpawnRatio`, `cargoStackMaxVehicleHeight`) take that way. `capitalist_economy`
+  writes the rest in memory (`findCvars`: name -> registration code -> the variable's data)
+  and logs `N of N took`. Check names against the exe, not a template: 0.7.20 renamed the
+  patrol payments to `...PaymentBase` / `...PaymentPerHour`, and the old names sit only in a
+  "Cheat CVar from online config" list.
 - **Proof it worked:** the server's log prints the row id it resolved the
   vehicle from — `Fortem(1068262)` on a vanilla server, `Fortem(1103752)` on
   ours. The id changed, so the server used *our* table.
