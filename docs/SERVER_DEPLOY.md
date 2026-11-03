@@ -96,6 +96,20 @@ Client-vanilla and server-vanilla balance tables differ in the payment rows
 with the client's balance patched back to vanilla, the balance category still
 differed. Leave it `true`.
 
+### More than 100 players
+
+`MaxPlayers` in the json is clamped to 100, and the clamp is a plain console
+variable, not a cheat one. Two settings, no plugin (tested 2026-11-03, B1147,
+`GameSession.MaxPlayers` read back as 200):
+
+- `MotorTown\Config\UserEngine.ini`, `[ConsoleVariables]`: `mh.netMaxPlayerCount=200`
+  (the clamp, default 100).
+- The launch line: `Jeju_World?listen?MaxPlayers=200` (the engine's own session limit,
+  which the json does not reach), plus `"MaxPlayers": 200` in the json.
+
+Not tested: an actual 101st player, what the server list shows, and whether the
+game's per-player systems hold up past 100.
+
 ## 4. Verify, in this order
 
 1. The server must reach **`Session created!`**. A wrong pak here does not
