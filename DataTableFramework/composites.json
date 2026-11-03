@@ -31,7 +31,8 @@
     ],
     "mod_tables": [
       "/Game/DataAsset/Cargos_Proxy",
-      "/Game/DataAsset/Cargos_Arini"
+      "/Game/DataAsset/Cargos_Arini",
+      "/Game/DataAsset/Cargos_CapitalistEconomy"
     ]
   },
   {
@@ -184,6 +185,7 @@
       "/Game/DataAsset/VehicleParts/VehicleParts_MoreTuningNoLimits",
       "/Game/DataAsset/VehicleParts/VehicleParts_MoreTuningCarbon",
       "/Game/DataAsset/VehicleParts/VehicleParts_TehEngines",
+      "/Game/DataAsset/VehicleParts/VehicleParts_AMCTires",
       "/Game/DataAsset/VehicleParts/VehicleParts_SuspensionExpansion",
       "/Game/RakMods/HeavyHaulPack/Parts/Engine/RHHP_Engines",
       "/Game/RakMods/HeavyHaulPack/Parts/Tires/RHHP_Tires",
@@ -210,8 +212,8 @@
       "/Game/DataAsset/Vehicles/Vehicles_Ambulance"
     ],
     "mod_tables": [
-      "/Game/DataAsset/Vehicles/Vehicles_VehicleLabs",
       "/Game/DataAsset/Vehicles/Vehicles_Arini",
+      "/Game/DataAsset/Vehicles/Vehicles_VehicleLabs",
       "/Game/RPMTech/DataAsset/RPMTech_Vehicle"
     ]
   }

@@ -46,8 +46,8 @@
       "/Game/DataAsset/CharacterBody/CharacterBodyParts_Slides": "SlideZone - Slide Industries Attachments"
     },
     "Vehicles": {
-      "/Game/DataAsset/Vehicles/Vehicles_VehicleLabs": "qxZap - VehicleLabs (fuel pumps, bulk economy, removable front bumpers; D:/MTLiveMap/vehicle_mod/tables.py)",
       "/Game/DataAsset/Vehicles/Vehicles_Arini": "qxZap - Arini island (changed + added vehicle rows, incl. Crany and Goliath4-DB from Vehicles_Deprecated)",
+      "/Game/DataAsset/Vehicles/Vehicles_VehicleLabs": "qxZap - VehicleLabs (fuel pumps, bulk economy, removable body parts; D:/MTLiveMap/vehicle_mod/tables.py). After Arini: it carries Arini's rows with its own changes on top, so it must win",
       "/Game/RPMTech/DataAsset/RPMTech_Vehicle": "Rak - RPMTech vehicles"
     }
   }
