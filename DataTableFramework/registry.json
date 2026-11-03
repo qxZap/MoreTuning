@@ -1,11 +1,10 @@
 {
   "_about": [
-    "DataTableFramework channel registry. One entry per claimed channel range or adopted table.",
-    "Channels: ship /Game/DataTableFramework/<Composite>/ChNNNN.uasset in your own pak; nothing else.",
-    "Later parents win a same-named row: vanilla < adopted tables < Ch0001 < ... < Ch1000.",
-    "New rows should be prefixed C<NNNN>_ with your channel number. Rows that already shipped keep their names -- saves store parts by row name.",
-    "adopted: tables existing mods already add to a composite. The framework lists them as parents and ships an empty stub at each path, so those mods work unchanged.",
-    "One mod, one channel file. Claim a channel by adding it here before you release."
+    "DataTableFramework registry: the mod tables the framework lists in each composite (run.py).",
+    "A mod ships its own table (<Composite>_<Mod>) and registers it here under adopted, then run.py rebuilds the framework pak.",
+    "Later parents win a same-named row: vanilla < adopted tables, in the order listed. Keep new row names unique.",
+    "A registered table whose mod is not installed is skipped (Rak's RPMTech is listed and absent here). Rows that already shipped keep their names -- saves store them by row name.",
+    "channels: the old Ch0001..Ch1000 scheme. The framework no longer ships channel parents or stubs, so a ChNNNN file is never read."
   ],
   "channels": {},
   "adopted": {
@@ -48,7 +47,8 @@
     "Vehicles": {
       "/Game/DataAsset/Vehicles/Vehicles_Arini": "qxZap - Arini island (changed + added vehicle rows, incl. Crany and Goliath4-DB from Vehicles_Deprecated)",
       "/Game/DataAsset/Vehicles/Vehicles_VehicleLabs": "qxZap - VehicleLabs (fuel pumps, bulk economy, removable body parts; D:/MTLiveMap/vehicle_mod/tables.py). After Arini: it carries Arini's rows with its own changes on top, so it must win",
-      "/Game/RPMTech/DataAsset/RPMTech_Vehicle": "Rak - RPMTech vehicles"
+      "/Game/RPMTech/DataAsset/RPMTech_Vehicle": "Rak - RPMTech vehicles",
+      "/Game/DataAsset/Vehicles/Vehicles_Biceps": "qxZap - Biceps (standalone car, row C0100_Biceps; built by the Arini session)"
     }
   }
 }
