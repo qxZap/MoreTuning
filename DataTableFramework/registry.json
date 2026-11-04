@@ -29,7 +29,8 @@
       "/Game/RakMods/HeavyHaulPack/Parts/Transmissions/RHHP_Transmissions": "Rak - Heavy Haul Pack",
       "/Game/RakMods/HeavyHaulPack/Parts/RHHP_Parts": "Rak - Heavy Haul Pack",
       "/Game/RakMods/HeavyHaulPack/Parts/RHHP_Misc": "Rak - Heavy Haul Pack",
-      "/Game/DataAsset/VehicleParts/VehicleParts_Biceps": "qxZap/sati - Biceps"
+      "/Game/DataAsset/VehicleParts/VehicleParts_Biceps": "qxZap/sati - Biceps",
+      "/Game/DataAsset/VehicleParts/VehicleParts_PackWheels": "qxZap/sati - PackWheels"
     },
     "Cargos": {
       "/Game/DataAsset/Cargos_Proxy": "Proxy - Oversize Cargo",
