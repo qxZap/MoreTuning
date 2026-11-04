@@ -498,7 +498,8 @@ repairing built actors, so the two cannot drift.
   applies Toggle / Mode / Color to every `MTLightControlComponent` on the actor
   (vanilla `Light_09_Blinker` has two controls, one control set). Mode is stored
   natively -- not on the controls, not in `Net_Parts`. Per-section control is
-  the `MoreAttachments` loader plugin: one control per section, labelled lines
+  the `AttachmentTweaks` loader plugin (was `MoreAttachments`; works on any attachment, settings
+  kept on the car's customisation list, not in an ini): one control per section, labelled lines
   (`Toggle <S>`, `<S> Mode`, `<S> Color`; a colour line may name a group,
   `Signal Color` → every section ending in "Signal").
 - **A wheel never paints whole.** `M_Palette` on a wheel is the tyre too, so wheels
