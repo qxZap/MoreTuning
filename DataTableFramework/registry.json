@@ -44,7 +44,8 @@
       "/Game/DataAsset/Items/Items_MoreAttachments": "qxZap & satigt3 - MoreAttachments (free and premium share it)"
     },
     "CharacterBodyParts": {
-      "/Game/DataAsset/CharacterBody/CharacterBodyParts_Slides": "SlideZone - Slide Industries Attachments"
+      "/Game/DataAsset/CharacterBody/CharacterBodyParts_Slides": "SlideZone - Slide Industries Attachments",
+      "/Game/DataAsset/CharacterBody/CharacterBodyParts_PackChars": "qxZap/sati - PackCharacters"
     },
     "Vehicles": {
       "/Game/DataAsset/Vehicles/Vehicles_Arini": "qxZap - Arini island (changed + added vehicle rows, incl. Crany and Goliath4-DB from Vehicles_Deprecated)",
