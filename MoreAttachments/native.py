@@ -9,7 +9,8 @@ Each actor's mesh slots decide what it gets:
   paint    the mesh's own slot is car paint (M_Body family): one native paint slot each,
            and the actor stops overriding it (the paint system paints the mesh's own
            material; an actor OverrideMaterials is invisible to it)
-  palette  only M_Palette (a car part's flat palette): the part gets its own copy of the
+  palette  only M_Palette, on a mesh vanilla's AeroParts lists as a body part (or a bull
+           bar, or a wheel -- see convert): the part gets its own copy of the
            mesh, /Game/MA_Parts/Paint/<original path>, with that slot on M_Gray -- the
            vanilla antenna's paint material -- and the actor points at the copy. The
            shared vanilla mesh is never edited: that would repaint the car itself.
@@ -19,7 +20,9 @@ Each actor's mesh slots decide what it gets:
            Mode / Color. Several: labelled lines ("Toggle Brake Light", "Brake Light
            Mode", ...; both signals share "Signal Color") for the MoreAttachments
            plugin -- without it the lines still work, every section together.
-  other    textured Synty props (Mat_Polygon*, MI_* palettes), glass, chrome: untouched.
+  other    M_Palette on anything else (Gunthoo cargo boxes, roof racks, inventories):
+           its palette colours are its look (logos, tyre, sticker), so it stays as it was.
+           Also textured Synty props (Mat_Polygon*, MI_* palettes), glass, chrome: untouched.
 
 Every actor is rebuilt from a pristine snapshot (Rebase/work/ma_pristine), so a rerun
 never stacks edits, and must read back with the same exports and nothing raw -- or it
@@ -119,9 +122,25 @@ def kind(slot, material, package):
     return "paint" if paintable_material(package, (VANILLA, MAIN)) else "other"
 
 
+_body_parts = None
+
+
+def palette_paints(mesh_pkg):
+    """A palette-only mesh paints only if it is a body part: in vanilla's AeroParts, a bull bar, or a wheel."""
+    global _body_parts
+    if _body_parts is None:
+        data = open(os.path.join(VANILLA, "DataAsset", "VehicleParts", "AeroParts.uasset"), "rb").read()
+        _body_parts = {m.decode() for m in re.findall(rb"/Game/[A-Za-z0-9_/]+", data)}
+    return (mesh_pkg in _body_parts or "/Cars/Parts/Wheels/" in mesh_pkg
+            or re.search(r"/Cars/Models/(Duro|Muhan)/Bullbar_\d+$", mesh_pkg) is not None)
+
+
 def plan(mesh_pkg):
     """[(index, slot, material, kind)] in StaticMaterials order; [] if the mesh is unknown."""
-    return [(i, s, m, kind(s, m, k)) for i, (s, m, k) in enumerate(mesh_materials(mesh_pkg, (VANILLA, MAIN)))]
+    slots = [(i, s, m, kind(s, m, k)) for i, (s, m, k) in enumerate(mesh_materials(mesh_pkg, (VANILLA, MAIN)))]
+    if not palette_paints(mesh_pkg):
+        slots = [(i, s, m, "other" if k == "palette" else k) for i, s, m, k in slots]
+    return slots
 
 
 def mesh_file(pkg):
@@ -407,6 +426,9 @@ def demo():
     assert labels == ["Toggle Tail Light", "Tail Light Mode", "Tail Light Color", "Toggle Left Signal",
                       "Left Signal Mode", "Signal Color", "Toggle Right Signal", "Right Signal Mode"], labels
     assert kind("Palette", "M_Palette", "/Game/Cars/Materials/Palette/M_Palette") == "palette"
+    assert not palette_paints("/Game/Cars/Models/Bike/Gunthoo/CargoBox_01"), "a prop keeps its palette look"
+    assert palette_paints("/Game/Cars/Models/Atlas/FrontBumper_01") and palette_paints("/Game/Cars/Models/Duro/Bullbar_02")
+    assert "palette" not in {k for *_, k in plan("/Game/Cars/Models/Bike/Gunthoo/CargoBox_01")}
     assert kind("Glass", "M_Glass", "") == "other" and kind("TailLight", "M_TailLight", "") == "lamp"
     print("ok")
 

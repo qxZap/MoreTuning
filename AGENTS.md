@@ -169,7 +169,7 @@ python MoreAttachments/channel.py  # Items Ch0001 + both Vendor_Garage copies
   `AttachmentPaintSlots` (the 0.7.20 metallic/roughness sliders) and goes
   further: with no `M_Body` slot, every non-light slot is painted, because
   vanilla's antenna paints a plain `M_Gray` slot -- the attachment paint system
-  supplies its own material, so palette-only meshes (Duro bumpers) paint too.
+  supplies its own material, so palette-only body parts (Duro bumpers) paint too.
 - **Generated attachment actors never use the lamp template.** A bumper with
   built-in lights (Duro 02/03, Duro bull bars) is still a bumper; the mesh test
   for `M_HeadLight` made them lamps with a dead ToggleLight/ChangeLightMode.
@@ -490,6 +490,10 @@ repairing built actors, so the two cannot drift.
   slot `M_Palette` (most car parts, and a *shared vanilla mesh*) → give the part
   its own mesh copy under `MA_Parts/` with that slot swapped to `M_Gray` and
   repoint the actor. Never edit the shared mesh: it repaints the car.
+  Only for **body parts**: a mesh vanilla's `AeroParts` lists, plus the Duro/Muhan
+  bull bars (`native.palette_paints`). A palette-only prop (Gunthoo cargo boxes, roof
+  racks, inventories, control panels) keeps its pristine actor: its palette colours
+  are its look -- logos, tyre, sticker -- and `M_Gray` wiped them out.
 - **Lamp sections** (`M_HeadLight`, `M_TailLight`, `M_TurnSignalLight`,
   `M_ReverseLight`) are the *car's* materials, driven by the car's own light
   system; on an attachment they go `M_AttachmentLight` (positional
