@@ -85,7 +85,7 @@ DIESEL_RPM = 3500
 # The EV-prefixed rows are electric too, and none of them says so.
 ELECTRIC = r"electric|^EV[A-Z]"
 SMALL_2T = r"kart|scooter|bike_i2"
-OLD_MECHANICAL = r"n14|3406|8v92|v149|dv27|detroit|series60|c18|cat"
+OLD_MECHANICAL = r"n14|3406|8v92|v149|dv27|detroit|series60|c18|cat|ntc|macke6|12v"
 DIESEL_NAME = r"tdi|cdi|hdi|dci|jtd|d4d|diesel|duramax|powerstroke|cummins|volvod|scania|paccar|weichai|dd\d"
 OLD_V8_NAME = r"smallblock|bigblock|hemi|coyote|windsor|v12_|ferrari|muscle"
 TURBO_NAME = r"turbo|tfsi|tsi|gti|2jz|rb2|sr20|4g63|ej2|k20|barra|amg|koenigsegg"
