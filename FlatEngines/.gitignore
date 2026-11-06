@@ -1,0 +1,14 @@
+# Only the tooling is source. Renders, downloaded recordings, game recordings, cook intermediates and
+# previews are rebuilt by these scripts (and run to gigabytes), so nothing else is tracked.
+*
+!*/
+!*.py
+!*.md
+!*.bat
+!.gitignore
+!cook/levels.json
+!cook/levels_cooked.json
+!cook/ref_lufs.json
+cook/work/
+__pycache__/
+es_src/
