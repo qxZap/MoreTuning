@@ -10,7 +10,8 @@ other engine. Rerunnable: it replaces its own rows and assets.
 Each asset is a reference engine of the same class cloned and restamped (MaxTorque, MaxRPM,
 Inertia, curve, and the torque-dimensioned friction/starter scaled by the same rule of three as
 NewEngines/run.py). Only exact-match strings are renamed, so the reference's sound cue paths survive
-the rename; SOUND (below) then points each engine at its own cooked cue, see FlatEngines/COOKED.md.
+the rename; an engine whose cooked MT_<key>_EngineSoundData exists (FlatEngines/COOKED.md) is then
+switched to it, and one not cooked yet keeps its reference's cue.
 """
 import copy
 import importlib.util
@@ -80,9 +81,14 @@ E = [
 KEYS = ("sound", "asset", "name", "family", "ref", "curve", "hp", "torque", "rpm", "mass", "inertia", "jake")
 ENGINES = [dict(zip(KEYS, e)) for e in E]
 
-# Cooked cues, filled from FlatEngines/COOKED.md: sound key -> {property: soft package path}. An engine
-# whose key is missing keeps its reference's sound.
-SOUND = {}
+SOUND_DIR = os.path.join(ENGINE_DIR, "Sound")
+
+
+def sound_data(key):
+    """The cooked MTEngineSoundDataAsset for a sound key (FlatEngines/COOKED.md), or None if not cooked yet."""
+    name = f"MT_{key}_EngineSoundData"
+    return (f"/Game/Cars/Parts/Engine/Sound/MT_{key}/{name}"
+            if os.path.isfile(os.path.join(SOUND_DIR, f"MT_{key}", name + ".uasset")) else None)
 
 
 def cost(e):
@@ -151,25 +157,30 @@ def make_asset(e, ref_asset):
     f["FuelConsumption"]["Value"] = float(round(e["hp"] / 3))  # placeholder: FuelRealism/run.py sets it
     if e["jake"] is not None and "MaxJakeBrakeStep" in f:
         f["MaxJakeBrakeStep"]["Value"] = e["jake"]
-    set_sound(asset, SOUND.get(e["sound"], {}))
+    if sound_data(e["sound"]):
+        set_sound_data(asset, sound_data(e["sound"]))
     sounds_in_order(asset)
     return asset
 
 
-def set_sound(asset, cues):
-    """Repoint sound slots at cooked cues: {property: '/Game/.../SC_X'} (package path = object path)."""
+def set_sound_data(asset, package):
+    """Play the engine through a cooked MTEngineSoundDataAsset, as vanilla's V6Sport_400HP does.
+
+    The reference's EnginesSound cue import (and its package) become the data asset's, and the slot
+    becomes EngineSoundData, so the import count and the export's dependency lists stay valid.
+    Backfire, intake and jake cues are kept.
+    """
     data = asset["Exports"][0]["Data"]
-    for prop, package in cues.items():
-        obj = package.rsplit("/", 1)[1]
-        slot = next((p for p in data if p["Name"] == prop), None)
-        if slot is None:
-            sys.exit(f"{asset['Exports'][0]['ObjectName']}: no {prop} slot on the reference to repoint")
-        cue = asset["Imports"][-slot["Value"] - 1]
-        outer = asset["Imports"][-cue["OuterIndex"] - 1]
-        if sum(1 for p in data if p["Name"] in SOUND_ORDER and p.get("Value") == slot["Value"]) > 1:
-            sys.exit("shared sound import, cannot repoint one slot")
-        outer["ObjectName"], cue["ObjectName"] = package, obj
-        register_names(asset, [package, obj])
+    slot = next(p for p in data if p["Name"] == "EnginesSound")
+    cue = asset["Imports"][-slot["Value"] - 1]
+    outer = asset["Imports"][-cue["OuterIndex"] - 1]
+    if sum(1 for p in data if p.get("Value") == slot["Value"]) > 1:
+        sys.exit("shared sound import, cannot repoint one slot")
+    obj = package.rsplit("/", 1)[1]
+    outer["ObjectName"] = package
+    cue.update(ObjectName=obj, ClassPackage="/Script/MotorTown", ClassName="MTEngineSoundDataAsset")
+    slot["Name"] = "EngineSoundData"
+    register_names(asset, [package, obj, "MTEngineSoundDataAsset"])
 
 
 def build(src, out):
@@ -257,6 +268,13 @@ def demo():
                                {"Name": "EngineSoundData", "Value": -1}, {"Name": "IntakeSound", "Value": -3}]}]}
     sounds_in_order(a)
     assert [p["Name"] for p in a["Exports"][0]["Data"]] == ["EngineProperty", "EnginesSound", "BackfireSound", "IntakeSound"]
+    s = {"NameMap": [], "NamesReferencedFromExportDataCount": 0,
+         "Imports": [{"ObjectName": "/Game/S/SC_X", "OuterIndex": 0},
+                     {"ObjectName": "SC_X", "OuterIndex": -1, "ClassPackage": "/Script/Engine", "ClassName": "SoundCue"}],
+         "Exports": [{"Data": [{"Name": "EnginesSound", "Value": -2}]}]}
+    set_sound_data(s, "/Game/Cars/Parts/Engine/Sound/MT_k/MT_k_EngineSoundData")
+    assert s["Exports"][0]["Data"][0]["Name"] == "EngineSoundData"
+    assert s["Imports"][1]["ClassName"] == "MTEngineSoundDataAsset" and s["Imports"][0]["ObjectName"].endswith("MT_k_EngineSoundData")
     t = {"x": "C18_550HP", "y": ["/Game/Cars/Parts/Engine/C18_550HP", "SC_C18_550HP"]}
     rename(t, ["C18_550HP", ENGINE_PKG + "C18_550HP"], ["N", ENGINE_PKG + "N"])
     assert t == {"x": "N", "y": [ENGINE_PKG + "N", "SC_C18_550HP"]}
