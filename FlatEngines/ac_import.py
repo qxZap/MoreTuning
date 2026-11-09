@@ -180,6 +180,71 @@ def game(key):
     json.dump(lv, open(sl.LEVELS, "w"), indent=1)
 
 
+def bands_of(x, cents):
+    from scipy.signal import welch
+    f, p = welch(x, SR, nperseg=8192)
+    b = np.array([p[(f >= c / 2 ** (1 / 6)) & (f < c * 2 ** (1 / 6))].sum() + 1e-20 for c in cents])
+    return 10 * np.log10(b / b.sum())
+
+
+def tone_match(key, max_db=9.0):
+    """One tone across an engine's steps (2026-11-09: steps taken from different recordings each had their own tone).
+    Per third-octave band, the band's share of the step's level is fitted against log rpm over all steps (the natural
+    brightening with revs stays); each step is EQ'd onto that line, +-max_db, smoothed over neighbouring bands,
+    applied around the loop (FFT of the whole loop: the seam is untouched), both layers alike, loudness kept.
+    -> {rpm: max |gain| dB}"""
+    folder = os.path.join(sl.OUT, f"MT_{key}")
+    lv = json.load(open(sl.LEVELS))
+    rows = lv["engines"][key]["steps"]
+    ks = [r[0] for r in rows]
+    if len(ks) < 3:
+        return {}
+    cents = 1000 * 2 ** (np.arange(-12, 11) / 3)  # 63 Hz .. 10 kHz: above it a clip's codec cutoff, not its tone
+    rd = lambda k, l: wavfile.read(os.path.join(folder, f"MT_{key}_{k}rpm_{l}.wav"))[1].astype(float) / 32768
+    L = np.array([bands_of(rd(k, "Exhaust"), cents) for k in ks])
+    t = np.log2(ks)
+    A = np.c_[t, np.ones_like(t)]
+    T = A @ np.linalg.lstsq(A, L, rcond=None)[0]
+    out = {}
+    for i, k in enumerate(ks):
+        g = np.clip(T[i] - L[i], -max_db, max_db)
+        g = np.convolve(np.r_[g[0], g, g[-1]], np.ones(3) / 3, "valid")  # no single-band peaks
+        g[0] = g[-1] = 0.0  # tapers to flat at both ends (np.interp holds the end value beyond them)
+        for layer in ("Exhaust", "Engine"):
+            x = rd(k, layer)
+            if not x.any():
+                continue
+            f = np.fft.rfftfreq(len(x), 1 / SR)
+            gg = np.interp(np.log2(np.maximum(f, 20)), np.log2(cents), g)
+            y = np.fft.irfft(np.fft.rfft(x) * 10 ** (gg / 20), len(x))
+            y = sl.limit([y * 10 ** ((sl.lufs(x) - sl.lufs(y)) / 20)])[0]
+            wavfile.write(os.path.join(folder, f"MT_{key}_{k}rpm_{layer}.wav"), SR, (y * 32767).astype(np.int16))
+        ex, en = rd(k, "Exhaust"), rd(k, "Engine")
+        n = min(len(ex), len(en))
+        rows[i][1] = round(sl.lufs(ex[:n] + en[:n]), 2)
+        out[k] = round(float(np.abs(g).max()), 1)
+    json.dump(lv, open(sl.LEVELS, "w"), indent=1)
+    return out
+
+
+def demo():
+    """tone_match's fit: three steps where the middle one is 6 dB brighter above 2 kHz come out on one line."""
+    global sl
+    rng = np.random.default_rng(0)
+    cents = 1000 * 2 ** (np.arange(-12, 14) / 3)
+    def tone(bright):
+        x = rng.normal(size=SR * 2)
+        f = np.fft.rfftfreq(len(x), 1 / SR)
+        return np.fft.irfft(np.fft.rfft(x) * np.where(f > 2000, 10 ** (bright / 20), 1.0), len(x))
+    L = np.array([bands_of(tone(b), cents) for b in (0, 6, 0)])
+    t = np.log2([1000, 1500, 2000]); A = np.c_[t, np.ones_like(t)]
+    T = A @ np.linalg.lstsq(A, L, rcond=None)[0]
+    d = T[1] - L[1]
+    tilt = d[cents > 3000].mean() - d[cents < 1500].mean()
+    assert tilt < -3, tilt  # the bright step is tilted darker (the fit lands 1/3 toward it with three points: ~-4 dB)
+    print("demo ok")
+
+
 def relevel(key, old_levels):
     """A set rebuilt by recompose.py (real recordings, its own older targets) brought back to the loudness curve the
     engine had before (old_levels: a saved levels.json), both layers by one gain, then limited."""
@@ -257,16 +322,19 @@ def main(key):
         wavfile.write(os.path.join(folder, f"MT_{key}_{k}rpm_Engine.wav"), SR, np.zeros(len(y), np.int16))
         rows.append([k, round(sl.lufs(y), 2), round(sl.lufs(y), 2), None, 0.0, len(y) / SR])
         print(f"  {k} rpm <- {name}: {len(y) / SR:.2f} s, {sl.lufs(y):.2f} LUFS (target {curve(k):.2f})")
-    import es_steps  # one tone across the set: the kept idle EQ'd to the first sample, the middle steps evened
-    print("  idle matched (dB at 1/3/6 kHz):", es_steps.match_idle(folder, key, min(s["keep"])))
-    print("  tone evened (max dB):", es_steps.even_tone(folder, key, min(s["keep"])))
     e.update(steps=sorted(rows), pitch=1.0, source="ac-bank", method="ac-bank", bank=s["bank"],
              crossfade=min(b - a for a, b in zip(sorted(r[0] for r in rows), sorted(r[0] for r in rows)[1:])) // 2)
     json.dump(lv, open(sl.LEVELS, "w"), indent=1)
+    print("  one tone (max dB per step):", tone_match(key))  # the kept idle and the samples on one tone line
 
 
 if __name__ == "__main__":
     if sys.argv[1] == "relevel":
         relevel(sys.argv[2], sys.argv[3])
+    elif sys.argv[1] == "tone":
+        for k in sys.argv[2:]:
+            print(k, tone_match(k))
+    elif sys.argv[1] == "demo":
+        demo()
     else:
         (scs if sys.argv[1] in SCS else game if sys.argv[1] in GAME else main)(sys.argv[1])
