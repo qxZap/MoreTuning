@@ -3,7 +3,7 @@
     python SuspensionExpansion/run.py [path\\to\\Z_SuspensionExpansion_P.pak]
 
 The 0.7.18 pak is one whole Suspensions table: vanilla's 52 rows plus 57 of
-its own (springs and dampers up to 600, ride height -20..+15, wheel spacers
+its own (springs and dampers up to 600, ride height -20..+15 (+30 since 2026-11-09), wheel spacers
 25..115, angle kits 15..30). A frozen table like that would hide anything
 vanilla adds and no longer parses since 0.7.19, so the port ships its own table
 (plus its own copy of the VehicleParts composite listing it):
@@ -56,6 +56,31 @@ def balance_edits(theirs, before, now):
     return out
 
 
+RIDE_TOP = 30  # the user, 2026-11-09: lift to +30 cm (the mod stopped at +15)
+
+
+def more_lift(own, top=RIDE_TOP):
+    """RideHeight_+16 .. +<top>, cloned from the mod's +15 row: new rows, appended (row names are save keys)."""
+    base = next((r for r in own if r["Name"] == "RideHeight_+15"), None)
+    have = {r["Name"] for r in own}
+    out = []
+    for cm in range(16, top + 1):
+        name = f"RideHeight_+{cm}"
+        if base is None or name in have:
+            continue
+        row = copy.deepcopy(base)
+        row["Name"] = name
+        for p in row["Value"]:
+            if p["Name"] == "Name":
+                p["CultureInvariantString"] = f"+{cm}cm"
+            elif p["Name"] == "SuspensionRideHeight":
+                for f in p["Value"]:
+                    if f["Name"] == "RideHeightChange":
+                        f["Value"] = float(cm)
+        out.append(row)
+    return out
+
+
 def main(argv):
     pak = argv[0] if argv else SOURCE_PAK
     src = os.path.join(WORK, "susp", "src")
@@ -71,9 +96,11 @@ def main(argv):
                           os.path.join(WORK, "susp", "Suspensions.vanilla719.json"), "MotorTown719"))
     merged, kept, added = rebase(now, theirs)
     own = channels.rows_of(merged)[kept:]
+    lift = more_lift(own)
+    own += lift
     edits = balance_edits({r["Name"]: r for r in channels.rows_of(theirs)}, before, now)
     channels.ship_one([(merged, own), (now, edits)], TABLE, DEST, "Suspension Expansion")
-    print(f"  {len(own)} new parts + {len(edits)} vanilla rows rebalanced")
+    print(f"  {len(own)} new parts ({len(lift)} lift steps to +{RIDE_TOP} cm) + {len(edits)} vanilla rows rebalanced")
 
 
 def demo():
@@ -83,6 +110,11 @@ def demo():
                         t(row("A", 2000), row("B", 500)), t(row("A", 2500), row("B", 600)))
     assert [r["Name"] for r in out] == ["A"], "only rows the mod changed"
     assert out[0]["Value"] == [{"Name": "Cost", "Value": 1000}, {"Name": "Tire", "Value": "x"}]
+    r15 = {"Name": "RideHeight_+15", "Value": [{"Name": "Name", "CultureInvariantString": "+15cm"},
+                                               {"Name": "SuspensionRideHeight", "Value": [{"Name": "RideHeightChange", "Value": 15.0}]}]}
+    lift = more_lift([r15], 17)
+    assert [r["Name"] for r in lift] == ["RideHeight_+16", "RideHeight_+17"] and lift[1]["Value"][1]["Value"][0]["Value"] == 17.0
+    assert lift[0]["Value"][0]["CultureInvariantString"] == "+16cm" and r15["Value"][1]["Value"][0]["Value"] == 15.0
     print("ok")
 
 
