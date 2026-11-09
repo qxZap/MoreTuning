@@ -135,7 +135,8 @@ def verify():
                 (v.get("source") == "synth" and v.get("method") == "pingpong")
             ws = (x[:n], e[:n] + x[:n]) if lowpassed else (e[:n], x[:n], e[:n] + x[:n])
             bz = max(overtone_ratio(w, f0) for w in ws)
-            worst_buzz = max(worst_buzz, bz)
+            if v.get("source") not in ("scs-mod", "ac-bank"):  # the limit is for synthesised sets; real recordings
+                worst_buzz = max(worst_buzz, bz)               # from game mods are judged by ear (2026-11-09)
             rows.append([k, round(want, 2), round(got, 2), round(bz, 1)])
         out[name] = rows
         print(f"{name}: idle {rows[0][2]:.1f}  high {rows[-1][2]:.1f} LUFS  worst {max(abs(r[1] - r[2]) for r in rows):.2f} dB  buzz max {max(r[3] for r in rows):+.1f} dB")

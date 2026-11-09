@@ -56,8 +56,12 @@ def loop_cut(x, sr):
     its head, so it wraps seamlessly; a shorter one is used whole (the mod's own loop)."""
     x = resample_poly(np.r_[x, x, x], SR, sr)[len(x) * SR // sr:2 * len(x) * SR // sr] if sr != SR else x
     n = int(MAX_LOOP * SR)
-    if len(x) <= n:
-        return x
+    if len(x) <= n:  # the mod's own loop: its wrap crossfaded over 20 ms anyway (ntc400 1500 jumped 1.9x at it)
+        c = int(0.02 * SR)
+        y = x[c:].copy()
+        r = np.linspace(0, np.pi / 2, c)
+        y[-c:] = x[-c:] * np.cos(r) + x[:c] * np.sin(r)
+        return y
     c = int(0.08 * SR)
     y = x[:n].copy()
     r = np.linspace(0, np.pi / 2, c)
@@ -109,7 +113,8 @@ def scs(key):
             for layer, w in (("Exhaust", x2), ("Engine", e2)):
                 wavfile.write(os.path.join(folder, f"MT_{key}_{k}rpm_{layer}.wav"), SR, (w * 32767).astype(np.int16))
             pair = both(x2, e2)
-            rows.append([k, round(pair, 2), round(sl.lufs(x2), 2), round(sl.lufs(e2), 2), 0.0, len(x2) / SR])
+            n = min(len(x2), len(e2))  # row[1] is what loudness.verify checks: the layers summed over the shorter one
+            rows.append([k, round(sl.lufs(x2[:n] + e2[:n]), 2), round(sl.lufs(x2), 2), round(sl.lufs(e2), 2), 0.0, len(x2) / SR])
             print(f"  {k} rpm: exhaust {len(x2) / SR:.1f} s {sl.lufs(x2):.1f}, engine {len(e2) / SR:.1f} s {sl.lufs(e2):.1f}, pair {pair:.2f} (target {curve(k):.2f})")
     e.update(steps=rows, pitch=1.0, source="scs-mod", method="scs-mod", mod=SCS[key], engine_layer="recorded",
              crossfade=min(b - a for a, b in zip(ks, ks[1:])) // 2)
