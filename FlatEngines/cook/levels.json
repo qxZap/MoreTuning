@@ -26,55 +26,55 @@
      2.4
     ],
     [
-     1850,
-     -17.16,
-     -17.16,
+     2000,
+     -10.67,
+     -10.67,
      null,
      0.0,
-     2.4
+     4.369270833333333
     ],
     [
-     2850,
-     -15.31,
-     -15.31,
+     3000,
+     -10.04,
+     -10.04,
      null,
      0.0,
-     2.4
+     1.7664166666666667
     ],
     [
-     3850,
-     -13.47,
-     -13.47,
+     4000,
+     -9.43,
+     -9.43,
      null,
      0.0,
-     2.4
+     1.8353541666666666
     ],
     [
-     4850,
-     -11.62,
-     -11.62,
+     5000,
+     -9.03,
+     -9.03,
      null,
      0.0,
-     2.4742291666666665
+     2.695125
     ],
     [
-     5850,
-     -9.77,
-     -9.77,
+     6000,
+     -8.81,
+     -8.81,
      null,
      0.0,
-     2.5025625
+     2.4935
     ],
     [
-     6850,
-     -7.93,
-     -7.93,
+     8000,
+     -9.05,
+     -9.05,
      null,
      0.0,
-     2.5401458333333333
+     3.2737291666666666
     ]
    ],
-   "source": "enginesim",
+   "source": "ac-bank",
    "curve": [
     [
      850,
@@ -96,7 +96,7 @@
     ]
    ],
    "engine_layer": "silent",
-   "method": "forward-loop",
+   "method": "ac-bank",
    "script": "mt_gen_rs3five.mr",
    "volumes": {
     "MasterVolume": 3.2,
@@ -105,9 +105,10 @@
    },
    "crossfade": 500,
    "jitter": 0.05,
-   "pitch": 0.92,
+   "pitch": 1.0,
    "idle_exhaust_ratio": null,
-   "loudness_db": 0
+   "loudness_db": 0,
+   "bank": "cky_audi_ttrs_performance_gapplebees\\sfx\\cky_audi_ttrs_performance_gapplebees.bank"
   },
   "s65": {
    "class": "petrol",

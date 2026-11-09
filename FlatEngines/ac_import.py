@@ -1,0 +1,78 @@
+# Engine sound steps from an Assetto Corsa car mod's FMOD bank (vgmstream extracts its FSB5 streams), replacing an
+# engine-sim set's steps (2026-11-09: engine-sim's RS3 and diesels still buzzed at mid rpm in game).
+#   python -I ac_import.py <engine>            uses SETS[engine]: bank, {rpm: stream name}, steps kept from engine-sim
+# AC samples are named by the rpm they play at unpitched and are palindromes (forward + reversed, last sample = first),
+# so a loop is the stream minus its last sample. Exhaust layer = the sample (mono, 48 kHz), Engine layer silent like
+# the engine-sim sets; each step levelled to the set's existing curve (levels.json "curve"), then cook as COOKED.md.
+import os, sys, json, subprocess, tempfile, numpy as np
+from scipy.io import wavfile
+from scipy.signal import resample_poly
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path[:0] = [HERE, os.path.join(HERE, "recompose")]
+import synthloop as sl
+VG = r"D:\MT\Output\.data\vgmstream-cli.exe"
+AC = r"D:\SteamLibrary\steamapps\common\assettocorsa\content\cars"
+SR = 48000
+SETS = {
+    # Ceky's TT RS 2020 (same 2.5 TFSI five as the RS3); on-load exterior samples, the 2000 one off-load
+    "rs3five": dict(bank=r"cky_audi_ttrs_performance_gapplebees\sfx\cky_audi_ttrs_performance_gapplebees.bank",
+                    steps={2000: "STM RS3_2000_off", 3000: "STM RS3_3000", 4000: "rs35_4000", 5000: "STM RS3_5000",
+                           6000: "rs35_6000", 8000: "rs35_8000"},
+                    keep=[850]),
+}
+
+
+def streams(bank):
+    out = subprocess.run([VG, "-m", bank], capture_output=True, text=True).stdout
+    n = int(next(l.split(":")[1] for l in out.splitlines() if l.startswith("stream count")))
+    names = {}
+    for i in range(1, n + 1):
+        m = subprocess.run([VG, "-m", "-s", str(i), bank], capture_output=True, text=True).stdout
+        names[next(l.split(": ", 1)[1].strip() for l in m.splitlines() if l.startswith("stream name"))] = i
+    return names
+
+
+def extract(bank, i):
+    with tempfile.TemporaryDirectory() as t:
+        p = os.path.join(t, "s.wav")
+        subprocess.run([VG, "-s", str(i), "-i", "-o", p, bank], capture_output=True, check=True)
+        assert os.path.exists(p), (bank, i)
+        sr, x = wavfile.read(p)
+    x = x.astype(float) / 32768
+    x = x.mean(1) if x.ndim > 1 else x
+    assert x[0] == x[-1] or abs(x[0] - x[-1]) < 1e-3, "not a palindrome loop"
+    x = x[:-1]
+    return resample_poly(np.r_[x, x, x], SR, sr)[len(x) * SR // sr:2 * len(x) * SR // sr]  # circular: seam kept
+
+
+def main(key):
+    s = SETS[key]
+    bank = os.path.join(AC, s["bank"])
+    ids = streams(bank)
+    folder = os.path.join(sl.OUT, f"MT_{key}")
+    lv = json.load(open(sl.LEVELS))
+    e = lv["engines"][key]
+    c = e["curve"]
+    curve = lambda k: float(np.interp(k, c[0], c[1]))
+    rows = [r for r in e["steps"] if r[0] in s["keep"]]
+    for f in os.listdir(folder):
+        k = int(f.split("_")[-2][:-3])
+        if k not in s["keep"]:
+            os.remove(os.path.join(folder, f))
+    for k, name in sorted(s["steps"].items()):
+        x = extract(bank, ids[name])
+        g = 1.0
+        for _ in range(6):
+            y = sl.limit([x * g])[0]
+            g *= 10 ** ((curve(k) - sl.lufs(y)) / 20)
+        wavfile.write(os.path.join(folder, f"MT_{key}_{k}rpm_Exhaust.wav"), SR, (y * 32767).astype(np.int16))
+        wavfile.write(os.path.join(folder, f"MT_{key}_{k}rpm_Engine.wav"), SR, np.zeros(len(y), np.int16))
+        rows.append([k, round(sl.lufs(y), 2), round(sl.lufs(y), 2), None, 0.0, len(y) / SR])
+        print(f"  {k} rpm <- {name}: {len(y) / SR:.2f} s, {sl.lufs(y):.2f} LUFS (target {curve(k):.2f})")
+    e.update(steps=sorted(rows), source="ac-bank", method="ac-bank", bank=s["bank"],
+             crossfade=min(b - a for a, b in zip(sorted(r[0] for r in rows), sorted(r[0] for r in rows)[1:])) // 2)
+    json.dump(lv, open(sl.LEVELS, "w"), indent=1)
+
+
+if __name__ == "__main__":
+    main(sys.argv[1])
