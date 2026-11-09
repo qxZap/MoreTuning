@@ -227,6 +227,41 @@ def tone_match(key, max_db=9.0):
     return out
 
 
+def whoosh_cut(x, k, cut_db=-14.0, lo=800.0, width=0.12):
+    """Everything between the engine's lines (multiples of the cycle rate, rpm/120 Hz: half orders of a four-stroke)
+    above `lo` Hz turned down by cut_db: turbo whoosh is broadband noise between them, the engine is on them. Around
+    the loop (FFT of the whole loop), so the seam stays; the lines themselves are untouched."""
+    f0 = k / 120.0
+    X = np.fft.rfft(x)
+    f = np.fft.rfftfreq(len(x), 1 / SR)
+    d = np.abs(f / f0 - np.round(f / f0)) * f0  # Hz from the nearest line
+    near = d <= np.maximum(width * f0, 1.5 * SR / len(x))
+    ramp = np.clip((f - lo) / lo, 0, 1)  # in over one more `lo`
+    return np.fft.irfft(X * np.where(near, 1.0, 10 ** (cut_db * ramp / 20)), len(x))
+
+
+def dewhoosh(key):
+    """whoosh_cut on every step of a set (2026-11-09: the 6.0's recordings carry turbo whoosh, heard mid and high),
+    both layers, each step back at its loudness. -> {rpm: dB removed above 1 kHz}"""
+    folder = os.path.join(sl.OUT, f"MT_{key}")
+    lv = json.load(open(sl.LEVELS))
+    out = {}
+    for r in lv["engines"][key]["steps"]:
+        k = r[0]
+        for layer in ("Exhaust", "Engine"):
+            p = os.path.join(folder, f"MT_{key}_{k}rpm_{layer}.wav")
+            x = wavfile.read(p)[1].astype(float) / 32768
+            if not x.any():
+                continue
+            y = whoosh_cut(x, k)
+            y = sl.limit([y * 10 ** ((sl.lufs(x) - sl.lufs(y)) / 20)])[0]
+            wavfile.write(p, SR, (y * 32767).astype(np.int16))
+            if layer == "Exhaust":
+                hi = lambda v: np.sum(np.abs(np.fft.rfft(v))[np.fft.rfftfreq(len(v), 1 / SR) > 1000] ** 2)
+                out[k] = round(float(10 * np.log10(hi(x) / hi(y))), 1)
+    return out
+
+
 def demo():
     """tone_match's fit: three steps where the middle one is 6 dB brighter above 2 kHz come out on one line."""
     global sl
@@ -242,6 +277,16 @@ def demo():
     d = T[1] - L[1]
     tilt = d[cents > 3000].mean() - d[cents < 1500].mean()
     assert tilt < -3, tilt  # the bright step is tilted darker (the fit lands 1/3 toward it with three points: ~-4 dB)
+    # whoosh_cut: an engine (lines at multiples of rpm/120) plus noise; the cut leaves the lines, takes the noise
+    k = 2400; f0 = k / 120; t = np.arange(SR * 2) / SR
+    eng = sum(np.sin(2 * np.pi * f0 * m * t) / m for m in range(40, 200, 4))
+    noise = rng.normal(size=len(t)) * 0.5
+    y = whoosh_cut(eng + noise, k)
+    F = lambda v: np.abs(np.fft.rfft(v)); f = np.fft.rfftfreq(len(t), 1 / SR)
+    line = (np.abs(f / f0 - np.round(f / f0)) * f0 < 0.6) & (f > 2000)
+    gap = (np.abs(f / f0 - np.round(f / f0)) > 0.4) & (f > 2000)
+    assert np.allclose(F(y)[line], F(eng + noise)[line], rtol=0.05)  # the engine is untouched
+    assert F(y)[gap].mean() < F(noise)[gap].mean() * 0.25  # the whoosh is down by more than 12 dB
     print("demo ok")
 
 
@@ -390,6 +435,9 @@ if __name__ == "__main__":
         relevel(sys.argv[2], sys.argv[3])
     elif sys.argv[1] == "rework":
         rework(sys.argv[2])
+    elif sys.argv[1] == "dewhoosh":
+        for k in sys.argv[2:]:
+            print(k, dewhoosh(k))
     elif sys.argv[1] == "tone":
         for k in sys.argv[2:]:
             print(k, tone_match(k))
