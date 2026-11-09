@@ -121,6 +121,95 @@ def scs(key):
     json.dump(lv, open(sl.LEVELS, "w"), indent=1)
 
 
+# American Truck Simulator's own trucks (banks cut out of the DLC .scs by D:\MT\scs_x\scs_banks.py): rpm-named samples,
+# a main family -> Exhaust layer and a second one -> Engine layer (the nearest rpm, pitched to the step, within 25 %)
+ATS = r"D:\MT\scs_x\ats"
+GAME = {
+    "mp8": dict(fsb=r"dlc_mack_pinnacle\0.fsb", main=r"mack_2-t00\d_(\d{4})(?:_load)?", second=r"mack_2-t006_exhaust_track_mono_exhaust_(\d{4})"),
+    "isx15": dict(fsb=r"dlc_peterbilt_389\0.fsb", main=r"load_(\d{4})", second=r"exhaust_(\d{4})"),
+    "series60": dict(fsb=r"dlc_freightliner_cascadia2019\0.fsb", main=r"cascadia_exhaust_(\d{4})", second=r"cascadia_dd15_unloaded_(\d{4})",
+                     idle=("cascadia_exhaust_idle", 600)),
+}
+
+
+def game(key):
+    import re
+    from scipy.signal import resample
+    s = GAME[key]
+    bank = os.path.join(ATS, s["fsb"])
+    ids = streams(bank)
+    fam = {f: {int(m.group(1)): i for n, i in ids.items() if (m := re.fullmatch(s[f], n))} for f in ("main", "second")}
+    if "idle" in s:  # an idle loop named without its rpm
+        fam["main"][s["idle"][1]] = ids[s["idle"][0]]
+    lv = json.load(open(sl.LEVELS))
+    e = lv["engines"][key]
+    c = e["curve"]
+    curve = lambda k: float(np.interp(k, c[0], c[1]))
+    folder = os.path.join(sl.OUT, f"MT_{key}")
+    for f in os.listdir(folder):
+        os.remove(os.path.join(folder, f))
+    both = lambda x2, e2: 10 * np.log10(10 ** (sl.lufs(x2) / 10) + (10 ** (sl.lufs(e2) / 10) if e2.any() else 0))
+    rows = []
+    with tempfile.TemporaryDirectory() as t:
+        def load(i):
+            p = os.path.join(t, "s.wav")
+            subprocess.run([VG, "-s", str(i), "-i", "-o", p, bank], capture_output=True, check=True)
+            sr, x = wavfile.read(p)
+            x = x.astype(float) / 32768
+            return loop_cut(x.mean(1) if x.ndim > 1 else x, sr)
+        for k in sorted(fam["main"]):
+            ex = load(fam["main"][k])
+            j = min(fam["second"], key=lambda r: abs(r - k), default=None)
+            en = np.zeros(len(ex))
+            if j is not None and abs(j / k - 1) <= 0.25:
+                y = load(fam["second"][j])
+                en = resample(y, int(round(len(y) * j / k)))  # whole-loop (circular) resample: the seam stays
+            g = 1.0
+            for _ in range(8):
+                x2 = sl.limit([ex * g])[0]
+                e2 = sl.limit([en * g])[0] if en.any() else en
+                g *= 10 ** ((curve(k) - both(x2, e2)) / 20)
+            for layer, w in (("Exhaust", x2), ("Engine", e2)):
+                wavfile.write(os.path.join(folder, f"MT_{key}_{k}rpm_{layer}.wav"), SR, (w * 32767).astype(np.int16))
+            n = min(len(x2), len(e2))
+            rows.append([k, round(sl.lufs(x2[:n] + e2[:n]), 2), round(sl.lufs(x2), 2), round(sl.lufs(e2), 2) if e2.any() else None, 0.0, len(x2) / SR])
+            print(f"  {k} rpm: main {len(x2) / SR:.1f} s, second {'from %d' % j if e2.any() else 'none'}, pair {both(x2, e2):.2f} (target {curve(k):.2f})")
+    ks = [r[0] for r in rows]
+    e.update(steps=rows, pitch=1.0, source="scs-mod", method="ats", bank=s["fsb"], engine_layer="recorded",
+             crossfade=min(b - a for a, b in zip(ks, ks[1:])) // 2)
+    json.dump(lv, open(sl.LEVELS, "w"), indent=1)
+
+
+def relevel(key, old_levels):
+    """A set rebuilt by recompose.py (real recordings, its own older targets) brought back to the loudness curve the
+    engine had before (old_levels: a saved levels.json), both layers by one gain, then limited."""
+    old = json.load(open(old_levels))["engines"][key]
+    c = old["curve"]
+    curve = lambda k: float(np.interp(k, c[0], c[1]))
+    lv = json.load(open(sl.LEVELS))
+    e = lv["engines"][key]
+    folder = os.path.join(sl.OUT, f"MT_{key}")
+    for r in e["steps"]:
+        k = r[0]
+        rd = lambda l: wavfile.read(os.path.join(folder, f"MT_{key}_{k}rpm_{l}.wav"))[1].astype(float) / 32768
+        x, en = rd("Exhaust"), rd("Engine")
+        g = 1.0
+        for _ in range(8):
+            x2, e2 = sl.limit([x * g, en * g])
+            g *= 10 ** ((curve(k) - sl.lufs(x2 + e2)) / 20)
+        for l, w in (("Exhaust", x2), ("Engine", e2)):
+            wavfile.write(os.path.join(folder, f"MT_{key}_{k}rpm_{l}.wav"), SR, (w * 32767).astype(np.int16))
+        r[1] = r[2] = round(sl.lufs(x2 + e2), 2)
+        print(f"  {k} rpm: pair {r[1]:.2f} (target {curve(k):.2f})")
+    e["curve"] = c
+    for f in ("starter", "volumes", "idle_exhaust_ratio", "loudness_db"):  # recompose rewrites the whole entry: the
+        if f in old:                                                       # approved starter and the in-game volumes
+            e[f] = old[f]
+    ks = [r[0] for r in e["steps"]]
+    e["crossfade"] = min(b - a for a, b in zip(ks, ks[1:])) // 2  # blend near each midpoint, like the other sets
+    json.dump(lv, open(sl.LEVELS, "w"), indent=1)
+
+
 def streams(bank):
     out = subprocess.run([VG, "-m", bank], capture_output=True, text=True).stdout
     n = int(next(l.split(":")[1] for l in out.splitlines() if l.startswith("stream count")))
@@ -177,4 +266,7 @@ def main(key):
 
 
 if __name__ == "__main__":
-    (scs if sys.argv[1] in SCS else main)(sys.argv[1])
+    if sys.argv[1] == "relevel":
+        relevel(sys.argv[2], sys.argv[3])
+    else:
+        (scs if sys.argv[1] in SCS else game if sys.argv[1] in GAME else main)(sys.argv[1])

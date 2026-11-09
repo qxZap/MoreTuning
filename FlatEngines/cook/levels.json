@@ -819,38 +819,54 @@
    "steps": [
     [
      600,
-     -17.0,
-     -17.0,
-     null,
+     -12.17,
+     -13.05,
+     -26.26,
      0.0,
-     2.4
+     8.0
     ],
     [
-     1100,
-     -13.22,
-     -13.22,
-     null,
+     1000,
+     -11.87,
+     -12.55,
+     -20.06,
      0.0,
-     2.4
+     7.0839791666666665
     ],
     [
-     1600,
-     -9.44,
-     -9.44,
-     null,
+     1200,
+     -11.12,
+     -12.17,
+     -19.35,
      0.0,
-     2.475
+     8.0
     ],
     [
-     2100,
-     -7.56,
-     -7.56,
-     null,
+     1500,
+     -10.75,
+     -12.1,
+     -16.89,
      0.0,
-     2.4
+     8.0
+    ],
+    [
+     1700,
+     -11.05,
+     -12.69,
+     -14.94,
+     0.0,
+     7.8306458333333335
+    ],
+    [
+     2000,
+     -10.09,
+     -13.27,
+     -14.07,
+     0.0,
+     8.0
     ]
    ],
-   "source": "enginesim",
+   "source": "scs-mod",
    "curve": [
     [
      600,
@@ -865,15 +881,15 @@
      -10.63
     ]
    ],
-   "engine_layer": "silent",
-   "method": "forward-loop",
+   "engine_layer": "recorded",
+   "method": "ats",
    "script": "mt_gen_series60.mr",
    "volumes": {
     "MasterVolume": 3.2,
     "EngineVolumeMultiplier": 3.4,
     "ExhaustVolumeMultiplier": 3.4
    },
-   "crossfade": 250,
+   "crossfade": 100,
    "jitter": 0.05,
    "pitch": 1.0,
    "idle_exhaust_ratio": null,
@@ -883,7 +899,8 @@
     "kind": "truck",
     "lufs": -9.4,
     "cold_start": true
-   }
+   },
+   "bank": "dlc_freightliner_cascadia2019\\0.fsb"
   },
   "cat3406e": {
    "class": "diesel",
@@ -1046,38 +1063,77 @@
    "steps": [
     [
      600,
+     -13.24,
+     -13.24,
+     -4.39,
+     0.3,
+     "fill",
+     10.4,
+     2.24,
      -17.0,
      -17.0,
-     null,
-     0.0,
-     2.4
+     -21.95,
+     "B8lvMZKil5c 31.9-33.0s@651 +-1.6%"
     ],
     [
-     1100,
-     -13.22,
-     -13.22,
-     null,
-     0.0,
-     2.4
+     900,
+     -12.45,
+     -12.45,
+     -3.95,
+     0.4,
+     "found",
+     4.4,
+     6.19,
+     -16.2,
+     -16.2,
+     -20.55,
+     "gHLvYEd1PK8 51.6-54.5s@937 +-0.3%"
     ],
     [
-     1600,
-     -9.44,
-     -9.44,
-     null,
-     0.0,
-     2.475
+     1200,
+     -11.69,
+     -11.69,
+     -1.47,
+     -0.2,
+     "fill",
+     7.2,
+     5.58,
+     -15.4,
+     -15.4,
+     -20.68,
+     "gHLvYEd1PK8 7.6-10.6s@1126 +-0.3%"
     ],
     [
-     2100,
-     -7.27,
-     -7.27,
-     null,
-     0.0,
-     2.4
+     1500,
+     -10.96,
+     -10.96,
+     -3.68,
+     -0.5,
+     "found",
+     4.6,
+     2.37,
+     -14.8,
+     -14.8,
+     -18.91,
+     "SIj5a7IaFAk 38.4-39.6s@1442 +-0.8%"
+    ],
+    [
+     1800,
+     -10.81,
+     -10.81,
+     -2.91,
+     -0.2,
+     "found",
+     9.0,
+     2.37,
+     -14.4,
+     -14.4,
+     -19.86,
+     "kPllh2MgXcU 23.4-24.6s@1745 +-2.1%"
     ]
    ],
-   "source": "enginesim",
+   "source": "recording",
+   "method": "pingpong",
    "curve": [
     [
      600,
@@ -1092,25 +1148,20 @@
      -10.94
     ]
    ],
-   "engine_layer": "silent",
-   "method": "forward-loop",
-   "script": "mt_gen_macke9.mr",
-   "volumes": {
-    "MasterVolume": 3.2,
-    "EngineVolumeMultiplier": 3.4,
-    "ExhaustVolumeMultiplier": 3.4
-   },
-   "crossfade": 250,
-   "jitter": 0.05,
-   "pitch": 1.0,
-   "idle_exhaust_ratio": null,
-   "loudness_db": 2,
    "starter": {
     "length": 2.4,
     "kind": "truck",
     "lufs": -9.36,
     "cold_start": true
-   }
+   },
+   "volumes": {
+    "MasterVolume": 3.2,
+    "EngineVolumeMultiplier": 3.4,
+    "ExhaustVolumeMultiplier": 3.4
+   },
+   "idle_exhaust_ratio": null,
+   "loudness_db": 2,
+   "crossfade": 150
   },
   "om502": {
    "class": "diesel",
@@ -1119,38 +1170,77 @@
    "steps": [
     [
      600,
+     -14.41,
+     -14.41,
+     -4.15,
+     0.2,
+     "fill",
+     7.8,
+     5.56,
      -17.0,
      -17.0,
-     null,
-     0.0,
-     2.4
+     -24.5,
+     "hwrciR0klPA 18.6-21.5s@560 +-0.3%"
     ],
     [
-     1100,
-     -12.95,
-     -12.95,
-     null,
-     0.0,
-     2.4
+     900,
+     -14.3,
+     -14.3,
+     -2.98,
+     -0.7,
+     "fill",
+     8.1,
+     5.93,
+     -16.2,
+     -16.2,
+     -26.53,
+     "AdoM7g-UQoU 194.4-197.1s@980 +-0.3%"
     ],
     [
-     1600,
-     -8.9,
-     -8.9,
-     null,
-     0.0,
-     2.475
+     1200,
+     -13.65,
+     -13.65,
+     -4.6,
+     0.9,
+     "found",
+     1.1,
+     2.05,
+     -15.4,
+     -15.4,
+     -26.42,
+     "AdoM7g-UQoU 198.8-199.8s@1194 +-0.8%"
     ],
     [
-     1900,
-     -7.55,
-     -7.55,
-     null,
-     0.0,
-     2.4
+     1500,
+     -11.95,
+     -11.95,
+     -1.91,
+     2.9,
+     "found",
+     4.7,
+     3.1,
+     -14.8,
+     -14.8,
+     -21.41,
+     "C26BInFHL1o 270.9-272.4s@1573 +-0.3%"
+    ],
+    [
+     1800,
+     -10.84,
+     -10.84,
+     -2.38,
+     0.5,
+     "found",
+     4.3,
+     2.06,
+     -14.4,
+     -14.4,
+     -19.08,
+     "C26BInFHL1o 3.2-4.2s@1813 +-1.1%"
     ]
    ],
-   "source": "enginesim",
+   "source": "recording",
+   "method": "pingpong",
    "curve": [
     [
      600,
@@ -1165,25 +1255,20 @@
      -10.55
     ]
    ],
-   "engine_layer": "silent",
-   "method": "forward-loop",
-   "script": "mt_gen_om502.mr",
-   "volumes": {
-    "MasterVolume": 3.2,
-    "EngineVolumeMultiplier": 3.4,
-    "ExhaustVolumeMultiplier": 3.4
-   },
-   "crossfade": 250,
-   "jitter": 0.05,
-   "pitch": 1.0,
-   "idle_exhaust_ratio": null,
-   "loudness_db": 2,
    "starter": {
     "length": 2.4,
     "kind": "truck",
     "lufs": -9.36,
     "cold_start": true
-   }
+   },
+   "volumes": {
+    "MasterVolume": 3.2,
+    "EngineVolumeMultiplier": 3.4,
+    "ExhaustVolumeMultiplier": 3.4
+   },
+   "idle_exhaust_ratio": null,
+   "loudness_db": 2,
+   "crossfade": 150
   },
   "8v92": {
    "class": "diesel",
@@ -1354,54 +1439,105 @@
    "steps": [
     [
      750,
+     -13.01,
+     -13.01,
+     -4.89,
+     0.4,
+     "fill",
+     7.3,
+     2.77,
      -17.0,
      -17.0,
-     null,
-     0.0,
-     2.56
+     -21.46,
+     "7OjtpKWFASE 11.1-12.6s@703 +-0.0%"
     ],
     [
-     1250,
-     -14.69,
-     -14.69,
-     null,
-     0.0,
-     2.496
+     1050,
+     -12.41,
+     -12.41,
+     -5.17,
+     0.7,
+     "fill",
+     10.1,
+     2.7,
+     -16.53,
+     -16.53,
+     -20.53,
+     "XJEg7gwLXuk 99.0-100.2s@1161 +-1.5%"
     ],
     [
-     1750,
-     -12.37,
-     -12.37,
-     null,
-     0.0,
-     2.4
+     1350,
+     -11.96,
+     -11.96,
+     -3.52,
+     -0.4,
+     "found",
+     2.0,
+     2.48,
+     -16.06,
+     -16.06,
+     -20.17,
+     "0ceceW_y12I 215.8-216.9s@1361 +-0.6%"
+    ],
+    [
+     1650,
+     -11.82,
+     -11.82,
+     -1.99,
+     1.6,
+     "fill",
+     12.9,
+     2.01,
+     -15.59,
+     -15.59,
+     -20.59,
+     "c3Dkheavkko 180.9-182.1s@1471 +-0.6%"
+    ],
+    [
+     1950,
+     -11.59,
+     -11.59,
+     -2.36,
+     3.4,
+     "fill",
+     9.9,
+     2.76,
+     -15.12,
+     -15.12,
+     -20.22,
+     "c3Dkheavkko 119.1-120.5s@1831 +-1.5%"
     ],
     [
      2250,
-     -10.05,
-     -10.05,
-     null,
-     0.0,
-     2.506666666666667
+     -11.32,
+     -11.32,
+     -1.81,
+     0.5,
+     "found",
+     5.0,
+     2.42,
+     -14.91,
+     -14.91,
+     -20.4,
+     "0ceceW_y12I 85.7-86.9s@2210 +-2.1%"
     ],
     [
-     2750,
-     -7.75,
-     -7.75,
-     null,
-     0.0,
-     2.4
-    ],
-    [
-     3100,
-     -6.9,
-     -6.9,
-     null,
-     0.0,
-     2.4
+     3300,
+     -11.98,
+     -11.98,
+     -1.66,
+     -1.2,
+     "found",
+     4.4,
+     2.42,
+     -14.5,
+     -14.5,
+     -24.28,
+     "0ceceW_y12I 105.7-106.8s@3240 +-2.1%"
     ]
    ],
-   "source": "enginesim",
+   "source": "recording",
+   "method": "pingpong",
    "curve": [
     [
      750,
@@ -1420,19 +1556,20 @@
      -11.94
     ]
    ],
-   "engine_layer": "silent",
-   "method": "forward-loop",
-   "script": "mt_gen_cummins67.mr",
    "volumes": {
     "MasterVolume": 3.2,
     "EngineVolumeMultiplier": 3.4,
     "ExhaustVolumeMultiplier": 3.4
    },
-   "crossfade": 250,
-   "jitter": 0.05,
-   "pitch": 1.0,
    "idle_exhaust_ratio": null,
-   "loudness_db": 2
+   "loudness_db": 2,
+   "crossfade": 150,
+   "starter": {
+    "length": 2.4,
+    "kind": "car",
+    "lufs": -9.61,
+    "cold_start": true
+   }
   },
   "ps60": {
    "class": "diesel",
@@ -1441,62 +1578,133 @@
    "steps": [
     [
      700,
+     -14.5,
+     -14.5,
+     -1.49,
+     0.6,
+     "found",
+     2.7,
+     5.86,
      -17.0,
      -17.0,
-     null,
-     0.0,
-     2.4
+     -24.65,
+     "ePKNr89lffo 155.3-158.3s@687 +-0.4%"
     ],
     [
-     1200,
-     -15.17,
-     -15.17,
-     null,
-     0.0,
-     2.5
+     1000,
+     -13.91,
+     -13.91,
+     -6.43,
+     -0.3,
+     "fill",
+     10.4,
+     2.07,
+     -16.62,
+     -16.62,
+     -20.78,
+     "ePKNr89lffo 135.2-136.2s@919 +-0.7%"
     ],
     [
-     1700,
-     -13.34,
-     -13.34,
-     null,
-     0.0,
-     2.4
+     1450,
+     -12.79,
+     -12.79,
+     -6.63,
+     3.7,
+     "found",
+     6.2,
+     3.14,
+     -16.05,
+     -16.05,
+     -27.42,
+     "6fqJUfo2LXc 49.5-50.9s@1536 +-0.7%"
     ],
     [
-     2200,
-     -11.51,
-     -11.51,
-     null,
-     0.0,
-     2.4
+     1750,
+     -12.08,
+     -12.08,
+     -4.69,
+     -0.3,
+     "found",
+     2.1,
+     2.91,
+     -15.67,
+     -15.67,
+     -19.79,
+     "22b27P9Pk9E 50.3-51.8s@1726 +-0.3%"
     ],
     [
-     2700,
-     -9.68,
-     -9.68,
-     null,
-     0.0,
-     2.533333333333333
+     2050,
+     -12.25,
+     -12.25,
+     -4.06,
+     1.2,
+     "found",
+     5.7,
+     4.24,
+     -15.29,
+     -15.29,
+     -23.58,
+     "6fqJUfo2LXc 42.9-45.1s@1953 +-0.3%"
     ],
     [
-     3200,
-     -7.85,
-     -7.85,
-     null,
-     0.0,
-     2.5125
+     2500,
+     -12.0,
+     -12.0,
+     -2.02,
+     2.6,
+     "fill",
+     7.1,
+     3.19,
+     -14.93,
+     -14.93,
+     -19.18,
+     "4SHBXzYCCcU 19.3-20.8s@2690 +-0.0%"
     ],
     [
-     3700,
-     -6.72,
-     -6.72,
-     null,
-     0.0,
-     2.4
+     2800,
+     -11.88,
+     -11.88,
+     -3.39,
+     -0.5,
+     "fill",
+     12.3,
+     2.25,
+     -14.83,
+     -14.83,
+     -22.05,
+     "ePKNr89lffo 16.8-17.9s@2546 +-2.0%"
+    ],
+    [
+     3250,
+     -12.3,
+     -12.3,
+     -2.67,
+     1.3,
+     "found",
+     1.9,
+     4.44,
+     -14.69,
+     -14.69,
+     -22.37,
+     "ePKNr89lffo 177.8-180.0s@3235 +-0.7%"
+    ],
+    [
+     3850,
+     -12.26,
+     -12.26,
+     -2.8,
+     -1.7,
+     "found",
+     8.0,
+     2.15,
+     -14.5,
+     -14.5,
+     -22.78,
+     "Z9BhAwv0Wus 155.5-156.6s@3665 +-2.1%"
     ]
    ],
-   "source": "enginesim",
+   "source": "recording",
+   "method": "pingpong",
    "curve": [
     [
      700,
@@ -1517,19 +1725,20 @@
      -12.26
     ]
    ],
-   "engine_layer": "silent",
-   "method": "forward-loop",
-   "script": "mt_gen_ps60.mr",
    "volumes": {
     "MasterVolume": 3.2,
     "EngineVolumeMultiplier": 3.4,
     "ExhaustVolumeMultiplier": 3.4
    },
-   "crossfade": 250,
-   "jitter": 0.05,
-   "pitch": 0.9,
    "idle_exhaust_ratio": null,
-   "loudness_db": 2
+   "loudness_db": 2,
+   "crossfade": 150,
+   "starter": {
+    "length": 2.4,
+    "kind": "car",
+    "lufs": -9.74,
+    "cold_start": true
+   }
   },
   "ntc400": {
    "class": "diesel",
@@ -1685,39 +1894,39 @@
    "cylinders": 6,
    "steps": [
     [
-     600,
-     -17.0,
-     -17.0,
-     null,
+     700,
+     -13.13,
+     -19.35,
+     -14.38,
      0.0,
-     2.4
+     4.617875
     ],
     [
-     1100,
-     -13.22,
-     -13.22,
-     null,
+     870,
+     -12.49,
+     -18.35,
+     -13.78,
      0.0,
-     2.4
+     5.643291666666666
     ],
     [
-     1600,
-     -9.44,
-     -9.44,
-     null,
+     1500,
+     -10.06,
+     -15.54,
+     -12.4,
      0.0,
-     2.475
+     4.10875
     ],
     [
-     2100,
-     -7.61,
-     -7.61,
-     null,
+     1800,
+     -10.19,
+     -12.9,
+     -13.55,
      0.0,
-     2.4
+     3.2307916666666667
     ]
    ],
-   "source": "enginesim",
+   "source": "scs-mod",
    "curve": [
     [
      600,
@@ -1732,15 +1941,15 @@
      -9.8
     ]
    ],
-   "engine_layer": "silent",
-   "method": "forward-loop",
+   "engine_layer": "recorded",
+   "method": "ats",
    "script": "mt_gen_isx15.mr",
    "volumes": {
     "MasterVolume": 3.2,
     "EngineVolumeMultiplier": 3.4,
     "ExhaustVolumeMultiplier": 3.4
    },
-   "crossfade": 250,
+   "crossfade": 85,
    "jitter": 0.05,
    "pitch": 1.0,
    "idle_exhaust_ratio": null,
@@ -1750,7 +1959,8 @@
     "kind": "truck",
     "lufs": -9.37,
     "cold_start": true
-   }
+   },
+   "bank": "dlc_peterbilt_389\\0.fsb"
   },
   "c16": {
    "class": "diesel",
@@ -1896,39 +2106,64 @@
    "cylinders": 6,
    "steps": [
     [
-     600,
-     -17.0,
-     -17.0,
-     null,
+     750,
+     -13.3,
+     -13.3,
+     -4.06,
      0.0,
-     2.4
+     "fill",
+     10.7,
+     2.71,
+     -16.6,
+     -16.6,
+     -22.65,
+     "wsIGIEdFvDg 5.5-7.0s@687 +-0.6%"
     ],
     [
-     1100,
-     -13.22,
-     -13.22,
-     null,
-     0.0,
-     2.4
+     1050,
+     -13.14,
+     -13.14,
+     -3.8,
+     -1.0,
+     "found",
+     3.9,
+     2.88,
+     -15.8,
+     -15.8,
+     -22.82,
+     "gRStbjyBup0 24.9-26.3s@1021 +-0.0%"
     ],
     [
-     1600,
-     -9.44,
-     -9.44,
-     null,
-     0.0,
-     2.475
+     1350,
+     -12.9,
+     -12.9,
+     -3.5,
+     0.4,
+     "fill",
+     11.5,
+     2.68,
+     -15.0,
+     -15.0,
+     -23.48,
+     "gRStbjyBup0 52.4-53.8s@1225 +-0.4%"
     ],
     [
-     2100,
-     -7.14,
-     -7.14,
-     null,
-     0.0,
-     2.4
+     1800,
+     -12.6,
+     -12.6,
+     -3.58,
+     0.9,
+     "fill",
+     9.0,
+     2.74,
+     -14.4,
+     -14.4,
+     -23.15,
+     "gRStbjyBup0 44.5-46.0s@1669 +-0.3%"
     ]
    ],
-   "source": "enginesim",
+   "source": "recording",
+   "method": "pingpong",
    "curve": [
     [
      600,
@@ -1943,25 +2178,20 @@
      -12.47
     ]
    ],
-   "engine_layer": "silent",
-   "method": "forward-loop",
-   "script": "mt_gen_macke6.mr",
-   "volumes": {
-    "MasterVolume": 3.2,
-    "EngineVolumeMultiplier": 3.4,
-    "ExhaustVolumeMultiplier": 3.4
-   },
-   "crossfade": 250,
-   "jitter": 0.05,
-   "pitch": 1.0,
-   "idle_exhaust_ratio": null,
-   "loudness_db": 2,
    "starter": {
     "length": 2.4,
     "kind": "truck",
     "lufs": -9.27,
     "cold_start": true
-   }
+   },
+   "volumes": {
+    "MasterVolume": 3.2,
+    "EngineVolumeMultiplier": 3.4,
+    "ExhaustVolumeMultiplier": 3.4
+   },
+   "idle_exhaust_ratio": null,
+   "loudness_db": 2,
+   "crossfade": 150
   },
   "mp8": {
    "class": "diesel",
@@ -1970,38 +2200,54 @@
    "steps": [
     [
      600,
-     -17.0,
-     -17.0,
-     null,
+     -15.5,
+     -19.12,
+     -18.0,
      0.0,
-     2.4
+     2.7935625
+    ],
+    [
+     800,
+     -13.97,
+     -17.87,
+     -16.19,
+     0.0,
+     4.472875
     ],
     [
      1100,
-     -13.22,
-     -13.22,
-     null,
+     -11.51,
+     -14.71,
+     -14.49,
      0.0,
-     2.4
+     2.474270833333333
+    ],
+    [
+     1500,
+     -12.6,
+     -15.23,
+     -16.17,
+     0.0,
+     2.553166666666667
     ],
     [
      1600,
-     -9.44,
-     -9.44,
-     null,
+     -12.92,
+     -15.08,
+     -17.02,
      0.0,
-     2.475
+     4.5253125
     ],
     [
-     2100,
-     -7.57,
-     -7.57,
-     null,
+     1700,
+     -12.5,
+     -14.98,
+     -16.16,
      0.0,
-     2.4
+     3.7839375
     ]
    ],
-   "source": "enginesim",
+   "source": "scs-mod",
    "curve": [
     [
      600,
@@ -2016,15 +2262,15 @@
      -10.88
     ]
    ],
-   "engine_layer": "silent",
-   "method": "forward-loop",
+   "engine_layer": "recorded",
+   "method": "ats",
    "script": "mt_gen_mp8.mr",
    "volumes": {
     "MasterVolume": 3.2,
     "EngineVolumeMultiplier": 3.4,
     "ExhaustVolumeMultiplier": 3.4
    },
-   "crossfade": 250,
+   "crossfade": 50,
    "jitter": 0.05,
    "pitch": 1.0,
    "idle_exhaust_ratio": null,
@@ -2034,7 +2280,8 @@
     "kind": "truck",
     "lufs": -9.37,
     "cold_start": true
-   }
+   },
+   "bank": "dlc_mack_pinnacle\\0.fsb"
   },
   "6ct": {
    "class": "diesel",
@@ -2043,46 +2290,77 @@
    "steps": [
     [
      650,
-     -18.0,
-     -18.0,
-     null,
-     0.0,
-     2.4
+     -13.92,
+     -13.92,
+     -6.03,
+     -0.9,
+     "found",
+     5.3,
+     2.58,
+     -17.0,
+     -17.0,
+     -23.48,
+     "6E56neK-VTg 6.2-7.3s@682 +-0.0%"
     ],
     [
-     1150,
-     -14.94,
-     -14.94,
-     null,
-     0.0,
-     2.4
+     950,
+     -12.71,
+     -12.71,
+     -4.32,
+     -0.4,
+     "found",
+     6.1,
+     2.33,
+     -16.38,
+     -16.38,
+     -20.39,
+     "zyGfE4V4_9A 285.0-286.2s@900 +-0.5%"
     ],
     [
-     1650,
+     1400,
      -11.87,
      -11.87,
-     null,
-     0.0,
-     2.4
+     -1.71,
+     1.1,
+     "fill",
+     9.4,
+     4.89,
+     -15.46,
+     -15.46,
+     -20.22,
+     "zyGfE4V4_9A 442.4-444.6s@1536 +-0.3%"
     ],
     [
-     2150,
-     -8.8,
-     -8.8,
-     null,
-     0.0,
-     2.4
+     2000,
+     -11.89,
+     -11.89,
+     -2.63,
+     0.4,
+     "found",
+     4.4,
+     2.03,
+     -14.62,
+     -14.62,
+     -22.44,
+     "uG0W7d7w8nQ 78.0-79.0s@1971 +-0.0%"
     ],
     [
-     2400,
-     -7.51,
-     -7.51,
-     null,
-     0.0,
-     2.5
+     2450,
+     -11.58,
+     -11.58,
+     -2.65,
+     0.7,
+     "found",
+     1.0,
+     6.02,
+     -14.15,
+     -14.15,
+     -21.67,
+     "uG0W7d7w8nQ 73.5-76.5s@2474 +-0.0%"
     ]
    ],
-   "source": "enginesim",
+   "source": "recording",
+   "method": "pingpong",
    "curve": [
     [
      650,
@@ -2099,25 +2377,20 @@
      -11.58
     ]
    ],
-   "engine_layer": "silent",
-   "method": "forward-loop",
-   "script": "mt_gen_6ct.mr",
-   "volumes": {
-    "MasterVolume": 3.2,
-    "EngineVolumeMultiplier": 3.4,
-    "ExhaustVolumeMultiplier": 3.4
-   },
-   "crossfade": 250,
-   "jitter": 0.05,
-   "pitch": 1.0,
-   "idle_exhaust_ratio": null,
-   "loudness_db": 1,
    "starter": {
     "length": 2.4,
     "kind": "truck",
     "lufs": -9.27,
     "cold_start": true
-   }
+   },
+   "volumes": {
+    "MasterVolume": 3.2,
+    "EngineVolumeMultiplier": 3.4,
+    "ExhaustVolumeMultiplier": 3.4
+   },
+   "idle_exhaust_ratio": null,
+   "loudness_db": 1,
+   "crossfade": 150
   },
   "12v": {
    "class": "diesel",
@@ -2126,54 +2399,77 @@
    "steps": [
     [
      750,
+     -13.04,
+     -13.04,
+     -4.62,
+     0.0,
+     "found",
+     2.8,
+     3.86,
      -17.0,
      -17.0,
-     null,
-     0.0,
-     2.56
+     -21.51,
+     "Z5LyBPg3AV0 53.4-55.3s@730 +-0.3%"
     ],
     [
-     1250,
-     -14.48,
-     -14.48,
-     null,
-     0.0,
-     2.496
+     1050,
+     -12.52,
+     -12.52,
+     -5.13,
+     1.1,
+     "found",
+     4.2,
+     5.75,
+     -16.47,
+     -16.47,
+     -20.48,
+     "UN_IsqXI8rg 25.2-28.1s@1013 +-0.0%"
     ],
     [
-     1750,
-     -11.96,
-     -11.96,
-     null,
-     0.0,
-     2.4
+     1500,
+     -12.18,
+     -12.18,
+     -4.04,
+     0.1,
+     "found",
+     2.9,
+     5.85,
+     -15.67,
+     -15.67,
+     -20.96,
+     "2cpIMnGVzyg 16.2-19.1s@1476 +-0.3%"
     ],
     [
-     2250,
-     -9.43,
-     -9.43,
-     null,
-     0.0,
-     2.506666666666667
+     1800,
+     -12.04,
+     -12.04,
+     -3.96,
+     -0.0,
+     "found",
+     5.1,
+     2.57,
+     -15.13,
+     -15.13,
+     -21.65,
+     "2cpIMnGVzyg 10.9-12.1s@1885 +-1.2%"
     ],
     [
-     2750,
-     -7.47,
-     -7.47,
-     null,
-     0.0,
-     2.4
-    ],
-    [
-     2900,
-     -7.46,
-     -7.46,
-     null,
-     0.0,
-     2.4
+     2100,
+     -11.22,
+     -11.22,
+     -1.73,
+     -0.1,
+     "fill",
+     8.8,
+     2.01,
+     -14.9,
+     -14.9,
+     -19.18,
+     "CGGhvSrzwT0 379.1-380.1s@1964 +-1.4%"
     ]
    ],
-   "source": "enginesim",
+   "source": "recording",
+   "method": "pingpong",
    "curve": [
     [
      750,
@@ -2192,25 +2488,20 @@
      -10.81
     ]
    ],
-   "engine_layer": "silent",
-   "method": "forward-loop",
-   "script": "mt_gen_12v.mr",
-   "volumes": {
-    "MasterVolume": 3.2,
-    "EngineVolumeMultiplier": 3.4,
-    "ExhaustVolumeMultiplier": 3.4
-   },
-   "crossfade": 250,
-   "jitter": 0.05,
-   "pitch": 1.0,
-   "idle_exhaust_ratio": null,
-   "loudness_db": 2,
    "starter": {
     "length": 2.4,
     "kind": "car",
     "lufs": -9.51,
     "cold_start": true
-   }
+   },
+   "volumes": {
+    "MasterVolume": 3.2,
+    "EngineVolumeMultiplier": 3.4,
+    "ExhaustVolumeMultiplier": 3.4
+   },
+   "idle_exhaust_ratio": null,
+   "loudness_db": 2,
+   "crossfade": 150
   },
   "vp44": {
    "class": "diesel",
@@ -2311,47 +2602,78 @@
    "cylinders": 12,
    "steps": [
     [
-     500,
-     -17.0,
-     -17.0,
-     null,
-     0.0,
-     2.4
+     650,
+     -12.4,
+     -12.4,
+     -4.69,
+     -0.2,
+     "found",
+     7.2,
+     2.37,
+     -16.67,
+     -16.67,
+     -21.07,
+     "2Tmi7EqpGZQ 173.2-174.4s@634 +-2.5%"
     ],
     [
-     1000,
-     -13.85,
-     -13.85,
-     null,
-     0.0,
-     2.52
+     1100,
+     -11.64,
+     -11.64,
+     -3.07,
+     -0.8,
+     "fill",
+     7.3,
+     6.43,
+     -15.67,
+     -15.67,
+     -20.1,
+     "8XG_JfyPdvE 39.9-42.8s@1186 +-0.0%"
     ],
     [
-     1500,
-     -10.69,
-     -10.69,
-     null,
-     0.0,
-     2.48
+     1400,
+     -11.01,
+     -11.01,
+     -2.2,
+     3.5,
+     "found",
+     7.4,
+     2.32,
+     -15.0,
+     -15.0,
+     -19.29,
+     "8XG_JfyPdvE 25.2-26.4s@1329 +-1.3%"
+    ],
+    [
+     1700,
+     -10.54,
+     -10.54,
+     -2.51,
+     0.2,
+     "found",
+     7.3,
+     2.09,
+     -14.67,
+     -14.67,
+     -19.05,
+     "JHUsBRRWOLI 69.5-70.6s@1655 +-2.2%"
     ],
     [
      2000,
-     -8.3,
-     -8.3,
-     null,
-     0.0,
-     2.52
-    ],
-    [
-     2200,
-     -8.47,
-     -8.47,
-     null,
-     0.0,
-     2.4
+     -10.14,
+     -10.14,
+     -1.78,
+     0.2,
+     "fill",
+     13.4,
+     2.13,
+     -14.33,
+     -14.33,
+     -18.43,
+     "m12O4Q9HfnM 28.1-29.4s@1770 +-0.3%"
     ]
    ],
-   "source": "enginesim",
+   "source": "recording",
+   "method": "pingpong",
    "curve": [
     [
      500,
@@ -2368,25 +2690,20 @@
      -10.14
     ]
    ],
-   "engine_layer": "silent",
-   "method": "forward-loop",
-   "script": "mt_gen_dd671.mr",
-   "volumes": {
-    "MasterVolume": 3.2,
-    "EngineVolumeMultiplier": 3.4,
-    "ExhaustVolumeMultiplier": 3.4
-   },
-   "crossfade": 250,
-   "jitter": 0.05,
-   "pitch": 1.0,
-   "idle_exhaust_ratio": null,
-   "loudness_db": 2,
    "starter": {
     "length": 2.4,
     "kind": "truck",
     "lufs": -9.15,
     "cold_start": true
-   }
+   },
+   "volumes": {
+    "MasterVolume": 3.2,
+    "EngineVolumeMultiplier": 3.4,
+    "ExhaustVolumeMultiplier": 3.4
+   },
+   "idle_exhaust_ratio": null,
+   "loudness_db": 2,
+   "crossfade": 150
   },
   "dd871": {
    "class": "diesel",
@@ -2395,46 +2712,63 @@
    "steps": [
     [
      500,
+     -12.91,
+     -12.91,
+     -6.0,
+     -1.2,
+     "found",
+     6.0,
+     2.59,
+     -17.0,
+     -17.0,
+     -21.31,
+     "DiO5q68uCYQ 19.9-21.1s@528 +-0.3%"
+    ],
+    [
+     950,
+     -11.89,
+     -11.89,
+     -1.67,
+     -1.9,
+     "fill",
+     6.5,
+     6.38,
      -16.0,
      -16.0,
-     null,
-     0.0,
-     2.4
+     -20.19,
+     "DiO5q68uCYQ 35.1-38.0s@1016 +-0.0%"
     ],
     [
-     1000,
-     -12.85,
-     -12.85,
-     null,
-     0.0,
-     2.52
+     1250,
+     -11.38,
+     -11.38,
+     -3.43,
+     1.1,
+     "fill",
+     10.9,
+     2.23,
+     -15.33,
+     -15.33,
+     -19.96,
+     "DiO5q68uCYQ 29.2-30.4s@1134 +-0.0%"
     ],
     [
-     1500,
-     -9.69,
-     -9.69,
-     null,
-     0.0,
-     2.48
-    ],
-    [
-     2000,
-     -6.85,
-     -6.85,
-     null,
-     0.0,
-     2.52
-    ],
-    [
-     2200,
-     -6.89,
-     -6.89,
-     null,
-     0.0,
-     2.4
+     1850,
+     -10.54,
+     -10.54,
+     -1.84,
+     -2.1,
+     "fill",
+     11.2,
+     2.24,
+     -14.5,
+     -14.5,
+     -18.63,
+     "ZjeVnLnwUi4 41.0-42.2s@1685 +-1.3%"
     ]
    ],
-   "source": "enginesim",
+   "source": "recording",
+   "method": "pingpong",
    "curve": [
     [
      500,
@@ -2451,25 +2785,20 @@
      -10.35
     ]
    ],
-   "engine_layer": "silent",
-   "method": "forward-loop",
-   "script": "mt_gen_dd871.mr",
-   "volumes": {
-    "MasterVolume": 3.2,
-    "EngineVolumeMultiplier": 3.4,
-    "ExhaustVolumeMultiplier": 3.4
-   },
-   "crossfade": 250,
-   "jitter": 0.05,
-   "pitch": 1.0,
-   "idle_exhaust_ratio": null,
-   "loudness_db": 3,
    "starter": {
     "length": 2.4,
     "kind": "truck",
     "lufs": -9.19,
     "cold_start": true
-   }
+   },
+   "volumes": {
+    "MasterVolume": 3.2,
+    "EngineVolumeMultiplier": 3.4,
+    "ExhaustVolumeMultiplier": 3.4
+   },
+   "idle_exhaust_ratio": null,
+   "loudness_db": 3,
+   "crossfade": 150
   },
   "dd1271": {
    "class": "diesel",
@@ -2478,46 +2807,49 @@
    "steps": [
     [
      500,
+     -14.78,
+     -14.78,
+     -4.91,
+     -0.6,
+     "fill",
+     8.8,
+     5.95,
+     -17.0,
+     -17.0,
+     -25.25,
+     "Qa7ubgW6kF8 122.5-125.2s@545 +-0.0%"
+    ],
+    [
+     950,
+     -13.78,
+     -13.78,
+     -4.82,
+     -0.7,
+     "found",
+     2.6,
+     4.07,
      -16.0,
      -16.0,
-     null,
-     0.0,
-     2.4
+     -24.4,
+     "Qa7ubgW6kF8 60.0-61.9s@976 +-0.0%"
     ],
     [
-     1000,
-     -12.85,
-     -12.85,
-     null,
-     0.0,
-     2.52
-    ],
-    [
-     1500,
-     -9.69,
-     -9.69,
-     null,
-     0.0,
-     2.48
-    ],
-    [
-     2000,
-     -6.9,
-     -6.9,
-     null,
-     0.0,
-     2.52
-    ],
-    [
-     2200,
-     -6.91,
-     -6.91,
-     null,
-     0.0,
-     2.4
+     1250,
+     -13.31,
+     -13.31,
+     -3.99,
+     -0.8,
+     "found",
+     5.7,
+     3.21,
+     -15.33,
+     -15.33,
+     -23.19,
+     "Qa7ubgW6kF8 147.7-149.3s@1197 +-0.3%"
     ]
    ],
-   "source": "enginesim",
+   "source": "recording",
+   "method": "pingpong",
    "curve": [
     [
      500,
@@ -2534,19 +2866,14 @@
      -12.96
     ]
    ],
-   "engine_layer": "silent",
-   "method": "forward-loop",
-   "script": "mt_gen_dd1271.mr",
    "volumes": {
     "MasterVolume": 3.2,
     "EngineVolumeMultiplier": 3.4,
     "ExhaustVolumeMultiplier": 3.4
    },
-   "crossfade": 250,
-   "jitter": 0.05,
-   "pitch": 1.0,
    "idle_exhaust_ratio": null,
-   "loudness_db": 3
+   "loudness_db": 3,
+   "crossfade": 150
   },
   "dd1671": {
    "class": "diesel",
@@ -2555,46 +2882,63 @@
    "steps": [
     [
      500,
-     -16.0,
-     -16.0,
-     null,
-     0.0,
-     2.4
+     -12.83,
+     -12.83,
+     -6.08,
+     -0.0,
+     "fill",
+     8.4,
+     2.32,
+     -17.0,
+     -17.0,
+     -21.15,
+     "uiUeLsAPZVE 66.0-67.1s@536 +-1.0%"
     ],
     [
-     1000,
-     -12.85,
-     -12.85,
-     null,
-     0.0,
-     2.52
+     800,
+     -12.33,
+     -12.33,
+     -7.02,
+     -1.3,
+     "found",
+     1.6,
+     4.42,
+     -16.33,
+     -16.33,
+     -20.41,
+     "eRsvlri-FpU 20.7-22.9s@792 +-0.0%"
     ],
     [
-     1500,
-     -9.69,
-     -9.69,
-     null,
-     0.0,
-     2.48
+     1100,
+     -11.83,
+     -11.83,
+     -5.21,
+     2.9,
+     "found",
+     3.6,
+     2.44,
+     -15.67,
+     -15.67,
+     -20.58,
+     "_mFg-osGN8U 12.7-13.9s@1089 +-1.9%"
     ],
     [
-     2000,
-     -6.55,
-     -6.55,
-     null,
-     0.0,
-     2.52
-    ],
-    [
-     2200,
-     -5.67,
-     -5.67,
-     null,
-     0.0,
-     2.4
+     2300,
+     -9.96,
+     -9.96,
+     -1.36,
+     0.3,
+     "found",
+     8.7,
+     4.59,
+     -14.0,
+     -14.0,
+     -18.06,
+     "eRsvlri-FpU 32.8-35.0s@2364 +-0.6%"
     ]
    ],
-   "source": "enginesim",
+   "source": "recording",
+   "method": "pingpong",
    "curve": [
     [
      500,
@@ -2611,19 +2955,14 @@
      -9.96
     ]
    ],
-   "engine_layer": "silent",
-   "method": "forward-loop",
-   "script": "mt_gen_dd1671.mr",
    "volumes": {
     "MasterVolume": 3.2,
     "EngineVolumeMultiplier": 3.4,
     "ExhaustVolumeMultiplier": 3.4
    },
-   "crossfade": 250,
-   "jitter": 0.05,
-   "pitch": 1.0,
    "idle_exhaust_ratio": null,
-   "loudness_db": 3
+   "loudness_db": 3,
+   "crossfade": 150
   },
   "type1": {
    "class": "petrol",

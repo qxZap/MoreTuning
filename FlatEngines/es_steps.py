@@ -527,7 +527,8 @@ def main(name, script, idle_throttle=0.02, mid_only=None):
                            # the game does not keep steps in phase: a crossfade over the whole spacing was heard as
                            # static on fast revs, so blend only near each midpoint (vanilla blends half its spacing)
                            "crossfade": spacing // 2, "jitter": JITTER, "pitch": pitch,
-                           "idle_exhaust_ratio": None, "loudness_db": LOUDNESS_DB.get(name, 0)}
+                           "idle_exhaust_ratio": None, "loudness_db": LOUDNESS_DB.get(name, 0),
+                           **({"starter": old["starter"]} if "starter" in old else {})}  # the approved starter stays
     json.dump(lv, open(sl.LEVELS, "w"), indent=1)
 
 
