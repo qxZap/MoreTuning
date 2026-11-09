@@ -14,10 +14,10 @@ VG = r"D:\MT\Output\.data\vgmstream-cli.exe"
 AC = r"D:\SteamLibrary\steamapps\common\assettocorsa\content\cars"
 SR = 48000
 SETS = {
-    # Ceky's TT RS 2020 (same 2.5 TFSI five as the RS3); on-load exterior samples, the 2000 one off-load
+    # Ceky's TT RS 2020 (same 2.5 TFSI five as the RS3). The bank holds two recording sessions ("STM RS3_*" and
+    # "rs35_*"); alternating them was heard as every rpm band having its own tone (2026-11-09): rs35 only
     "rs3five": dict(bank=r"cky_audi_ttrs_performance_gapplebees\sfx\cky_audi_ttrs_performance_gapplebees.bank",
-                    steps={2000: "STM RS3_2000_off", 3000: "STM RS3_3000", 4000: "rs35_4000", 5000: "STM RS3_5000",
-                           6000: "rs35_6000", 8000: "rs35_8000"},
+                    steps={3000: "rs35_3000", 4000: "rs35_4000", 6000: "rs35_6000", 8000: "rs35_8000"},
                     keep=[850]),
 }
 
@@ -69,7 +69,10 @@ def main(key):
         wavfile.write(os.path.join(folder, f"MT_{key}_{k}rpm_Engine.wav"), SR, np.zeros(len(y), np.int16))
         rows.append([k, round(sl.lufs(y), 2), round(sl.lufs(y), 2), None, 0.0, len(y) / SR])
         print(f"  {k} rpm <- {name}: {len(y) / SR:.2f} s, {sl.lufs(y):.2f} LUFS (target {curve(k):.2f})")
-    e.update(steps=sorted(rows), source="ac-bank", method="ac-bank", bank=s["bank"],
+    import es_steps  # one tone across the set: the kept idle EQ'd to the first sample, the middle steps evened
+    print("  idle matched (dB at 1/3/6 kHz):", es_steps.match_idle(folder, key, min(s["keep"])))
+    print("  tone evened (max dB):", es_steps.even_tone(folder, key, min(s["keep"])))
+    e.update(steps=sorted(rows), pitch=1.0, source="ac-bank", method="ac-bank", bank=s["bank"],
              crossfade=min(b - a for a, b in zip(sorted(r[0] for r in rows), sorted(r[0] for r in rows)[1:])) // 2)
     json.dump(lv, open(sl.LEVELS, "w"), indent=1)
 
