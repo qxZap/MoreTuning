@@ -34,6 +34,9 @@ ENGINE_PKG = "/Game/Cars/Parts/Engine/"
 TABLE_PKG = "/Game/DataAsset/VehicleParts/VehicleParts_MoreTuning"
 TABLE = os.path.join(MOD, "DataAsset", "VehicleParts", "VehicleParts_MoreTuning.uasset")
 PREFIX = "C0001_"  # MoreTuning's channel number: the C<NNNN>_ convention (AGENTS.md)
+# Kept as save keys but off the shop: the VP44 24-valve duplicated the long-standing 5.9 Cummins 240HP (59cummins)
+# (the user, 2026-11-09). Never delete a row players may have fitted.
+HIDDEN = {"CumminsVP44_245HP"}
 SOUND_ORDER = ["EnginesSound", "EngineSoundData", "BackfireSound", "IntakeSound", "JakeBrakeSound"]  # usmap 721T1
 
 # reference asset -> its row in the table (the row template)
@@ -226,6 +229,8 @@ def make_row(e, donor):
                       "CultureInvariantString": e["name"]})
         elif p["Name"] == "Cost":
             p["Value"] = cost(e)
+        elif p["Name"] == "bIsHidden":
+            p["Value"] = e["asset"] in HIDDEN
         elif p["Name"] == "MassKg":
             p["Value"] = float(e["mass"])
         elif p["Name"] == "LevelRequirementToBuy":

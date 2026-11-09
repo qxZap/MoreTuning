@@ -19,7 +19,7 @@ for name in sys.argv[2:]:
         k = int(re.search(r"_(\d+)rpm_", p).group(1))
         a = wavfile.read(p)[1].astype(float) / 32768
         b = wavfile.read(p.replace("Exhaust", "Engine"))[1].astype(float) / 32768
-        loops[k] = a + b[:len(a)]
+        loops[k] = a + (b[:len(a)] if b.any() else 0)  # a silent engine layer is not resampled with the exhaust
     loops = dict(sorted(loops.items()))
     d = es_steps.engine_spec(name)
     top, vs = d["top"], (1.0 if d["kind"] == "car" else 0.5)

@@ -57,6 +57,12 @@ IDLE_SHELF_HZ, IDLE_SHELF_DB, IDLE_BUZZ = 1500, -6.0, 0.0
 # the engine up from 0 with its own starter -- does not stretch the idle loop down to a fifth of its pitch
 CRANK, CRANK_DB = 250, -6.0  # retired 2026-11-07: blended into idle as a low, buzzy pitch; kept for old levels
 # exhaust resonances that land on one step (Hz, gain dB, Q), cut before looping
+# de-buzz target (buzz dB) for steps heard as buzzing in game although under the limit: 2026-11-09 the Voodoo and the
+# RS3 "buzz at ~4000 rpm floored" -- the game's blend around their 3850 step measured +4.5 / +2.7 against ~+2 / -2
+# mid-only diesels: steps from this rpm up come from a second render here instead of the mid one, so the top is not
+# the mid render played ~1.8x fast (2026-11-09: 6.7 "high rpm wrong", 6.0 "high rpm trash")
+UPPER_BASE = {"cummins67": 2750, "ps60": 3200}
+DEBUZZ_TO = {("voodoo", 3850): 1.0, ("rs3five", 3850): 0.0, ("ps60", 2700): 1.0}
 NOTCHES = {("cgtv10", 7000): [(1750, -18, 12), (1727, -6, 20)],  # +24 dB over the 6500/7500 steps
            ("cgtv10", 1500): [(1750, -6, 8)]}  # firing h14 6 dB over h12/h16: buzz +4.5 against the 4.0 limit
 
@@ -105,6 +111,16 @@ def phase_loop(x, cycle, start, seconds=2.5):
     ramp = np.linspace(0, np.pi / 2, C)  # equal power: a linear fade between two partly unlike cycles dipped
     out[:C] = seg[:C] * np.sin(ramp) + seg[L:L + C] * np.cos(ramp)  # (-1.2 dB once a loop on ps60 3700, heard as static)
     return out, m
+
+
+def crackle(x):
+    """Worst 10 ms 2-8 kHz frame over the loop's median, dB: engine-sim's odd crackle, heard once per wrap."""
+    w, hop = 1024, SR // 100
+    xx = np.r_[x, x[:w]]
+    f = np.fft.rfftfreq(w, 1 / SR)
+    band, win = (f > 2000) & (f < 8000), np.hanning(w)
+    e = np.array([(np.abs(np.fft.rfft(xx[i:i + w] * win)) ** 2)[band].sum() for i in range(0, len(x), hop)])
+    return float(10 * np.log10(e.max() / np.median(e)))
 
 
 def play(x, k, r, n, off=0.0):
@@ -200,15 +216,16 @@ def debuzz(folder, name, cyl, crank=None, pitch=1.0, idle=None):
         k = int(re.search(r"_(\d+)rpm_", p).group(1))
         x = wavfile.read(p)[1].astype(float) / 32768
         f0 = k / 60 * cyl / 2 * pitch  # measured on the pitched loop, as verify measures the shipped wave
-        if not x.any() or overtone_ratio(x, f0) <= LIMIT - 0.5:
+        to = DEBUZZ_TO.get((name, k), LIMIT - 0.5)
+        if not x.any() or overtone_ratio(x, f0) <= to:
             continue
         g, y, wide = 0, x, False
-        while overtone_ratio(y, f0) > LIMIT - 0.5 and g > -40:
+        while overtone_ratio(y, f0) > to and g > -40:
             g -= 2
             y = comb_cut(x, f0, g)
-        if overtone_ratio(y, f0) > LIMIT - 0.5:  # the lines alone were not enough: the sidebands around them
+        if overtone_ratio(y, f0) > to:  # the lines alone were not enough: the sidebands around them
             g, wide = 0, True
-            while overtone_ratio(y, f0) > LIMIT - 0.5 and g > -40:
+            while overtone_ratio(y, f0) > to and g > -40:
                 g -= 2
                 y = comb_cut(x, f0, g, wide=True)
         want, gg = sl.lufs(x), 1.0
@@ -433,12 +450,13 @@ def main(name, script, idle_throttle=0.02, mid_only=None):
     base = min((k for k in steps if k != d["idle"]), key=lambda k: abs(k - (d["idle"] + d["top"]) / 2)) if mid_only else None
     for k in steps:
         if mid_only:  # every step is the mid render, resampled to its rpm: one sound, pitch and volume only
-            long_raw = os.path.join(work, f"step_{base}_long.wav")  # long enough to be squeezed up to the limit
+            b = UPPER_BASE[name] if name in UPPER_BASE and k >= (base + UPPER_BASE[name]) / 2 else base
+            long_raw = os.path.join(work, f"step_{b}_long.wav")  # long enough to be squeezed up to the limit
             if not os.path.exists(long_raw):
-                print(render(script, long_raw, base, 1.0, seconds=4.0 * d["top"] / base + 2.0), flush=True)
+                print(render(script, long_raw, b, 1.0, seconds=4.0 * d["top"] / b + 2.0), flush=True)
             x = resample_poly(wavfile.read(long_raw)[1].astype(float) / 32768, 160, 147)
             from scipy.signal import resample
-            x = resample(x, int(round(len(x) * base / k)))
+            x = resample(x, int(round(len(x) * b / k)))
         else:
             x = wavfile.read(raws[k])[1].astype(float) / 32768
             x = resample_poly(x, 160, 147)  # engine-sim runs at 44.1 kHz
@@ -455,6 +473,12 @@ def main(name, script, idle_throttle=0.02, mid_only=None):
         # within the cycle: -rel matches 1.000, +rel 0.873); at least one cycle in, past the render's start
         start = int(round((-rel % 1.0) * cycle)) + int(cycle)
         loop, m = phase_loop(x, cycle, start)
+        if mid_only:  # the cleanest stretch of the render: whole cycles later keeps the phase chain
+            n = int((len(x) - start - len(loop) - 2 * cycle) // cycle)
+            if n > 0:
+                start = min((int(round(start + j * cycle)) for j in range(0, n, max(1, n // 40))),
+                            key=lambda s0: crackle(phase_loop(x, cycle, s0)[0]))
+                loop, m = phase_loop(x, cycle, start)
         if k == CRANK and not np.isfinite(sl.lufs(loop)) or sl.lufs(loop) < -60:
             print(f"  {k} rpm: silent ({sl.lufs(loop):.0f} LUFS) -- step dropped, the idle step covers it", flush=True)
             prev = None  # the next step starts the phase chain afresh
