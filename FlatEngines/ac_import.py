@@ -245,6 +245,63 @@ def demo():
     print("demo ok")
 
 
+# The user's verdicts in game (2026-11-09): which recorded steps to drop, which to remake from another step's recording
+# (pitched to the new rpm), and where a step's Engine layer is another step's recording pitched to it
+REWORK = {
+    # mid steps were turbo whoosh; the top recording (2800) is the engine's sound, pitched down for the mids
+    # and quieter toward the mids than the top ("the high rpm with a lower volume towards the mid section")
+    "ps60": dict(drop=[1450, 1750], derive={2050: 2800, 2500: 2800}, gain_db={2050: -3.0, 2500: -1.5}),
+    # its top recording sounded wrong: the mid one (1500) carried up
+    "cummins67": dict(drop=[3300], derive={2000: 1500, 2600: 1500, 3200: 1500}),
+    # the top was pointless, the mid (1800) good
+    "12v": dict(derive={2100: 1800, 2600: 1800}),
+    # mid and high combined: the high steps keep their recording, their Engine layer is the mid one (1200)
+    "om502": dict(engine_from={1500: 1200, 1800: 1200}),
+}
+
+
+def rework(key):
+    from scipy.signal import resample
+    plan = REWORK[key]
+    folder = os.path.join(sl.OUT, f"MT_{key}")
+    lv = json.load(open(sl.LEVELS))
+    e = lv["engines"][key]
+    c = e["curve"]
+    curve = lambda k: float(np.interp(k, c[0], c[1]))
+    path = lambda k, l: os.path.join(folder, f"MT_{key}_{k}rpm_{l}.wav")
+    rd = lambda k, l: wavfile.read(path(k, l))[1].astype(float) / 32768
+    pitched = lambda x, src, k: resample(x, int(round(len(x) * src / k)))  # around the loop: the seam stays
+    src = {k: {l: rd(k, l) for l in ("Exhaust", "Engine")} for k in set(plan.get("derive", {}).values()) | set(plan.get("engine_from", {}).values())}
+    rows = {r[0]: r for r in e["steps"]}
+    for k in plan.get("drop", []):
+        for l in ("Exhaust", "Engine"):
+            os.remove(path(k, l))
+        rows.pop(k)
+    work = {}
+    for k, j in plan.get("derive", {}).items():
+        work[k] = (pitched(src[j]["Exhaust"], j, k), pitched(src[j]["Engine"], j, k), f"from the {j} rpm recording")
+        rows.setdefault(k, list(rows[j]))
+    for k, j in plan.get("engine_from", {}).items():
+        mid = src[j]["Exhaust"] + src[j]["Engine"]
+        work[k] = (rd(k, "Exhaust"), pitched(mid, j, k), f"engine layer from the {j} rpm recording")
+    for k, (x, en, why) in sorted(work.items()):
+        g = 1.0
+        for _ in range(8):
+            x2, e2 = sl.limit([x * g])[0], sl.limit([en * g])[0]
+            n = min(len(x2), len(e2))
+            g *= 10 ** ((curve(k) + plan.get("gain_db", {}).get(k, 0.0) - sl.lufs(x2[:n] + e2[:n])) / 20)
+        wavfile.write(path(k, "Exhaust"), SR, (x2 * 32767).astype(np.int16))
+        wavfile.write(path(k, "Engine"), SR, (e2 * 32767).astype(np.int16))
+        r = list(rows[k]); r[0] = k; r[1] = r[2] = round(sl.lufs(x2[:n] + e2[:n]), 2); r[-1] = why
+        rows[k] = r
+        print(f"  {k} rpm: {why}, pair {r[1]:.2f} (target {curve(k):.2f})")
+    e["steps"] = [rows[k] for k in sorted(rows)]
+    ks = sorted(rows)
+    e["crossfade"] = min(b - a for a, b in zip(ks, ks[1:])) // 2
+    e["reworked"] = json.loads(json.dumps(plan))  # what was done, for the record
+    json.dump(lv, open(sl.LEVELS, "w"), indent=1)
+
+
 def relevel(key, old_levels):
     """A set rebuilt by recompose.py (real recordings, its own older targets) brought back to the loudness curve the
     engine had before (old_levels: a saved levels.json), both layers by one gain, then limited."""
@@ -331,6 +388,8 @@ def main(key):
 if __name__ == "__main__":
     if sys.argv[1] == "relevel":
         relevel(sys.argv[2], sys.argv[3])
+    elif sys.argv[1] == "rework":
+        rework(sys.argv[2])
     elif sys.argv[1] == "tone":
         for k in sys.argv[2:]:
             print(k, tone_match(k))
