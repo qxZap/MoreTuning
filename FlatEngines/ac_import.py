@@ -1,4 +1,5 @@
-# Engine sound steps from an Assetto Corsa car mod's FMOD bank (vgmstream extracts its FSB5 streams), replacing an
+# Engine sound steps from an Assetto Corsa car mod's FMOD bank, or from an ETS2/ATS engine sound mod (SCS layout:
+# exhaust_NNN / engine_NNN / intake_NNN per rpm, NNN = 010 for 1000, 070 for 700; banks stored raw in the .scs) (vgmstream extracts its FSB5 streams), replacing an
 # engine-sim set's steps (2026-11-09: engine-sim's RS3 and diesels still buzzed at mid rpm in game).
 #   python -I ac_import.py <engine>            uses SETS[engine]: bank, {rpm: stream name}, steps kept from engine-sim
 # AC samples are named by the rpm they play at unpitched and are palindromes (forward + reversed, last sample = first),
@@ -20,6 +21,99 @@ SETS = {
                     steps={3000: "rs35_3000", 4000: "rs35_4000", 6000: "rs35_6000", 8000: "rs35_8000"},
                     keep=[850]),
 }
+
+
+# ETS2/ATS engine sound mods by zeemods (E:\Digi\Moduri ETS\zee): real recordings of the same engines as our trucks
+ZEE = r"E:\Digi\Moduri ETS\zee"
+SCS = {"cat3406e": "zeemod.c3406e_v1.1.1.scs", "c16": "zeemods.c16_v1.2.scs", "8v92": "zeemods.detroit_8v92_v1.0.scs",
+       "ntc400": "zeemods.cummins.bigcam_v1.1.scs"}
+MAX_LOOP = 8.0  # s: longer recordings are cut here and looped with a crossfade (the C16's run 30-50 s at 192 kHz)
+
+
+def carve(mod, out):
+    """FSB5 banks stored uncompressed in a mod archive (zeemods zero the zip's local headers): cut out by their own
+    header sizes. -> paths"""
+    import struct
+    b, paths = open(mod, "rb").read(), []
+    i = b.find(b"FSB5")
+    while i != -1:
+        ver, ns, sh, nt, ds = struct.unpack("<5I", b[i + 4:i + 24])
+        size = (60 if ver == 1 else 64) + sh + nt + ds
+        if 0 < size <= len(b) - i:
+            paths.append(os.path.join(out, f"bank{len(paths)}.fsb"))
+            open(paths[-1], "wb").write(b[i:i + size])
+        i = b.find(b"FSB5", i + 4)
+    return paths
+
+
+def rpm_of(nnn):
+    v = int(nnn)
+    return v * 100 if v <= 30 else v * 10
+
+
+def loop_cut(x, sr):
+    """Mono 48 kHz loop of at most MAX_LOOP s: a longer one is cut and its tail crossfaded (equal power, 80 ms) into
+    its head, so it wraps seamlessly; a shorter one is used whole (the mod's own loop)."""
+    x = resample_poly(np.r_[x, x, x], SR, sr)[len(x) * SR // sr:2 * len(x) * SR // sr] if sr != SR else x
+    n = int(MAX_LOOP * SR)
+    if len(x) <= n:
+        return x
+    c = int(0.08 * SR)
+    y = x[:n].copy()
+    r = np.linspace(0, np.pi / 2, c)
+    y[:c] = x[n:n + c] * np.cos(r) + x[:c] * np.sin(r)
+    return y
+
+
+def scs(key):
+    import re, es_steps
+    d = es_steps.engine_spec(key)
+    lv = json.load(open(sl.LEVELS))
+    e = lv["engines"][key]
+    c = e["curve"]
+    curve = lambda k: float(np.interp(k, c[0], c[1]))
+    folder = os.path.join(sl.OUT, f"MT_{key}")
+    for f in os.listdir(folder):
+        os.remove(os.path.join(folder, f))
+    with tempfile.TemporaryDirectory() as t:
+        got = {}  # (layer, rpm) -> (bank, index), first bank wins
+        for bank in carve(os.path.join(ZEE, SCS[key]), t):
+            for name, i in streams(bank).items():
+                m = re.fullmatch(r"(exhaust|engine|intake)_(\d{3})", name)
+                if m:
+                    got.setdefault((m.group(1), rpm_of(m.group(2))), (bank, i))
+        ks = sorted(k for (l, k) in got if l == "exhaust" and ("engine", k) in got and d["idle"] - 150 <= k <= d["top"] + 300)
+        rows = []
+        for k in ks:
+            def load(layer):
+                b, i = got[(layer, k)]
+                p = os.path.join(t, "s.wav")
+                subprocess.run([VG, "-s", str(i), "-i", "-o", p, b], capture_output=True, check=True)
+                sr, x = wavfile.read(p)
+                x = x.astype(float) / 32768
+                return (x.mean(1) if x.ndim > 1 else x), sr
+            ex, sr = load("exhaust")
+            ex = loop_cut(ex, sr)
+            en, sr2 = load("engine")
+            en = loop_cut(en, sr2)
+            if ("intake", k) in got:
+                it = loop_cut(*load("intake"))
+                if len(it) == len(en):  # recorded together (same length once at 48 kHz): one layer
+                    en = en + it
+            # the layers loop at their own lengths, so they are limited apart and the pair is their energy sum
+            both = lambda x2, e2: 10 * np.log10(10 ** (sl.lufs(x2) / 10) + 10 ** (sl.lufs(e2) / 10))
+            g = 1.0
+            for _ in range(8):
+                x2, e2 = sl.limit([ex * g])[0], sl.limit([en * g])[0]
+                g *= 10 ** ((curve(k) - both(x2, e2)) / 20)
+            for layer, w in (("Exhaust", x2), ("Engine", e2)):
+                wavfile.write(os.path.join(folder, f"MT_{key}_{k}rpm_{layer}.wav"), SR, (w * 32767).astype(np.int16))
+            pair = both(x2, e2)
+            rows.append([k, round(pair, 2), round(sl.lufs(x2), 2), round(sl.lufs(e2), 2), 0.0, len(x2) / SR])
+            print(f"  {k} rpm: exhaust {len(x2) / SR:.1f} s {sl.lufs(x2):.1f}, engine {len(e2) / SR:.1f} s {sl.lufs(e2):.1f}, pair {pair:.2f} (target {curve(k):.2f})")
+    e.update(steps=rows, pitch=1.0, source="scs-mod", method="scs-mod", mod=SCS[key], engine_layer="recorded",
+             crossfade=min(b - a for a, b in zip(ks, ks[1:])) // 2)
+    json.dump(lv, open(sl.LEVELS, "w"), indent=1)
 
 
 def streams(bank):
@@ -78,4 +172,4 @@ def main(key):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1])
+    (scs if sys.argv[1] in SCS else main)(sys.argv[1])
