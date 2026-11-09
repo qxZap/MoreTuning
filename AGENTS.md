@@ -114,8 +114,9 @@ other mods. `DataTableFramework/convert_mod.py` converts a mod to this layout.
   used by the ECU Tuning plugin, a friend's sound, used with their OK) and
   `Sounds/CabinMasterSoundMix`, vanilla's cabin mix with its 5 kHz band raised from 0.5 to 0.85
   and its top band from 0.1 to 0.6. Both sit under `Sounds/`, which server paks drop.
-- **Suspension Visuals is its own mod** (2026-11-09, the user's call: not MoreTuning, not ECU Tuning). Plugin
-  `SuspensionVisuals` + pak `qxZap_SuspensionVisuals_P`: Arini's meshes under `/Game/SuspensionVisuals/` and the
+- **Suspension Tuning is its own mod** (2026-11-09, the user's call: not MoreTuning, not ECU Tuning; renamed from
+  Suspension Visuals the same day -- the pak and `/Game/SuspensionVisuals/` keep the old name). Plugin
+  `SuspensionTuning` (`suspension_tuning.ini`) + pak `qxZap_SuspensionVisuals_P`: Arini's meshes under `/Game/SuspensionVisuals/` and the
   kits in the framework's reserved slot `/Game/ReservedRegistration/Slots/Slot01/DT_VehicleParts` (no framework
   rebuild, no composite copy). `BrakeKits/run.py` (after `channels.py` and `NewEngines/synth.py`) writes there:
   - **Big Brake Kits are Brake Pads parts** `C0001_BBK320/360/400`, open to every class: a bigger disc heats less,
