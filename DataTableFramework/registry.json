@@ -52,5 +52,13 @@
       "/Game/RPMTech/DataAsset/RPMTech_Vehicle": "Rak - RPMTech vehicles",
       "/Game/DataAsset/Vehicles/Vehicles_Biceps": "qxZap - Biceps (standalone car, row C0100_Biceps; built by the Arini session)"
     }
+  },
+  "reserved": {
+    "_about": "rtwin's ReservedVehicleFramework layout (Hachiroku AE86 and later car mods): a car pak ships its own slot's tables at /Game/ReservedRegistration/Slots/SlotNN/<table>. Listed here as parents after every adopted table, no stubs: the framework outranks every pak (_99_P), so a stub would beat the car's own table. A slot whose car is not installed is a missing parent, which the game skips.",
+    "slots": 32,
+    "tables": {
+      "Vehicles": "DT_Vehicles",
+      "VehicleParts": "DT_VehicleParts"
+    }
   }
 }

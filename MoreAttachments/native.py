@@ -74,7 +74,7 @@ def wheelworks_sections():
         return {}
     src = tables[-1]
     t = None
-    for m in ("MotorTown720T2", "MotorTown720T1", "MotorTown719"):  # her table may lag the game
+    for m in ("MotorTown720T6", "MotorTown720T2", "MotorTown720T1", "MotorTown719"):  # her table may lag the game
         js = to_json(src, os.path.join(NATIVE_WORK, f"wheelworks.{m}.json"), m)
         t = json.load(open(js, encoding="utf-8"))
         if t["Exports"][0]["$type"].startswith("UAssetAPI.ExportTypes.DataTableExport"):

@@ -9,9 +9,10 @@ Everything else here is tooling that generates the `.uasset` files inside them.
 | | |
 |---|---|
 | **UAssetGUI** | `D:\MT\UAssetGUI.exe` (**v1.1.1**). **Not** `.\UAssetGUI.exe` in this repo — that is v1.0.4 and writes an older JSON schema; anything it exports fails to build again under the current game. |
-| **Mappings** | `MotorTown721T1` for the 2026-11-02 update, `MotorTown720T1` for game 0.7.20 (`MotorTown719` for 0.7.19, `MotorTown718P1` for 0.7.18 tables). UAssetGUI resolves the name against `%LOCALAPPDATA%\UAssetGUI\Mappings\*.usmap`. Dump a fresh one after every game update. |
-| **Engine version** | `VER_UE5_4`. |
+| **Mappings** | `MotorTown720T6` for 0.7.20+T6 (2026-11-07; Arini's merge of the live dump over 721T1 -- a live dump alone lacks unloaded classes), `MotorTown721T1` for the 2026-11-02 update, `MotorTown720T1` for game 0.7.20 (`MotorTown719` for 0.7.19, `MotorTown718P1` for 0.7.18 tables). UAssetGUI resolves the name against `%LOCALAPPDATA%\UAssetGUI\Mappings\*.usmap`. Dump a fresh one after every game update. |
+| **Engine version** | The game is **UE 5.5.4** (crash context `EngineVersion`, 0.7.20). The tools here pass `VER_UE5_4` and that works for these unversioned assets; Arini's injector uses `VER_UE5_5`. Cooking with the installed UE 5.5 matches the game. |
 | **Packing** | `modp.bat <ModFolder>` — repak, then copy the pak into the game. |
+| **New paks start off** | The game's own mod review (main menu **Mods [Review]**, state in `%LOCALAPPDATA%\MotorTown\Saved\Config\Windows\CustomPak.ini` `[CustomPakStateV2]`) mounts a pak it has not seen before only after the player enables it: `UserEnabled=False, ReviewPending=True`. A rebuilt pak under a known name stays enabled. A brand-new mod that "does nothing" in game: check that list first. |
 
 ```
 D:\MT\UAssetGUI.exe tojson   <in.uasset> <out.json>   VER_UE5_4 MotorTown719
@@ -86,6 +87,21 @@ Consequences:
 - Genuinely hard references still exist (aero/tire meshes, `QuadWheelMesh`), so
   a rebase still has to graft those imports across.
 
+## After a game update (since 2026-11-07)
+
+1. Mappings: set `[Mappings] Export=1` in `Binaries\Win64\mt_loader.ini`, start the game and **load into a save** (the
+   loader waits for a world; the main menu is not enough), close it, set Export back to 0. Merge the dump over the
+   previous usmap (a live dump lacks classes that were not loaded) and name it `MotorTown<ver>`.
+2. `python DataTableFramework/update.py [--install]`: pulls vanilla straight from `MotorTown-Windows.pak` (repak with
+   `MT_AES_KEY` from `D:\MTLiveMap\mt_paths.py`; no FModel), refreshes `D:\MT\Output\Exports` with a dated backup, and
+   rebuilds every composite, `GameResource` and `DriveGameModeBP`. Those two must never ship stale: the framework
+   outranks vanilla and would undo the update's own changes to them.
+3. `Rebase/reserialize.py` for anything whose class layout shifted (its diff names the classes).
+
+Engine sounds in game follow `FlatEngines/game_audio.py`, measured with the SoundProbe plugin: pitch clamped 0.5-2,
+the exhaust layer at `IdleExhaustRatio` (default 0.2) with the throttle shut, adjacent steps blended on a log-rpm
+smoothstep. Previews go through it.
+
 ## Since 2 Nov 2026: own tables, not channels
 
 This supersedes the channel files in the section below. MoreTuning, No Limits, Carbon, Teh's
@@ -98,6 +114,24 @@ other mods. `DataTableFramework/convert_mod.py` converts a mod to this layout.
   used by the ECU Tuning plugin, a friend's sound, used with their OK) and
   `Sounds/CabinMasterSoundMix`, vanilla's cabin mix with its 5 kHz band raised from 0.5 to 0.85
   and its top band from 0.1 to 0.6. Both sit under `Sounds/`, which server paks drop.
+- **Suspension Visuals is its own mod** (2026-11-09, the user's call: not MoreTuning, not ECU Tuning). Plugin
+  `SuspensionVisuals` + pak `qxZap_SuspensionVisuals_P`: Arini's meshes under `/Game/SuspensionVisuals/` and the
+  kits in the framework's reserved slot `/Game/ReservedRegistration/Slots/Slot01/DT_VehicleParts` (no framework
+  rebuild, no composite copy). `BrakeKits/run.py` (after `channels.py` and `NewEngines/synth.py`) writes there:
+  - **Big Brake Kits are Brake Pads parts** `C0001_BBK320/360/400`, open to every class: a bigger disc heats less,
+    cools more, fades later, wears less. The 18 earlier BrakePower rows `C0001_BBK<mm>_<Colour>` stay hidden (save
+    keys); the plugin prefers the pad row when a car still wears an old one. Disc size is a share of the tyre radius.
+  - **Paint**: an entry on the Paint screen is greyed out unless a mesh on the car has a material slot of that name.
+    So the plugin adds `QX_*` to `MTVehicle.ColorSlots` and `Customization.BodyColors`, makes the names with
+    `Conv_StringToName` (no table registers them), and renames its meshes' slots in memory. Entries: Brake Caliper,
+    Brake Disc, Suspension (the spring: `SM_Coilover` slot 0 "Spring", 1 "Damper"), Dampers, Wheel Spacer, Lug
+    Nuts, Knuckle & Arms, Drive Shaft. Read slot order off the asset, never guess it.
+  - **Tuning > Brakes & Suspension** (a menu button, its own page; the user wants the menu buttons first): per axle
+    (`1, 2, ...`, `*` = driven) brake position, spacer length, upper and lower mount inboard/height, coilover top
+    and size, lower arm pivot, +-100 cm. Stored on the car like Custom Plates' design (`QXS<axle><A-E>`, 24 bits
+    each), so it saves with the car and syncs to players with the plugin. The click is polled every tick.
+  - Plugin-made components are `neverCull` (`mt_plugin.hpp`): the maps' cull-distance volumes dropped small meshes
+    (brakes, flames, plates) a little way off.
 - **Plugins read MoreTuning, they do not need it.** Row names are the metadata: ECU Tuning takes
   the supercharger stage from an intake row called `Supercharger*`. Without the plugin those are
   plain intakes, and without the sounds the plugin plays nothing and carries on.
@@ -108,9 +142,9 @@ other mods. `DataTableFramework/convert_mod.py` converts a mod to this layout.
 - **`[General] Disabled=1` does not make a client vanilla.** Capitalist's cargo table is listed
   by the framework pak, so `Cargos` still differs from a vanilla server's. On your own server
   use `bAllowCargoMismatch`, or give it the same data. Never fake the check.
-- **Cooking sounds:** only UE 5.5 is installed and the game is 5.4, so a new SoundWave is blocked
-  on that. Reuse what is already cooked: the supercharger whine is Teh's `hellcathigh` with a
-  1400 Hz high-pass taking the V8 off.
+- **Cooking sounds:** the game is UE 5.5 (an earlier note here said 5.4 and called cooking blocked; it is not,
+  `FlatEngines/cook` ships cooked sets). The supercharger whine is still Teh's `hellcathigh` with a 1400 Hz
+  high-pass taking the V8 off.
 - Vanilla's real numbers are worth reading: `TurboWhistle_01_High` is 96 kHz, so it survives
   being pitched down; mod sounds top out at 48 kHz.
 
@@ -162,6 +196,11 @@ python MoreAttachments/channel.py  # Items Ch0001 + both Vendor_Garage copies
 - **No override channel on `Wheels`.** It would sit above Maja's Mo Wheel Works
   and put vanilla meshes back on her 93 rows. With channels the old ZZb wheel
   compat pak is unnecessary: carbon wheel twins are new rows.
+- **Which wheels a vehicle is offered is decided by mesh slots, not gates.** Each axle asks for one slot kind
+  (Left/Right, DRW, Quad, Rear) and the panel lists only rows that fill it; vanilla fills Left/Right only. 0.7.19's
+  `make_universal` (8d47b3206) filled the rest in our Wheels tables; 0.7.20 ships vanilla Wheels as it is, so the
+  `CustomWheelScale` plugin fills empty slots in memory (and clears the gates) on every table. Symptom when it is
+  missing: a vehicle lists only the rows that fill every slot (2026-11-08, the Biceps saw only the pack wheels).
 - **Paint on foreign cars** (`paint.py`): a part paints where its mesh slot uses
   `M_Body`, but 388/413 AeroParts rows have no `ColorSlots` and rely on the
   slot name matching the car's. No Limits and Carbon give such parts one
@@ -512,6 +551,10 @@ repairing built actors, so the two cannot drift.
   named from Maja's Wheel Works table (`native.wheelworks_sections`), which paint once
   her meshes are installed at the vanilla paths and do nothing until then. A wheel in
   neither gets no paint. Refresh her table and rebuild when she releases.
+  Wheel Works V6 (2026-11-05, for 0.7.20) is staged in `MajasMoWheelWorksV6-7.20_P/` (her Wheels table + string
+  table, unpacked with repak -- her pak is no longer a problem for it); 121 rows, the 28 new ones all 0.7.20's own
+  wheels. It replaces vanilla `Wheels` (a parent, not a composite), so channels keep working. Installed: Standard
+  (CustomWheelScale unlocks anyway).
 - A light control is a **root** SCS node (`RootNodes` + `AllNodes`), not a
   child of the scene root -- cloning one means registering it there.
 

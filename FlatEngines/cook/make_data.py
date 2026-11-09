@@ -5,7 +5,8 @@
 #   /Game/Cars/Parts/Engine/Sound/MT_<engine>/MT_<engine>_EngineSoundData
 import os, sys, json, copy, glob, re, subprocess
 HERE = os.path.dirname(os.path.abspath(__file__))
-UAG, MAP = r"D:\MT\UAssetGUI.exe", "MotorTown721T1"
+UAG, MAP = r"D:\MT\UAssetGUI.exe", "MotorTown720T6"
+IDLE_EXHAUST = 0.6  # engine-sim sets: exhaust at 60% of full with the throttle shut (game default 0.2), ~4.4 dB under
 TEMPLATE = r"D:\MT\Output\Exports\MotorTown\Content\Cars\Parts\Engine\Sound\Truck\MidDuty_02\EngineSoundData.uasset"
 MOD = r"D:\MT\MoreTuning\qxZap_MoreTuning_P\MotorTown\Content\Cars\Parts\Engine\Sound"
 WAV = r"D:\MT\SoundCook\wav"
@@ -26,7 +27,7 @@ def tojson(src, dst):
     return json.load(open(dst))
 
 
-def build(tpl, name, rpms, master=None, crossfade=None):
+def build(tpl, name, rpms, master=None, crossfade=None, idle_exhaust=None):
     d = copy.deepcopy(tpl)
     pkg_of = lambda obj: f"{ROOT}/MT_{name}/{obj}"
     asset = f"MT_{name}_EngineSoundData"
@@ -71,6 +72,13 @@ def build(tpl, name, rpms, master=None, crossfade=None):
         mv = copy.deepcopy(props["CrossfadeRPMRange"])
         mv["Name"], mv["Value"] = key, float(master[key])
         e["Data"].insert(at + i, mv)
+    # with the throttle shut the game plays the exhaust layer at IdleExhaustRatio of full (default 0.2, measured
+    # 2026-11-07 by the SoundProbe); engine-sim sets are exhaust only, so idle sat 14 dB under the floor. Schema
+    # order: after the volumes, before StarterMotorSound.
+    if idle_exhaust is not None:
+        r = copy.deepcopy(props["CrossfadeRPMRange"])
+        r["Name"], r["Value"] = "IdleExhaustRatio", float(idle_exhaust)
+        e["Data"].insert(e["Data"].index(props["StarterMotorSound"]), r)
     e["ObjectName"] = asset
     e["ClassIndex"], e["TemplateIndex"] = -1, -2
     e["CreateBeforeSerializationDependencies"] = deps + [starter]
@@ -100,7 +108,9 @@ def main():
         if os.path.exists(os.path.join(folder, f"MT_{name}_Starter.wav")):  # an own starter must have cooked too
             assert os.path.exists(os.path.join(MOD, f"MT_{name}", f"MT_{name}_Starter.uexp")), (name, "Starter")
         master = levels.get(name, {}).get("volumes")
-        d, asset = build(tpl, name, rpms, master, levels.get(name, {}).get("crossfade"))
+        v = levels.get(name, {})
+        d, asset = build(tpl, name, rpms, master, v.get("crossfade"),
+                         v.get("idle_exhaust_ratio", IDLE_EXHAUST if v.get("source") == "enginesim" else None))
         js = os.path.join(WORK, f"{asset}.json")
         out = os.path.join(MOD, f"MT_{name}", f"{asset}.uasset")
         json.dump(d, open(js, "w"), indent=1)

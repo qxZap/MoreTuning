@@ -1,0 +1,431 @@
+{
+ "node_data": [
+  {
+   "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+   "Name": "ComponentClass",
+   "ArrayIndex": 0,
+   "PropertyGuid": null,
+   "IsZero": false,
+   "PropertyTagFlags": "None",
+   "PropertyTypeName": null,
+   "PropertyTagExtensions": "NoExtension",
+   "Value": -41
+  },
+  {
+   "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+   "Name": "ComponentTemplate",
+   "ArrayIndex": 0,
+   "PropertyGuid": null,
+   "IsZero": false,
+   "PropertyTagFlags": "None",
+   "PropertyTypeName": null,
+   "PropertyTagExtensions": "NoExtension",
+   "Value": -45
+  },
+  {
+   "$type": "UAssetAPI.PropertyTypes.Structs.StructPropertyData, UAssetAPI",
+   "StructType": "Guid",
+   "SerializeNone": true,
+   "StructGUID": "{00000000-0000-0000-0000-000000000000}",
+   "SerializationControl": "NoExtension",
+   "Operation": "None",
+   "Name": "VariableGuid",
+   "ArrayIndex": 0,
+   "PropertyGuid": null,
+   "IsZero": false,
+   "PropertyTagFlags": "None",
+   "PropertyTypeName": null,
+   "PropertyTagExtensions": "NoExtension",
+   "Value": [
+    {
+     "$type": "UAssetAPI.PropertyTypes.Structs.GuidPropertyData, UAssetAPI",
+     "Name": "VariableGuid",
+     "ArrayIndex": 0,
+     "PropertyGuid": null,
+     "IsZero": false,
+     "PropertyTagFlags": "None",
+     "PropertyTypeName": null,
+     "PropertyTagExtensions": "NoExtension",
+     "Value": "{3DA7932E-F52F-2AB6-5CA4-3F7996ABCFDD}"
+    }
+   ]
+  },
+  {
+   "$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI",
+   "Name": "InternalVariableName",
+   "ArrayIndex": 0,
+   "PropertyGuid": null,
+   "IsZero": false,
+   "PropertyTagFlags": "None",
+   "PropertyTypeName": null,
+   "PropertyTagExtensions": "NoExtension",
+   "Value": "None"
+  }
+ ],
+ "childnodes_prop": {
+  "$type": "UAssetAPI.PropertyTypes.Objects.ArrayPropertyData, UAssetAPI",
+  "ArrayType": "ObjectProperty",
+  "Name": "ChildNodes",
+  "ArrayIndex": 0,
+  "PropertyGuid": null,
+  "IsZero": false,
+  "PropertyTagFlags": "None",
+  "PropertyTypeName": null,
+  "PropertyTagExtensions": "NoExtension",
+  "Value": [
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "0",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 8
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "1",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 9
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "2",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 10
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "3",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 11
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "4",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 12
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "5",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 13
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "6",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 14
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "7",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 15
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "8",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 16
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "9",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 17
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "10",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 18
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "11",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 19
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "12",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 20
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "13",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 21
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "14",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 22
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "15",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 23
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "16",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 24
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "17",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 25
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "18",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 26
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "19",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 27
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "20",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 28
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "21",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 29
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "22",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 30
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "23",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 31
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "24",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 32
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "25",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 33
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "26",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 34
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "27",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 35
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "28",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 36
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "29",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 37
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "30",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 38
+   },
+   {
+    "$type": "UAssetAPI.PropertyTypes.Objects.ObjectPropertyData, UAssetAPI",
+    "Name": "31",
+    "ArrayIndex": 0,
+    "PropertyGuid": null,
+    "IsZero": false,
+    "PropertyTagFlags": "None",
+    "PropertyTypeName": null,
+    "PropertyTagExtensions": "NoExtension",
+    "Value": 39
+   }
+  ]
+ },
+ "_source": "rtwin ReservedVehicleFramework_1_P (0.7.19, cooked UE5.5): GameMode/DriveGameModeBP SCS_Node_DealerSlot02 and SCS_Node_0.ChildNodes, read with VER_UE5_5 MotorTown719"
+}

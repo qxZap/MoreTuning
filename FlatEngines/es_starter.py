@@ -15,9 +15,13 @@ import es_steps
 SR = 48000
 LENGTH = 2.4
 IGNITION = 0.8      # vanilla's catch
-STARTER_OFF = 0.95  # lets go once it has caught
-CRANK_GAIN = 0.55   # cranking chuffs and motor against running: puts the two parts ~6 dB apart like vanilla
-BLIP = [(0.0, 0.0), (0.85, 0.0), (0.9, 0.18), (1.1, 0.18), (1.2, 0.0), (9, 0.0)]  # modest flare, ~1400 rpm
+CRANK_DB = -6.5     # cranking (chuffs + motor) against running: vanilla's two parts are ~6 dB apart
+# per class: when the starter lets go (big diesels catch slower) and the idle-air flare after the catch
+TIMING = {"car": (0.95, 0.18), "pickup": (1.2, 0.08), "truck": (1.3, 0.06)}
+
+
+def blip(amount):
+    return [(0.0, 0.0), (0.85, 0.0), (0.9, amount), (1.1, amount), (1.2, 0.0), (9, 0.0)]
 # per starter size: pinion ratio, commutator bars, housing modes (Hz), body thump (Hz), loudness
 MOTORS = {
     "car": dict(ratio=11, bars=16, pinion=9, modes=(1150, 2350, 3700, 5200, 7400), thump=110, lufs=-9.5),
@@ -25,14 +29,14 @@ MOTORS = {
 }
 
 
-def render_start(script, wav):
+def render_start(script, wav, starter_off=0.95, flare=0.18):
     """engine-sim cold start for this engine: audio (48 kHz, float) and the crank log (t, rpm, starter on)."""
     from scipy.signal import resample_poly
     csv = wav + ".thr.csv"
     P = es_steps.PITCH
-    open(csv, "w").write("\n".join(f"{t * P},{v}" for t, v in BLIP))
+    open(csv, "w").write("\n".join(f"{t * P},{v}" for t, v in blip(flare)))
     r = subprocess.run([os.path.join(es_steps.ES, "Release", "es-render.exe"), f"../assets/{script}", wav, "start", csv,
-                        str(LENGTH * P + 0.5), str(IGNITION * P), str(STARTER_OFF * P)], cwd=es_steps.ES, capture_output=True,
+                        str(LENGTH * P + 0.5), str(IGNITION * P), str(starter_off * P)], cwd=es_steps.ES, capture_output=True,
                        text=True, env=dict(os.environ, ES_JITTER=str(es_steps.JITTER)))
     assert r.returncode == 0 and os.path.exists(wav), (r.stdout, r.stderr)
     x = resample_poly(wavfile.read(wav)[1].astype(float) / 32768, 160, 147)
@@ -109,11 +113,15 @@ def build(x, log, m, rng):
         mot[off:] *= np.exp(-(t[off:] - t[off]) / 0.15)
     spin = np.clip(t / 0.12, 0, 1)
     crank_part = slice(int(0.15 * SR), int(IGNITION * SR * 0.95))
-    e_rms = np.sqrt(np.mean(x[crank_part] ** 2)) + 1e-9
-    m_rms = np.sqrt(np.mean(mot[crank_part] ** 2)) + 1e-9
-    # cranking is quieter than running (vanilla: 6 dB): the chuffs sit at CRANK_GAIN until the catch
-    x = x * np.interp(t, [0, IGNITION, IGNITION + 0.1, 9], [CRANK_GAIN, CRANK_GAIN, 1, 1])
-    y = x + mot * spin * (e_rms * CRANK_GAIN / m_rms) * 0.6 + engage(n, m, rng) * e_rms * CRANK_GAIN * 4
+    rms = lambda v: np.sqrt(np.mean(v ** 2)) + 1e-9
+    e_rms, m_rms, r_rms = rms(x[crank_part]), rms(mot[crank_part]), rms(x[int(1.0 * SR):int(2.0 * SR)])
+    # cranking sits CRANK_DB under running, whatever engine-sim's chuffs come out at (big diesels: next to nothing):
+    # the chuffs carry at most a third of it, the motor the rest
+    target = r_rms * 10 ** (CRANK_DB / 20)
+    gc = min(1.0, target * 0.6 / e_rms)
+    gm = np.sqrt(max(target ** 2 - (gc * e_rms) ** 2, (0.5 * target) ** 2)) / m_rms
+    x = x * np.interp(t, [0, IGNITION, IGNITION + 0.1, 9], [gc, gc, 1, 1])
+    y = x + mot * spin * gm + engage(n, m, rng) * target * 3
     y[-int(0.35 * SR):] *= np.cos(np.linspace(0, np.pi / 2, int(0.35 * SR))) ** 2
     y[:int(0.002 * SR)] *= np.linspace(0, 1, int(0.002 * SR))
     return y, crank
@@ -133,9 +141,11 @@ def main(name, script, kind="car"):
     m = MOTORS[kind]
     work = os.path.join(HERE, "es2", name)
     os.makedirs(work, exist_ok=True)
-    x, log = render_start(script, os.path.join(work, "start.wav"))
+    off, flare = TIMING[es_steps.engine_spec(name)["kind"]]
+    x, log = render_start(script, os.path.join(work, "start.wav"), off, flare)
     ran = log[log[:, 0] > (IGNITION + 0.5) * es_steps.PITCH, 1]
-    assert ran.size and ran.max() > 700, f"engine did not catch: {ran.max() if ran.size else 0:.0f} rpm after ignition"
+    idle = es_steps.engine_spec(name)["idle"]
+    assert ran.size and ran.max() > 0.7 * idle, f"engine did not catch: {ran.max() if ran.size else 0:.0f} rpm after ignition"
     y, crank = build(x, log, m, np.random.default_rng(7))
     z = level(y, m["lufs"])
     out = os.path.join(sl.OUT, f"MT_{name}", f"MT_{name}_Starter.wav")

@@ -15,9 +15,9 @@ UE ranks a _N_P pak by N before its name, so it outranks every mod pak (plain _P
 chunk 1, and some mods already use _1_P / _2_P) although it sorts first.
 
 A registered table whose mod is not installed is simply absent; the composite
-then has a parent that does not exist, and the game has to skip it.
-shortcut: that is unverified until the lab test (lab_missing_parent.py) has run
-in game -- if it fails, absent mods need stubs in a separate first-loading pak.
+then has a parent that does not exist, and the game skips it -- in daily use
+since 2026-11-02 with 18 of 34 registered tables not installed (checked 11-07).
+rtwin's reserved slots (registry "reserved") work the same way: listed, never stubbed.
 A mod that ships no table of its own -- one frozen copy of a vanilla
 table (Teh's 0.7.18 Engines, Suspension Expansion's Suspensions) -- needs nothing
 here: the framework lists the vanilla table, the copy replaces it.
@@ -42,7 +42,8 @@ PAK = "AAAA_DataTableFramework_99_P"
 MOD = os.path.join(HERE, "..", PAK, "MotorTown", "Content")
 REGISTRY = os.path.join(HERE, "registry.json")
 MANIFEST = os.path.join(HERE, "composites.json")
-WORK = os.path.join(HERE, "..", "Rebase", "work", "fw")
+# DTF_WORK: a private scratch folder per run, so two builds (ours, Arini's own_tables.py) never write the same files
+WORK = os.environ.get("DTF_WORK") or os.path.join(HERE, "..", "Rebase", "work", "fw")
 MARKER = b"Default__CompositeDataTable"
 
 
@@ -170,8 +171,15 @@ def add_parents(comp_table, packages):
 
 
 def adopted(comp):
+    """Registered mod tables of `comp`, then rtwin's reserved slots (registry "reserved") for the composites
+    his layout fills: /Game/ReservedRegistration/Slots/Slot01..NN/<table>."""
     with open(REGISTRY, encoding="utf-8") as f:
-        return list(json.load(f)["adopted"].get(comp, {}))
+        reg = json.load(f)
+    out = list(reg["adopted"].get(comp, {}))
+    res = reg.get("reserved", {})
+    if comp in res.get("tables", {}):
+        out += [f"/Game/ReservedRegistration/Slots/Slot{i:02d}/{res['tables'][comp]}" for i in range(1, res["slots"] + 1)]
+    return out
 
 
 def check_table(path, expect_struct, expect_rows=0, out=None):
@@ -253,6 +261,9 @@ def demo():
                           "/Game/DataAsset/VehicleParts/VehicleParts_MoreTuningNoLimits"], parents(t)
     assert "VehicleParts_MoreTuning" in t["NameMap"] and t["Generations"][0]["NameCount"] == len(t["NameMap"])
     assert PAK.endswith("_99_P"), "the framework must outrank every mod pak's composite copy"
+    slots = [p for p in adopted("Vehicles") if "/ReservedRegistration/" in p]
+    assert slots[0] == "/Game/ReservedRegistration/Slots/Slot01/DT_Vehicles" and len(slots) == 32, slots[:2]
+    assert not [p for p in adopted("Cargos") if "/ReservedRegistration/" in p]
     print("demo ok")
 
 

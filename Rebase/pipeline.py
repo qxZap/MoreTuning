@@ -19,7 +19,7 @@ REPO = os.path.join(HERE, "..")
 # NOT the UAssetGUI.exe in the repo root -- that one is v1.0.4 and writes an
 # older JSON schema, so anything it exports fails to build again on 0.7.19.
 UASSETGUI = r"D:\MT\UAssetGUI.exe"
-CURRENT_MAPPINGS = "MotorTown721T1"
+CURRENT_MAPPINGS = "MotorTown720T6"
 ENGINE_VERSION = "VER_UE5_4"
 
 VANILLA = r"D:\MT\Output\Exports\MotorTown\Content"

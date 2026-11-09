@@ -50,7 +50,8 @@
       "/Game/DataAsset/CharacterBody/CharacterBodyParts_Glasses"
     ],
     "mod_tables": [
-      "/Game/DataAsset/CharacterBody/CharacterBodyParts_Slides"
+      "/Game/DataAsset/CharacterBody/CharacterBodyParts_Slides",
+      "/Game/DataAsset/CharacterBody/CharacterBodyParts_Biceps"
     ]
   },
   {
@@ -191,7 +192,40 @@
       "/Game/RakMods/HeavyHaulPack/Parts/Tires/RHHP_Tires",
       "/Game/RakMods/HeavyHaulPack/Parts/Transmissions/RHHP_Transmissions",
       "/Game/RakMods/HeavyHaulPack/Parts/RHHP_Parts",
-      "/Game/RakMods/HeavyHaulPack/Parts/RHHP_Misc"
+      "/Game/RakMods/HeavyHaulPack/Parts/RHHP_Misc",
+      "/Game/DataAsset/VehicleParts/VehicleParts_Biceps",
+      "/Game/ReservedRegistration/Slots/Slot01/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot02/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot03/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot04/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot05/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot06/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot07/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot08/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot09/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot10/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot11/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot12/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot13/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot14/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot15/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot16/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot17/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot18/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot19/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot20/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot21/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot22/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot23/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot24/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot25/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot26/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot27/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot28/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot29/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot30/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot31/DT_VehicleParts",
+      "/Game/ReservedRegistration/Slots/Slot32/DT_VehicleParts"
     ]
   },
   {
@@ -214,7 +248,40 @@
     "mod_tables": [
       "/Game/DataAsset/Vehicles/Vehicles_Arini",
       "/Game/DataAsset/Vehicles/Vehicles_VehicleLabs",
-      "/Game/RPMTech/DataAsset/RPMTech_Vehicle"
+      "/Game/RPMTech/DataAsset/RPMTech_Vehicle",
+      "/Game/DataAsset/Vehicles/Vehicles_Biceps",
+      "/Game/ReservedRegistration/Slots/Slot01/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot02/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot03/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot04/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot05/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot06/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot07/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot08/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot09/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot10/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot11/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot12/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot13/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot14/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot15/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot16/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot17/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot18/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot19/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot20/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot21/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot22/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot23/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot24/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot25/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot26/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot27/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot28/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot29/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot30/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot31/DT_Vehicles",
+      "/Game/ReservedRegistration/Slots/Slot32/DT_Vehicles"
     ]
   }
 ]

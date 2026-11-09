@@ -34,7 +34,7 @@ def main():
             js = os.path.join(WORK, os.path.basename(ua)[:-7] + ".json")
             if os.path.exists(js):
                 os.remove(js)
-            subprocess.run([r"D:\MT\UAssetGUI.exe", "tojson", ua, js, "VER_UE5_4", "MotorTown721T1"], check=True)
+            subprocess.run([r"D:\MT\UAssetGUI.exe", "tojson", ua, js, "VER_UE5_4", "MotorTown720T6"], check=True)
             assert os.path.exists(js), f"UAssetGUI wrote nothing for {ua}"
             e = json.load(open(js))["Exports"][0]
             assert e["$type"].endswith("NormalExport, UAssetAPI"), (ua, e["$type"])
