@@ -37,13 +37,24 @@ TRANS_PKG = "/Game/Cars/Parts/Transmission/"
 TRANS_REF = "allisonHT740"  # a 0.7.20-clean box (reserialized); only its gear list changes
 PREFIX = synth.PREFIX
 
+def marine(asset, name, hp, nm, rpm, mass, inertia, boat):
+    """One engine; the family's sound, starter share and idle come from the boat (2026-11-11 tests: the tug idles at
+    0.05, the ship's 600 rpm engine only just failed to at 0.12)."""
+    tug = boat == "C0700_Tugboat"
+    return dict(sound="dd1671" if tug else "om502", asset=asset, name=name, family="truck", ref="C18_550HP",
+                curve="DieselTruck", hp=hp, torque=nm * 12000, rpm=rpm, mass=mass, inertia=inertia, jake=0,
+                starter_rpm=round(rpm * 0.475), idle=0.05 if tug else 0.2, boat=boat)
+
+
+# Upgrades in the garage, one family per boat (the user: "upgradable things within the service menu"). Real ratings;
+# torque = hp * 745.7 / (2 pi rpm / 60). The middle one of each is the boat's stock engine.
 ENGINES = [
-    dict(sound="dd1671", asset="Marine3512C_1800HP", name="Caterpillar 3512C Marine 1800HP", family="truck",
-         ref="C18_550HP", curve="DieselTruck", hp=1800, torque=96_000_000, rpm=1600, mass=7000, inertia=400_000,
-         jake=0, starter_rpm=760, idle=0.05, boat="C0700_Tugboat"),
-    dict(sound="om502", asset="MaK8M32C_5400HP", name="MaK 8M32C Marine 5400HP", family="truck",
-         ref="C18_550HP", curve="DieselTruck", hp=5400, torque=768_000_000, rpm=600, mass=40000, inertia=4_000_000,
-         jake=0, starter_rpm=290, idle=0.12, boat="C0701_ContainerShip"),
+    marine("Marine3508C_1200HP", "Caterpillar 3508C Marine 1200HP", 1200, 5341, 1600, 5000, 285_000, "C0700_Tugboat"),
+    marine("Marine3512C_1800HP", "Caterpillar 3512C Marine 1800HP", 1800, 8000, 1600, 7000, 400_000, "C0700_Tugboat"),
+    marine("Marine3516C_2575HP", "Caterpillar 3516C Marine 2575HP", 2575, 11460, 1600, 8700, 500_000, "C0700_Tugboat"),
+    marine("MaK6M32C_4000HP", "MaK 6M32C Marine 4000HP", 4000, 47750, 600, 31000, 3_000_000, "C0701_ContainerShip"),
+    marine("MaK8M32C_5400HP", "MaK 8M32C Marine 5400HP", 5400, 64000, 600, 40000, 4_000_000, "C0701_ContainerShip"),
+    marine("MaK9M32C_6000HP", "MaK 9M32C Marine 6000HP", 6000, 71620, 600, 45000, 4_500_000, "C0701_ContainerShip"),
 ]
 BOXES = [
     dict(asset="MarineGear_Tug", name="Marine Reverse Gear 5:1 (Tug)", ratio=5.0, mass=2000, cost=40000, boat="C0700_Tugboat"),
@@ -181,7 +192,7 @@ def demo():
     g = gears({"ratio": 5.0}, ref)
     assert [(x["Name"], x["Value"][2]["Value"], x["Value"][0]["Value"]) for x in g] == [("0", "R", -5.0), ("1", "N", "+0"), ("2", "F", 5.0)], g
     assert all("cat" not in e["asset"].lower() for e in ENGINES)
-    assert all(abs(e["torque"] / 12000 - n) < 1 for e, n in zip(ENGINES, (8000, 64000)))
+    assert all(abs(e["hp"] * 745.7 / (6.2832 * e["rpm"] / 60) - e["torque"] / 12000) < 0.02 * e["torque"] / 12000 for e in ENGINES), "torque off its rating"
     print("ok")
 
 
