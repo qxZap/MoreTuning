@@ -9,7 +9,7 @@ Everything else here is tooling that generates the `.uasset` files inside them.
 | | |
 |---|---|
 | **UAssetGUI** | `D:\MT\UAssetGUI.exe` (**v1.1.1**). **Not** `.\UAssetGUI.exe` in this repo — that is v1.0.4 and writes an older JSON schema; anything it exports fails to build again under the current game. |
-| **Mappings** | `MotorTown720T6` for 0.7.20+T6 (2026-11-07; Arini's merge of the live dump over 721T1 -- a live dump alone lacks unloaded classes), `MotorTown721T1` for the 2026-11-02 update, `MotorTown720T1` for game 0.7.20 (`MotorTown719` for 0.7.19, `MotorTown718P1` for 0.7.18 tables). UAssetGUI resolves the name against `%LOCALAPPDATA%\UAssetGUI\Mappings\*.usmap`. Dump a fresh one after every game update. |
+| **Mappings** | `MotorTown20261111` for the 2026-11-11 update (Steam build 26547148; live dump merged over 720T6), `MotorTown720T6` for 0.7.20+T6 (2026-11-07; Arini's merge of the live dump over 721T1 -- a live dump alone lacks unloaded classes), `MotorTown721T1` for the 2026-11-02 update, `MotorTown720T1` for game 0.7.20 (`MotorTown719` for 0.7.19, `MotorTown718P1` for 0.7.18 tables). UAssetGUI resolves the name against `%LOCALAPPDATA%\UAssetGUI\Mappings\*.usmap`. Dump a fresh one after every game update. |
 | **Engine version** | The game is **UE 5.5.4** (crash context `EngineVersion`, 0.7.20). The tools here pass `VER_UE5_4` and that works for these unversioned assets; Arini's injector uses `VER_UE5_5`. Cooking with the installed UE 5.5 matches the game. |
 | **Packing** | `modp.bat <ModFolder>` — repak, then copy the pak into the game. |
 | **New paks start off** | The game's own mod review (main menu **Mods [Review]**, state in `%LOCALAPPDATA%\MotorTown\Saved\Config\Windows\CustomPak.ini` `[CustomPakStateV2]`) mounts a pak it has not seen before only after the player enables it: `UserEnabled=False, ReviewPending=True`. A rebuilt pak under a known name stays enabled. A brand-new mod that "does nothing" in game: check that list first. |
@@ -133,6 +133,10 @@ other mods. `DataTableFramework/convert_mod.py` converts a mod to this layout.
     each), so it saves with the car and syncs to players with the plugin. The click is polled every tick.
   - Plugin-made components are `neverCull` (`mt_plugin.hpp`): the maps' cull-distance volumes dropped small meshes
     (brakes, flames, plates) a little way off.
+- **Marine parts** (`MarineParts/run.py`, 2026-11-11): a Cat 3512C for Arini's tug and a MaK 8M32C for the ship, each
+  with its own ahead / neutral / astern gearbox (same ratio both ways), `VehicleKeys` limited to that boat. Run after
+  `NewEngines/synth.py`, then FuelRealism and EngineTags. The Boats plugin pushes with rpm/limit squared, so the
+  engine's inertia is what makes a ship slow to get going.
 - **Plugins read MoreTuning, they do not need it.** Row names are the metadata: ECU Tuning takes
   the supercharger stage from an intake row called `Supercharger*`. Without the plugin those are
   plain intakes, and without the sounds the plugin plays nothing and carries on.
