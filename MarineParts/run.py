@@ -40,10 +40,10 @@ PREFIX = synth.PREFIX
 ENGINES = [
     dict(sound="dd1671", asset="Marine3512C_1800HP", name="Caterpillar 3512C Marine 1800HP", family="truck",
          ref="C18_550HP", curve="DieselTruck", hp=1800, torque=96_000_000, rpm=1600, mass=7000, inertia=400_000,
-         jake=0, starter_rpm=700, boat="C0700_Tugboat"),
+         jake=0, starter_rpm=760, idle=0.05, boat="C0700_Tugboat"),
     dict(sound="om502", asset="MaK8M32C_5400HP", name="MaK 8M32C Marine 5400HP", family="truck",
          ref="C18_550HP", curve="DieselTruck", hp=5400, torque=768_000_000, rpm=600, mass=40000, inertia=4_000_000,
-         jake=0, starter_rpm=250, boat="C0701_ContainerShip"),
+         jake=0, starter_rpm=290, idle=0.12, boat="C0701_ContainerShip"),
 ]
 BOXES = [
     dict(asset="MarineGear_Tug", name="Marine Reverse Gear 5:1 (Tug)", ratio=5.0, mass=2000, cost=40000, boat="C0700_Tugboat"),
@@ -129,7 +129,10 @@ def build_assets():
     ref_e = synth.framework.load(to_json(os.path.join(synth.ENGINE_DIR, "C18_550HP.uasset"), work("ref_engine.json")))
     for e in ENGINES:
         a = synth.make_asset(e, ref_e)
+        # 2026-11-11: with the C18's IdleThrottle (0.017) both died the moment the throttle closed. Starter at the
+        # C18's share of its limit (0.48), and more idle fuel: a slow heavy engine needs it to hold its idle.
         synth.fields(a)["StarterRPM"]["Value"] = float(e["starter_rpm"])
+        synth.fields(a)["IdleThrottle"]["Value"] = float(e["idle"])
         src = work(e["asset"] + ".json")
         synth.framework.save(a, src)
         back = check_asset(synth.build(src, os.path.join(synth.ENGINE_DIR, e["asset"] + ".uasset")), e["asset"], "engine")
