@@ -29,7 +29,8 @@
       "/Game/RakMods/HeavyHaulPack/Parts/Transmissions/RHHP_Transmissions": "Rak - Heavy Haul Pack",
       "/Game/RakMods/HeavyHaulPack/Parts/RHHP_Parts": "Rak - Heavy Haul Pack",
       "/Game/RakMods/HeavyHaulPack/Parts/RHHP_Misc": "Rak - Heavy Haul Pack",
-      "/Game/DataAsset/VehicleParts/VehicleParts_Biceps": "qxZap/sati - Biceps"
+      "/Game/DataAsset/VehicleParts/VehicleParts_Biceps": "qxZap/sati - Biceps",
+      "/Game/DataAsset/VehicleParts/VehicleParts_BoaterTown": "qxZap - Boater Town: Beyond the Waves (boat winches, propellers; built by the Arini session)"
     },
     "Cargos": {
       "/Game/DataAsset/Cargos_Proxy": "Proxy - Oversize Cargo",
@@ -50,7 +51,8 @@
       "/Game/DataAsset/Vehicles/Vehicles_Arini": "qxZap - Arini island (changed + added vehicle rows, incl. Crany and Goliath4-DB from Vehicles_Deprecated)",
       "/Game/DataAsset/Vehicles/Vehicles_VehicleLabs": "qxZap - VehicleLabs (fuel pumps, bulk economy, removable body parts; D:/MTLiveMap/vehicle_mod/tables.py). After Arini: it carries Arini's rows with its own changes on top, so it must win",
       "/Game/RPMTech/DataAsset/RPMTech_Vehicle": "Rak - RPMTech vehicles",
-      "/Game/DataAsset/Vehicles/Vehicles_Biceps": "qxZap - Biceps (standalone car, row C0100_Biceps; built by the Arini session)"
+      "/Game/DataAsset/Vehicles/Vehicles_Biceps": "qxZap - Biceps (standalone car, row C0100_Biceps; built by the Arini session)",
+      "/Game/DataAsset/Vehicles/Vehicles_BoaterTown": "qxZap - Boater Town: Beyond the Waves (C0700_Tugboat, C0701_ContainerShip; built by the Arini session)"
     }
   },
   "reserved": {
