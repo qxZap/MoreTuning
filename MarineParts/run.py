@@ -15,7 +15,8 @@ Astern is the same ratio as ahead (a reversing gearbox: the user wants reverse a
 
 Asset names keep "cat" out (FuelRealism reads it as an old mechanical diesel; the 3512C is electronic). Run after
 Rebase/channels.py and NewEngines/synth.py, then FuelRealism/run.py and EngineTags/run.py, like synth.py. Rerunnable.
-Boat row keys: Arini's Vehicles_Biceps (C0700_Tugboat, C0701_ContainerShip).
+Boat row keys: Arini's Vehicles_Biceps (C0700_Tugboat, C0701_ContainerShip, C0702_TenderBoat, C0703_FishingBoat,
+C0704_SpeedBoat). The three small boats run petrol outboards / sterndrives (Yamaha F-series, MerCruiser, Mercury Racing).
 """
 import copy
 import importlib.util
@@ -43,7 +44,16 @@ def marine(asset, name, hp, nm, rpm, mass, inertia, boat):
     tug = boat == "C0700_Tugboat"
     return dict(sound="dd1671" if tug else "om502", asset=asset, name=name, family="truck", ref="C18_550HP",
                 curve="DieselTruck", hp=hp, torque=nm * 12000, rpm=rpm, mass=mass, inertia=inertia, jake=0,
-                starter_rpm=round(rpm * 0.475), idle=0.05 if tug else 0.2, boat=boat)
+                starter_rpm=round(rpm * 0.475), idle=0.05 if tug else 0.2, boat=boat, per_nm=12000)
+
+
+def petrol(asset, name, hp, rpm, mass, inertia, boat, sound):
+    """Outboards and sterndrives (2026-11-12, the small boats): car petrol engines, LS3 as the reference, so torque
+    at the car scale (9,560 per Nm) and the LS3's own starter and idle. Priced like the marine diesels ($166.67/hp,
+    family "truck" only sets that), the table the user approved."""
+    nm = hp * 745.7 / (6.2832 * rpm / 60)
+    return dict(sound=sound, asset=asset, name=name, family="truck", ref="LS3_430HP", curve="SmallBlock", hp=hp,
+                torque=round(nm * 9560), rpm=rpm, mass=mass, inertia=inertia, jake=None, boat=boat, per_nm=9560)
 
 
 # Upgrades in the garage, one family per boat (the user: "upgradable things within the service menu"). Real ratings;
@@ -55,11 +65,25 @@ ENGINES = [
     marine("MaK6M32C_4000HP", "MaK 6M32C Marine 4000HP", 4000, 47750, 600, 31000, 3_000_000, "C0701_ContainerShip"),
     marine("MaK8M32C_5400HP", "MaK 8M32C Marine 5400HP", 5400, 64000, 600, 40000, 4_000_000, "C0701_ContainerShip"),
     marine("MaK9M32C_6000HP", "MaK 9M32C Marine 6000HP", 6000, 71620, 600, 45000, 4_500_000, "C0701_ContainerShip"),
+    petrol("Outboard_F70_70HP", "Yamaha F70 Outboard 70HP", 70, 5800, 119, 1500, "C0702_TenderBoat", "4age"),
+    petrol("Outboard_F115_115HP", "Yamaha F115 Outboard 115HP", 115, 5500, 172, 1800, "C0702_TenderBoat", "4age"),
+    petrol("Outboard_F150_150HP", "Yamaha F150 Outboard 150HP", 150, 5500, 216, 2200, "C0702_TenderBoat", "4age"),
+    petrol("Outboard_TwinF150_300HP", "Twin Yamaha F150 Outboards 300HP", 300, 5500, 432, 4400, "C0703_FishingBoat", "4g63t"),
+    petrol("Outboard_TwinF200_400HP", "Twin Yamaha F200 Outboards 400HP", 400, 5500, 452, 5000, "C0703_FishingBoat", "4g63t"),
+    petrol("Outboard_TwinF250_500HP", "Twin Yamaha F250 V6 Outboards 500HP", 500, 5500, 510, 6000, "C0703_FishingBoat", "4g63t"),
+    petrol("Sterndrive_45L_250HP", "MerCruiser 4.5L V6 Sterndrive 250HP", 250, 5000, 390, 3500, "C0704_SpeedBoat", "sbc350"),
+    petrol("Sterndrive_62L_300HP", "MerCruiser 6.2L 350 MAG Sterndrive 300HP", 300, 5000, 420, 4500, "C0704_SpeedBoat", "sbc350"),
+    petrol("Sterndrive_Racing520_520HP", "Mercury Racing 520 Sterndrive 520HP", 520, 5200, 450, 4000, "C0704_SpeedBoat", "sbc350"),
 ]
 BOXES = [
     dict(asset="MarineGear_Tug", name="Marine Reverse Gear 5:1 (Tug)", ratio=5.0, mass=2000, cost=40000, boat="C0700_Tugboat"),
     dict(asset="MarineGear_Ship", name="Marine Reverse-Reduction Gear 4:1 (Ship)", ratio=4.0, mass=8000, cost=120000,
          boat="C0701_ContainerShip"),
+    dict(asset="MarineGear_Tender", name="Outboard Lower Unit 2.15:1 (Tender)", ratio=2.15, mass=20, cost=3000, boat="C0702_TenderBoat"),
+    dict(asset="MarineGear_Fisher", name="Outboard Lower Units 1.86:1 (Fishing Boat)", ratio=1.86, mass=40, cost=6000,
+         boat="C0703_FishingBoat"),
+    dict(asset="MarineGear_Sterndrive", name="Bravo III Sterndrive 2.0:1 (Speedboat)", ratio=2.0, mass=80, cost=8000,
+         boat="C0704_SpeedBoat"),
 ]
 
 
@@ -137,18 +161,20 @@ def check_asset(out, name, kind):
 
 
 def build_assets():
-    ref_e = synth.framework.load(to_json(os.path.join(synth.ENGINE_DIR, "C18_550HP.uasset"), work("ref_engine.json")))
+    refs = {r: synth.framework.load(to_json(os.path.join(synth.ENGINE_DIR, r + ".uasset"), work(f"ref_{r}.json")))
+            for r in {e["ref"] for e in ENGINES}}
     for e in ENGINES:
-        a = synth.make_asset(e, ref_e)
+        a = synth.make_asset(e, refs[e["ref"]])
         # 2026-11-11: with the C18's IdleThrottle (0.017) both died the moment the throttle closed. Starter at the
         # C18's share of its limit (0.48), and more idle fuel: a slow heavy engine needs it to hold its idle.
-        synth.fields(a)["StarterRPM"]["Value"] = float(e["starter_rpm"])
-        synth.fields(a)["IdleThrottle"]["Value"] = float(e["idle"])
+        if "starter_rpm" in e:  # petrol ones keep the LS3's
+            synth.fields(a)["StarterRPM"]["Value"] = float(e["starter_rpm"])
+            synth.fields(a)["IdleThrottle"]["Value"] = float(e["idle"])
         src = work(e["asset"] + ".json")
         synth.framework.save(a, src)
         back = check_asset(synth.build(src, os.path.join(synth.ENGINE_DIR, e["asset"] + ".uasset")), e["asset"], "engine")
         f = synth.fields(back)
-        assert f["MaxRPM"]["Value"] == e["rpm"] and f["StarterRPM"]["Value"] == e["starter_rpm"], e["asset"]
+        assert f["MaxRPM"]["Value"] == e["rpm"] and ("starter_rpm" not in e or f["StarterRPM"]["Value"] == e["starter_rpm"]), e["asset"]
         print(f"  {e['asset']:22} {e['hp']}hp {e['torque']:,} @ {e['rpm']}, inertia {e['inertia']:,}, for {e['boat']}")
     ref_t = synth.framework.load(to_json(os.path.join(TRANS_DIR, TRANS_REF + ".uasset"), work("ref_box.json")))
     for b in BOXES:
@@ -192,7 +218,8 @@ def demo():
     g = gears({"ratio": 5.0}, ref)
     assert [(x["Name"], x["Value"][2]["Value"], x["Value"][0]["Value"]) for x in g] == [("0", "R", -5.0), ("1", "N", "+0"), ("2", "F", 5.0)], g
     assert all("cat" not in e["asset"].lower() for e in ENGINES)
-    assert all(abs(e["hp"] * 745.7 / (6.2832 * e["rpm"] / 60) - e["torque"] / 12000) < 0.02 * e["torque"] / 12000 for e in ENGINES), "torque off its rating"
+    assert all(abs(e["hp"] * 745.7 / (6.2832 * e["rpm"] / 60) - e["torque"] / e["per_nm"]) < 0.02 * e["torque"] / e["per_nm"] for e in ENGINES), "torque off its rating"
+    assert all(synth.sound_data(e["sound"]) for e in ENGINES), "a sound set is not cooked"
     print("ok")
 
 

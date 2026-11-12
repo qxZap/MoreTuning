@@ -136,7 +136,9 @@ other mods. `DataTableFramework/convert_mod.py` converts a mod to this layout.
 - **Marine parts** (`MarineParts/run.py`, 2026-11-11): a Cat 3512C for Arini's tug and a MaK 8M32C for the ship, each
   with its own ahead / neutral / astern gearbox (same ratio both ways), `VehicleKeys` limited to that boat. Run after
   `NewEngines/synth.py`, then FuelRealism and EngineTags. The Boats plugin pushes with rpm/limit squared, so the
-  engine's inertia is what makes a ship slow to get going.
+  engine's inertia is what makes a ship slow to get going. The small boats (2026-11-12: tender, fishing boat,
+  speedboat) run petrol outboards / sterndrives (`petrol()`, LS3 reference, car torque scale), three per boat with
+  their own gear; tag new ones `Boat` in `EngineTags/tags.json`, which otherwise guesses Car from the name.
 - **Plugins read MoreTuning, they do not need it.** Row names are the metadata: ECU Tuning takes
   the supercharger stage from an intake row called `Supercharger*`. Without the plugin those are
   plain intakes, and without the sounds the plugin plays nothing and carries on.
