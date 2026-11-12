@@ -139,6 +139,9 @@ other mods. `DataTableFramework/convert_mod.py` converts a mod to this layout.
   engine's inertia is what makes a ship slow to get going. The small boats (2026-11-12: tender, fishing boat,
   speedboat) run petrol outboards / sterndrives (`petrol()`, LS3 reference, car torque scale), three per boat with
   their own gear; tag new ones `Boat` in `EngineTags/tags.json`, which otherwise guesses Car from the name.
+- **Engine specs** (`EngineSpecs/specs.py`, 2026-11-12): cylinders, litres and layout for every combustion engine row;
+  `python specs.py` writes ECU Tuning's `engine_specs.inc` (rebuild the plugins), and its demo fails on a tagged
+  engine with no spec. Add a row there with every new engine: flames take their size and rhythm from it.
 - **Plugins read MoreTuning, they do not need it.** Row names are the metadata: ECU Tuning takes
   the supercharger stage from an intake row called `Supercharger*`. Without the plugin those are
   plain intakes, and without the sounds the plugin plays nothing and carries on.
