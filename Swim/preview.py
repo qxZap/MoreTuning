@@ -14,9 +14,9 @@ def dump(out):
     import swim_anim as sa
     segs = [(i, p) for i, p in enumerate(sa.PARENT) if p > 0 and not sa.N[i].startswith(SKIP) and not sa.N[i].endswith('_end')]
     data = {'segs': segs, 'names': sa.N, 'anims': {}}
-    for name in sa.ANIMS:
+    for name in (sys.argv[2:] or sa.ANIMS):
         Pw, L = sa.world_frames(name); n = len(Pw) - 1
-        picks = [0, n // 4, n // 2, 3 * n // 4]
+        picks = [0, n // 4, n // 2, 3 * n // 4] if sa.ANIMS[name][2] else [round(n * i / 5) for i in range(6)]
         data['anims'][name] = {'frames': picks, 'pos': [[[-p[0] / 100, p[1] / 100, p[2] / 100] for p in Pw[f]] for f in picks]}
     path = os.path.join(out, 'poses.json'); json.dump(data, open(path, 'w')); return path
 
@@ -54,7 +54,7 @@ for name, a in data['anims'].items():
         bpy.ops.mesh.primitive_uv_sphere_add(radius=0.11, location=Vector(pos[hi]) + (Vector(pos[hi]) - Vector(pos[hi - 1])).normalized() * 0.1)
         bpy.context.object.color = (0.95, 0.85, 0.6, 1); objs.append(bpy.context.object)
         # nose: where the face points (head's forward is asset +Y in the ref pose, carried by the head bone)
-        ctr = Vector((0, 0, 1.2))
+        ctr = Vector((0, 0, 1.15))
         for vi, view in enumerate(((1, 0, 0.15), (0.7, 0.75, 0.45))):     # side (from the left), three-quarter front
             place(view, ctr)
             sc.render.filepath = '%s/%s_%d_%d.png' % (out, name, fi, vi)

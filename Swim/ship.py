@@ -6,7 +6,7 @@
    would replace the game's SK_MTCharacter.
 2. Every AnimationAsset stores its skeleton's GUID; the stand-in's is swapped for the game's (read off the vanilla
    skeleton) so nothing treats the anims as foreign.
-3. A montage's section loops when NextSectionName names itself; UE's Python cannot reach CompositeSections, so it is
+3. A looping montage's section loops when NextSectionName names itself (the one-shots keep None); UE's Python cannot reach CompositeSections, so it is
    set in the cooked montage with UAssetGUI.
 4. Reads every shipped asset back (UAssetGUI fails silently, so: output exists, NormalExport, imports point at the
    game's skeleton and ACL settings, the GUID is the game's, montage slot/section as intended).
@@ -20,7 +20,8 @@ VANILLA_SKEL = r"D:\MT\Output\Exports\MotorTown\Content\Characters\Models\Skelet
 OUT = r"D:\MT\MoreTuning\qxZap_Swim_P\MotorTown\Content\Swim\Anims"
 WORK = r"D:\MT\SwimCook\ship"
 SKEL_PATH = "/Game/Characters/Models/Skeletons/SK_MTCharacter"
-ANIMS = ["Swim_Crawl", "Swim_Tread", "Swim_Dive"]
+KEYS = json.load(open(r"D:\MT\SwimCook\keys.json"))      # swim_anim.py export: names, lengths, which ones loop
+ANIMS = list(KEYS)
 
 
 def tojson(uasset, out):
@@ -64,8 +65,9 @@ def main():
         e = m["Exports"][0]
         e["Extras"] = base64.b64encode(game_guid).decode()
         sec = next(p for p in e["Data"] if p["Name"] == "CompositeSections")["Value"][0]["Value"]
-        nxt = next(p for p in sec if p["Name"] == "NextSectionName")
-        nxt["Value"] = next(p for p in sec if p["Name"] == "SectionName")["Value"]
+        if KEYS[a]["loop"]:
+            nxt = next(p for p in sec if p["Name"] == "NextSectionName")
+            nxt["Value"] = next(p for p in sec if p["Name"] == "SectionName")["Value"]
         json.dump(m, open(js, "w", encoding="utf-8"))
         fromjson(js, um)
     verify(game_guid)
@@ -88,11 +90,11 @@ def verify(game_guid):
         props = {p["Name"]: p for p in e["Data"]}
         sec = {p["Name"]: p.get("Value") for p in props["CompositeSections"]["Value"][0]["Value"]}
         slot = {p["Name"]: p.get("Value") for p in props["SlotAnimTracks"]["Value"][0]["Value"]}
-        assert sec["SectionName"] == sec["NextSectionName"] == "Default", sec
+        assert sec["SectionName"] == "Default" and sec["NextSectionName"] == ("Default" if KEYS[a]["loop"] else None), sec
         assert slot["SlotName"] == "DefaultSlot", slot
         imps = {(i["ObjectName"], i["ClassName"]) for i in m["Imports"]}
         assert ("/Game/Swim/Anims/" + a, "Package") in imps and (SKEL_PATH, "Package") in imps, a
-        print("ok  /Game/Swim/Anims/%s_Montage.%s_Montage  %.2f s, slot DefaultSlot, section Default -> Default" % (a, a, float(length)))
+        print("ok  /Game/Swim/Anims/%s_Montage.%s_Montage  %.2f s, slot DefaultSlot, %s" % (a, a, float(length), "loops" if KEYS[a]["loop"] else "one-shot"))
     print("shipped to", OUT)
 
 
