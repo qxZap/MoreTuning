@@ -614,6 +614,12 @@ wrong:
   and logs `N of N took`. Check names against the exe, not a template: 0.7.20 renamed the
   patrol payments to `...PaymentBase` / `...PaymentPerHour`, and the old names sit only in a
   "Cheat CVar from online config" list.
+  Since 2026-11-13 the loader unlocks them for good (`mt_loader.ini [CVars] UnlockCheat=1`,
+  the default). In `DllMain`, before the engine registers its variables, it applies two
+  one-byte patches: the registration check `test al,1` and the setter's `and sil,1` become 0.
+  After that a cheat cvar takes from `[ConsoleVariables]` like any other. Learnt from Balledk's
+  CVar INI Unlocker (`winhttp.dll`); his setter pattern includes the `GetFlags` call, which
+  the 11-12 build compiles differently, so ours starts after it. Both must match exactly once.
 - **Proof it worked:** the server's log prints the row id it resolved the
   vehicle from — `Fortem(1068262)` on a vanilla server, `Fortem(1103752)` on
   ours. The id changed, so the server used *our* table.
