@@ -110,10 +110,13 @@ Engines, Suspension Expansion and MoreAttachments ship their own tables as **ado
 `DataTableFramework/registry.json`), not `Ch0001..`. The framework still stubs the channels for
 other mods. `DataTableFramework/convert_mod.py` converts a mod to this layout.
 
-- **MoreTuning carries two extra assets:** `Sounds/Vehicle/Intake/QX_Flutter_Shot` (the flutter
-  used by the ECU Tuning plugin, a friend's sound, used with their OK) and
-  `Sounds/CabinMasterSoundMix`, vanilla's cabin mix with its 5 kHz band raised from 0.5 to 0.85
-  and its top band from 0.1 to 0.6. Both sit under `Sounds/`, which server paks drop.
+- **MoreTuning carries one extra asset:** `Sounds/CabinMasterSoundMix`, vanilla's cabin mix with its 5 kHz band raised
+  from 0.5 to 0.85 and its top band from 0.1 to 0.6 (under `Sounds/`, which server paks drop).
+- **ECU Tuning's sounds are their own pak** (2026-11-13, the user: "ECU tuning as a pack and as a plugin"):
+  `qxZap_ECUTuning_P` holds the turbo flutter `Sounds/Vehicle/Intake/QX_Flutter_Shot` (a friend's sound, used with
+  their OK) and the supercharger whine `MoreTuning/Sounds/SW_QX_BlowerWhine`. They kept their package paths when they
+  moved out of MoreTuning, so a cooked asset was not renamed and the plugin's paths did not change. The plugin works
+  without the pak and plays no flutter or whine; the whine falls back to Teh's `hellcathigh` when that pack is in.
 - **Suspension Tuning is its own mod** (2026-11-09, the user's call: not MoreTuning, not ECU Tuning; renamed from
   Suspension Visuals the same day -- the pak and `/Game/SuspensionVisuals/` keep the old name). Plugin
   `SuspensionTuning` (`suspension_tuning.ini`) + pak `qxZap_SuspensionVisuals_P`: Arini's meshes under `/Game/SuspensionVisuals/` and the
