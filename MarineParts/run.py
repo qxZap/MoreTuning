@@ -40,11 +40,12 @@ PREFIX = synth.PREFIX
 
 def marine(asset, name, hp, nm, rpm, mass, inertia, boat):
     """One engine; the family's sound, starter share and idle come from the boat (2026-11-11 tests: the tug idles at
-    0.05, the ship's 600 rpm engine only just failed to at 0.12)."""
+    0.05, the ship's 600 rpm engine only just failed to at 0.12; 2026-11-13: at 0.2 it still died, 149 rpm then 0 in
+    neutral, so 0.35)."""
     tug = boat == "C0700_Tugboat"
     return dict(sound="dd1671" if tug else "om502", asset=asset, name=name, family="truck", ref="C18_550HP",
                 curve="DieselTruck", hp=hp, torque=nm * 12000, rpm=rpm, mass=mass, inertia=inertia, jake=0,
-                starter_rpm=round(rpm * 0.475), idle=0.05 if tug else 0.2, boat=boat, per_nm=12000)
+                starter_rpm=round(rpm * 0.475), idle=0.05 if tug else 0.35, boat=boat, per_nm=12000)
 
 
 def petrol(asset, name, hp, rpm, mass, inertia, boat, sound):
