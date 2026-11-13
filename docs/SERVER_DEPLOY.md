@@ -52,8 +52,17 @@ python server_safe_pak.py "<client Paks>\qxZap_MoreTuning_P.pak" ^
 | `qxZap_MoreTuning_yCarbon_P.pak` | `DataTableFramework` | – | 1 asset |
 | `Z_SuspensionExpansion_P.pak` | `DataTableFramework` | – | 1 asset |
 | `Z_TehsEngineSoundPack_P.pak` | `DataTableFramework,Cars/Parts` | `Sound` | 94 → 25 assets -- **it carries 16 engines, not just audio** |
+| `BoaterTown_P.pak` (Arini's boats) | `DC` | `Textures,Materials,/T_,/M_,/MI_,Sound,/UI/,RT_` | 164 MB: tables, the 7 boat classes **and the hull meshes** (tested 2026-11-13) |
 
 Two of these are easy to get wrong:
+
+- **Boats need their hull meshes on the server.** Stripped to tables + classes like the others, every boat's body
+  weighed 35 kg on the server, fell through the unloaded land and was flung by the Boats plugin's buoyancy -- two
+  boats in the server's save ended up millions of metres away (2026-11-13). Keeping `DC` minus textures, materials
+  and sounds, the server still reached `Session created!` in about a minute and the hulls (`SM_Tugboat_Hull` ...)
+  loaded. A boat with no player near is held still by the server itself (its body does not simulate); the plugin
+  floats a boat once the game simulates it. Server plugins: the loader must be v7 for Boats (`version.dll`), plus
+  `mt_plugin_Boats.dll` and the client's `boats.ini` (its per-boat hull and buoyancy sections).
 
 - **`Z_TehsEngineSoundPack_P.pak` is not just sounds.** It carries Teh's 16
   engines in the `VehicleParts` channel (Ch0004). Skip it and the server's
