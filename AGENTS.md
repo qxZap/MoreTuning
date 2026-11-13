@@ -212,7 +212,7 @@ python MoreAttachments/channel.py  # Items Ch0001 + both Vendor_Garage copies
 - **Which wheels a vehicle is offered is decided by mesh slots, not gates.** Each axle asks for one slot kind
   (Left/Right, DRW, Quad, Rear) and the panel lists only rows that fill it; vanilla fills Left/Right only. 0.7.19's
   `make_universal` (8d47b3206) filled the rest in our Wheels tables; 0.7.20 ships vanilla Wheels as it is, so the
-  `CustomWheelScale` plugin fills empty slots in memory (and clears the gates) on every table. Symptom when it is
+  `WheelSizeUnlimited` plugin (was CustomWheelScale) fills empty slots in memory (and clears the gates) on every table. Symptom when it is
   missing: a vehicle lists only the rows that fill every slot (2026-11-08, the Biceps saw only the pack wheels).
 - **Paint on foreign cars** (`paint.py`): a part paints where its mesh slot uses
   `M_Body`, but 388/413 AeroParts rows have no `ColorSlots` and rely on the
@@ -567,7 +567,7 @@ repairing built actors, so the two cannot drift.
   Wheel Works V6 (2026-11-05, for 0.7.20) is staged in `MajasMoWheelWorksV6-7.20_P/` (her Wheels table + string
   table, unpacked with repak -- her pak is no longer a problem for it); 121 rows, the 28 new ones all 0.7.20's own
   wheels. It replaces vanilla `Wheels` (a parent, not a composite), so channels keep working. Installed: Standard
-  (CustomWheelScale unlocks anyway).
+  (WheelSizeUnlimited unlocks anyway).
 - A light control is a **root** SCS node (`RootNodes` + `AllNodes`), not a
   child of the scene root -- cloning one means registering it there.
 
