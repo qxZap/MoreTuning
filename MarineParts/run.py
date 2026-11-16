@@ -17,6 +17,8 @@ Asset names keep "cat" out (FuelRealism reads it as an old mechanical diesel; th
 Rebase/channels.py and NewEngines/synth.py, then FuelRealism/run.py and EngineTags/run.py, like synth.py. Rerunnable.
 Boat row keys: Arini's Vehicles_Biceps (C0700_Tugboat, C0701_ContainerShip, C0702_TenderBoat, C0703_FishingBoat,
 C0704_SpeedBoat). The three small boats run petrol outboards / sterndrives (Yamaha F-series, MerCruiser, Mercury Racing).
+The MaK family and the ship gearbox also go on the three carriers Arini is building (C0705_OilTanker, C0706_GrainCarrier,
+C0707_OreCarrier, 2026-11-16): one engine list, four hulls, so a part's VehicleKeys carries every hull it fits.
 """
 import copy
 import importlib.util
@@ -37,6 +39,9 @@ TRANS_DIR = os.path.join(MOD, "Cars", "Parts", "Transmission")
 TRANS_PKG = "/Game/Cars/Parts/Transmission/"
 TRANS_REF = "allisonHT740"  # a 0.7.20-clean box (reserialized); only its gear list changes
 PREFIX = synth.PREFIX
+# The hulls the MaK family and the ship gearbox go on: the container ship and Arini's three carriers
+# (2026-11-16: C0705_OilTanker, C0706_GrainCarrier, C0707_OreCarrier, all copies of the freighter).
+SHIPS = ["C0701_ContainerShip", "C0705_OilTanker", "C0706_GrainCarrier", "C0707_OreCarrier"]
 
 def marine(asset, name, hp, nm, rpm, mass, inertia, boat):
     """One engine; the family's sound, starter share and idle come from the boat (2026-11-11 tests: the tug idles at
@@ -63,9 +68,9 @@ ENGINES = [
     marine("Marine3508C_1200HP", "Caterpillar 3508C Marine 1200HP", 1200, 5341, 1600, 5000, 285_000, "C0700_Tugboat"),
     marine("Marine3512C_1800HP", "Caterpillar 3512C Marine 1800HP", 1800, 8000, 1600, 7000, 400_000, "C0700_Tugboat"),
     marine("Marine3516C_2575HP", "Caterpillar 3516C Marine 2575HP", 2575, 11460, 1600, 8700, 500_000, "C0700_Tugboat"),
-    marine("MaK6M32C_4000HP", "MaK 6M32C Marine 4000HP", 4000, 47750, 600, 31000, 3_000_000, "C0701_ContainerShip"),
-    marine("MaK8M32C_5400HP", "MaK 8M32C Marine 5400HP", 5400, 64000, 600, 40000, 4_000_000, "C0701_ContainerShip"),
-    marine("MaK9M32C_6000HP", "MaK 9M32C Marine 6000HP", 6000, 71620, 600, 45000, 4_500_000, "C0701_ContainerShip"),
+    marine("MaK6M32C_4000HP", "MaK 6M32C Marine 4000HP", 4000, 47750, 600, 31000, 3_000_000, SHIPS),
+    marine("MaK8M32C_5400HP", "MaK 8M32C Marine 5400HP", 5400, 64000, 600, 40000, 4_000_000, SHIPS),
+    marine("MaK9M32C_6000HP", "MaK 9M32C Marine 6000HP", 6000, 71620, 600, 45000, 4_500_000, SHIPS),
     petrol("Outboard_F70_70HP", "Yamaha F70 Outboard 70HP", 70, 5800, 119, 1500, "C0702_TenderBoat", "4age"),
     petrol("Outboard_F115_115HP", "Yamaha F115 Outboard 115HP", 115, 5500, 172, 1800, "C0702_TenderBoat", "4age"),
     petrol("Outboard_F150_150HP", "Yamaha F150 Outboard 150HP", 150, 5500, 216, 2200, "C0702_TenderBoat", "4age"),
@@ -79,7 +84,7 @@ ENGINES = [
 BOXES = [
     dict(asset="MarineGear_Tug", name="Marine Reverse Gear 5:1 (Tug)", ratio=5.0, mass=2000, cost=40000, boat="C0700_Tugboat"),
     dict(asset="MarineGear_Ship", name="Marine Reverse-Reduction Gear 4:1 (Ship)", ratio=4.0, mass=8000, cost=120000,
-         boat="C0701_ContainerShip"),
+         boat=SHIPS),
     dict(asset="MarineGear_Tender", name="Outboard Lower Unit 2.15:1 (Tender)", ratio=2.15, mass=20, cost=3000, boat="C0702_TenderBoat"),
     dict(asset="MarineGear_Fisher", name="Outboard Lower Units 1.86:1 (Fishing Boat)", ratio=1.86, mass=40, cost=6000,
          boat="C0703_FishingBoat"),
@@ -122,13 +127,19 @@ def make_box(box, ref):
     return asset
 
 
-def name_key(row, boat):
+def name_key(row, boats):
+    """The part sits on these boats only: one VehicleKeys name each. It is a list, so the same engine can go on
+    more than one hull (2026-11-16: the MaK family and the ship gearbox now go on the three new carriers too)."""
+    if isinstance(boats, str):
+        boats = [boats]
     for p in row["Value"]:
         if p["Name"] == "VehicleKeys":
-            item = {"$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI", "Name": "0", "ArrayIndex": 0,
-                    "PropertyGuid": None, "IsZero": False, "PropertyTagFlags": "None", "PropertyTypeName": None,
-                    "PropertyTagExtensions": "NoExtension", "Value": boat}
-            p["Value"] = [item]
+            items = []
+            for i, boat in enumerate(boats):
+                items.append({"$type": "UAssetAPI.PropertyTypes.Objects.NamePropertyData, UAssetAPI", "Name": str(i),
+                              "ArrayIndex": i, "PropertyGuid": None, "IsZero": False, "PropertyTagFlags": "None",
+                              "PropertyTypeName": None, "PropertyTagExtensions": "NoExtension", "Value": boat})
+            p["Value"] = items
         elif p["Name"] == "LevelRequirementToBuy":
             p["Value"][0][1]["Value"] = 1  # the boat is the gate; truck levels would ask for level 333
         elif p["Name"] == "bIsHidden":
