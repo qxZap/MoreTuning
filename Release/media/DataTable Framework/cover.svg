@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" role="img" aria-labelledby="t d">
+  <title id="t">DataTable Framework</title>
+  <desc id="d">Five mods' tables stacked on the left, each feeding its rows into one composite VehicleParts table on the right.</desc>
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#16293A" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="glow" cx="72%" cy="58%" r="55%">
+      <stop offset="0" stop-color="#1B3A50" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#0D1B26" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="lift" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <!-- ground -->
+  <rect width="1280" height="720" fill="#0D1B26"/>
+  <rect width="1280" height="720" fill="url(#grid)"/>
+  <rect width="1280" height="720" fill="url(#glow)"/>
+
+  <!-- title -->
+  <text x="90" y="112" fill="#EAF1F5" font-family="'Space Grotesk','Segoe UI',Arial,sans-serif" font-size="66" font-weight="700" letter-spacing="-1">DataTable Framework</text>
+  <text x="92" y="156" fill="#8FA6B8" font-family="'Space Grotesk','Segoe UI',Arial,sans-serif" font-size="25">Every mod's rows in one table. Nobody overwrites anybody.</text>
+
+  <!-- the feeds: one curve per source, into the composite -->
+  <g fill="none" stroke-width="3" stroke-linecap="round" opacity="0.85">
+    <path d="M498 270 C640 270 650 318 806 318" stroke="#8C7CF0"/>
+    <path d="M472 292 C630 292 650 382 806 382" stroke="#E4677A"/>
+    <path d="M446 314 C620 314 650 446 806 446" stroke="#3FC1B0"/>
+    <path d="M420 336 C610 336 650 510 806 510" stroke="#F2A33A"/>
+    <path d="M394 358 C600 358 650 574 806 574" stroke="#8FA3B4"/>
+  </g>
+
+  <!-- the stack: back to front -->
+  <g font-family="'Space Grotesk','Segoe UI',Arial,sans-serif" filter="url(#lift)">
+    <!-- Rak -->
+    <g transform="translate(198 236)">
+      <rect width="300" height="150" rx="7" fill="#132637" stroke="#8C7CF0" stroke-width="2"/>
+      <path d="M0 7a7 7 0 0 1 7-7h286a7 7 0 0 1 7 7v25H0z" fill="#8C7CF0"/>
+      <text x="14" y="22" fill="#0D1B26" font-size="15" font-weight="700" letter-spacing="1">RAK · HEAVY HAUL</text>
+    </g>
+    <!-- Teh -->
+    <g transform="translate(172 258)">
+      <rect width="300" height="150" rx="7" fill="#132637" stroke="#E4677A" stroke-width="2"/>
+      <path d="M0 7a7 7 0 0 1 7-7h286a7 7 0 0 1 7 7v25H0z" fill="#E4677A"/>
+      <text x="14" y="22" fill="#0D1B26" font-size="15" font-weight="700" letter-spacing="1">TEH · ENGINE SOUNDS</text>
+    </g>
+    <!-- Overlord -->
+    <g transform="translate(146 280)">
+      <rect width="300" height="150" rx="7" fill="#132637" stroke="#3FC1B0" stroke-width="2"/>
+      <path d="M0 7a7 7 0 0 1 7-7h286a7 7 0 0 1 7 7v25H0z" fill="#3FC1B0"/>
+      <text x="14" y="22" fill="#0D1B26" font-size="15" font-weight="700" letter-spacing="1">AUSTIN · OVERLORD HX8</text>
+    </g>
+    <!-- MoreTuning -->
+    <g transform="translate(120 302)">
+      <rect width="300" height="150" rx="7" fill="#132637" stroke="#F2A33A" stroke-width="2"/>
+      <path d="M0 7a7 7 0 0 1 7-7h286a7 7 0 0 1 7 7v25H0z" fill="#F2A33A"/>
+      <text x="14" y="22" fill="#0D1B26" font-size="15" font-weight="700" letter-spacing="1">QXZAP · MORETUNING</text>
+    </g>
+    <!-- Vanilla, in front -->
+    <g transform="translate(94 324)">
+      <rect width="300" height="150" rx="7" fill="#15293B" stroke="#8FA3B4" stroke-width="2"/>
+      <path d="M0 7a7 7 0 0 1 7-7h286a7 7 0 0 1 7 7v25H0z" fill="#8FA3B4"/>
+      <text x="14" y="22" fill="#0D1B26" font-size="15" font-weight="700" letter-spacing="1">VANILLA · 0.7.20</text>
+      <g stroke="#2A4357" stroke-width="1.5">
+        <line x1="14" y1="62" x2="286" y2="62"/>
+        <line x1="14" y1="90" x2="286" y2="90"/>
+        <line x1="14" y1="118" x2="286" y2="118"/>
+      </g>
+      <g fill="#6F879A" font-family="'JetBrains Mono',Consolas,monospace" font-size="14">
+        <text x="14" y="55">MediumDuty_190HP</text>
+        <text x="14" y="83">Kart_10HP</text>
+        <text x="14" y="111">SemiTruck_Box</text>
+        <text x="14" y="139">…</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- the composite -->
+  <g transform="translate(806 260)" filter="url(#lift)">
+    <rect width="384" height="360" rx="9" fill="#10222F" stroke="#EAF1F5" stroke-width="2.5"/>
+    <path d="M0 9a9 9 0 0 1 9-9h366a9 9 0 0 1 9 9v39H0z" fill="#EAF1F5"/>
+    <text x="18" y="32" fill="#0D1B26" font-family="'Space Grotesk','Segoe UI',Arial,sans-serif" font-size="21" font-weight="700">VehicleParts</text>
+    <rect x="262" y="12" width="106" height="24" rx="12" fill="#0D1B26"/>
+    <text x="315" y="29" fill="#EAF1F5" text-anchor="middle" font-family="'Space Grotesk','Segoe UI',Arial,sans-serif" font-size="12.5" font-weight="700" letter-spacing="1.2">COMPOSITE</text>
+
+    <g font-family="'JetBrains Mono',Consolas,monospace" font-size="16" fill="#D7E2EA">
+      <rect x="18" y="50" width="8" height="24" rx="2" fill="#8C7CF0"/>
+      <text x="40" y="68">RHHP_Engine_Cat3406</text>
+      <rect x="18" y="114" width="8" height="24" rx="2" fill="#E4677A"/>
+      <text x="40" y="132">Teh_HellcatHigh</text>
+      <rect x="18" y="178" width="8" height="24" rx="2" fill="#3FC1B0"/>
+      <text x="40" y="196">HX8_Winch100T</text>
+      <rect x="18" y="242" width="8" height="24" rx="2" fill="#F2A33A"/>
+      <text x="40" y="260">C0001_BBK360</text>
+      <rect x="18" y="306" width="8" height="24" rx="2" fill="#8FA3B4"/>
+      <text x="40" y="324">MediumDuty_190HP</text>
+    </g>
+    <g stroke="#1E3546" stroke-width="1.5">
+      <line x1="18" y1="94" x2="366" y2="94"/>
+      <line x1="18" y1="158" x2="366" y2="158"/>
+      <line x1="18" y1="222" x2="366" y2="222"/>
+      <line x1="18" y1="286" x2="366" y2="286"/>
+    </g>
+  </g>
+
+  <!-- the facts -->
+  <g font-family="'Space Grotesk','Segoe UI',Arial,sans-serif" font-size="19" fill="#8FA6B8">
+    <text x="92" y="664"><tspan fill="#EAF1F5" font-weight="700">14</tspan> composite tables   ·   <tspan fill="#EAF1F5" font-weight="700">36</tspan> mod tables listed   ·   <tspan fill="#EAF1F5" font-weight="700">32</tspan> car slots   ·   Motor Town <tspan fill="#F2A33A" font-weight="700">0.7.20</tspan></text>
+  </g>
+</svg>

@@ -70,6 +70,9 @@ DOWNLOADS = [
     ("2 Mods", "Arini Vehicles", ["Biceps_P.pak"], None,
      "Arini's vehicles.",
      "DataTable Framework.", "Arini Map."),
+    ("2 Mods", "VehicleLabs", ["VehicleLabs_1_P.pak"], None,
+     "Fuel pumps, the bulk economy, and body parts you can take off a vehicle.",
+     "DataTable Framework.", "Arini Map: its vehicle rows go on top of Arini's."),
     ("2 Mods", "Crisp Sky", ["CrispSky_P.pak"], None,
      "A clearer, crisper sky.",
      "Nothing.", ""),
@@ -160,7 +163,6 @@ NOT_OURS = [
     ("MajasDetailWorksV4-7.20_P.pak", "Maja's Detail Works"),
     ("MajasMoWheelWorksV6-7.20_P.pak", "Maja's Mo Wheel Works"),
     ("Slides_Attachments_P.pak", "Slides Attachments"),
-    ("VehicleLabs_1_P.pak", "VehicleLabs"),
     ("Wormhole720_P.pak", "Wormhole (check whether it is ours)"),
 ]
 
@@ -240,6 +242,9 @@ def build():
         print(f"  {folder}: {len(files)} file(s)")
     with open(os.path.join(DEST, "README.txt"), "w", encoding="utf-8", newline="\r\n") as f:
         f.write(index_text(downloads))
+    media = os.path.join(os.path.dirname(os.path.abspath(__file__)), "media")
+    if os.path.isdir(media):   # the mod-page kit: cover images and descriptions, one folder per download
+        shutil.copytree(media, os.path.join(DEST, "Media"))
     print(f"{len(downloads)} downloads in {DEST}")
 
 
