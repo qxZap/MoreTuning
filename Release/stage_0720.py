@@ -174,6 +174,7 @@ NOT_OURS = [
     ("MajasDecalPackV4.4_P.pak", "Maja's Decal Pack"),
     ("MajasDetailWorksV4-7.20_P.pak", "Maja's Detail Works"),
     ("MajasMoWheelWorksV6-7.20_P.pak", "Maja's Mo Wheel Works"),
+    ("MajasMnTrailerworksV8-7.20_P.pak", "Maja's Trailer Works (V8, 0.7.20)"),
     ("Slides_Attachments_P.pak", "Slides Attachments"),
     ("Wormhole720_P.pak", "Wormhole (check whether it is ours)"),
 ]
