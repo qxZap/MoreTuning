@@ -2,7 +2,7 @@
 
 ## Short description
 
-One key to put every vehicle you own back in your list. Press Ctrl+F10 and the map is clear; your camper stays where it is.
+One key to put every vehicle you own back in your list. Press Ctrl+F10 and the map is clear; your campers stay where they are.
 
 ## Long description
 
@@ -12,7 +12,7 @@ Vehicles you leave around the map stay out until you despawn them one by one in 
 
 - Ctrl+F10 sends every vehicle you own back to your vehicle list, the same as pressing Despawn on each one.
 - Nothing is sold or deleted: spawn them again from the list whenever you want.
-- Campers stay out, so your base on wheels stays where you parked it.
+- Campers stay out, so your base on wheels stays where you parked it: motorhomes and camper trailers, the game's and mods' alike.
 
 ### What you need
 
