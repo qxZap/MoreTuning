@@ -94,8 +94,10 @@ Consequences:
    previous usmap (a live dump lacks classes that were not loaded) and name it `MotorTown<ver>`.
 2. `python DataTableFramework/update.py [--install]`: pulls vanilla straight from `MotorTown-Windows.pak` (repak with
    `MT_AES_KEY` from `D:\MTLiveMap\mt_paths.py`; no FModel), refreshes `D:\MT\Output\Exports` with a dated backup, and
-   rebuilds every composite, `GameResource` and `DriveGameModeBP`. Those two must never ship stale: the framework
-   outranks vanilla and would undo the update's own changes to them.
+   rebuilds every composite, the Decals composite and `DriveGameModeBP`. That one must never ship stale: the framework
+   outranks vanilla and would undo the update's own changes to it. The framework does **not** ship `GameResource`
+   (since 2026-11-19): its copy carried Arini's world map to players without the Arini Map, whose roads then sat
+   shifted on the map view. Arini's own pak ships it (its bounds + the Decals redirect); rebuild that one with Arini.
 3. `Rebase/reserialize.py` for anything whose class layout shifted (its diff names the classes).
 
 Engine sounds in game follow `FlatEngines/game_audio.py`, measured with the SoundProbe plugin: pitch clamped 0.5-2,

@@ -11,9 +11,9 @@
    hundred at a time, for a CompositeDataTable an update added elsewhere.
 2. Refresh the vanilla export (pipeline.VANILLA, D:\\MT\\Output\\Exports): files that changed are copied in, and the
    previous copies go to D:\\MT\\Output\\_backup_<date>\\ first. Prints what changed.
-3. Rebuild: run.py (every composite: vanilla parents + adopted tables + rtwin's slots), gameresource.py (Decals
-   redirect + Arini's world map), dealers.py (DriveGameModeBP with the 32 dealer slot nodes; no stubs ship). Each reads vanilla fresh, so a
-   changed GameResource or game mode is never shipped stale -- the framework outranks vanilla and would mask it.
+3. Rebuild: run.py (every composite: vanilla parents + adopted tables + rtwin's slots), gameresource.py (the Decals
+   composite only; GameResource is Arini's to ship), dealers.py (DriveGameModeBP with the 32 dealer slot nodes; no stubs ship). Each reads vanilla fresh, so a
+   changed game mode is never shipped stale -- the framework outranks vanilla and would mask it.
 4. Pack AAAA_DataTableFramework_99_P (the one framework pak); --install copies it into Paks.
 """
 import datetime
