@@ -269,6 +269,9 @@ def copy_tree():
     dead = os.path.join(OUT, "MotorTown", "Content", DROP)
     if os.path.isdir(dead):                          # copytree still makes it
         shutil.rmtree(dead)
+    mix = os.path.join(OUT, "MotorTown", "Content", "Sounds")   # the cabin sound mix: client-only, like all audio
+    if os.path.isdir(mix):
+        shutil.rmtree(mix)
 
 
 def packages_here():

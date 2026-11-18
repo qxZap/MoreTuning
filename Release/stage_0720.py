@@ -24,6 +24,7 @@ import sys
 GAME = r"D:\SteamLibrary\steamapps\common\Motor Town\MotorTown"
 PAKS = os.path.join(GAME, "Content", "Paks")
 LOADER_OUT = r"D:\MTLiveMap\mt_loader\out"
+SERVER_PAK = r"D:\MT\MoreTuning\qxZap_MoreTuning_Server_P.pak"   # python ServerBuild/run.py --pack
 # the loader ships as GitHub built it from the public source, so the download matches the release's hash
 LOADER_RELEASE = "v1.0"   # qxZap/mt-plugin-loader; bump with each release/<version> branch
 LOADER_DLL = os.path.join(os.path.dirname(os.path.abspath(__file__)), "work", "loader-" + LOADER_RELEASE, "version.dll")
@@ -48,6 +49,12 @@ DOWNLOADS = [
     ("2 Mods", "MoreTuning", ["qxZap_MoreTuning_P.pak"], None,
      "The parts pack: engines, transmissions, turbos, brakes, Motor Works' parts and the cabin sound mix.",
      "DataTable Framework.", "ECU Tuning plugin reads its supercharger and turbo parts (optional)."),
+    ("2 Mods", "MoreTuning - Server", [SERVER_PAK], None,
+     "MoreTuning for a dedicated server, so players with MoreTuning can join it: the same parts and stats, "
+     "without the engine sounds a server cannot load (a server plays no sound; players keep the full mod).",
+     "DataTable Framework, installed on the server too (the whole pak, as it is).",
+     "If your players use MoreTuning - No Limits or Carbon, put those paks on the server too, unchanged: "
+     "they are tables only."),
     ("2 Mods", "MoreTuning - No Limits", ["qxZap_MoreTuning_xNoLimits_P.pak"], None,
      "Any bumper, body part or headlight on any vehicle (they will not always sit right).",
      "DataTable Framework, MoreTuning.", ""),
@@ -175,11 +182,21 @@ INSTALL = """HOW TO INSTALL
 """
 
 
+SERVER_INSTALL = """HOW TO INSTALL (on the dedicated server, not on a player's game)
+1. Open the dedicated server's folder (Motor Town Behind The Wheel - Dedicated Server).
+2. Drag the MotorTown folder from this download into it and let it merge.
+3. In the server's DedicatedServerConfig.json set "bAllowModdedVehicle": true, and under
+   "GameDataValidation" set "bAllowVehicleAndPartsMismatch": true.
+Players install the normal MoreTuning download. When they join, the game may say some game data
+differs: that is the engine sounds, which only players have, and it is expected.
+"""
+
+
 def readme(name, what, needs, works, files):
     lines = [name, "=" * len(name), "", what, "", "NEEDS: " + needs]
     if works:
         lines += ["WORKS WITH: " + works]
-    lines += ["", "FILES:"] + ["  " + f for f in files] + ["", INSTALL]
+    lines += ["", "FILES:"] + ["  " + f for f in files] + ["", SERVER_INSTALL if name.endswith("Server") else INSTALL]
     return "\n".join(lines)
 
 
@@ -190,7 +207,7 @@ def plan():
         folder = os.path.join(group, name)
         files = []
         for p in paks:
-            files.append((os.path.join(PAKS, p), os.path.join(PAKDIR, p)))
+            files.append((os.path.join(PAKS, p), os.path.join(PAKDIR, os.path.basename(p))))
         if dll == "LOADER":
             files.append((LOADER_DLL, os.path.join(WIN64, "version.dll")))
         elif dll:   # the plugin alone: the loader is its own download, which every plugin needs
