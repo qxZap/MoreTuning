@@ -36,7 +36,7 @@ DOWNLOADS = [
     # ---- what everything else stands on ----
     ("1 Required", "Plugin Loader", [], "LOADER",
      "The loader every plugin runs on (version.dll). On its own it does nothing visible.",
-     "Nothing.", "Every plugin download already carries a copy; the copies are identical."),
+     "Nothing.", "Every download in 3 Plugins needs it: install it once, then add the plugins you want."),
     ("1 Required", "DataTable Framework", ["AAAA_DataTableFramework_99_P.pak"], None,
      "Lets several mods add parts, vehicles and cargo side by side instead of overwriting each other.",
      "Nothing.", "Every mod in 2 Mods that adds parts, vehicles or cargo needs it."),
@@ -83,72 +83,72 @@ DOWNLOADS = [
     # ---- plugins: one dll each (plus the loader), and its own pak if it has one ----
     ("3 Plugins", "Sea (boats and swimming)", [], "mt_plugin_Sea.dll",
      "Drives and floats every boat and ship on the game's own waves, and lets you swim.",
-     "Plugin Loader (included).", "Boater Town mod: the boats themselves."),
+     "Plugin Loader.", "Boater Town mod: the boats themselves."),
     ("3 Plugins", "Helicopter", [], "mt_plugin_Helicopter.dll",
      "Makes the helicopter fly: W is the collective, steering yaws.",
-     "Plugin Loader (included), Boater Town mod (the aircraft).", ""),
+     "Plugin Loader, Boater Town mod (the aircraft).", ""),
     ("3 Plugins", "Boater Town (plugin)", [], "mt_plugin_BoaterTown.dll",
      "Gives the harbour delivery points their capacity and cargo list.",
-     "Plugin Loader (included), Boater Town mod, Arini Map.", ""),
+     "Plugin Loader, Boater Town mod, Arini Map.", ""),
     ("3 Plugins", "ECU Tuning", ["qxZap_ECUTuning_P.pak"], "mt_plugin_ECUTuning.dll",
      "Per-vehicle engine tuning in the garage: timing, fuel, boost, anti-lag; pops, bangs and flames. "
      "The pak is the turbo flutter and supercharger whine.",
-     "Plugin Loader (included).", "MoreTuning (supercharger/turbo parts), Tehs Engine Sound Pack."),
+     "Plugin Loader.", "MoreTuning (supercharger/turbo parts), Tehs Engine Sound Pack."),
     ("3 Plugins", "Suspension Tuning", ["qxZap_SuspensionVisuals_P.pak"], "mt_plugin_SuspensionTuning.dll",
      "Brakes & Suspension page: big brake kits, calipers and discs you can see and paint, per-axle "
      "suspension geometry. Off per car until you switch it on in the garage.",
-     "Plugin Loader (included).", ""),
+     "Plugin Loader.", ""),
     ("3 Plugins", "Capitalist Economy", ["qxZap_CapitalistEconomy_P.pak"], "mt_plugin_CapitalistEconomy.dll",
      "Cargo pays by straight-line distance, real weight and size, and fragility.",
-     "Plugin Loader (included).",
+     "Plugin Loader.",
      "On a dedicated server it must be installed on the server too: the server pays."),
     ("3 Plugins", "Wheel Size Unlimited", [], "mt_plugin_WheelSizeUnlimited.dll",
      "Wheel radius and width tuning, and any wheel on any vehicle.",
-     "Plugin Loader (included).", ""),
+     "Plugin Loader.", ""),
     ("3 Plugins", "Attachment Tweaks", [], "mt_plugin_AttachmentTweaks.dll",
      "Tools for any attachment: per-section lamp control, the placement clipboard.",
-     "Plugin Loader (included).", "MoreAttachments."),
+     "Plugin Loader.", "MoreAttachments."),
     ("3 Plugins", "Custom Plates", [], "mt_plugin_CustomPlates.dll",
      "License plates you design in the garage.",
-     "Plugin Loader (included).", ""),
+     "Plugin Loader.", ""),
     ("3 Plugins", "Rear Cam", [], "mt_plugin_RearCam.dll",
      "A backup camera on the dashboard screen while reversing.",
-     "Plugin Loader (included).", ""),
+     "Plugin Loader.", ""),
     ("3 Plugins", "Search Box", [], "mt_plugin_SearchBox.dll",
      "A search field on the garage part list, the decal picker and the vendor list.",
-     "Plugin Loader (included).", ""),
+     "Plugin Loader.", ""),
     ("3 Plugins", "Smoke Factory", [], "mt_plugin_SmokeFactory.dll",
      "Longer-lasting, bigger, rising tyre smoke.",
-     "Plugin Loader (included).", ""),
+     "Plugin Loader.", ""),
     ("3 Plugins", "Company Size Unlimited", [], "mt_plugin_CompanySizeUnlimited.dll",
      "More company vehicles.",
-     "Plugin Loader (included).", ""),
+     "Plugin Loader.", ""),
     ("3 Plugins", "Vehicle Parker", [], "mt_plugin_VehicleParker.dll",
      "Ctrl+F10: every vehicle you own goes back to your list (campers stay).",
-     "Plugin Loader (included).", ""),
+     "Plugin Loader.", ""),
     ("3 Plugins", "Quiet Popups", [], "mt_plugin_QuietPopups.dll",
      "Closes the 'Invalid vehicle type' pop-ups a save with missing mod vehicles opens.",
-     "Plugin Loader (included).", ""),
+     "Plugin Loader.", ""),
     ("3 Plugins", "Time Keys", [], "mt_plugin_TimeKeys.dll",
      "Page Up sets the clock to noon, Page Down to midnight.",
-     "Plugin Loader (included).", ""),
+     "Plugin Loader.", ""),
     ("3 Plugins", "Performance", [], "mt_plugin_Performance.dll",
      "A frame-rate governor: eases the heaviest work when the frame rate stays low.",
-     "Plugin Loader (included).", ""),
+     "Plugin Loader.", ""),
     ("3 Plugins", "MTNet", [], "mt_plugin_MTNet.dll",
      "The in-game panel (Ctrl+F9) for server and console settings.",
-     "Plugin Loader (included).", "Keep it off on a dedicated server."),
+     "Plugin Loader.", "Keep it off on a dedicated server."),
     ("3 Plugins", "Motortown Connect", [], "mt_plugin_MotortownConnect.dll",
      "The network side: direct IP connections.",
-     "Plugin Loader (included).", ""),
+     "Plugin Loader.", ""),
 
     # ---- not for release: dev tools and held-back work, kept apart so they are not shipped by mistake ----
     ("4 Not for release", "Coordinates (dev)", [], "mt_plugin_Coordinates.dll",
      "Ctrl+F11 saves spots, #tp teleports. A tool for building the map.",
-     "Plugin Loader (included).", ""),
+     "Plugin Loader.", ""),
     ("4 Not for release", "POI Teleport (dev)", [], "mt_plugin_POITeleport.dll",
      "#poi <name> goes to a saved point of interest. Reads plugins\\pois.txt.",
-     "Plugin Loader (included).", ""),
+     "Plugin Loader.", ""),
     ("4 Not for release", "Swim animations (held back)", ["qxZap_Swim_P.pak"], None,
      "The swim montages. Held back: the game crashed when the swim played them; the Sea plugin ships "
      "with the animation off.",
@@ -186,10 +186,10 @@ def plan():
         files = []
         for p in paks:
             files.append((os.path.join(PAKS, p), os.path.join(PAKDIR, p)))
-        if dll:
+        if dll == "LOADER":
             files.append((os.path.join(LOADER_OUT, "version.dll"), os.path.join(WIN64, "version.dll")))
-            if dll != "LOADER":
-                files.append((os.path.join(LOADER_OUT, "plugins", dll), os.path.join(WIN64, "plugins", dll)))
+        elif dll:   # the plugin alone: the loader is its own download, which every plugin needs
+            files.append((os.path.join(LOADER_OUT, "plugins", dll), os.path.join(WIN64, "plugins", dll)))
         if dll == "mt_plugin_MTNet.dll" and os.path.isdir(MTNET_TEMPLATES):
             for f in sorted(os.listdir(MTNET_TEMPLATES)):
                 if f.endswith(".json"):
@@ -203,7 +203,7 @@ def index_text(downloads):
              "Every folder is one download, laid out to drop onto the game folder.",
              "1 Required          what everything else stands on",
              "2 Mods              paks: parts, vehicles, the map -- bought and used in the game",
-             "3 Plugins           what makes things work: each one carries the Plugin Loader",
+             "3 Plugins           what makes things work: each one needs the Plugin Loader (1 Required)",
              "4 Not for release   dev tools and held-back work, kept apart on purpose",
              "",
              "A vehicle is bought from its MOD; a PLUGIN makes it move. The boats, ships and helicopter",
@@ -252,8 +252,10 @@ def demo():
     assert len(dlls) == len(set(dlls)), "a plugin is in two downloads"
     assert not set(paks) & {p for p, _ in NOT_OURS}, "someone else's pak is in a download"
     for folder, files, _ in plan():
-        if folder.startswith("3 Plugins"):
-            assert any(r.endswith("version.dll") for _, r in files), folder + " has no loader"
+        if not folder.endswith("Plugin Loader"):
+            assert not any(r.endswith("version.dll") for _, r in files), folder + " carries the loader"
+        assert files, folder + " is empty"
+        assert all(r.startswith("MotorTown" + os.sep) for _, r in files), folder + " is not a drop-in MotorTown tree"
     print("demo ok")
 
 
