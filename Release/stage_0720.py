@@ -74,8 +74,9 @@ DOWNLOADS = [
     ("2 Mods", "Tehs Engine Sound Pack", ["Z_TehsEngineSoundPack_P.pak"], None,
      "Teh's 16 engines with their own sounds.",
      "DataTable Framework.", ""),
-    ("2 Mods", "Arini Map", ["qxZap_Arini_P.pak"], None,
-     "The Arini island: roads, towns, delivery points, the harbours and their sea lanes.",
+    ("2 Mods", "Arini Map", ["qxZap_Arini_P.pak", "qxZap_Arini_WorldMap_100_P.pak"], None,
+     "The Arini island: roads, towns, delivery points, the harbours and their sea lanes. "
+     "The WorldMap pak lines the map view up with the island (the framework's own map view is vanilla's).",
      "DataTable Framework.",
      "Boater Town (the boats that use the harbours). New name: enable it once in Mods [Review]."),
     ("2 Mods", "Arini Vehicles", ["Biceps_P.pak"], None,

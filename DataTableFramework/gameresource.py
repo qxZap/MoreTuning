@@ -5,10 +5,11 @@ mod tables to the 14 composites. GameResource names the table the game reads; th
 /Game/DataTableFramework/Decals/Decals, a composite of vanilla Decals and rtwin's Slot01..32 DT_Decals (registry
 "reserved" style: listed, not stubbed -- a missing parent is skipped).
 
-Only one pak can ship GameResource, so the framework's is regenerated from vanilla each update and carries every mod's
-GameResource change as a patch. Today that is Arini's world map (DriveMaps[0].WorldMap WorldMapLocation and
-WorldMapSize), read from Arini's patch file (worldmap_align.py rewrites it on every map build), or failing that from the
-GameResource in the installed qxZap_Arini_P.pak. No source for a registered patch fails the build: shipping vanilla values would move Arini's map.
+The framework's GameResource is vanilla's with only that redirect: its world map stays vanilla. (18-19 Nov it carried
+Arini's world map bounds, and every player without the Arini Map saw the roads shifted on the map -- the 19 Nov report.)
+Arini's bounds (DriveMaps[0].WorldMap WorldMapLocation and WorldMapSize, from Arini's patch file, which worldmap_align.py
+rewrites on every map build, else from the installed qxZap_Arini_P.pak) go into the Arini Map's own override pak,
+ARINI_OVERRIDE: the framework's GameResource plus those bounds, chunk 100 so it outranks the framework's 99.
 
     python DataTableFramework/gameresource.py          python DataTableFramework/gameresource.py demo
 """
@@ -31,6 +32,7 @@ TEMPLATE_COMPOSITE = "Buffs"  # a small vanilla composite to build the Decals co
 ARINI_PATCH = r"D:\MTLiveMap\dtf_patches\gameresource_worldmap.json"
 ARINI_PAK = r"D:\SteamLibrary\steamapps\common\Motor Town\MotorTown\Content\Paks\qxZap_Arini_P.pak"  # renamed from Arini_P.pak, 18 Nov
 REPAK = r"D:\MT\PakMerge\repak.exe"
+ARINI_OVERRIDE = os.path.join(os.path.dirname(HERE), "qxZap_Arini_WorldMap_100_P")  # mounts above AAAA_DataTableFramework_99_P
 
 
 def prop(data, name):
@@ -130,16 +132,37 @@ def main():
     back = write(table, DECALS, "Decals.framework")
     assert run.is_composite(back) and run.parents(back)[0] == "/Game/DataAsset/Decals" and len(run.parents(back)) == SLOTS + 1, run.parents(back)[:3]
     print(f"  Decals composite: {struct}, vanilla Decals + {SLOTS} slots")
-    gr = load(to_json(os.path.join(VANILLA, "DataAsset", "GameResource.uasset"), os.path.join(WORK, "GameResource.vanilla.json")))
-    values, src = arini_worldmap()
-    patch_worldmap(gr, values)
+    vanilla = load(to_json(os.path.join(VANILLA, "DataAsset", "GameResource.uasset"), os.path.join(WORK, "GameResource.vanilla.json")))
+    plain = {p["Name"]: p.get("Value") for p in worldmap(vanilla) if p["Name"] in ("WorldMapLocation", "WorldMapSize")}
+    gr = copy.deepcopy(vanilla)
     redirect_decals(gr)
     back = write(gr, "/Game/DataAsset/GameResource", "GameResource.framework")
+    check(back)
+    got = {p["Name"]: p.get("Value") for p in worldmap(back) if p["Name"] in ("WorldMapLocation", "WorldMapSize")}
+    assert json.dumps(got, default=str) == json.dumps(plain, default=str), "the framework's world map must stay vanilla"
+    print(f"  GameResource: Decals -> {DECALS}; world map vanilla")
+    # Arini Map's override: the same GameResource with Arini's bounds
+    values, src = arini_worldmap()
+    gr = copy.deepcopy(vanilla)
+    patch_worldmap(gr, values)
+    redirect_decals(gr)
+    save(gr, os.path.join(WORK, "GameResource.arini.json"))
+    out = os.path.join(ARINI_OVERRIDE, "MotorTown", "Content", "DataAsset", "GameResource.uasset")
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    back = load(to_json(from_json(os.path.join(WORK, "GameResource.arini.json"), out), os.path.join(WORK, "GameResource.arini.check.json")))
+    check(back)
+    got = {p["Name"]: p.get("Value") for p in worldmap(back) if p["Name"] in ("WorldMapLocation", "WorldMapSize")}
+    assert json.dumps(got, default=str) != json.dumps(plain, default=str), "Arini's override carries vanilla bounds"
+    if os.path.exists(ARINI_OVERRIDE + ".pak"):
+        os.remove(ARINI_OVERRIDE + ".pak")  # repak does not overwrite
+    subprocess.run([REPAK, "pack", ARINI_OVERRIDE, ARINI_OVERRIDE + ".pak"], check=True, stdout=subprocess.DEVNULL)
+    print(f"  Arini override {os.path.basename(ARINI_OVERRIDE)}.pak: world map from {os.path.basename(src)}")
+
+
+def check(back):
     assert back["Exports"][0]["$type"].startswith("UAssetAPI.ExportTypes.NormalExport"), back["Exports"][0]["$type"]
     d = prop(back["Exports"][0]["Data"], "Decals")["Value"]
     assert back["Imports"][-d - 1]["ClassName"] == "CompositeDataTable"
-    got = {p["Name"]: p.get("Value") for p in worldmap(back) if p["Name"] in ("WorldMapLocation", "WorldMapSize")}
-    print(f"  GameResource: Decals -> {DECALS}; world map from {os.path.basename(src)}: {json.dumps(got, default=str)[:200]}")
 
 
 if __name__ == "__main__":
