@@ -2,7 +2,7 @@
 
 ## Short description
 
-An ECU Tuning page in the garage, set per vehicle: tune the engine and get the exhaust to match, with pops, bangs and real flames from the exhaust tips.
+An ECU Tuning page in the garage, set per vehicle: tune the engine and get the exhaust to match: anti-lag, turbo flutter, pops, bangs and real flames from the exhaust tips.
 
 ## Long description
 
@@ -11,6 +11,8 @@ ECU Tuning adds its own section to the garage's Tuning screen. Each vehicle has 
 ### What you get
 
 - Engine tuning per vehicle: ignition timing, fuel map and boost, with 0.50 as stock.
+- Anti-lag on turbo cars: above the rpm you set, the turbo stays spun up for a moment after you lift off. Touching the brake cancels it.
+- Turbo flutter when you lift off from high revs.
 - Pops and bangs when you lift off the throttle.
 - Exhaust flames from the car's own exhaust tips, lighting up what is around them. A car with its catalytic converter still fitted stays clean; take it off and the flames come.
 - Supercharger whine on supercharger intakes.
