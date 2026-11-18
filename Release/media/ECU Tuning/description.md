@@ -17,8 +17,9 @@ ECU Tuning adds its own section to the garage's Tuning screen. Each vehicle has 
 
 ### What you need
 
-- Plugin Loader (its own download). This download is a bundle: the plugin and its sound pak go in together.
-- MoreTuning adds the supercharger and turbo parts the sounds are made for. Without it the plugin still works, and those sounds just stay silent.
+- Plugin Loader (its own download).
+- Nothing else. This download is a bundle: the plugin plus its own sound pak, with the turbo flutter and the supercharger whine. Install both together.
+- The whine plays on supercharger intakes, which come with MoreTuning. Without MoreTuning everything else works the same.
 
 ### Install
 
