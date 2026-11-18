@@ -7,8 +7,8 @@ mod tables to the 14 composites. GameResource names the table the game reads; th
 
 Only one pak can ship GameResource, so the framework's is regenerated from vanilla each update and carries every mod's
 GameResource change as a patch. Today that is Arini's world map (DriveMaps[0].WorldMap WorldMapLocation and
-WorldMapSize), read from Arini's patch file, or -- until Arini writes it -- from the GameResource in the installed
-Arini_P.pak. No source for a registered patch fails the build: shipping vanilla values would move Arini's map.
+WorldMapSize), read from Arini's patch file (worldmap_align.py rewrites it on every map build), or failing that from the
+GameResource in the installed qxZap_Arini_P.pak. No source for a registered patch fails the build: shipping vanilla values would move Arini's map.
 
     python DataTableFramework/gameresource.py          python DataTableFramework/gameresource.py demo
 """
@@ -29,7 +29,7 @@ DECALS = "/Game/DataTableFramework/Decals/Decals"
 SLOTS = 32
 TEMPLATE_COMPOSITE = "Buffs"  # a small vanilla composite to build the Decals composite on
 ARINI_PATCH = r"D:\MTLiveMap\dtf_patches\gameresource_worldmap.json"
-ARINI_PAK = r"D:\SteamLibrary\steamapps\common\Motor Town\MotorTown\Content\Paks\Arini_P.pak"
+ARINI_PAK = r"D:\SteamLibrary\steamapps\common\Motor Town\MotorTown\Content\Paks\qxZap_Arini_P.pak"  # renamed from Arini_P.pak, 18 Nov
 REPAK = r"D:\MT\PakMerge\repak.exe"
 
 
@@ -44,7 +44,7 @@ def worldmap(gr):
 
 
 def arini_worldmap():
-    """Arini's WorldMapLocation and WorldMapSize properties: their patch file, else the installed Arini_P.pak."""
+    """Arini's WorldMapLocation and WorldMapSize properties: their patch file, else the installed qxZap_Arini_P.pak."""
     if os.path.isfile(ARINI_PATCH):
         return json.load(open(ARINI_PATCH, encoding="utf-8")), ARINI_PATCH
     if not os.path.isfile(ARINI_PAK):
