@@ -34,4 +34,4 @@ Settings are in MotorTown\Binaries\Win64\plugins\ecu_tuning.ini, created on firs
 
 ### Multiplayer
 
-Other players see your flames and hear your pops and bangs. The engine changes only take effect in single player or when you are the host.
+Other players see and hear your pops and bangs. The engine changes only take effect in single player or when you are the host.
