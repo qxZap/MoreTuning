@@ -8,8 +8,9 @@ extracts only her edits: for each vanilla row, the properties her copy has that
 0.7.19 vanilla did not. channels.py applies them onto 0.7.20 vanilla, so a row
 she touched keeps her change and everything else is 0.7.20's.
 
-Her 7 new rows (winches, TaxiLicense2, TrailerHitch_Hook) are already in
-MoreTuning's own tables, and the hitch mesh ships in qxZap_MoreTuning_P.
+Her 7 new rows (winches, TaxiLicense2, TrailerHitch_Hook) and the hitch mesh are
+Trailer Works' since 2026-11-18: MoreTuning requires it and TrailerWorks/run.py
+takes them out of our table.
 Refresh this when she releases for a new game version.
 """
 import copy

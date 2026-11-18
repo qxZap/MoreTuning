@@ -200,6 +200,11 @@ python MoreAttachments/channel.py  # Items Ch0001 + both Vendor_Garage copies
 - The mod's 0.7.19 tables live in `Rebase/old/0.7.19/` as migration input only.
   `rebuild.py`, `compat.py` and the `main()`s of RemoveReq/CarbonParts still write
   whole tables -- the pre-0.7.20 route below; don't ship their output.
+- **Maja's Trailer Works is required since 2026-11-18.** Its V8 (0.7.20) ships the hitch hook, the MMW
+  winches and `TaxiLicense2` in its own `VehicleParts0`, which our adopted table would outrank, so
+  `TrailerWorks/run.py` (run last, after everything that writes `VehicleParts_MoreTuning`) drops those 7 rows
+  and the hitch mesh from MoreTuning. Our copies of vanilla rows stay: they carry the gate stripping and
+  matched her values. The paragraph below is the history.
 - **Motor Works ships inside MoreTuning.** Her 7 rows are in its own tables, the
   hitch mesh is in `qxZap_MoreTuning_P/Cars/Parts/TrailerHitch`, and her edits to
   vanilla rows are kept as a per-property diff against 0.7.19 vanilla

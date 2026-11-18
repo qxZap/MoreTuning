@@ -47,8 +47,9 @@ DOWNLOADS = [
 
     # ---- mods: paks, bought and used in the game ----
     ("2 Mods", "MoreTuning", ["qxZap_MoreTuning_P.pak"], None,
-     "The parts pack: engines, transmissions, turbos, brakes, Motor Works' parts and the cabin sound mix.",
-     "DataTable Framework.", "ECU Tuning plugin reads its supercharger and turbo parts (optional)."),
+     "The parts pack: engines, transmissions, turbos, brakes and the cabin sound mix.",
+     "DataTable Framework, and Maja's Trailer Works (V8 for 0.7.20, from her mod page): the hitch hook and "
+     "the MW winches are hers now.", "ECU Tuning plugin reads its supercharger and turbo parts (optional)."),
     ("2 Mods", "MoreTuning - Server", [SERVER_PAK], None,
      "MoreTuning for a dedicated server, so players with MoreTuning can join it: the same parts and stats, "
      "without the engine sounds a server cannot load (a server plays no sound; players keep the full mod).",
