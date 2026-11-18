@@ -24,6 +24,9 @@ import sys
 GAME = r"D:\SteamLibrary\steamapps\common\Motor Town\MotorTown"
 PAKS = os.path.join(GAME, "Content", "Paks")
 LOADER_OUT = r"D:\MTLiveMap\mt_loader\out"
+# the loader ships as GitHub built it from the public source, so the download matches the release's hash
+LOADER_RELEASE = "v1.0"   # qxZap/mt-plugin-loader; bump with each release/<version> branch
+LOADER_DLL = os.path.join(os.path.dirname(os.path.abspath(__file__)), "work", "loader-" + LOADER_RELEASE, "version.dll")
 MTNET_TEMPLATES = r"D:\MTLiveMap\mt_loader\plugins\mt_net_templates"
 DEST = os.path.join(os.path.expanduser("~"), "Documents", "MoreTuning 0720")
 
@@ -189,7 +192,7 @@ def plan():
         for p in paks:
             files.append((os.path.join(PAKS, p), os.path.join(PAKDIR, p)))
         if dll == "LOADER":
-            files.append((os.path.join(LOADER_OUT, "version.dll"), os.path.join(WIN64, "version.dll")))
+            files.append((LOADER_DLL, os.path.join(WIN64, "version.dll")))
         elif dll:   # the plugin alone: the loader is its own download, which every plugin needs
             files.append((os.path.join(LOADER_OUT, "plugins", dll), os.path.join(WIN64, "plugins", dll)))
         if dll == "mt_plugin_MTNet.dll" and os.path.isdir(MTNET_TEMPLATES):
@@ -224,7 +227,17 @@ def index_text(downloads):
     return "\n".join(lines) + "\n"
 
 
+def fetch_loader():
+    """The GitHub-built version.dll of LOADER_RELEASE, downloaded once."""
+    if not os.path.exists(LOADER_DLL):
+        import subprocess
+        os.makedirs(os.path.dirname(LOADER_DLL), exist_ok=True)
+        subprocess.run(["gh", "release", "download", LOADER_RELEASE, "-R", "qxZap/mt-plugin-loader",
+                        "-p", "version.dll", "-D", os.path.dirname(LOADER_DLL)], check=True)
+
+
 def build():
+    fetch_loader()
     downloads = plan()
     missing = [s for _, files, _ in downloads for s, _ in files if not os.path.exists(s)]
     if missing:
