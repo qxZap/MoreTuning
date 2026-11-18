@@ -23,7 +23,7 @@ A save with vehicles from a mod that is no longer installed, or not updated yet,
 1. In Steam, right-click Motor Town > Manage > Browse local files.
 2. Drag the MotorTown folder from this download into that window and let it merge.
 
-Settings are in MotorTown\Binaries\Win64\plugins\quiet_popups.ini, created on first launch. Words under [QuietPopups] lists the phrases that close a pop-up, separated by |, any case (default: invalid vehicle|vehicle type is not supported). Disabled=1 under [General] turns the plugin off.
+Settings are in MotorTown\Binaries\Win64\plugins\quiet_popups.ini, created on first launch. To set your own phrases, add a [QuietPopups] section with a Words line: it lists the phrases that close a pop-up, separated by |, any case (default: invalid vehicle|vehicle type is not supported). Disabled=1 under [General] turns the plugin off.
 
 ### Good to know
 
