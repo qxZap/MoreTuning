@@ -29,4 +29,4 @@ Settings are in MotorTown\Binaries\Win64\plugins\ecu_tuning.ini, created on firs
 
 ### Multiplayer
 
-Pops, flames and sounds show anywhere. The engine changes themselves only take effect in single player or when you are the host.
+The engine changes only take effect in single player or when you are the host.
