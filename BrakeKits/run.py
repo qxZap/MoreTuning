@@ -8,9 +8,9 @@ The 18 earlier BrakePower rows (C0001_BBK<mm>_<Colour>) stay in the table hidden
     python BrakeKits/run.py          # after Rebase/channels.py and NewEngines/synth.py (it strips the kits out of
                                      # MoreTuning's table, where they used to live)
 
-Suspension Visuals is its own mod (the user's call, 2026-11-09): qxZap_SuspensionVisuals_P ships the kits in the
-framework's reserved VehicleParts Slot01 (free on this machine, Arini checked; a slot needs no framework rebuild)
-and the meshes under /Game/SuspensionVisuals/. No composite copy: the framework's lists the slot.
+Suspension Visuals is its own mod (the user's call, 2026-11-09): qxZap_SuspensionVisuals_P ships the kits in its own
+adopted table VehicleParts_SuspensionTuning (registry.json) and the meshes under /Game/SuspensionVisuals/. No composite
+copy. Until 2026-11-19 they sat in rtwin's reserved Slot01, which Overlord HX8 1.0.2 now ships (its pak outranked ours).
     python BrakeKits/run.py demo
 
 Each size is a stronger BrakePowerMultiplier (vanilla: BrakePower_130/150/200 = x1.3/1.5/2.0 for
@@ -39,7 +39,8 @@ _spec = importlib.util.spec_from_file_location("dtframework", os.path.join(REPO,
 framework = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(framework)
 
-TABLE_PKG = "/Game/ReservedRegistration/Slots/Slot01/DT_VehicleParts"
+TABLE_PKG = "/Game/DataAsset/VehicleParts/VehicleParts_SuspensionTuning"  # was rtwin's Slot01 until 2026-11-19: Overlord took it
+OLD_SLOT = "ReservedRegistration/Slots/Slot01/DT_VehicleParts"
 DEST = os.path.join(REPO, "qxZap_SuspensionVisuals_P", "MotorTown", "Content")
 OLD_PKG = "/Game/DataAsset/VehicleParts/VehicleParts_MoreTuning"  # where the kits were until 2026-11-09
 OLD = os.path.join(MOD, "DataAsset", "VehicleParts", "VehicleParts_MoreTuning.uasset")
@@ -141,7 +142,11 @@ def main():
         sys.exit(f"FAIL: slot table has {len(after)} rows, wanted the {len(ours)} kits")
     import subprocess
     subprocess.run([sys.executable, os.path.join(REPO, "Rebase", "verify.py"), check, DEST, MOD, VANILLA], check=True)
-    print(f"  Slot01 DT_VehicleParts: {len(PADS)} brake kits (Brake Pads) + {len(ours) - len(PADS)} hidden old rows -> qxZap_SuspensionVisuals_P")
+    for ext in (".uasset", ".uexp"):  # the old slot table: left in the pak it would fight Overlord's Slot01
+        stale = os.path.join(DEST, OLD_SLOT + ext)
+        if os.path.exists(stale):
+            os.remove(stale)
+    print(f"  VehicleParts_SuspensionTuning: {len(PADS)} brake kits (Brake Pads) + {len(ours) - len(PADS)} hidden old rows -> qxZap_SuspensionVisuals_P")
 
     old = framework.load(to_json(OLD, os.path.join(work, "moretuning.before.json")))
     rows = old["Exports"][0]["Table"]["Data"]

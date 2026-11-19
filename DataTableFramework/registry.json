@@ -53,7 +53,8 @@
       "/Game/DataAsset/VehicleParts/VehicleParts_ProxyHighwayHauler": "SlideZone/Proxy - listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped)",
       "/Game/DataAsset/VehicleParts/VehicleParts_ProxyTrackLoader": "Proxy - TechTrackLoader",
       "/Game/DataAsset/VehicleParts/VehicleParts_ProxyTrackLoaderEngine": "Proxy - TechTrackLoader",
-      "/Game/DataAsset/VehicleParts/VehicleParts_ProxyTrackLoaderTrans": "Proxy - TechTrackLoader"
+      "/Game/DataAsset/VehicleParts/VehicleParts_ProxyTrackLoaderTrans": "Proxy - TechTrackLoader",
+      "/Game/DataAsset/VehicleParts/VehicleParts_SuspensionTuning": "qxZap - Suspension Tuning (Big Brake Kits; was rtwin's Slot01 until 2026-11-19, Overlord took it)"
     },
     "Cargos": {
       "/Game/DataAsset/Cargos_Proxy": "Proxy - Oversize Cargo",

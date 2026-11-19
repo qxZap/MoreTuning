@@ -28,7 +28,8 @@ CHANNEL_HISTORY = [
 
 # Reserved car slots (rtwin's ReservedVehicleFramework layout) that are spoken for.
 SLOTS_TAKEN = {
-    1: "qxZap - Suspension Tuning (Big Brake Kits, VehicleParts only)",
+    1: "Austin - Overlord HX8 1.0.2 (VehicleParts, Vehicles: Atlas 112, Decals)",
+    32: "Austin - Overlord HX8 1.0.2 (VehicleParts: AusV tyre compounds)",
 }
 
 
@@ -111,7 +112,7 @@ def demo():
            "reserved": {"slots": 3, "tables": {"Vehicles": "DT_Vehicles"}}}
     md = render(reg)
     assert "**3 mod tables** in 2 composites, from **2 authors**" in md, md[:400]
-    assert "### Rak (2)" in md and "| Slot01 | qxZap - Suspension Tuning" in md and "| Slot03 | free |" in md
+    assert "### Rak (2)" in md and "| Slot01 | Austin - Overlord HX8" in md and "| Slot03 | free |" in md
     assert author("qxZap & satigt3 - MoreAttachments (free)") == "qxZap & satigt3"
     assert author("Suspension Expansion (0.7.20 port by qxZap)") == "Suspension Expansion"
     print("demo ok")
