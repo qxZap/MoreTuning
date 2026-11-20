@@ -2,11 +2,11 @@
 
 Every table the DataTable Framework lists, generated from `DataTableFramework/registry.json` by `registry_doc.py`. Within a table, later entries win a same-named row: vanilla first, then these in order.
 
-**104 mod tables** in 5 composites, from **12 authors**, plus **32 reserved car slots**.
+**105 mod tables** in 5 composites, from **13 authors**, plus **32 reserved car slots**.
 
 ## By table
 
-### VehicleParts (46)
+### VehicleParts (47)
 
 | # | Table | Author | Mod |
 |---|---|---|---|
@@ -27,35 +27,36 @@ Every table the DataTable Framework lists, generated from `DataTableFramework/re
 | 15 | `/Game/DataAsset/VehicleParts/VehicleParts_TehEngines` | Teh | Engine Sound Pack (0.7.20 port by qxZap) |
 | 16 | `/Game/DataAsset/VehicleParts/VehicleParts_AMCTires` | AMC | Tires (0.7.20 port by qxZap) |
 | 17 | `/Game/DataAsset/VehicleParts/VehicleParts_SuspensionExpansion` | Suspension Expansion | Suspension Expansion (0.7.20 port by qxZap) |
-| 18 | `/Game/RakMods/HeavyHaulPack/Parts/Engine/RHHP_Engines` | Rak | Heavy Haul Pack |
-| 19 | `/Game/RakMods/HeavyHaulPack/Parts/Tires/RHHP_Tires` | Rak | Heavy Haul Pack |
-| 20 | `/Game/RakMods/HeavyHaulPack/Parts/Transmissions/RHHP_Transmissions` | Rak | Heavy Haul Pack |
-| 21 | `/Game/RakMods/HeavyHaulPack/Parts/RHHP_Parts` | Rak | Heavy Haul Pack |
-| 22 | `/Game/RakMods/HeavyHaulPack/Parts/RHHP_Misc` | Rak | Heavy Haul Pack |
-| 23 | `/Game/DataAsset/VehicleParts/VehicleParts_Biceps` | qxZap/sati | Biceps |
-| 24 | `/Game/DataAsset/VehicleParts/VehicleParts_BoaterTown` | qxZap | Boater Town: Beyond the Waves (boat winches, propellers; built by the Arini session) |
-| 25 | `/Game/DataAsset/VehicleParts/VehicleParts_ProxyWorkStar` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
-| 26 | `/Game/DataAsset/VehicleParts/VehicleParts_SlidesSZ745` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
-| 27 | `/Game/DataAsset/VehicleParts/VehicleParts_SlidesSI500XL` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
-| 28 | `/Game/DataAsset/VehicleParts/VehicleParts_SlidesC500Chassis` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
-| 29 | `/Game/DataAsset/VehicleParts/VehicleParts_SlidesK200` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
-| 30 | `/Game/DataAsset/VehicleParts/VehicleParts_SlidesTrailrunnerTX` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
-| 31 | `/Game/DataAsset/VehicleParts/VehicleParts_SlidesFoldProbe` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
-| 32 | `/Game/DataAsset/VehicleParts/VehicleParts_SlidesC500Rotator` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
-| 33 | `/Game/DataAsset/VehicleParts/VehicleParts_SlidesRidgeback450` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
-| 34 | `/Game/DataAsset/VehicleParts/VehicleParts_SlidesRazorbackR` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
-| 35 | `/Game/DataAsset/VehicleParts/VehicleParts_SlidesWorkhorse6x6` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
-| 36 | `/Game/DataAsset/VehicleParts/VehicleParts_SlidesHeavyTractor` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
-| 37 | `/Game/DataAsset/VehicleParts/VehicleParts_SlidesWarhogGT` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
-| 38 | `/Game/DataAsset/VehicleParts/VehicleParts_ProxyToter` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
-| 39 | `/Game/DataAsset/VehicleParts/VehicleParts_SlidesLongHood` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
-| 40 | `/Game/DataAsset/VehicleParts/VehicleParts_SlidesRaid8x8` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
-| 41 | `/Game/DataAsset/VehicleParts/VehicleParts_SlidesProxyStinger9T` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
-| 42 | `/Game/DataAsset/VehicleParts/VehicleParts_ProxyHighwayHauler` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
-| 43 | `/Game/DataAsset/VehicleParts/VehicleParts_ProxyTrackLoader` | Proxy | TechTrackLoader |
-| 44 | `/Game/DataAsset/VehicleParts/VehicleParts_ProxyTrackLoaderEngine` | Proxy | TechTrackLoader |
-| 45 | `/Game/DataAsset/VehicleParts/VehicleParts_ProxyTrackLoaderTrans` | Proxy | TechTrackLoader |
-| 46 | `/Game/DataAsset/VehicleParts/VehicleParts_SuspensionTuning` | qxZap | Suspension Tuning (Big Brake Kits; was rtwin's Slot01 until 2026-11-19, Overlord took it) |
+| 18 | `/Game/DataAsset/VehicleParts/VehicleParts_MoreSuspension` | Hinet | More Suspension (after Suspension Expansion; reserved 2026-11-20) |
+| 19 | `/Game/RakMods/HeavyHaulPack/Parts/Engine/RHHP_Engines` | Rak | Heavy Haul Pack |
+| 20 | `/Game/RakMods/HeavyHaulPack/Parts/Tires/RHHP_Tires` | Rak | Heavy Haul Pack |
+| 21 | `/Game/RakMods/HeavyHaulPack/Parts/Transmissions/RHHP_Transmissions` | Rak | Heavy Haul Pack |
+| 22 | `/Game/RakMods/HeavyHaulPack/Parts/RHHP_Parts` | Rak | Heavy Haul Pack |
+| 23 | `/Game/RakMods/HeavyHaulPack/Parts/RHHP_Misc` | Rak | Heavy Haul Pack |
+| 24 | `/Game/DataAsset/VehicleParts/VehicleParts_Biceps` | qxZap/sati | Biceps |
+| 25 | `/Game/DataAsset/VehicleParts/VehicleParts_BoaterTown` | qxZap | Boater Town: Beyond the Waves (boat winches, propellers; built by the Arini session) |
+| 26 | `/Game/DataAsset/VehicleParts/VehicleParts_ProxyWorkStar` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
+| 27 | `/Game/DataAsset/VehicleParts/VehicleParts_SlidesSZ745` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
+| 28 | `/Game/DataAsset/VehicleParts/VehicleParts_SlidesSI500XL` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
+| 29 | `/Game/DataAsset/VehicleParts/VehicleParts_SlidesC500Chassis` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
+| 30 | `/Game/DataAsset/VehicleParts/VehicleParts_SlidesK200` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
+| 31 | `/Game/DataAsset/VehicleParts/VehicleParts_SlidesTrailrunnerTX` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
+| 32 | `/Game/DataAsset/VehicleParts/VehicleParts_SlidesFoldProbe` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
+| 33 | `/Game/DataAsset/VehicleParts/VehicleParts_SlidesC500Rotator` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
+| 34 | `/Game/DataAsset/VehicleParts/VehicleParts_SlidesRidgeback450` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
+| 35 | `/Game/DataAsset/VehicleParts/VehicleParts_SlidesRazorbackR` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
+| 36 | `/Game/DataAsset/VehicleParts/VehicleParts_SlidesWorkhorse6x6` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
+| 37 | `/Game/DataAsset/VehicleParts/VehicleParts_SlidesHeavyTractor` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
+| 38 | `/Game/DataAsset/VehicleParts/VehicleParts_SlidesWarhogGT` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
+| 39 | `/Game/DataAsset/VehicleParts/VehicleParts_ProxyToter` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
+| 40 | `/Game/DataAsset/VehicleParts/VehicleParts_SlidesLongHood` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
+| 41 | `/Game/DataAsset/VehicleParts/VehicleParts_SlidesRaid8x8` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
+| 42 | `/Game/DataAsset/VehicleParts/VehicleParts_SlidesProxyStinger9T` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
+| 43 | `/Game/DataAsset/VehicleParts/VehicleParts_ProxyHighwayHauler` | SlideZone/Proxy | listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped) |
+| 44 | `/Game/DataAsset/VehicleParts/VehicleParts_ProxyTrackLoader` | Proxy | TechTrackLoader |
+| 45 | `/Game/DataAsset/VehicleParts/VehicleParts_ProxyTrackLoaderEngine` | Proxy | TechTrackLoader |
+| 46 | `/Game/DataAsset/VehicleParts/VehicleParts_ProxyTrackLoaderTrans` | Proxy | TechTrackLoader |
+| 47 | `/Game/DataAsset/VehicleParts/VehicleParts_SuspensionTuning` | qxZap | Suspension Tuning (Big Brake Kits; was rtwin's Slot01 until 2026-11-19, Overlord took it) |
 
 ### Cargos (3)
 
@@ -191,6 +192,10 @@ Every table the DataTable Framework lists, generated from `DataTableFramework/re
 ### Suspension Expansion (1)
 
 - **VehicleParts** `/Game/DataAsset/VehicleParts/VehicleParts_SuspensionExpansion` -- Suspension Expansion (0.7.20 port by qxZap)
+
+### Hinet (1)
+
+- **VehicleParts** `/Game/DataAsset/VehicleParts/VehicleParts_MoreSuspension` -- More Suspension (after Suspension Expansion; reserved 2026-11-20)
 
 ### Rak (6)
 
