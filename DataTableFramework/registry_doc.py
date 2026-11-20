@@ -29,6 +29,7 @@ CHANNEL_HISTORY = [
 # Reserved car slots (rtwin's ReservedVehicleFramework layout) that are spoken for.
 SLOTS_TAKEN = {
     1: "Austin - Overlord HX8 1.0.2 (VehicleParts, Vehicles: Atlas 112, Decals)",
+    2: "Atlas 8x4 Container (MotorTown(WIP) 7.20; Vehicles + dealer, row Atlas_8x4_Container; reserved 2026-11-20)",
     32: "Austin - Overlord HX8 1.0.2 (VehicleParts: AusV tyre compounds)",
 }
 

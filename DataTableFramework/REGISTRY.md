@@ -291,7 +291,7 @@ Tables per slot: Vehicles -> `DT_Vehicles`, VehicleParts -> `DT_VehicleParts`, D
 | Slot | Taken by |
 |---|---|
 | Slot01 | Austin - Overlord HX8 1.0.2 (VehicleParts, Vehicles: Atlas 112, Decals) |
-| Slot02 | free |
+| Slot02 | Atlas 8x4 Container (MotorTown(WIP) 7.20; Vehicles + dealer, row Atlas_8x4_Container; reserved 2026-11-20) |
 | Slot03 | free |
 | Slot04 | free |
 | Slot05 | free |
