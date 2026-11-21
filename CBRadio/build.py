@@ -40,6 +40,7 @@ KEY = "CB_Handheld"
 NAME = "Ham Radio"
 PRICE = 1500
 SCALE = 0.7
+PITCH = -90.0  # in the hand, as the flare
 MESH = "/Game/Models/PolygonPoliceStation/Meshes/Props/SM_Prop_WalkieTalkie_01"
 ICON = "/Game/UI/Icons/Item/Radio"
 VENDOR = os.path.join("Characters", "NPC", "Vendor_TechStore.uasset")
@@ -95,6 +96,15 @@ def handheld(items):
     prop(row, "Materials")["Value"] = []
     for v in prop(row, "StaticMeshScale")["Value"]:
         v["Value"].update(X=SCALE, Y=SCALE, Z=SCALE)
+    # in the hand (11-21: it lay in the palm, into the sleeve): stood up like the flare (Pitch -90) and held by its
+    # middle, not its base (offset by bounds); carried, never dropped or placed -- the generic actor's drop is the
+    # furniture placement ("I can build it somewhere")
+    hold_rot = copy.deepcopy(prop(rows["Flare_01"], "DefaultHoldingRotation"))
+    hold_rot["Value"][0]["Value"].update(Pitch=PITCH, Yaw="+0", Roll="+0")
+    row["Value"][[p["Name"] for p in row["Value"]].index("DefaultHoldingRotation")] = hold_rot
+    prop(row, "bHoldingOffsetUsingItemBounds")["Value"] = True
+    for k in ("bDropable", "bSpawnActorOnDrop", "bCrosshairModeForDropping", "bThrowable"):
+        prop(row, k)["Value"] = False
     soft(row, "IconTexture", ICON)
     literal(row, NAME)
     return row
@@ -168,6 +178,7 @@ def demo():
     assert prop(row, "HoldableSocketName")["Value"] == "Hand_R_Hold"
     assert prop(row, "Material")["Value"]["AssetPath"]["PackageName"] == "None", "no icon-atlas material"
     assert prop(row, "StaticMeshScale")["Value"][0]["Value"]["X"] == SCALE
+    assert prop(row, "DefaultHoldingRotation")["Value"][0]["Value"]["Pitch"] == PITCH and not prop(row, "bDropable")["Value"]
     assert NAME in json.dumps(prop(row, "ItemNameTexts")) and "StringTableEntry" not in json.dumps(prop(row, "ItemNameTexts"))
     assert len([p["Name"] for p in row["Value"]]) == len({p["Name"] for p in row["Value"]}), "a property twice"
     print("ok")
