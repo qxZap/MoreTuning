@@ -37,8 +37,9 @@ framework = channels.framework
 PAK = os.path.join(REPO, "qxZap_CBRadio_P", "MotorTown", "Content")
 CHANNEL = "/Game/DataAsset/Items/Items_CBRadio"  # adopted by the framework (registry.json); it lists no channels
 KEY = "CB_Handheld"
-NAME = "CB Handheld Radio"
+NAME = "Ham Radio"
 PRICE = 1500
+SCALE = 0.7
 MESH = "/Game/Models/PolygonPoliceStation/Meshes/Props/SM_Prop_WalkieTalkie_01"
 ICON = "/Game/UI/Icons/Item/Radio"
 VENDOR = os.path.join("Characters", "NPC", "Vendor_TechStore.uasset")
@@ -87,6 +88,13 @@ def handheld(items):
     prop(row, "bIsPersistence")["Value"] = False
     prop(row, "Cost")["Value"] = PRICE
     soft(row, "StaticMesh", MESH)
+    # the donor's look goes: its icon-atlas material painted the radio as the letter A, and its 3x scale made a 39 cm
+    # model (antenna up) 1.2 m tall in the hand (11-21). 0.7 = about 27 cm, a real handheld.
+    m = prop(row, "Material")["Value"]["AssetPath"]
+    m["PackageName"], m["AssetName"] = "None", "None"
+    prop(row, "Materials")["Value"] = []
+    for v in prop(row, "StaticMeshScale")["Value"]:
+        v["Value"].update(X=SCALE, Y=SCALE, Z=SCALE)
     soft(row, "IconTexture", ICON)
     literal(row, NAME)
     return row
@@ -158,6 +166,8 @@ def demo():
     assert row["Name"] == KEY and prop(row, "Cost")["Value"] == PRICE
     assert prop(row, "StaticMesh")["Value"]["AssetPath"]["AssetName"] == "SM_Prop_WalkieTalkie_01"
     assert prop(row, "HoldableSocketName")["Value"] == "Hand_R_Hold"
+    assert prop(row, "Material")["Value"]["AssetPath"]["PackageName"] == "None", "no icon-atlas material"
+    assert prop(row, "StaticMeshScale")["Value"][0]["Value"]["X"] == SCALE
     assert NAME in json.dumps(prop(row, "ItemNameTexts")) and "StringTableEntry" not in json.dumps(prop(row, "ItemNameTexts"))
     assert len([p["Name"] for p in row["Value"]]) == len({p["Name"] for p in row["Value"]}), "a property twice"
     print("ok")
