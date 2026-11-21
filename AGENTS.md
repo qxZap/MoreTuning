@@ -165,6 +165,11 @@ other mods. `DataTableFramework/convert_mod.py` converts a mod to this layout.
 
 ## 0.7.20: everything ships as DataTableFramework channels
 
+> **Superseded (checked 2026-11-21):** the framework ships no channels or stubs any more, only registered
+> tables (`registry.json` "adopted"). A `DataTableFramework/<Composite>/ChNNNN` file is listed by nothing and the
+> game never sees it -- CB Radio's handheld item shipped that way and was missing from the shop. Ship an own table
+> and register it, then rebuild the framework (`python DataTableFramework/run.py <Composite>`).
+
 Since 0.7.20 no pak in this repo ships a part table. `DataTableFramework/run.py`
 ships every composite the game has (14: VehicleParts, Vehicles, Items, Cargos,
 CharacterBodyParts, Buildings, Buffs, Emotes, four `DT_Voice_*`, HelpText,

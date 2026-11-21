@@ -8,8 +8,9 @@ item (MTCharacter.Net_HoldingItem.ItemKey == CB_Handheld). A player's own invent
 the hand is (2026-11-21), so holding it is the check -- and it shows: the character holds a walkie-talkie.
 
 The row is a copy of Text_01_A (the generic holdable, IT_Common_Cargo, which shows the row's StaticMesh) with the
-one-hand hold of the winch remote, the game's own walkie-talkie mesh and radio icon. It ships as a DataTableFramework
-Items channel (Ch0019, CB channel 19), so the framework lists it with no registry change. Vendor_TechStore gets it
+one-hand hold of the winch remote, the game's own walkie-talkie mesh and radio icon. It ships as the mod's own table,
+Items_CBRadio, adopted in DataTableFramework/registry.json (the framework lists registered tables, not channels: an
+Items/Ch0019 file was never seen in game, 11-21). Vendor_TechStore gets it
 appended; no installed mod ships that vendor (Detail Works ships Car Supply, MoreAttachments the Garage).
 """
 import copy
@@ -29,7 +30,7 @@ spec.loader.exec_module(channels)
 framework = channels.framework
 
 PAK = os.path.join(REPO, "qxZap_CBRadio_P", "MotorTown", "Content")
-CHANNEL = "/Game/DataTableFramework/Items/Ch0019"
+CHANNEL = "/Game/DataAsset/Items/Items_CBRadio"  # adopted by the framework (registry.json); it lists no channels
 KEY = "CB_Handheld"
 NAME = "CB Handheld Radio"
 PRICE = 1500
@@ -87,6 +88,8 @@ def handheld(items):
 
 
 def build():
+    import shutil
+    shutil.rmtree(os.path.join(PAK, "DataTableFramework"), ignore_errors=True)  # the old channel file
     items = load(os.path.join(VANILLA, "DataAsset", "Items", "Items.uasset"), "Items.vanilla")
     row = handheld(items)
     channels.ship(framework.make_table(items, CHANNEL, [row]), CHANNEL, PAK, "CB Radio")

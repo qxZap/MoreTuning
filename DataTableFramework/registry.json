@@ -69,7 +69,8 @@
       "/Game/DataAsset/Items/Items_MoreAttachments": "qxZap & satigt3 - MoreAttachments (free and premium share it)",
       "/Game/DataAsset/Items/Items_SlidesHarbour": "SlideZone/Proxy - listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped)",
       "/Game/DataAsset/Items/Items_ProxyRepair": "Proxy - TechRepairKit",
-      "/Game/DataAsset/Items/Items_SlidesPlaceables": "SlideZone/Proxy - listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped)"
+      "/Game/DataAsset/Items/Items_SlidesPlaceables": "SlideZone/Proxy - listed by zzzzSlideZone_ProxyTech_Compat_7.20 (not installed here; a missing parent is skipped)",
+      "/Game/DataAsset/Items/Items_CBRadio": "qxZap - CB Radio (the CB Handheld Radio item, sold at the tech store)"
     },
     "CharacterBodyParts": {
       "/Game/DataAsset/CharacterBody/CharacterBodyParts_Slides": "SlideZone - Slide Industries Attachments",
