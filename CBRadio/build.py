@@ -1,0 +1,124 @@
+"""CB Radio's pak (qxZap_CBRadio_P): the handheld radio item, sold at the tech store.
+
+    python CBRadio/build.py          build into qxZap_CBRadio_P
+    python CBRadio/build.py demo     self-check
+
+The CB Radio plugin (D:\\MTLiveMap\\mt_loader\\plugins\\cb_radio.cpp) lets you talk on foot only while you hold this
+item (MTCharacter.Net_HoldingItem.ItemKey == CB_Handheld). A player's own inventory is not reflected, the item in
+the hand is (2026-11-21), so holding it is the check -- and it shows: the character holds a walkie-talkie.
+
+The row is a copy of Text_01_A (the generic holdable, IT_Common_Cargo, which shows the row's StaticMesh) with the
+one-hand hold of the winch remote, the game's own walkie-talkie mesh and radio icon. It ships as a DataTableFramework
+Items channel (Ch0019, CB channel 19), so the framework lists it with no registry change. Vendor_TechStore gets it
+appended; no installed mod ships that vendor (Detail Works ships Car Supply, MoreAttachments the Garage).
+"""
+import copy
+import json
+import os
+import sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+REPO = os.path.join(HERE, "..")
+sys.path.insert(0, os.path.join(REPO, "Rebase"))
+from pipeline import VANILLA, WORK, from_json, register_names, to_json  # noqa: E402
+import importlib.util  # noqa: E402
+
+spec = importlib.util.spec_from_file_location("channels", os.path.join(REPO, "Rebase", "channels.py"))
+channels = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(channels)
+framework = channels.framework
+
+PAK = os.path.join(REPO, "qxZap_CBRadio_P", "MotorTown", "Content")
+CHANNEL = "/Game/DataTableFramework/Items/Ch0019"
+KEY = "CB_Handheld"
+NAME = "CB Handheld Radio"
+PRICE = 1500
+MESH = "/Game/Models/PolygonPoliceStation/Meshes/Props/SM_Prop_WalkieTalkie_01"
+ICON = "/Game/UI/Icons/Item/Radio"
+VENDOR = os.path.join("Characters", "NPC", "Vendor_TechStore.uasset")
+TEXT = "UAssetAPI.PropertyTypes.Objects.TextPropertyData"
+W = os.path.join(WORK, "cbradio")
+
+
+def load(path, tag):
+    os.makedirs(W, exist_ok=True)
+    return json.load(open(to_json(path, os.path.join(W, tag + ".json")), encoding="utf-8"))
+
+
+def prop(row, name):
+    return next(p for p in row["Value"] if p["Name"] == name)
+
+
+def soft(row, name, package):
+    a = prop(row, name)["Value"]["AssetPath"]
+    a["PackageName"], a["AssetName"] = package, package.rsplit("/", 1)[1]
+
+
+def literal(row, text):
+    """Every display-name field as a literal: a copied row would read the donor's string table entry."""
+    def walk(n):
+        if isinstance(n, dict):
+            if n.get("$type", "").startswith(TEXT):
+                n.update(HistoryType="None", Namespace=None, Value=None, TableId=None, Flags=0, CultureInvariantString=text)
+            for v in n.values():
+                walk(v)
+        elif isinstance(n, list):
+            for v in n:
+                walk(v)
+    for name in ("ItemName", "ItemNameAndNumber", "ItemNameTexts"):
+        walk(prop(row, name))
+
+
+def handheld(items):
+    rows = {r["Name"]: r for r in items["Exports"][0]["Table"]["Data"]}
+    row = copy.deepcopy(rows["Text_01_A"])
+    hold = rows["WinchController"]
+    row["Name"] = KEY
+    for k in ("HoldableSocketName", "HoldableItemSocketName", "bHoldingOffsetUsingItemBounds", "bUseHandIK",
+              "HandIKType", "bUseCargoHoldingPose"):
+        prop(row, k)["Value"] = copy.deepcopy(prop(hold, k)["Value"])
+    prop(row, "ItemType")["Value"] = prop(hold, "ItemType")["Value"]  # a tool, not furniture
+    prop(row, "bIsPersistence")["Value"] = False
+    prop(row, "Cost")["Value"] = PRICE
+    soft(row, "StaticMesh", MESH)
+    soft(row, "IconTexture", ICON)
+    literal(row, NAME)
+    return row
+
+
+def build():
+    items = load(os.path.join(VANILLA, "DataAsset", "Items", "Items.uasset"), "Items.vanilla")
+    row = handheld(items)
+    channels.ship(framework.make_table(items, CHANNEL, [row]), CHANNEL, PAK, "CB Radio")
+
+    vendor = load(os.path.join(VANILLA, VENDOR), "Vendor_TechStore.vanilla")
+    sell = next(p["Value"] for e in vendor["Exports"] for p in e.get("Data") or []
+                if isinstance(p, dict) and p.get("Name") == "SellItems")
+    if KEY not in [x["Value"] for x in sell]:
+        entry = copy.deepcopy(sell[-1])
+        entry["Name"], entry["Value"] = str(len(sell)), KEY
+        sell.append(entry)
+    register_names(vendor, [KEY])
+    src = os.path.join(W, "Vendor_TechStore.json")
+    json.dump(vendor, open(src, "w", encoding="utf-8"))
+    os.makedirs(os.path.dirname(os.path.join(PAK, VENDOR)), exist_ok=True)
+    out = from_json(src, os.path.join(PAK, VENDOR))
+    back = load(out, "Vendor_TechStore.check")
+    if any("RawExport" in e["$type"] for e in back["Exports"]):
+        sys.exit("FAIL: Vendor_TechStore reads back raw")
+    print(f"  Vendor_TechStore: {len(sell)} items, the last {sell[-1]['Value']}")
+
+
+def demo():
+    items = load(os.path.join(VANILLA, "DataAsset", "Items", "Items.uasset"), "Items.vanilla")
+    row = handheld(items)
+    assert row["Name"] == KEY and prop(row, "Cost")["Value"] == PRICE
+    assert prop(row, "StaticMesh")["Value"]["AssetPath"]["AssetName"] == "SM_Prop_WalkieTalkie_01"
+    assert prop(row, "HoldableSocketName")["Value"] == "Hand_R_Hold"
+    assert NAME in json.dumps(prop(row, "ItemNameTexts")) and "StringTableEntry" not in json.dumps(prop(row, "ItemNameTexts"))
+    assert len([p["Name"] for p in row["Value"]]) == len({p["Name"] for p in row["Value"]}), "a property twice"
+    print("ok")
+
+
+if __name__ == "__main__":
+    demo() if sys.argv[1:] == ["demo"] else build()
