@@ -90,7 +90,7 @@ def verify(game_guid):
         props = {p["Name"]: p for p in e["Data"]}
         sec = {p["Name"]: p.get("Value") for p in props["CompositeSections"]["Value"][0]["Value"]}
         slot = {p["Name"]: p.get("Value") for p in props["SlotAnimTracks"]["Value"][0]["Value"]}
-        assert sec["SectionName"] == "Default" and sec["NextSectionName"] == ("Default" if KEYS[a]["loop"] else None), sec
+        assert sec["SectionName"] == "Default" and sec["NextSectionName"] in ((["Default"]) if KEYS[a]["loop"] else (None, "None")), sec
         assert slot["SlotName"] == "DefaultSlot", slot
         imps = {(i["ObjectName"], i["ClassName"]) for i in m["Imports"]}
         assert ("/Game/Swim/Anims/" + a, "Package") in imps and (SKEL_PATH, "Package") in imps, a

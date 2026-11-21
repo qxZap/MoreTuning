@@ -25,7 +25,7 @@ transforms per frame (frames()), which ue_anims.py keys and preview.py renders.
 import sys
 from functools import lru_cache
 import numpy as np
-from fk import B, N, IDX, PARENT, REF_T, REF_S, REF_W, REF_P, qmul, qconj, qrot, qaxis, norm, world
+from fk import B, N, IDX, PARENT, REF_R, REF_T, REF_S, REF_W, REF_P, qmul, qconj, qrot, qaxis, norm, world
 
 FPS = 30
 X, Y, Z = (1, 0, 0), (0, 1, 0), (0, 0, 1)
@@ -315,6 +315,68 @@ def tread_frames(length=2.0):
     n = int(round(length * FPS)); return [rel_local(*tread(f / n)) for f in range(n + 1)]
 
 
+# ---------------------------------------------------------------- 2026-11-19: the underwater set
+def hover(p):
+    """underwater idle: near-upright 'seated' hover, hands sculling slowly in front of the chest, a lazy flutter, a slow bob"""
+    rel = {'Pelvis': rx(-12), 'spine_02': rx(-4), 'neck_01': rx(-6), 'head': rx(-4)}
+    sc = TAU * p
+    for side, s in SIDE.items():
+        clav, up, low, hand = ARM[side]
+        rel[up] = chain(rz(14 * S(sc) * s), rz(42 * s), ry(30 * s))   # the tread's sculling arms, slower and lower
+        rel[low] = elbow(s, 50 - 10 * S(sc))
+        rel[hand] = rx(28 * C(sc))
+    for side, ph in (('L', 0.0), ('R', 0.5)):
+        th_, cf, ft = LEG[side]; k = TAU * (2 * p + ph)
+        rel[th_] = chain(rx(30 + 9 * S(k)), ry(-8 * SIDE[side]))
+        rel[cf] = rx(-(40 + 14 * (0.5 + 0.5 * S(k + 1.2))))
+        rel[ft] = rx(-40 - 8 * S(k + 2))
+    return rel, (0.0, 0.0, PEL_TREAD_Z + 3 * S(sc))
+
+
+def hover_frames(length=2.4):
+    n = int(round(length * FPS)); return [rel_local(*hover(f / n)) for f in range(n + 1)]
+
+
+def duck_dive(length=1.1):
+    """surface -> under: from treading, pike forward with the arms reaching down, legs lift over (jackknife), into the
+    dive glide (Swim_Dive's first frame). The plugin sinks the capsule meanwhile."""
+    pike = {'Pelvis': rx(-100), 'spine_02': rx(-12), 'neck_01': rx(-15), 'head': rx(-10)}
+    for side, s in SIDE.items():
+        clav, up, low, hand = ARM[side]; pike[up] = chain(overhead(s), rx(-10)); pike[low] = elbow(s, 15)
+    for side in ('L', 'R'):
+        th_, cf, ft = LEG[side]; pike[th_] = rx(85); pike[cf] = rx(-30); pike[ft] = rx(-40)
+    jack = {'Pelvis': rx(-150), 'spine_02': rx(-5), 'neck_01': rx(-10), 'head': rx(-5)}
+    for side, s in SIDE.items():
+        clav, up, low, hand = ARM[side]; jack[up] = chain(overhead(s), ry(4 * s)); jack[low] = elbow(s, 5)
+    for side in ('L', 'R'):
+        th_, cf, ft = LEG[side]; jack[th_] = rx(15); jack[cf] = rx(-10); jack[ft] = rx(-65)
+    keys = [(0.0, rel_local(*tread(0.0))), (0.3, rel_local(pike, (0, 0, 120))), (0.65, rel_local(jack, (0, 0, 120))),
+            (length, dive_frames()[0])]
+    return keyed(keys, length)
+
+
+TURN_BANK = 25.0   # degrees the body rolls into an underwater turn
+
+
+def turn(side, length=1.6):
+    """the underwater stroke banked into a turn: the whole body rolls about its long axis (the pelvis carries it, so the
+    capsule stays upright) and the spine, neck and head look into the turn. side +1 = left, -1 = right."""
+    root = REF_R[IDX['Root']]
+    roll = norm(qmul(qmul(qconj(root), qaxis(Y, TURN_BANK * side)), root))   # a world roll, in the pelvis's parent frame
+    out = []
+    for f in dive_frames(length):
+        f = list(f)
+        k = IDX['Pelvis']; loc, q = f[k]; f[k] = (loc, norm(qmul(roll, q)))   # about the pelvis: the body stays put
+        for b, d in (('spine_02', 8), ('neck_01', 10), ('head', 8)):
+            k = IDX[b]; loc, q = f[k]; f[k] = (loc, norm(qmul(q, ry(-d * side))))   # local Y is sideways on these bones (+ = right)
+        out.append(f)
+    return out
+
+
+def turn_left(length=1.6): return turn(+1, length)
+def turn_right(length=1.6): return turn(-1, length)
+
+
 ANIMS = {  # name: (builder, seconds, loops)
     'Swim_Crawl': (crawl_frames, 1.4, True),
     'Swim_Tread': (tread_frames, 2.0, True),
@@ -322,6 +384,10 @@ ANIMS = {  # name: (builder, seconds, loops)
     'Swim_DiveIn': (dive_in, 1.0, False),
     'Swim_Surface': (surface, 0.8, False),
     'Swim_ClimbOut': (climb_out, 0.8, False),
+    'Swim_DuckDive': (duck_dive, 1.1, False),
+    'Swim_Hover': (hover_frames, 2.4, True),
+    'Swim_TurnL': (turn_left, 1.6, True),
+    'Swim_TurnR': (turn_right, 1.6, True),
 }
 
 
@@ -376,6 +442,8 @@ def demo():
     assert same(world_frames('Swim_Surface')[0][0], world_frames('Swim_Dive')[0][0])
     assert same(world_frames('Swim_Surface')[0][-1], world_frames('Swim_Tread')[0][0])
     assert same(world_frames('Swim_ClimbOut')[0][0], world_frames('Swim_Tread')[0][0])
+    assert same(world_frames('Swim_DuckDive')[0][0], world_frames('Swim_Tread')[0][0])
+    assert same(world_frames('Swim_DuckDive')[0][-1], world_frames('Swim_Dive')[0][0])
     print('demo ok')
 
 

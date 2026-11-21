@@ -160,6 +160,9 @@ other mods. `DataTableFramework/convert_mod.py` converts a mod to this layout.
 - **Cooking sounds:** the game is UE 5.5 (an earlier note here said 5.4 and called cooking blocked; it is not,
   `FlatEngines/cook` ships cooked sets). The supercharger whine is still Teh's `hellcathigh` with a 1400 Hz
   high-pass taking the V8 off.
+- **Cooking a material** (ECU Tuning's 3D flames, `FlameModels/`, 2026-11-22): the SoundCook project has
+  `bShareMaterialShaderCode=False`, so a cooked material carries its own shaders. With the default (shared), they
+  land in the project's ShaderArchive, which no mod pak ships, and the game draws nothing. The game is SM5 only.
 - Vanilla's real numbers are worth reading: `TurboWhistle_01_High` is 96 kHz, so it survives
   being pitched down; mod sounds top out at 48 kHz.
 
