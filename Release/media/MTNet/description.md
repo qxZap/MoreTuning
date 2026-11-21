@@ -23,6 +23,7 @@ MTNet changes the game the same way any mod does, just from a panel instead of a
   - Cargo Stack Unlimited: stack cargo higher and heavier, and get paid for the full weight.
 - Your own templates: a template is a small JSON file in MotorTown\Binaries\Win64\mt_net_templates. Copy one, change the values, and it shows up in the panel. Sharing a template with a friend means sending them that file.
 - Fewer background requests: by default MTNet answers the game's reporting calls (events, logs, playtime, vehicle and character uploads) itself, so they never go out to the server. You can switch each one on or off live on the panel's Network page, which also lists every request the game makes and how long the server takes to answer.
+- Traffic dump: set Dump=1 under [MTNet] in mt_net.ini and every exchange with the game's servers is saved whole to plugins\logs\MTNet\traffic. Those files hold your login headers, so never share them as they are.
 - Reset: one button puts every setting back to the game's defaults.
 
 ### What you need

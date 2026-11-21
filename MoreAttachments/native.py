@@ -295,13 +295,14 @@ def convert(t, mesh_pkg, slots):
         register_names(t, paint)
     elif palette and not paint and "/Cars/Parts/Wheels/" in mesh_pkg:
         pass  # a wheel never paints whole: the palette section is its tyre too
-    elif palette and not paint:
+    elif palette:
+        # palette-only, or body + palette trim (Longhorn Semi bumpers, 11-21): the trim paints too
         new_pkg = copy_mesh(mesh_pkg)
         if new_pkg:
             pkg_import, _ = actor_mesh_import(t)
             pkg_import["ObjectName"] = new_pkg
             register_names(t, [new_pkg])
-            paint = palette
+            paint = [s for _, s, _, k in slots if k in ("paint", "palette")]
     mesh = next(e for e in t["Exports"] if e.get("ObjectName") == "Mesh_GEN_VARIABLE")
     inter = next((e for e in t["Exports"] if e.get("ObjectName") == "MTInteractable_GEN_VARIABLE"), None)
 
@@ -405,7 +406,7 @@ def convert_all(regenerated=()):
             shutil.copy2(tmp[:-7] + ext, base + ext)
         out[name] = paint
         stats["paint"] += bool(paint)
-        stats["copies"] += any(k == "palette" for *_, k in slots) and not any(k == "paint" for *_, k in slots)
+        stats["copies"] += any(k == "palette" for *_, k in slots) and "/Cars/Parts/Wheels/" not in mesh_pkg
         secs = len({section(s, m) for _, s, m, k in slots if k == "lamp"})
         stats["lamps"] += bool(secs)
         stats["sections"] += secs > 1
