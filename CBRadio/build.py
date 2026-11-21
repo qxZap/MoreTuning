@@ -118,7 +118,14 @@ def build():
     shutil.rmtree(os.path.join(PAK, "DataTableFramework"), ignore_errors=True)  # the old channel file
     items = load(os.path.join(VANILLA, "DataAsset", "Items", "Items.uasset"), "Items.vanilla")
     row = handheld(items)
-    channels.ship(framework.make_table(items, CHANNEL, [row]), CHANNEL, PAK, "CB Radio")
+    # built on a PLAIN table: Items itself is a CompositeDataTable, and a table made from it was a composite too --
+    # it kept no rows of its own, so the game never had the handheld (11-21, the shop check: not in the item list)
+    plain = load(os.path.join(VANILLA, "DataAsset", "Items", "Items_Etc.uasset"), "Items_Etc.vanilla")
+    table = framework.make_table(plain, CHANNEL, [row])
+    cls = table["Imports"][-table["Exports"][0]["ClassIndex"] - 1]["ObjectName"]
+    if cls != "DataTable":
+        sys.exit(f"FAIL: Items_CBRadio would be a {cls}, not a DataTable")
+    channels.ship(table, CHANNEL, PAK, "CB Radio")
 
     vendor = load(os.path.join(VANILLA, VENDOR), "Vendor_TechStore.vanilla")
     sell = next(p["Value"] for e in vendor["Exports"] for p in e.get("Data") or []
