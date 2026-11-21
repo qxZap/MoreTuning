@@ -169,6 +169,9 @@ other mods. `DataTableFramework/convert_mod.py` converts a mod to this layout.
 > tables (`registry.json` "adopted"). A `DataTableFramework/<Composite>/ChNNNN` file is listed by nothing and the
 > game never sees it -- CB Radio's handheld item shipped that way and was missing from the shop. Ship an own table
 > and register it, then rebuild the framework (`python DataTableFramework/run.py <Composite>`).
+> Build that table on a **plain** vanilla table (`Items_Etc`, not `Items`): `framework.make_table` keeps the
+> source's class, and a table made from a composite is a `CompositeDataTable` with no rows of its own -- it loads
+> empty. A shop's stock is the baked `RawAssets/ItemSellers_<map>.json`, not the vendor blueprint (CB Radio, 11-21).
 
 Since 0.7.20 no pak in this repo ships a part table. `DataTableFramework/run.py`
 ships every composite the game has (14: VehicleParts, Vehicles, Items, Cargos,
