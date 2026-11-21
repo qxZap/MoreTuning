@@ -41,6 +41,14 @@ NAME = "Ham Radio"
 PRICE = 1500
 SCALE = 0.7
 PITCH = -90.0  # in the hand, as the flare
+# The radio's own hand actor (11-21): the generic one is cargo (MTCargo: it could be set down anywhere, "built") and
+# its default model is the letter A, which the preview showed. IT_HamRadio is the tire repair kit's actor -- a plain
+# Actor, a root and a mesh -- with the walkie-talkie in it and the hold the user asked for: half as big again, 5 cm
+# lower in the palm, tilted 15 degrees.
+ACTOR = "/Game/Objects/Item/IT_HamRadio"
+ACTOR_SCALE = 1.05      # 0.7 x 1.5
+ACTOR_LOCATION = (0.0, 0.0, -5.0)   # cm, along the radio: down into the palm
+ACTOR_ROTATION = (0.0, 0.0, 15.0)   # pitch, yaw, roll: the tilt
 MESH = "/Game/Models/PolygonPoliceStation/Meshes/Props/SM_Prop_WalkieTalkie_01"
 ICON = "/Game/UI/Icons/CBRadio/Ham_Radio"  # our own, drawn in the game's icon style (CBRadio/ham_icon.html -> Ham_Radio.png)
 ICON_COOKED = r"D:\MT\SoundCook\MTEngineSounds\Saved\Cooked\Windows\MTEngineSounds\Content\UI\Icons\CBRadio"  # icon_import.py + cook
@@ -90,6 +98,8 @@ def handheld(items):
     prop(row, "bIsPersistence")["Value"] = False
     prop(row, "Cost")["Value"] = PRICE
     soft(row, "StaticMesh", MESH)
+    h = prop(row, "HoldableActorClass")["Value"]["AssetPath"]
+    h["PackageName"], h["AssetName"] = ACTOR, "IT_HamRadio_C"   # our own hand actor (see ACTOR)
     # the donor's look goes: its icon-atlas material painted the radio as the letter A, and its 3x scale made a 39 cm
     # model (antenna up) 1.2 m tall in the hand (11-21). 0.7 = about 27 cm, a real handheld.
     m = prop(row, "Material")["Value"]["AssetPath"]
@@ -132,6 +142,54 @@ def sellers():
     return json.dumps(data, indent=2), n
 
 
+def actor():
+    """IT_HamRadio: the repair kit's hand actor, renamed, with the walkie-talkie and its hold. -> its class path."""
+    donor = load(os.path.join(VANILLA, "Objects", "Item", "IT_TireRepairKit.uasset"), "IT_TireRepairKit.vanilla")
+    flare = load(os.path.join(VANILLA, "Objects", "Item", "IT_Flare.uasset"), "IT_Flare.vanilla")
+    items = load(os.path.join(VANILLA, "DataAsset", "Items", "Items.uasset"), "Items.vanilla")
+    j = copy.deepcopy(donor)
+    old_pkg, new_pkg = "/Game/Objects/Item/IT_TireRepairKit", ACTOR
+    old_mesh_pkg = "/Game/Models/PolygonMilitary/Meshes/Characters/Attachments/SM_Chr_Attach_Tool_02"
+    ren = {old_pkg: new_pkg, "IT_TireRepairKit_C": "IT_HamRadio_C", "Default__IT_TireRepairKit_C": "Default__IT_HamRadio_C",
+           old_mesh_pkg: MESH, "SM_Chr_Attach_Tool_02": MESH.rsplit("/", 1)[1]}
+    j["NameMap"] = [ren.get(n, n) for n in j["NameMap"]]
+    for imp in j["Imports"]:
+        imp["ObjectName"] = ren.get(imp["ObjectName"], imp["ObjectName"])
+    for e in j["Exports"]:
+        if isinstance(e.get("ObjectName"), str):
+            e["ObjectName"] = ren.get(e["ObjectName"], e["ObjectName"])
+    if j.get("FolderName") == old_pkg:
+        j["FolderName"] = new_pkg
+    mesh = next(e for e in j["Exports"] if e.get("ObjectName") == "Mesh_GEN_VARIABLE")
+    loc = copy.deepcopy(next(p for e in flare["Exports"] for p in e.get("Data") or []
+                             if isinstance(p, dict) and p.get("Name") == "RelativeLocation"))
+    loc["Value"][0]["Value"].update(X=ACTOR_LOCATION[0], Y=ACTOR_LOCATION[1], Z=ACTOR_LOCATION[2])
+    rot = copy.deepcopy(prop(next(r for r in items["Exports"][0]["Table"]["Data"] if r["Name"] == "Flare_01"), "DefaultHoldingRotation"))
+    rot["Name"] = "RelativeRotation"
+    rot["Value"][0]["Name"] = "RelativeRotation"
+    rot["Value"][0]["Value"].update(Pitch=ACTOR_ROTATION[0], Yaw=ACTOR_ROTATION[1], Roll=ACTOR_ROTATION[2])
+    data = [p for p in mesh["Data"] if p.get("Name") not in ("RelativeLocation", "RelativeRotation")]
+    at = next(i for i, p in enumerate(data) if p.get("Name") == "RelativeScale3D")
+    data[at:at] = [loc, rot]
+    for v in data[at + 2]["Value"]:
+        v["Value"].update(X=ACTOR_SCALE, Y=ACTOR_SCALE, Z=ACTOR_SCALE)
+    mesh["Data"] = data
+    register_names(j, ["RelativeLocation", "RelativeRotation", "Vector", "Rotator"])
+    src = os.path.join(W, "IT_HamRadio.json")
+    json.dump(j, open(src, "w", encoding="utf-8"))
+    dst = os.path.join(PAK, "Objects", "Item", "IT_HamRadio.uasset")
+    os.makedirs(os.path.dirname(dst), exist_ok=True)
+    out = from_json(src, dst)
+    back = load(out, "IT_HamRadio.check")
+    if any("RawExport" in e["$type"] for e in back["Exports"]) or len(back["Exports"]) != len(j["Exports"]):
+        sys.exit("FAIL: IT_HamRadio reads back raw")
+    m = next(e for e in back["Exports"] if e.get("ObjectName") == "Mesh_GEN_VARIABLE")
+    got = {p["Name"]: p for p in m["Data"]}
+    assert {"RelativeLocation", "RelativeRotation", "RelativeScale3D"} <= set(got), list(got)
+    print(f"  actor: IT_HamRadio, mesh {MESH.rsplit('/', 1)[1]} x{ACTOR_SCALE}, {ACTOR_LOCATION} cm, {ACTOR_ROTATION} deg")
+    return ACTOR + ".IT_HamRadio_C"
+
+
 def icon():
     """The cooked icon into the pak, checked: it reads back as a texture, not raw."""
     import shutil
@@ -158,6 +216,7 @@ def build():
     if cls != "DataTable":
         sys.exit(f"FAIL: Items_CBRadio would be a {cls}, not a DataTable")
     icon()
+    actor()
     channels.ship(table, CHANNEL, PAK, "CB Radio")
 
     vendor = load(os.path.join(VANILLA, VENDOR), "Vendor_TechStore.vanilla")
