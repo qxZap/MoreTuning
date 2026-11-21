@@ -8,10 +8,15 @@ item (MTCharacter.Net_HoldingItem.ItemKey == CB_Handheld). A player's own invent
 the hand is (2026-11-21), so holding it is the check -- and it shows: the character holds a walkie-talkie.
 
 The row is a copy of Text_01_A (the generic holdable, IT_Common_Cargo, which shows the row's StaticMesh) with the
-one-hand hold of the winch remote, the game's own walkie-talkie mesh and radio icon. It ships as the mod's own table,
+one-hand hold of the Super Flashlight, the game's own walkie-talkie mesh and radio icon. It ships as the mod's own table,
 Items_CBRadio, adopted in DataTableFramework/registry.json (the framework lists registered tables, not channels: an
 Items/Ch0019 file was never seen in game, 11-21). Vendor_TechStore gets it
 appended; no installed mod ships that vendor (Detail Works ships Car Supply, MoreAttachments the Garage).
+
+What a shop sells in game is NOT the vendor blueprint's list: it is baked into RawAssets/ItemSellers_Jeju_World.json
+(FMTBakedItemSellerData, one entry per seller with its map location), so the pak ships that file with CB_Handheld added
+to every tech store (the sellers that sell Furniture_Laptop_01). Found 11-21 after the item never showed up. The file is
+pulled from the installed game's pak, so a game update that rebakes it needs this rerun; no other mod ships it (checked).
 """
 import copy
 import json
@@ -73,10 +78,10 @@ def literal(row, text):
 def handheld(items):
     rows = {r["Name"]: r for r in items["Exports"][0]["Table"]["Data"]}
     row = copy.deepcopy(rows["Text_01_A"])
-    hold = rows["WinchController"]
+    hold = rows["SuperFlashlight"]  # held like a flashlight: one hand, in the hotbar
     row["Name"] = KEY
     for k in ("HoldableSocketName", "HoldableItemSocketName", "bHoldingOffsetUsingItemBounds", "bUseHandIK",
-              "HandIKType", "bUseCargoHoldingPose"):
+              "HandIKType", "bUseCargoHoldingPose", "bHoldOnlyItem", "bSpawnActorOnDrop", "bCrosshairModeForDropping"):
         prop(row, k)["Value"] = copy.deepcopy(prop(hold, k)["Value"])
     prop(row, "ItemType")["Value"] = prop(hold, "ItemType")["Value"]  # a tool, not furniture
     prop(row, "bIsPersistence")["Value"] = False
@@ -85,6 +90,27 @@ def handheld(items):
     soft(row, "IconTexture", ICON)
     literal(row, NAME)
     return row
+
+
+RAW = "MotorTown/Content/RawAssets/ItemSellers_Jeju_World.json"
+
+
+def sellers():
+    """The game's baked shop lists with the handheld at every tech store -> (json text, stores changed)."""
+    import subprocess
+    sys.path.insert(0, r"D:\MTLiveMap")
+    from mt_paths import MT_AES_KEY
+    game = r"D:\SteamLibrary\steamapps\common\Motor Town\MotorTown\Content\Paks\MotorTown-Windows.pak"
+    raw = subprocess.run([r"D:\MTLiveMap\tools\repak.exe", "--aes-key", MT_AES_KEY, "get", game, RAW],
+                         capture_output=True, check=True).stdout
+    data = json.loads(raw)
+    n = 0
+    for sel in data["Sellers"]:
+        items = sel.get("sellItems", [])
+        if "Furniture_Laptop_01" in items and KEY not in items:
+            items.append(KEY)
+            n += 1
+    return json.dumps(data, indent=2), n
 
 
 def build():
@@ -110,6 +136,13 @@ def build():
     if any("RawExport" in e["$type"] for e in back["Exports"]):
         sys.exit("FAIL: Vendor_TechStore reads back raw")
     print(f"  Vendor_TechStore: {len(sell)} items, the last {sell[-1]['Value']}")
+    text, n = sellers()
+    if not n:
+        sys.exit("FAIL: no tech store in ItemSellers_Jeju_World.json")
+    out = os.path.join(PAK, *RAW.split("/")[2:])
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    open(out, "w", encoding="utf-8").write(text)
+    print(f"  ItemSellers_Jeju_World.json: {KEY} at {n} tech store(s)")
 
 
 def demo():
