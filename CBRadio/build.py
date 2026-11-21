@@ -42,7 +42,8 @@ PRICE = 1500
 SCALE = 0.7
 PITCH = -90.0  # in the hand, as the flare
 MESH = "/Game/Models/PolygonPoliceStation/Meshes/Props/SM_Prop_WalkieTalkie_01"
-ICON = "/Game/UI/Icons/Item/Radio"
+ICON = "/Game/UI/Icons/CBRadio/Ham_Radio"  # our own, drawn in the game's icon style (CBRadio/ham_icon.html -> Ham_Radio.png)
+ICON_COOKED = r"D:\MT\SoundCook\MTEngineSounds\Saved\Cooked\Windows\MTEngineSounds\Content\UI\Icons\CBRadio"  # icon_import.py + cook
 VENDOR = os.path.join("Characters", "NPC", "Vendor_TechStore.uasset")
 TEXT = "UAssetAPI.PropertyTypes.Objects.TextPropertyData"
 W = os.path.join(WORK, "cbradio")
@@ -131,6 +132,19 @@ def sellers():
     return json.dumps(data, indent=2), n
 
 
+def icon():
+    """The cooked icon into the pak, checked: it reads back as a texture, not raw."""
+    import shutil
+    dst = os.path.join(PAK, "UI", "Icons", "CBRadio")
+    os.makedirs(dst, exist_ok=True)
+    for ext in (".uasset", ".uexp"):
+        shutil.copy2(os.path.join(ICON_COOKED, "Ham_Radio" + ext), dst)
+    back = load(os.path.join(dst, "Ham_Radio.uasset"), "Ham_Radio.check")
+    if any("RawExport" in e["$type"] for e in back["Exports"]):
+        sys.exit("FAIL: the cooked icon reads back raw")
+    print("  icon: Ham_Radio", [e["$type"].split(".")[-1].split(",")[0] for e in back["Exports"]])
+
+
 def build():
     import shutil
     shutil.rmtree(os.path.join(PAK, "DataTableFramework"), ignore_errors=True)  # the old channel file
@@ -143,6 +157,7 @@ def build():
     cls = table["Imports"][-table["Exports"][0]["ClassIndex"] - 1]["ObjectName"]
     if cls != "DataTable":
         sys.exit(f"FAIL: Items_CBRadio would be a {cls}, not a DataTable")
+    icon()
     channels.ship(table, CHANNEL, PAK, "CB Radio")
 
     vendor = load(os.path.join(VANILLA, VENDOR), "Vendor_TechStore.vanilla")
