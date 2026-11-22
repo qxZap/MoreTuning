@@ -92,7 +92,9 @@ def handheld(items):
     hold = rows["SuperFlashlight"]  # held like a flashlight: one hand, in the hotbar
     row["Name"] = KEY
     for k in ("HoldableSocketName", "HoldableItemSocketName", "bHoldingOffsetUsingItemBounds", "bUseHandIK",
-              "HandIKType", "bUseCargoHoldingPose", "bHoldOnlyItem", "bSpawnActorOnDrop", "bCrosshairModeForDropping"):
+              "HandIKType", "bUseCargoHoldingPose", "bHoldOnlyItem", "bSpawnActorOnDrop", "bCrosshairModeForDropping",
+              # the sign's InteractionType "Build" is the "start build" prompt in the hand (11-22)
+              "InteractionType", "bTrashByInteraction"):
         prop(row, k)["Value"] = copy.deepcopy(prop(hold, k)["Value"])
     prop(row, "ItemType")["Value"] = prop(hold, "ItemType")["Value"]  # a tool, not furniture
     prop(row, "bIsPersistence")["Value"] = False
@@ -253,6 +255,7 @@ def demo():
     assert prop(row, "StaticMesh")["Value"]["AssetPath"]["AssetName"] == "SM_Prop_WalkieTalkie_01"
     assert prop(row, "BuildingKey")["Value"] == "None", "no building: the donor's is the letter A"
     assert prop(row, "HoldableSocketName")["Value"] == "Hand_R_Hold"
+    assert prop(row, "InteractionType")["Value"] == "None", "no build prompt"
     assert prop(row, "Material")["Value"]["AssetPath"]["PackageName"] == "None", "no icon-atlas material"
     assert prop(row, "StaticMeshScale")["Value"][0]["Value"]["X"] == SCALE
     assert prop(row, "DefaultHoldingRotation")["Value"][0]["Value"]["Pitch"] == PITCH and not prop(row, "bDropable")["Value"]
