@@ -222,6 +222,10 @@ def build():
     icon()
     actor()
     channels.ship(table, CHANNEL, PAK, "CB Radio")
+    # Standalone too (11-22): our own Items composite, vanilla's parents + Items_CBRadio, so the item exists without the
+    # framework. With it, AAAA_DataTableFramework_99_P outranks this copy (chunk 99) and lists Items_CBRadio itself.
+    # Without it, a later mod's own Items copy (Slides, ProxyTech...) still beats ours: that is what the framework is for.
+    framework.mod_composite("Items", [CHANNEL], PAK)
 
     vendor = load(os.path.join(VANILLA, VENDOR), "Vendor_TechStore.vanilla")
     sell = next(p["Value"] for e in vendor["Exports"] for p in e.get("Data") or []
