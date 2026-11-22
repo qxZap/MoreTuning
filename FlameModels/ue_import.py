@@ -102,12 +102,12 @@ mel.connect_material_property(m4, "", unreal.MaterialProperty.MP_EMISSIVE_COLOR)
 mel.recompile_material(m)
 lib.save_loaded_asset(m, only_if_is_dirty=False)
 
-for n in range(6):
-    mesh = lib.load_asset(f"{DEST}/SM_QX_Tongue_{n}")
+for name in [f"SM_QX_Tongue_{n}" for n in range(6)] + [f"SM_QX_Tongue_{n}_{k}" for n in range(6) for k in range(3)]:
+    mesh = lib.load_asset(f"{DEST}/{name}")
     if not mesh:
-        raise RuntimeError(f"SM_QX_Tongue_{n} did not import")
+        raise RuntimeError(f"{name} did not import")
     mesh.set_material(0, m)
     b = mesh.get_bounding_box()
-    print(f"SM_QX_Tongue_{n}: bounds min {b.min} max {b.max}")
+    print(f"{name}: bounds min {b.min} max {b.max}")
     lib.save_loaded_asset(mesh, only_if_is_dirty=False)
 print("flames imported")
